@@ -1,0 +1,64 @@
+<resources>
+    <!-- App title -->
+    <string name="app_name">Socializing</string>
+
+    <!-- Introduction -->
+        <string name="skip_introduction">Skip</string>
+        <!-- Fragment 1 -->
+        <string name="title_fragment1">Create your</string>
+        <string name="subtitle_fragment1">Network</string>
+        <string name="description_fragment1">Customize your own social network by choosing a theme, a geographical location and much more… </string>
+        <!-- Fragment 2 -->
+        <string name="title_fragment2">Set up your</string>
+        <string name="subtitle_fragment2">Network</string>
+        <string name="description_fragment2">Public so that everyone has access or private to be in smaller numbers…</string>
+        <!-- Fragment 3 -->
+        <string name="title_fragment3">Share content</string>
+        <string name="subtitle_fragment3">on Network</string>
+        <string name="description_fragment3">You can share whatever you want : message, media, emails and be notified !</string>
+
+    <!-- Home page -->
+        <string name="welcome_login">Welcome to Socializing</string>
+        <!-- Login -->
+        <string name="email_login">Email</string>
+        <string name="password_login">Password</string>
+        <string name="forgotPassword_login">Forgot password</string>
+        <string name="button_login">Login</string>
+        <!-- Signup -->
+        <string name="email_signup">Email</string>
+        <string name="name_signup">Name</string>
+        <string name="phone_signup">Phone number</string>
+        <string name="password_signup">Password</string>
+        <string name="button_signup">Signup</string>
+
+
+    <!-- Nav button -->
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Mes réseaux</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+
+    <string name="item_default">nom du post</string>
+    <string name="item_title_default">Nom du réseau</string>
+    <string name="item_subtitle_default">Nom de l\'auteur</string>
+    <string name="item_content_text">Default content</string>
+    <string name="item_nbView">3000</string>
+    <string name="item_date_ago">1min</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="profile_name">Jean Pierre</string>
+</resources>
