@@ -7,9 +7,29 @@
     <color name="teal_700">#FF018786</color>
 
     <!-- Own colors -->
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#5C5BE5</color>
+    <color name="colorPrimaryDark">#5C5BE5</color>
+
+    <color name="colorSecondary">#9292E3</color>
+    <color name="colorSecondaryDark">#5C5BE5</color>
+
+    <color name="colorAccent">#5C5BE5</color>
+
+    <!-- Text colors-->
+    <color name="colorTitle">#323D48</color>
+    <color name="colorText">#647A90</color>
+    <color name="colorTextAccent">#5C5BE5</color>
+
+    <color name="colorTitleDark">#323D48</color>
+    <color name="colorTextDark">#647A90</color>
+    <color name="colorTextAccentDark">#5C5BE5</color>
+
+    <!-- Background colors-->
+    <color name="colorBackground">#F5F5F5</color>
+    <color name="colorBackgroundDark">#0D0D10</color>
+
+    <color name="colorBackgroundCard">#FFFFFF</color>
+    <color name="colorBackgroundCardDark">#26262A</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
