@@ -25,7 +25,7 @@ public class TchatGroupeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tchat_groupe_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_groupe_tchat, container, false);
     }
 
     @Override

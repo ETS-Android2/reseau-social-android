@@ -21,7 +21,7 @@ public class SignupTabFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.signup_tab_fragment, container, false);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_signup_tab, container, false);
 
         email = root.findViewById(R.id.email);
         name = root.findViewById(R.id.name);
