@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.navigation.Navigation;
+
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.models.GroupItem;
 
@@ -61,10 +63,12 @@ public class GroupItemAdapter extends BaseAdapter {
 
 
         // accéder à la notification
+        View finalView = view;
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Voir le groupe : " + itemTitle , Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(finalView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post);
             }
         });
 
