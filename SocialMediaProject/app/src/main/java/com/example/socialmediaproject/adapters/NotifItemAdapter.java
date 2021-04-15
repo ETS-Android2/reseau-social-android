@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.navigation.Navigation;
+
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.models.NotifItem;
 
@@ -66,11 +68,13 @@ public class NotifItemAdapter extends BaseAdapter {
         TextView itemContentView = (TextView) view.findViewById(R.id.item_content);
         itemContentView.setText(itemContent);
 
+        View finalView = view;
         // accéder à la notification
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Voir la notification : " + itemTitle , Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(finalView).navigate(R.id.action_navigation_notifications_to_settingsNotificationFragment);
             }
         });
 

@@ -37,7 +37,20 @@
         android:id="@+id/navigation_profile"
         android:name="com.example.socialmediaproject.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_my_informationsFragment"
+            app:destination="@id/my_informationsFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_myFavorisFragment"
+            app:destination="@id/myFavorisFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_myGroupsFragment"
+            app:destination="@id/myGroupsFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_myPostsFragment"
+            app:destination="@id/myPostsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_groupe_post"
@@ -55,5 +68,25 @@
             android:id="@+id/action_settingsNotificationFragment_to_navigation_notifications"
             app:destination="@id/navigation_notifications" />
     </fragment>
+    <fragment
+        android:id="@+id/my_informationsFragment"
+        android:name="com.example.socialmediaproject.ui.pagesprofile.informations.MyInformationsFragment"
+        android:label="my_informations_fragment"
+        tools:layout="@layout/my_informations_fragment" />
+    <fragment
+        android:id="@+id/myFavorisFragment"
+        android:name="com.example.socialmediaproject.ui.pagesprofile.favoris.MyFavorisFragment"
+        android:label="my_favoris_fragment"
+        tools:layout="@layout/my_favoris_fragment" />
+    <fragment
+        android:id="@+id/myGroupsFragment"
+        android:name="com.example.socialmediaproject.ui.pagesprofile.groups.MyGroupsFragment"
+        android:label="my_groups_fragment"
+        tools:layout="@layout/my_groups_fragment" />
+    <fragment
+        android:id="@+id/myPostsFragment"
+        android:name="com.example.socialmediaproject.ui.pagesprofile.posts.MyPostsFragment"
+        android:label="my_posts_fragment"
+        tools:layout="@layout/my_posts_fragment" />
 
 </navigation>

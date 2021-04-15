@@ -1,5 +1,6 @@
 package com.example.socialmediaproject.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.navigation.Navigation;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.models.ProfileItem;
@@ -46,6 +49,7 @@ public class ProfileItemAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
@@ -68,11 +72,29 @@ public class ProfileItemAdapter extends BaseAdapter {
         itemTitleView.setText(itemTitle);
 
 
+        View finalView = view;
         // accéder à la notification
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Voir : " + itemTitle , Toast.LENGTH_SHORT).show();
+                switch (itemTitle){
+                    case "Mes favoris":
+                        Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myFavorisFragment);
+                        break;
+                    case "Mes posts":
+                        Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myPostsFragment);
+                        break;
+                    case "Mes groupes":
+                        Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myGroupsFragment);
+                        break;
+                    case "Mes informations":
+                        Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_my_informationsFragment);
+                        break;
+                    default:
+                        Toast.makeText(context, "Voir : " + itemTitle , Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
             }
         });
 
