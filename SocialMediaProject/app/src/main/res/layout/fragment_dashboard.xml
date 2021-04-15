@@ -23,6 +23,11 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Tchat" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Email" />
 
         <com.google.android.material.tabs.TabItem

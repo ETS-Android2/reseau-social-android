@@ -37,10 +37,10 @@ public class ProfileFragment extends Fragment {
 
         // list of posts
         List<ProfileItem> profileItemList = new ArrayList<>();
-        profileItemList.add(new ProfileItem("Mes favoris"));
-        profileItemList.add(new ProfileItem("Mes posts"));
-        profileItemList.add(new ProfileItem("Mes groupes"));
-        profileItemList.add(new ProfileItem("Mes informations"));
+        profileItemList.add(new ProfileItem("Mes favoris","star"));
+        profileItemList.add(new ProfileItem("Mes posts","article"));
+        profileItemList.add(new ProfileItem("Mes groupes","groups"));
+        profileItemList.add(new ProfileItem("Mes informations","info"));
 
         // get list view
         ListView allPost = (ListView) root.findViewById(R.id.profileListView);

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,13 @@ public class ProfileItemAdapter extends BaseAdapter {
         ProfileItem currentItem = getItem(i);
 
         String itemTitle = currentItem.getTitle();
+        String mnenonic = currentItem.getMnenonic();
+
+        // get item icon view
+        ImageView itemIconView = view.findViewById(R.id.item_icon);
+        String ressourceName = "ic_baseline_"+ mnenonic + "_24" ;
+        int resId = context.getResources().getIdentifier(ressourceName, "drawable", context.getPackageName());
+        itemIconView.setImageResource(resId);
 
         // get item title view
         TextView itemTitleView = (TextView) view.findViewById(R.id.item_title);

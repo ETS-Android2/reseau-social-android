@@ -75,13 +75,14 @@ public class DashboardFragment extends Fragment {
                         allPost.setAdapter(new GroupItemAdapter(getContext(), groupAllItemList));
                         break;
                     case 1: // posts
+                    case 2: // Tchat
                         allPost.setAdapter(new GroupItemAdapter(getContext(), groupPostItemList));
                         break;
-                    case 2: // email
+                    case 3: // email
                         allPost.setAdapter(new GroupItemAdapter(getContext(), groupEmailItemList));
 
                         break;
-                    case 3: // sms
+                    case 4: // sms
                         allPost.setAdapter(new GroupItemAdapter(getContext(), groupSMSItemList));
                         break;
                 }

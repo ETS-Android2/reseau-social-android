@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
         postItemList.add(new PostItem("Les fans de Squeezie"));
 
         // get list view
-        ListView allPost = (ListView) root.findViewById(R.id.simpleListView);
+        ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);
         allPost.setAdapter(new PostItemAdapter(getContext(), postItemList));
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("App Projet Android");

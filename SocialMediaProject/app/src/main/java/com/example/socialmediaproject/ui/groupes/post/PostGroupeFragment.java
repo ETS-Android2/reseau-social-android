@@ -9,10 +9,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.adapters.PostItemAdapter;
+import com.example.socialmediaproject.models.PostItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PostGroupeFragment extends Fragment {
 
@@ -25,9 +33,21 @@ public class PostGroupeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_groupe_post, container, false);
+        View root = inflater.inflate(R.layout.fragment_groupe_post, container, false);
 
-        return view;
+        // list of posts
+        List<PostItem> postItemList = new ArrayList<>();
+        postItemList.add(new PostItem("Les étudiants de montpellier"));
+        postItemList.add(new PostItem("Les motards du 36"));
+        postItemList.add(new PostItem("Végan un jour, Végan toujours"));
+        postItemList.add(new PostItem("FDS - informatique"));
+        postItemList.add(new PostItem("Les fans de Squeezie"));
+
+        // get list view
+        ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);
+        allPost.setAdapter(new PostItemAdapter(getContext(), postItemList));
+
+        return root;
     }
 
     @Override
@@ -35,6 +55,19 @@ public class PostGroupeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(PostGroupeViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        // inflate menu
+        inflater.inflate(R.menu.group_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
 }

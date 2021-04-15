@@ -1,9 +1,11 @@
 package com.example.socialmediaproject.ui.notifications;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -13,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.NotifItemAdapter;
@@ -24,6 +27,7 @@ import java.util.List;
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
+    View finalView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,4 +63,18 @@ public class NotificationsFragment extends Fragment {
         inflater.inflate(R.menu.notif_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.notif_menu_params:
+                // ouverture de l'activité des paramètres de l'application
+                //openSettings();
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

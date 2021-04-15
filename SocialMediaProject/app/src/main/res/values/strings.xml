@@ -3,33 +3,33 @@
     <string name="app_name">Socializing</string>
 
     <!-- Introduction -->
-        <string name="skip_introduction">Skip</string>
-        <!-- Fragment 1 -->
-        <string name="title_fragment1">Create your</string>
-        <string name="subtitle_fragment1">Network</string>
-        <string name="description_fragment1">Customize your own social network by choosing a theme, a geographical location and much more… </string>
-        <!-- Fragment 2 -->
-        <string name="title_fragment2">Set up your</string>
-        <string name="subtitle_fragment2">Network</string>
-        <string name="description_fragment2">Public so that everyone has access or private to be in smaller numbers…</string>
-        <!-- Fragment 3 -->
-        <string name="title_fragment3">Share content</string>
-        <string name="subtitle_fragment3">on Network</string>
-        <string name="description_fragment3">You can share whatever you want : message, media, emails and be notified !</string>
+    <string name="skip_introduction">Skip</string>
+    <!-- Fragment 1 -->
+    <string name="title_fragment1">Create your</string>
+    <string name="subtitle_fragment1">Network</string>
+    <string name="description_fragment1">Customize your own social network by choosing a theme, a geographical location and much more… </string>
+    <!-- Fragment 2 -->
+    <string name="title_fragment2">Set up your</string>
+    <string name="subtitle_fragment2">Network</string>
+    <string name="description_fragment2">Public so that everyone has access or private to be in smaller numbers…</string>
+    <!-- Fragment 3 -->
+    <string name="title_fragment3">Share content</string>
+    <string name="subtitle_fragment3">on Network</string>
+    <string name="description_fragment3">You can share whatever you want : message, media, emails and be notified !</string>
 
     <!-- Home page -->
-        <string name="welcome_login">Welcome to Socializing</string>
-        <!-- Login -->
-        <string name="email_login">Email</string>
-        <string name="password_login">Password</string>
-        <string name="forgotPassword_login">Forgot password</string>
-        <string name="button_login">Login</string>
-        <!-- Signup -->
-        <string name="email_signup">Email</string>
-        <string name="name_signup">Name</string>
-        <string name="phone_signup">Phone number</string>
-        <string name="password_signup">Password</string>
-        <string name="button_signup">Signup</string>
+    <string name="welcome_login">Welcome to Socializing</string>
+    <!-- Login -->
+    <string name="email_login">Email</string>
+    <string name="password_login">Password</string>
+    <string name="forgotPassword_login">Forgot password</string>
+    <string name="button_login">Login</string>
+    <!-- Signup -->
+    <string name="email_signup">Email</string>
+    <string name="name_signup">Name</string>
+    <string name="phone_signup">Phone number</string>
+    <string name="password_signup">Password</string>
+    <string name="button_signup">Signup</string>
 
 
     <!-- Nav button -->
@@ -62,4 +62,11 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="profile_name">Jean Pierre</string>
     <string name="title_groupe_post">Nom du groupe</string>
+    <string name="title_activity_settings_notification">SettingsNotificationActivity</string>
+    <string name="notif_newPost">New posts</string>
+    <string name="notif_newLike">New likes</string>
+    <string name="notif_groupProposition">Group proposition</string>
+    <string name="title_settings_notification">Notifications</string>
+    <string name="addPost">ajouter un post</string>
+    <string name="long_latin">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod ex nec sagittis suscipit. Pellentesque et massa id turpis rutrum blandit vitae nec lectus. Etiam consequat, tellus sit amet faucibus interdum, neque odio scelerisque sem, id efficitur risus sapien at nunc. Vivamus quis ultrices elit, non auctor dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam viverra, velit nec ornare dignissim, lacus lacus malesuada nisi, eu elementum mi ligula a mauris. Phasellus non semper tortor, at condimentum mauris.  Curabitur a tortor justo. Nunc quis arcu aliquam ex maximus ultricies. Praesent eu enim in neque molestie pretium. Sed eget enim suscipit, hendrerit leo vel, lacinia sapien. Fusce in magna eu libero cursus hendrerit. Duis in magna convallis, dapibus velit sit amet, maximus eros. Maecenas ornare purus justo, eget hendrerit nulla porta ac. Proin viverra nisl sit amet est interdum pellentesque. Morbi ut diam quis metus feugiat sollicitudin. Sed id malesuada odio. Cras in lectus nibh. Nam interdum ante ligula. Cras pulvinar faucibus augue at varius.  Cras commodo lacus ut nulla ultrices, sit amet viverra arcu vehicula. Nunc purus metus, auctor et purus nec, sagittis gravida lectus. Nunc eleifend mattis sem, nec sagittis ligula aliquam at. Pellentesque facilisis in felis nec tristique. Nunc dictum vitae est eu mattis. Donec in lacus condimentum, bibendum ligula eu, auctor nisl. Fusce dapibus, orci vitae sollicitudin aliquam, enim dui sagittis lorem, quis ultricies ipsum leo sit amet neque. Nam nec elit leo. Integer eget tellus sed sem hendrerit consectetur. Vivamus sit amet velit tincidunt, ullamcorper purus eget, tempus neque.  Aliquam non elit mauris. Morbi malesuada mattis turpis, at pulvinar justo mollis quis. Sed lobortis tempus scelerisque. Vestibulum posuere, purus at rhoncus tincidunt, lorem velit luctus arcu, quis condimentum ligula diam id augue. Fusce lobortis vitae est ac posuere. Praesent eros dui, scelerisque vitae ullamcorper quis, bibendum non sapien. Nulla facilisi. Cras purus orci, dapibus in condimentum vel, congue eget sapien. Phasellus ultrices feugiat diam vel dictum.  Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis magna erat, aliquam vitae ornare a, rutrum nec justo. Curabitur ac ullamcorper nunc, a lobortis massa. In venenatis commodo malesuada. Sed rutrum lacus sit amet felis tempor, eget pretium elit convallis. Vivamus hendrerit mi ac facilisis tempus. Nulla sit amet tempus lacus. Nunc mattis enim eu eros imperdiet sollicitudin. Pellentesque eros ex, dictum bibendum imperdiet in, gravida vel urna. Aliquam eget nisl pellentesque, viverra mauris sed, molestie urna. Etiam neque ipsum, dictum nec velit sit amet, semper placerat ante.</string>
 </resources>
