@@ -40,6 +40,8 @@ public class DashboardFragment extends Fragment {
         dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+        // on enlève la fleche de retour en arrière
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // list of posts
         List<GroupItem> groupAllItemList = new ArrayList<>();

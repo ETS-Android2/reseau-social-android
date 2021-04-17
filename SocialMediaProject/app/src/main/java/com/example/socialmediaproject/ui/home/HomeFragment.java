@@ -53,6 +53,8 @@ public class HomeFragment extends Fragment {
         ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);
         allPost.setAdapter(new PostItemAdapter(getContext(), postItemList));
 
+        // on enlève la fleche de retour en arrière
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("App Projet Android");
         return root;
     }

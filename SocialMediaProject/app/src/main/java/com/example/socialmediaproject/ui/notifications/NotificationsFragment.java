@@ -15,11 +15,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.NotifItemAdapter;
 import com.example.socialmediaproject.models.NotifItem;
+import com.example.socialmediaproject.ui.settings.SettingsNotificationFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,8 @@ public class NotificationsFragment extends Fragment {
         notificationsViewModel = new ViewModelProvider(this).get(NotificationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
 
+        // on enlève la fleche de retour en arrière
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
 
         // list of posts
@@ -70,7 +75,7 @@ public class NotificationsFragment extends Fragment {
         switch(item.getItemId()){
             case R.id.notif_menu_params:
                 // ouverture de l'activité des paramètres de l'application
-                //openSettings();
+                NavHostFragment.findNavController(this).navigate(R.id.action_navigation_notifications_to_settingsNotificationFragment);
                 return true;
 
         }

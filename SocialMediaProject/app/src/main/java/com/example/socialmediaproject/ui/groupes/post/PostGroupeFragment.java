@@ -1,6 +1,7 @@
 package com.example.socialmediaproject.ui.groupes.post;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -50,6 +52,9 @@ public class PostGroupeFragment extends Fragment {
         ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);
         allPost.setAdapter(new PostItemAdapter(getContext(), postItemList));
 
+        // affichage de la flèche retour en arrière dans le menu
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         // action sur le bouton flottant pour ajouter un post
         FloatingActionButton fab = root.findViewById(R.id.fab);
@@ -82,5 +87,17 @@ public class PostGroupeFragment extends Fragment {
         inflater.inflate(R.menu.group_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()) {
+            case android.R.id.home: // action sur la flèche de retour en arrière
+                getActivity().onBackPressed();
+                break;
+            }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

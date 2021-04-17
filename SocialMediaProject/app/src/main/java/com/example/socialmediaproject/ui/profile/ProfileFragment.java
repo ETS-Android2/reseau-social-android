@@ -34,6 +34,8 @@ public class ProfileFragment extends Fragment {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        // on enlève la fleche de retour en arrière
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // list of posts
         List<ProfileItem> profileItemList = new ArrayList<>();
