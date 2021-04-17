@@ -1,5 +1,6 @@
 package com.example.socialmediaproject.ui.pagesprofile.posts;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -25,7 +26,10 @@ public class MyPostsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.my_posts_fragment, container, false);
+        View view = inflater.inflate(R.layout.my_posts_fragment, container, false);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes posts");
+        return view;
     }
 
     @Override
