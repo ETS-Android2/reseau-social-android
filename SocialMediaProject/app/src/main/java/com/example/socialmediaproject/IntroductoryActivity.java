@@ -6,14 +6,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.os.Bundle;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.socialmediaproject.ui.OnBoardingFragment1;
+import com.example.socialmediaproject.ui.OnBoardingFragment2;
+import com.example.socialmediaproject.ui.OnBoardingFragment3;
 
 public class IntroductoryActivity extends AppCompatActivity {
 

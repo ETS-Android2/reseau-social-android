@@ -1,4 +1,4 @@
-package com.example.socialmediaproject;
+package com.example.socialmediaproject.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.socialmediaproject.MainActivity;
+import com.example.socialmediaproject.R;
 
 public class LoginTabFragment extends Fragment {
 

@@ -1,10 +1,13 @@
-package com.example.socialmediaproject;
+package com.example.socialmediaproject.adapters;
 
 import android.content.Context;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.example.socialmediaproject.ui.LoginTabFragment;
+import com.example.socialmediaproject.ui.SignupTabFragment;
 
 public class LoginAdapter extends FragmentPagerAdapter {
 
