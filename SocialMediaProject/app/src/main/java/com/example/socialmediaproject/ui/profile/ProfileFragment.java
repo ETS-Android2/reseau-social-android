@@ -9,16 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.SettingsActivity;
 import com.example.socialmediaproject.adapters.ProfileItemAdapter;
 import com.example.socialmediaproject.models.ProfileItem;
 
@@ -72,15 +71,10 @@ public class ProfileFragment extends Fragment {
         switch(item.getItemId()){
             case R.id.profile_menu_settings:
                 // ouverture de l'activité des paramètres de l'application
-                openSettingsActivity();
+                NavHostFragment.findNavController(this).navigate(R.id.action_navigation_profile_to_settingsFragment);
                 return true;
             
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    void openSettingsActivity(){
-        Intent intent = new Intent(getContext(), SettingsActivity.class);
-        startActivity(intent);
     }
 }
