@@ -34,7 +34,7 @@
 
     <!-- Nav button -->
     <string name="title_home">Accueil</string>
-    <string name="title_dashboard">Mes réseaux</string>
+    <string name="title_dashboard">Réseaux</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_profile">Profile</string>
 
