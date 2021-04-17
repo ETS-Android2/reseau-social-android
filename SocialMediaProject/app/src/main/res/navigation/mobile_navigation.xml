@@ -58,10 +58,11 @@
     <fragment
         android:id="@+id/navigation_groupe_post"
         android:name="com.example.socialmediaproject.ui.groupes.post.PostGroupeFragment"
-        android:label="@string/title_groupe_post">
+        android:label="@string/title_groupe_post"
+        tools:layout="@layout/fragment_groupe_post">
         <action
-            android:id="@+id/action_navigation_groupe_post_to_navigation_dashboard"
-            app:destination="@id/navigation_dashboard" />
+            android:id="@+id/action_navigation_groupe_post_to_settingsGroupFragment"
+            app:destination="@id/settingsGroupFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsNotificationFragment"
@@ -95,5 +96,9 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.socialmediaproject.ui.settings.SettingsFragment"
         android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/settingsGroupFragment"
+        android:name="com.example.socialmediaproject.ui.settings.SettingsGroupFragment"
+        android:label="SettingsGroupFragment" />
 
 </navigation>

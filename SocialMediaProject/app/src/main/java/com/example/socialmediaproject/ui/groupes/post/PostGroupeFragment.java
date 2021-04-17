@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -95,7 +96,10 @@ public class PostGroupeFragment extends Fragment {
             case android.R.id.home: // action sur la flèche de retour en arrière
                 getActivity().onBackPressed();
                 break;
-            }
+            case R.id.group_menu_settings:
+                NavHostFragment.findNavController(this).navigate(R.id.action_navigation_groupe_post_to_settingsGroupFragment);
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 

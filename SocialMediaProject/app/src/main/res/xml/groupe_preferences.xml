@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+        <PreferenceCategory app:title="Paramètre du groupe">
+
+            <SwitchPreferenceCompat
+                app:key="notif_newPost"
+                app:title="@string/notif_newPost" />
+
+            <SwitchPreferenceCompat
+                app:key="notif_newLike"
+                app:title="@string/notif_newLike" />
+
+            <SwitchPreferenceCompat
+                app:key="notif_groupProposition"
+                app:title="@string/notif_groupProposition" />
+
+        </PreferenceCategory>
+</PreferenceScreen>
