@@ -15,10 +15,12 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.PostItemAdapter;
 import com.example.socialmediaproject.models.PostItem;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,16 @@ public class PostGroupeFragment extends Fragment {
         // get list view
         ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);
         allPost.setAdapter(new PostItemAdapter(getContext(), postItemList));
+
+
+        // action sur le bouton flottant pour ajouter un post
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return root;
     }
