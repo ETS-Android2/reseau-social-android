@@ -1,13 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.pagesprofile.informations.MyInformationsFragment">
+    tools:context=".ui.pagesprofile.informations.MyInformationsFragment"
+    android:orientation="vertical">
 
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/label_email"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Pages mes informations" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/email_adress">
 
-</FrameLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/label_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/phone_number"
+        android:layout_below="@+id/label_email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/label_birth_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/date_of_birth"
+        android:layout_below="@+id/label_phone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_update_informations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
+        android:text="@string/update_informations"/>
+
+
+</RelativeLayout>

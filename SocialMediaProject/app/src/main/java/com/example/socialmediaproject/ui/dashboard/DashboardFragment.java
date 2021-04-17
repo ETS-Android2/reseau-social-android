@@ -43,22 +43,22 @@ public class DashboardFragment extends Fragment {
 
         // list of posts
         List<GroupItem> groupAllItemList = new ArrayList<>();
-        groupAllItemList.add(new GroupItem("Les étudiants de montpellier"));
-        groupAllItemList.add(new GroupItem("Les motards du 36"));
-        groupAllItemList.add(new GroupItem("Végan un jour, Végan toujours"));
-        groupAllItemList.add(new GroupItem("FDS - informatique"));
-        groupAllItemList.add(new GroupItem("Les fans de Squeezie"));
+        groupAllItemList.add(new GroupItem("Les étudiants de montpellier","post"));
+        groupAllItemList.add(new GroupItem("Les motards du 36","post"));
+        groupAllItemList.add(new GroupItem("Végan un jour, Végan toujours","post"));
+        groupAllItemList.add(new GroupItem("FDS - informatique","post"));
+        groupAllItemList.add(new GroupItem("Les fans de Squeezie","post"));
 
         List<GroupItem> groupPostItemList = new ArrayList<>();
-        groupPostItemList.add(new GroupItem("Les étudiants de montpellier"));
-        groupPostItemList.add(new GroupItem("Les motards du 36"));
+        groupPostItemList.add(new GroupItem("Les étudiants de montpellier","post"));
+        groupPostItemList.add(new GroupItem("Les motards du 36","post"));
 
         List<GroupItem> groupSMSItemList = new ArrayList<>();
-        groupSMSItemList.add(new GroupItem("Végan un jour, Végan toujours"));
+        groupSMSItemList.add(new GroupItem("Végan un jour, Végan toujours","post"));
 
         List<GroupItem> groupEmailItemList = new ArrayList<>();
-        groupEmailItemList.add(new GroupItem("FDS - informatique"));
-        groupEmailItemList.add(new GroupItem("Les fans de Squeezie"));
+        groupEmailItemList.add(new GroupItem("FDS - informatique","post"));
+        groupEmailItemList.add(new GroupItem("Les fans de Squeezie","post"));
 
 
         // get grid view
