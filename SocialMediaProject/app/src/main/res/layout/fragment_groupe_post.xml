@@ -74,5 +74,6 @@
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_baseline_create_24"
         android:contentDescription="@string/addPost"
-        android:layout_margin="16dp" />
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="70dp"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

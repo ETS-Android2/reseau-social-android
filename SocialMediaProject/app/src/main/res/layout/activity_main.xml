@@ -31,7 +31,7 @@
         app:contentInsetStart="0dp"
         app:contentInsetStartWithNavigation="0dp"
         app:fabAlignmentMode="center"
-        app:fabCradleMargin="10dp"
+        app:fabCradleMargin="7dp"
         app:fabCradleRoundedCornerRadius="25dp"
         app:fabCradleVerticalOffset="0dp">
 
