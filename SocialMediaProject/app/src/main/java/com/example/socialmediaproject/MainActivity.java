@@ -4,13 +4,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -30,6 +34,19 @@ public class MainActivity extends AppCompatActivity {
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         setSupportActionBar(findViewById(R.id.materialToolbar));
         NavigationUI.setupWithNavController(navView, navController);
+
+
+        // action sur le bouton flottant du menu pour ajouter un groupe
+        FloatingActionButton fab = findViewById(R.id.btnAddGroup);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"Nouveau groupe!" , Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.newGroupFragment);
+            }
+        });
+
+
     }
 
 }

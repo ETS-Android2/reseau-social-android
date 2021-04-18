@@ -73,4 +73,7 @@
     <string name="phone_number">Phone number</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="update_informations">Update Informations</string>
+    <string name="nom_du_groupe">Nom du groupe</string>
+    <string name="group_name">Nom du groupe</string>
+    <string name="type_groupe">Type de groupe</string>
 </resources>

@@ -100,5 +100,10 @@
         android:id="@+id/settingsGroupFragment"
         android:name="com.example.socialmediaproject.ui.settings.SettingsGroupFragment"
         android:label="SettingsGroupFragment" />
+    <fragment
+        android:id="@+id/newGroupFragment"
+        android:name="com.example.socialmediaproject.ui.newGroup.NewGroupFragment"
+        android:label="new_group_fragment"
+        tools:layout="@layout/new_group_fragment" />
 
 </navigation>
