@@ -22,13 +22,78 @@
                 android:hint="@string/group_name">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editText_email"
+                    android:id="@+id/editText_group_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
-<!--
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/label_group_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="@string/group_type"
+                android:layout_below="@+id/label_group_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_group_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/label_group_subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="@string/group_subject"
+                android:layout_below="@+id/label_group_type">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_group_subject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/label_group_access"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="@string/group_access"
+                android:layout_below="@+id/label_group_subject">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_group_access"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/label_group_publication"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="@string/group_publication"
+                android:layout_below="@+id/label_group_access">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_group_publication"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/menu"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
@@ -43,7 +108,16 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 -->
+            <Button
+                android:id="@+id/button_update_informations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/label_group_publication"
+
+                android:text="@string/btn_create_groupe"/>
 
         </RelativeLayout>
 

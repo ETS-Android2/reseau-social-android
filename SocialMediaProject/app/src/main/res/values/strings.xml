@@ -76,4 +76,9 @@
     <string name="nom_du_groupe">Nom du groupe</string>
     <string name="group_name">Nom du groupe</string>
     <string name="type_groupe">Type de groupe</string>
+    <string name="btn_create_groupe">Nouveau groupe</string>
+    <string name="group_type">Type du groupe</string>
+    <string name="group_subject">Sujet du groupe</string>
+    <string name="group_access">Accès au groupe</string>
+    <string name="group_publication">Publication</string>
 </resources>
