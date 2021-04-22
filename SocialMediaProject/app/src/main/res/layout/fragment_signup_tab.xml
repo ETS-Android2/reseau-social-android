@@ -63,6 +63,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_bg"
         android:hint="@string/password_signup"
+        android:inputType="textPassword"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -74,7 +75,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phone"
         app:layout_constraintWidth_percent=".8" />
-
 
     <Button
         android:id="@+id/signup"

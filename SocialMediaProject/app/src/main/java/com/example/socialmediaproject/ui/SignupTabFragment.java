@@ -86,7 +86,9 @@ public class SignupTabFragment extends Fragment {
                                         Toast.makeText(getContext(), "This Phone Number is already using...", Toast.LENGTH_LONG).show();
                                     }
                                     else{
-                                        createUser(name_value, phone_value, email_value, password_value);
+
+                                        if(validateFields(name_value, phone_value, email_value, password_value))
+                                            registerUser(name_value, phone_value, email_value, password_value);
                                     }
                                 }
 
@@ -110,7 +112,7 @@ public class SignupTabFragment extends Fragment {
         return root;
     }
 
-    public void createUser(String name, String phone, String email, String password){
+    public void registerUser(String name, String phone, String email, String password){
         rootNode = FirebaseDatabase.getInstance();
         reference = rootNode.getReference("users");
         String key =  rootNode.getReference("users").push().getKey();
@@ -122,5 +124,29 @@ public class SignupTabFragment extends Fragment {
 
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
+    }
+
+    public boolean validateFields(String name, String phone, String email, String password){
+
+        boolean validate = true;
+
+        if(name.isEmpty() || name.length()<3 || !name.matches("^([^0-9]*)$")){
+            Toast.makeText(getContext(), "The name must be at least 3 characters long and not contain number", Toast.LENGTH_LONG).show();
+            validate = false;
+        }
+        else if(phone.isEmpty() || !phone.matches("^0[6-7]{1}[0-9]{8}$")){
+            Toast.makeText(getContext(), "The phone mustn't be empty and be correct", Toast.LENGTH_LONG).show();
+            validate = false;
+        }
+        else if(email.isEmpty() || !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+            Toast.makeText(getContext(), "The email address must be correct", Toast.LENGTH_LONG).show();
+            validate = false;
+        }
+        else if(password.isEmpty() || password.length()<4){
+            Toast.makeText(getContext(), "Password must be at least 4 characters", Toast.LENGTH_LONG).show();
+            validate = false;
+        }
+
+        return validate;
     }
 }
