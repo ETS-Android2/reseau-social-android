@@ -2,6 +2,7 @@ package com.example.socialmediaproject.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.MainActivity;
 import com.example.socialmediaproject.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +36,7 @@ public class LoginTabFragment extends Fragment {
 
     FirebaseDatabase rootNode;
     DatabaseReference reference;
+    String userId;
     Intent intent;
 
     @Nullable
@@ -74,8 +78,8 @@ public class LoginTabFragment extends Fragment {
                 final String email_value = email.getText().toString();
                 final String password_value = password.getText().toString();
 
-
-
+                if(validateFields(email_value, password_value))
+                    isUser(email_value, password_value);
 
                 /*
                 Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -112,10 +116,19 @@ public class LoginTabFragment extends Fragment {
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    String passwordFromDB = snapshot.child(email).child("password").getValue(String.class);
 
-                    if(passwordFromDB.equals(password)){
+                Log.d("HERE ========>", snapshot.getValue().toString());
+
+                String userId = "";
+
+                for(DataSnapshot child : snapshot.getChildren()){
+                    userId = child.getKey();
+                }
+
+                if(snapshot.exists()){
+                    String passwordFromDB = snapshot.child(userId).child("password").getValue(String.class);
+
+                    if(passwordFromDB != null && passwordFromDB.equals(password)){
                         String emailFromDB = snapshot.child(password).child("email").getValue(String.class);
                         String nameFromDB = snapshot.child(password).child("name").getValue(String.class);
                         String phoneNumberFromDB = snapshot.child(password).child("phoneNumber").getValue(String.class);
@@ -124,6 +137,8 @@ public class LoginTabFragment extends Fragment {
                         intent.putExtra("email", emailFromDB);
                         intent.putExtra("name", nameFromDB);
                         intent.putExtra("phone", phoneNumberFromDB);
+
+                        startActivity(intent);
                     }
                     else{
                         Toast.makeText(getContext(), "Wrong Password", Toast.LENGTH_LONG).show();
