@@ -3,12 +3,15 @@ package com.example.socialmediaproject.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.socialmediaproject.R;
@@ -59,8 +62,8 @@ public class PostItemAdapter extends BaseAdapter {
         String itemTitle = currentItem.getTitle();
         String itemSubtitle = currentItem.getSubtitle();
         String itemContent = currentItem.getContent();
-        String itemNbViews = currentItem.getNbViews();
-        String itemNbStars = currentItem.getNbStars();
+        int itemNbViews = currentItem.getNbViews();
+        int itemNbStars = currentItem.getNbStars();
 
         // get item title view
         TextView itemTitleView = (TextView) view.findViewById(R.id.item_title);
@@ -76,12 +79,20 @@ public class PostItemAdapter extends BaseAdapter {
 
         // get item nb views view
         TextView itemNbViewsView = (TextView) view.findViewById(R.id.item_nbViews);
-        itemNbViewsView.setText(itemNbViews);
+        itemNbViewsView.setText(String.valueOf(itemNbViews));
 
         // get item nb stars view
         TextView itemNbStarsView = (TextView) view.findViewById(R.id.item_nbStars);
-        itemNbStarsView.setText(itemNbStars);
+        itemNbStarsView.setText(String.valueOf(itemNbStars));
 
+        ImageView imageLike = (ImageView) view.findViewById(R.id.image_star);
+        if(currentItem.getIsLike()){ // si true alors
+            imageLike.setImageResource(R.drawable.ic_baseline_star_24);
+        }else{
+            imageLike.setImageResource(R.drawable.ic_baseline_star_outline_24);
+        }
+
+        // bouton partager la publication
         ImageButton shareButton = (ImageButton) view.findViewById(R.id.item_share);
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +102,23 @@ public class PostItemAdapter extends BaseAdapter {
                 intent.setType("application/vnd.android.package-archive");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(akpath)));
                 context.startActivity(Intent.createChooser(intent,"Share post"));
+            }
+        });
+
+        // bouton "aimé" la publication
+        LinearLayout likeButton = (LinearLayout) view.findViewById(R.id.button_like_post);
+
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // on inverse l'état du like lors du clique sur le button
+                currentItem.changeLike();
+                if(currentItem.getIsLike()){ // si true alors
+                    imageLike.setImageResource(R.drawable.ic_baseline_star_24);
+                }else{
+                    imageLike.setImageResource(R.drawable.ic_baseline_star_outline_24);
+                }
+                itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));
             }
         });
 
