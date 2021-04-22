@@ -129,9 +129,9 @@ public class LoginTabFragment extends Fragment {
                     String passwordFromDB = snapshot.child(userId).child("password").getValue(String.class);
 
                     if(passwordFromDB != null && passwordFromDB.equals(password)){
-                        String emailFromDB = snapshot.child(password).child("email").getValue(String.class);
-                        String nameFromDB = snapshot.child(password).child("name").getValue(String.class);
-                        String phoneNumberFromDB = snapshot.child(password).child("phoneNumber").getValue(String.class);
+                        String emailFromDB = snapshot.child(userId).child("email").getValue(String.class);
+                        String nameFromDB = snapshot.child(userId).child("name").getValue(String.class);
+                        String phoneNumberFromDB = snapshot.child(userId).child("phoneNumber").getValue(String.class);
 
                         intent = new Intent(getActivity(), MainActivity.class);
                         intent.putExtra("email", emailFromDB);
