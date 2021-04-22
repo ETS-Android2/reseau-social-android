@@ -62,19 +62,19 @@ public class SignupTabFragment extends Fragment {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Logique métier signup pas encore implémentée...", Toast.LENGTH_LONG).show();
-
-                String email_value = email.getText().toString();
-                String name_value = name.getText().toString();
-                String phone_value = phone.getText().toString();
-                String password_value = password.getText().toString();
+                final String email_value = email.getText().toString();
+                final String name_value = name.getText().toString();
+                final String phone_value = phone.getText().toString();
+                final String password_value = password.getText().toString();
 
                 Query emailAddress = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("email").equalTo(email_value);
+                Query phoneNumber = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("phoneNumber").equalTo(phone_value);
+
                 emailAddress.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.getChildrenCount() > 0) {
-                            Toast.makeText(getContext(), "The email address is already using...", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "This Email Address is already using...", Toast.LENGTH_LONG).show();
                         }
                         else{
                             createUser(name_value, phone_value, email_value, password_value);
@@ -83,9 +83,28 @@ public class SignupTabFragment extends Fragment {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        throw error.toException();
                     }
                 });
+
+                emailAddress.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.getChildrenCount() > 0) {
+                            Toast.makeText(getContext(), "This Phone Number is already using...", Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            createUser(name_value, phone_value, email_value, password_value);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        throw error.toException();
+                    }
+                });
+
+
 
             }
         });
