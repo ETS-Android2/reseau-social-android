@@ -13,12 +13,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.models.UserHelperClass;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignupTabFragment extends Fragment {
 
     EditText email, name, phone, password;
     Button signup;
     float v=0;
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
 
     @Nullable
     @Override
@@ -53,9 +63,42 @@ public class SignupTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(),"Logique métier signup pas encore implémentée...", Toast.LENGTH_LONG).show();
+
+                String email_value = email.getText().toString();
+                String name_value = name.getText().toString();
+                String phone_value = phone.getText().toString();
+                String password_value = password.getText().toString();
+
+                Query emailAddress = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("email").equalTo(email_value);
+                emailAddress.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.getChildrenCount() > 0) {
+                            Toast.makeText(getContext(), "The email address is already using...", Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            createUser(name_value, phone_value, email_value, password_value);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
         });
 
         return root;
+    }
+
+    public void createUser(String name, String phone, String email, String password){
+        rootNode = FirebaseDatabase.getInstance();
+        reference = rootNode.getReference("users");
+        String key =  rootNode.getReference("users").push().getKey();
+
+        UserHelperClass helperClass = new UserHelperClass(name, phone, email, password);
+        reference.child(key).setValue(helperClass);
     }
 }
