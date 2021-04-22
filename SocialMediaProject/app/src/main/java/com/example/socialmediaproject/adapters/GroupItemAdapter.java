@@ -75,6 +75,8 @@ public class GroupItemAdapter extends BaseAdapter {
             }
         });
 
+
+
         return view;
     }
 }

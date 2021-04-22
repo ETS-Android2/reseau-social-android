@@ -10,8 +10,10 @@ public class PostItem {
     private String subtitle;
     private String content;
     private String date;
-    private String nbViews;
-    private String nbStars;
+    private int nbViews;
+    private int nbStars;
+
+    private Boolean isLike;
 
 
     // constructor
@@ -27,8 +29,10 @@ public class PostItem {
 
         // Générer des nombres random pour le template
         int randomView = (int) (Math.random() * 1000);
-        this.nbViews = ""+ randomView ;
-        this.nbStars = ""+  ( Math.abs((int)(Math.random() * randomView)));
+        this.nbViews = randomView ;
+        this.nbStars =  ( Math.abs((int)(Math.random() * randomView)));
+
+        this.isLike = false;
 
     }
 
@@ -36,6 +40,18 @@ public class PostItem {
     public String getTitle(){ return this.title;}
     public String getSubtitle(){ return this.subtitle;}
     public String getContent(){ return this.content;}
-    public String getNbViews(){ return this.nbViews;}
-    public String getNbStars(){ return  this.nbStars;}
+    public int getNbViews(){ return this.nbViews;}
+    public int getNbStars(){ return  this.nbStars;}
+    public Boolean getIsLike(){ return  this.isLike;}
+
+    public void changeLike(){
+        this.isLike = !this.isLike;
+        if(this.isLike){
+            this.nbStars +=1; // donc on rajoute une étoile
+        }else{
+            this.nbStars -=1; // donc on enlève une étoile
+        }
+
+    }
+
 }

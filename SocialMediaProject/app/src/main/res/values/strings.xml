@@ -81,4 +81,28 @@
     <string name="group_subject">Sujet du groupe</string>
     <string name="group_access">Accès au groupe</string>
     <string name="group_publication">Publication</string>
+
+    <string-array name="list_group_type">
+        <item>Post</item>
+        <item>Tchat</item>
+        <item>SMS</item>
+        <item>E-mail</item>
+    </string-array>
+
+    <string-array name="list_group_access">
+        <item>private</item>
+        <item>public</item>
+    </string-array>
+
+    <string-array name="list_group_subject">
+        <item>Localisation</item>
+        <item>Theme</item>
+        <item>Centre d\'interet</item>
+        <item>Service</item>
+    </string-array>
+
+    <string-array name="list_group_publication">
+        <item>Administrateurs et modérateurs</item>
+        <item>Tout le monde</item>
+    </string-array>
 </resources>

@@ -15,6 +15,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/label_group_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,22 +31,26 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:id="@+id/label_group_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="@string/group_type"
-                android:layout_below="@+id/label_group_name">
+                android:layout_below="@+id/label_group_name"
+                android:hint="type de groupe">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editText_group_type"
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_group_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:id="@+id/label_group_subject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,15 +58,17 @@
                 android:hint="@string/group_subject"
                 android:layout_below="@+id/label_group_type">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editText_group_subject"
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_group_subject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:id="@+id/label_group_access"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,15 +76,17 @@
                 android:hint="@string/group_access"
                 android:layout_below="@+id/label_group_subject">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editText_group_access"
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_group_access"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:id="@+id/label_group_publication"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,29 +94,15 @@
                 android:hint="@string/group_publication"
                 android:layout_below="@+id/label_group_access">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editText_group_publication"
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_group_publication"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/menu"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:endIconMode="dropdown_menu"
-                android:hint="@string/type_groupe">
-
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </com.google.android.material.textfield.TextInputLayout>
--->
             <Button
                 android:id="@+id/button_update_informations"
                 android:layout_width="wrap_content"

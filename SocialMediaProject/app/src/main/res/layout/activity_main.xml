@@ -33,7 +33,8 @@
         app:fabAlignmentMode="center"
         app:fabCradleMargin="7dp"
         app:fabCradleRoundedCornerRadius="25dp"
-        app:fabCradleVerticalOffset="0dp">
+        app:fabCradleVerticalOffset="0dp"
+        >
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomAppBar"
@@ -42,11 +43,10 @@
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
             android:background="@drawable/background_transparent"
-            app:labelVisibilityMode="selected"
+            app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-
             app:menu="@menu/bottom_nav_menu" />
 
     </com.google.android.material.bottomappbar.BottomAppBar>
