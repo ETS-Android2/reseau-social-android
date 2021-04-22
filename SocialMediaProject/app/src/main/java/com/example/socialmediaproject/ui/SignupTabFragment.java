@@ -1,5 +1,6 @@
 package com.example.socialmediaproject.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +13,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.models.UserHelperClass;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignupTabFragment extends Fragment {
 
     EditText email, name, phone, password;
     Button signup;
     float v=0;
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
 
     @Nullable
     @Override
@@ -52,10 +64,88 @@ public class SignupTabFragment extends Fragment {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Logique métier signup pas encore implémentée...", Toast.LENGTH_LONG).show();
+                final String email_value = email.getText().toString();
+                final String name_value = name.getText().toString();
+                final String phone_value = phone.getText().toString();
+                final String password_value = password.getText().toString();
+
+                Query emailAddress = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("email").equalTo(email_value);
+                Query phoneNumber = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("phoneNumber").equalTo(phone_value);
+
+                emailAddress.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.getChildrenCount() > 0) {
+                            Toast.makeText(getContext(), "This Email Address is already using...", Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            phoneNumber.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.getChildrenCount() > 0) {
+                                        Toast.makeText(getContext(), "This Phone Number is already using...", Toast.LENGTH_LONG).show();
+                                    }
+                                    else{
+                                        if(validateFields(name_value, phone_value, email_value, password_value))
+                                            registerUser(name_value, phone_value, email_value, password_value);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    throw error.toException();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        throw error.toException();
+                    }
+                });
+
             }
         });
 
         return root;
+    }
+
+    public void registerUser(String name, String phone, String email, String password){
+        rootNode = FirebaseDatabase.getInstance();
+        reference = rootNode.getReference("users");
+        String key =  rootNode.getReference("users").push().getKey();
+
+        UserHelperClass helperClass = new UserHelperClass(name, phone, email, password);
+        reference.child(key).setValue(helperClass);
+
+        Toast.makeText(getContext(), "User created !", Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+    }
+
+    public boolean validateFields(String name, String phone, String email, String password){
+
+        boolean validate = true;
+
+        if(name.isEmpty() || name.length()<3 || !name.matches("^([^0-9]*)$")){
+            Toast.makeText(getContext(), "The name must be at least 3 characters long and not contain number", Toast.LENGTH_LONG).show();
+            validate = false;
+        }
+        else if(phone.isEmpty() || !phone.matches("^0[6-7]{1}[0-9]{8}$")){
+            Toast.makeText(getContext(), "The phone mustn't be empty and be correct", Toast.LENGTH_LONG).show();
+            validate = false;
+        }
+        else if(email.isEmpty() || !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+            Toast.makeText(getContext(), "The email address must be correct", Toast.LENGTH_LONG).show();
+            validate = false;
+        }
+        else if(password.isEmpty() || password.length()<4){
+            Toast.makeText(getContext(), "Password must be at least 4 characters", Toast.LENGTH_LONG).show();
+            validate = false;
+        }
+
+        return validate;
     }
 }

@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_bg"
         android:hint="@string/password_login"
+        android:inputType="textPassword"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
