@@ -87,7 +87,7 @@ public class SignupTabFragment extends Fragment {
                     }
                 });
 
-                emailAddress.addListenerForSingleValueEvent(new ValueEventListener() {
+                phoneNumber.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.getChildrenCount() > 0) {
