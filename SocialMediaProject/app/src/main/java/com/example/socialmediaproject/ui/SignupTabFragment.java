@@ -1,5 +1,6 @@
 package com.example.socialmediaproject.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.models.UserHelperClass;
 import com.google.firebase.database.DataSnapshot;
@@ -117,5 +119,8 @@ public class SignupTabFragment extends Fragment {
         reference.child(key).setValue(helperClass);
 
         Toast.makeText(getContext(), "User created !", Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
     }
 }
