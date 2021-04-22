@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Nouveau groupe!" , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Nouveau groupe!" , Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.newGroupFragment);
             }
         });
