@@ -77,7 +77,22 @@ public class SignupTabFragment extends Fragment {
                             Toast.makeText(getContext(), "This Email Address is already using...", Toast.LENGTH_LONG).show();
                         }
                         else{
-                            createUser(name_value, phone_value, email_value, password_value);
+                            phoneNumber.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.getChildrenCount() > 0) {
+                                        Toast.makeText(getContext(), "This Phone Number is already using...", Toast.LENGTH_LONG).show();
+                                    }
+                                    else{
+                                        createUser(name_value, phone_value, email_value, password_value);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    throw error.toException();
+                                }
+                            });
                         }
                     }
 
@@ -86,25 +101,6 @@ public class SignupTabFragment extends Fragment {
                         throw error.toException();
                     }
                 });
-
-                phoneNumber.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.getChildrenCount() > 0) {
-                            Toast.makeText(getContext(), "This Phone Number is already using...", Toast.LENGTH_LONG).show();
-                        }
-                        else{
-                            createUser(name_value, phone_value, email_value, password_value);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        throw error.toException();
-                    }
-                });
-
-
 
             }
         });
@@ -119,5 +115,7 @@ public class SignupTabFragment extends Fragment {
 
         UserHelperClass helperClass = new UserHelperClass(name, phone, email, password);
         reference.child(key).setValue(helperClass);
+
+        Toast.makeText(getContext(), "User created !", Toast.LENGTH_LONG).show();
     }
 }
