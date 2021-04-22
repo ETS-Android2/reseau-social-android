@@ -86,7 +86,6 @@ public class SignupTabFragment extends Fragment {
                                         Toast.makeText(getContext(), "This Phone Number is already using...", Toast.LENGTH_LONG).show();
                                     }
                                     else{
-
                                         if(validateFields(name_value, phone_value, email_value, password_value))
                                             registerUser(name_value, phone_value, email_value, password_value);
                                     }

@@ -14,8 +14,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.MainActivity;
 import com.example.socialmediaproject.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginTabFragment extends Fragment {
 
@@ -23,6 +30,10 @@ public class LoginTabFragment extends Fragment {
     TextView forgotPassword;
     Button login;
     float v=0;
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
+    Intent intent;
 
     @Nullable
     @Override
@@ -60,14 +71,73 @@ public class LoginTabFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Logique métier login pas encore implémentée...", Toast.LENGTH_LONG).show();
+                final String email_value = email.getText().toString();
+                final String password_value = password.getText().toString();
 
-                // Redirection vers Main Activity depuis le bouton Login
+
+
+
+                /*
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+                */
             }
         });
 
         return root;
+    }
+
+    public boolean validateFields(String email, String password){
+
+        boolean validate = true;
+
+        if(email.isEmpty() || !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+            Toast.makeText(getContext(), "The email address must be correct", Toast.LENGTH_LONG).show();
+            validate = false;
+        }
+        else if(password.isEmpty() || password.length()<4){
+            Toast.makeText(getContext(), "Password must be at least 4 characters", Toast.LENGTH_LONG).show();
+            validate = false;
+        }
+
+        return validate;
+    }
+
+    public void isUser(String email, String password){
+        rootNode = FirebaseDatabase.getInstance();
+        reference = rootNode.getReference("users");
+
+        Query checkUser = reference.orderByChild("email").equalTo(email);
+
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String passwordFromDB = snapshot.child(email).child("password").getValue(String.class);
+
+                    if(passwordFromDB.equals(password)){
+                        String emailFromDB = snapshot.child(password).child("email").getValue(String.class);
+                        String nameFromDB = snapshot.child(password).child("name").getValue(String.class);
+                        String phoneNumberFromDB = snapshot.child(password).child("phoneNumber").getValue(String.class);
+
+                        intent = new Intent(getActivity(), MainActivity.class);
+                        intent.putExtra("email", emailFromDB);
+                        intent.putExtra("name", nameFromDB);
+                        intent.putExtra("phone", phoneNumberFromDB);
+                    }
+                    else{
+                        Toast.makeText(getContext(), "Wrong Password", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getContext(), "No such User exist", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
     }
 }
