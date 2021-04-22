@@ -3,12 +3,12 @@ package com.example.socialmediaproject.ui.newGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,10 +16,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Spinner;
 
 import com.example.socialmediaproject.R;
 
 public class NewGroupFragment extends Fragment {
+
+    private AutoCompleteTextView spinnerGroupType;
+    private AutoCompleteTextView spinnerGroupAccess;
+    private AutoCompleteTextView spinnerGroupPublication;
+    private AutoCompleteTextView spinnerGroupSubject;
+
+
 
     private NewGroupViewModel mViewModel;
 
@@ -36,6 +46,33 @@ public class NewGroupFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nouveau Groupe");
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        spinnerGroupType = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_type);
+        spinnerGroupAccess = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_access);
+        spinnerGroupSubject = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_subject);
+        spinnerGroupPublication = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_publication);
+        ArrayAdapter<CharSequence> adapterTypeGroup = ArrayAdapter.createFromResource(getContext(), R.array.list_group_type, android.R.layout.simple_spinner_item);
+        adapterTypeGroup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<CharSequence> adapterAccessGroup = ArrayAdapter.createFromResource(getContext(), R.array.list_group_access, android.R.layout.simple_spinner_item);
+        adapterAccessGroup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<CharSequence> adapterPublicationGroup = ArrayAdapter.createFromResource(getContext(), R.array.list_group_publication, android.R.layout.simple_spinner_item);
+        adapterPublicationGroup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<CharSequence> adapterSubjectGroup = ArrayAdapter.createFromResource(getContext(), R.array.list_group_subject, android.R.layout.simple_spinner_item);
+        adapterSubjectGroup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        spinnerGroupType.setAdapter(adapterTypeGroup);
+        spinnerGroupAccess.setAdapter(adapterAccessGroup);
+        spinnerGroupPublication.setAdapter(adapterPublicationGroup);
+        spinnerGroupSubject.setAdapter(adapterSubjectGroup);
+
+        //spinnerGroupType = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_type);
+
+        // adapter input select
+
 
         return view;
     }
