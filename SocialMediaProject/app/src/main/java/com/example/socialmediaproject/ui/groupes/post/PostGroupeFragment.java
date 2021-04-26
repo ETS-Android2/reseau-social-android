@@ -1,6 +1,6 @@
 package com.example.socialmediaproject.ui.groupes.post;
 
-import androidx.activity.OnBackPressedCallback;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -19,12 +19,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+
 import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.adapters.PostAdapter;
-import com.example.socialmediaproject.adapters.PostItemAdapter;
+
+import com.example.socialmediaproject.adapters.PostInGroupAdapter;
 import com.example.socialmediaproject.models.PostItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -47,11 +47,11 @@ public class PostGroupeFragment extends Fragment {
 
         // list of posts
         List<PostItem> postItemList = new ArrayList<>();
-        postItemList.add(new PostItem("Les étudiants de montpellier"));
-        postItemList.add(new PostItem("Les motards du 36"));
-        postItemList.add(new PostItem("Végan un jour, Végan toujours"));
-        postItemList.add(new PostItem("FDS - informatique"));
-        postItemList.add(new PostItem("Les fans de Squeezie"));
+        postItemList.add(new PostItem("Les étudiants de montpellier", "Antoine"));
+        postItemList.add(new PostItem("Les motards du 36", "Thomas"));
+        postItemList.add(new PostItem("Végan un jour, Végan toujours", "Enzo"));
+        postItemList.add(new PostItem("FDS - informatique", "Pedro"));
+        postItemList.add(new PostItem("Les fans de Squeezie", "José"));
 
         // get list view
         //ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);
@@ -59,7 +59,7 @@ public class PostGroupeFragment extends Fragment {
 
         recyclerView = root.findViewById(R.id.recyclerView_group_posts);
 
-        PostAdapter myAdapter = new PostAdapter(getContext(), postItemList);
+        PostInGroupAdapter myAdapter = new PostInGroupAdapter(getContext(), postItemList);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

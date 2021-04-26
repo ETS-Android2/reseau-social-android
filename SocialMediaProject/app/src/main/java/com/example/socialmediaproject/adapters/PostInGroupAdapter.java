@@ -22,15 +22,17 @@ import java.util.List;
 
 /**
  * Created by Antoine Barbier on 4/26/21.
+ *
+ * Contrairement à Post Adapter, le title du post n'est pas le nom du groupe mais le nom de l'autheur
  */
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
+public class PostInGroupAdapter extends RecyclerView.Adapter<PostInGroupAdapter.MyViewHolder> {
 
     // fields
     private Context context;
     private List<PostItem> postList;
 
     // constructor
-    public PostAdapter(Context context, List<PostItem> postList){
+    public PostInGroupAdapter(Context context, List<PostItem> postList){
         this.context = context;
         this.postList = postList;
     }
@@ -47,8 +49,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         PostItem currentItem = this.postList.get(position);
 
-        holder.itemTitleView.setText(currentItem.getGroup());
-        holder.itemSubtitleView.setText(currentItem.getAuthor());
+        holder.itemTitleView.setText(currentItem.getAuthor());
+        holder.itemSubtitleView.setText("");
         holder.itemContentView.setText(currentItem.getContent());
         holder.itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));
         holder.itemNbViewsView.setText(String.valueOf(currentItem.getNbViews()));
@@ -109,3 +111,5 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
         }
     }
 }
+
+

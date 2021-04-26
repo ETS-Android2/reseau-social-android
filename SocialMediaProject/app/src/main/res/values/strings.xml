@@ -39,8 +39,8 @@
     <string name="title_profile">Profile</string>
 
     <string name="item_default">nom du post</string>
-    <string name="item_title_default">Nom du réseau</string>
-    <string name="item_subtitle_default">Nom de l\'auteur</string>
+    <string name="item_title_default">Titre du post</string>
+    <string name="item_subtitle_default">Soustitre du post</string>
     <string name="item_content_text">Default content</string>
     <string name="item_nbView">3000</string>
     <string name="item_date_ago">1min</string>

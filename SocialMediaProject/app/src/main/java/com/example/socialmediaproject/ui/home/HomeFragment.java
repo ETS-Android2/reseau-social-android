@@ -47,11 +47,11 @@ public class HomeFragment extends Fragment {
 
         // list of posts
         List<PostItem> postItemList = new ArrayList<>();
-        postItemList.add(new PostItem("Les étudiants de montpellier"));
-        postItemList.add(new PostItem("Les motards du 36"));
-        postItemList.add(new PostItem("Végan un jour, Végan toujours"));
-        postItemList.add(new PostItem("FDS - informatique"));
-        postItemList.add(new PostItem("Les fans de Squeezie"));
+        postItemList.add(new PostItem("Les étudiants de montpellier", "Antoine"));
+        postItemList.add(new PostItem("Les motards du 36", "Thomas"));
+        postItemList.add(new PostItem("Végan un jour, Végan toujours", "Enzo"));
+        postItemList.add(new PostItem("FDS - informatique", "Pedro"));
+        postItemList.add(new PostItem("Les fans de Squeezie", "José"));
 
         // get list view
         //ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);
