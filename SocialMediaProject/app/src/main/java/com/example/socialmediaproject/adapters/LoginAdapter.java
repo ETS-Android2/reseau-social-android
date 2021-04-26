@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.socialmediaproject.ui.LoginTabFragment;
+import com.example.socialmediaproject.ui.SignupTabFragment;
 
 public class LoginAdapter extends FragmentPagerAdapter {
 

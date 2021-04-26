@@ -21,8 +21,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.adapters.PostAdapter;
 import com.example.socialmediaproject.adapters.PostItemAdapter;
 import com.example.socialmediaproject.models.PostItem;
 
@@ -31,6 +34,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
+    private RecyclerView recyclerView;
     private HomeViewModel homeViewModel;
     private String m_Text = "";
 
@@ -50,8 +54,14 @@ public class HomeFragment extends Fragment {
         postItemList.add(new PostItem("Les fans de Squeezie"));
 
         // get list view
-        ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);
-        allPost.setAdapter(new PostItemAdapter(getContext(), postItemList));
+        //ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);
+        //allPost.setAdapter(new PostItemAdapter(getContext(), postItemList));
+
+        recyclerView = root.findViewById(R.id.recyclerView_home_posts);
+
+        PostAdapter myAdapter = new PostAdapter(getContext(), postItemList);
+        recyclerView.setAdapter(myAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // on enlève la fleche de retour en arrière
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);

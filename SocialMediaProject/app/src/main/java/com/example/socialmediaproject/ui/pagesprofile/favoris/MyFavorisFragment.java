@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,8 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.adapters.PostAdapter;
+import com.example.socialmediaproject.models.PostItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyFavorisFragment extends Fragment {
+
+    private RecyclerView recyclerView;
 
     private MyFavorisViewModel mViewModel;
 
@@ -35,6 +44,21 @@ public class MyFavorisFragment extends Fragment {
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes favoris");
+
+        // list of posts
+        List<PostItem> postItemList = new ArrayList<>();
+        postItemList.add(new PostItem("Les étudiants de montpellier"));
+        postItemList.add(new PostItem("Les motards du 36"));
+        postItemList.add(new PostItem("Végan un jour, Végan toujours"));
+        postItemList.add(new PostItem("FDS - informatique"));
+        postItemList.add(new PostItem("Les fans de Squeezie"));
+
+        recyclerView = view.findViewById(R.id.recyclerView_myFavoris);
+
+        PostAdapter myAdapter = new PostAdapter(getContext(), postItemList);
+        recyclerView.setAdapter(myAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         return view;
     }
 
