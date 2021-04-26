@@ -43,7 +43,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GroupItem currentItem = this.groupList.get(position);
 
-        holder.itemTitleView.setText(currentItem.getTitle());
+        holder.itemTitleView.setText(currentItem.getName());
     }
 
     @Override

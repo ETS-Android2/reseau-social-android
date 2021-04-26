@@ -20,11 +20,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
 
 import com.example.socialmediaproject.adapters.PostInGroupAdapter;
+import com.example.socialmediaproject.models.GroupItem;
 import com.example.socialmediaproject.models.PostItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -45,17 +47,27 @@ public class PostGroupeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_groupe_post, container, false);
 
-        // list of posts
-        List<PostItem> postItemList = new ArrayList<>();
-        postItemList.add(new PostItem("Les étudiants de montpellier", "Antoine"));
-        postItemList.add(new PostItem("Les motards du 36", "Thomas"));
-        postItemList.add(new PostItem("Végan un jour, Végan toujours", "Enzo"));
-        postItemList.add(new PostItem("FDS - informatique", "Pedro"));
-        postItemList.add(new PostItem("Les fans de Squeezie", "José"));
+        // group
+        GroupItem group = new GroupItem("Les étudiants de montpellier","post", false);
 
-        // get list view
-        //ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);
-        //allPost.setAdapter(new PostItemAdapter(getContext(), postItemList));
+        TextView tv_groupTitle = root.findViewById(R.id.group_title);
+        TextView tv_groupType = root.findViewById(R.id.group_type);
+        TextView tv_groupAccess = root.findViewById(R.id.group_acces);
+        TextView tv_groupNbMembers = root.findViewById(R.id.group_members);
+        tv_groupTitle.setText(group.getName());
+        tv_groupType.setText(group.getType());
+        tv_groupAccess.setText(group.isPrivate() ? "private" : "public" );
+        tv_groupNbMembers.setText("50 members");
+
+
+        // list d'exemple
+        List<PostItem> postItemList = new ArrayList<>();
+        postItemList.add(new PostItem(group.getName(), "Antoine"));
+        postItemList.add(new PostItem(group.getName(), "Thomas"));
+        postItemList.add(new PostItem(group.getName(), "Enzo"));
+        postItemList.add(new PostItem(group.getName(), "Pedro"));
+        postItemList.add(new PostItem(group.getName(), "José"));
+
 
         recyclerView = root.findViewById(R.id.recyclerView_group_posts);
 

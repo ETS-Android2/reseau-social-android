@@ -58,7 +58,7 @@ public class GroupItemAdapter extends BaseAdapter {
         // get informations about item
         GroupItem currentItem = getItem(i);
 
-        String itemTitle = currentItem.getTitle();
+        String itemTitle = currentItem.getName();
 
         // get item title view
         TextView itemTitleView = (TextView) view.findViewById(R.id.item_title);

@@ -6,19 +6,29 @@ package com.example.socialmediaproject.models;
 public class GroupItem {
 
     // fields
-    private String title;   // titre du groupe
-    private String type;
+    private String name;   // titre du groupe
+    private String type; // type du groupe
+    private String field; // domaine du groupe
+    private String admin; // nom de l'admin
+
+    private Boolean is_private; // if private : true, else is public
 
     // constructor
-    public GroupItem(String title, String type){
-        this.type = type;
-        this.title = title;
+    public GroupItem(String _name, String _type, Boolean _private){
+        this.type = _type;
+        this.name = _name;
+        this.field = "sujet inconnu";
+        this.admin ="inconnu";
+        this.is_private = _private;
     }
 
     // methods
-    public String getTitle(){ return this.title;}
+    public String getName(){ return this.name;}
+    public String getType() { return this.type; }
+    public String getAdmin(){ return this.admin;}
+    public String getField(){ return this.field;}
 
-    public String getType() {
-        return type;
+    public Boolean isPrivate(){
+        return this.is_private;
     }
 }

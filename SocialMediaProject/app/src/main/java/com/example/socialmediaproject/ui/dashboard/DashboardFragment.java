@@ -45,22 +45,22 @@ public class DashboardFragment extends Fragment {
 
         // list of posts
         List<GroupItem> groupAllItemList = new ArrayList<>();
-        groupAllItemList.add(new GroupItem("Les étudiants de montpellier","post"));
-        groupAllItemList.add(new GroupItem("Les motards du 36","post"));
-        groupAllItemList.add(new GroupItem("Végan un jour, Végan toujours","post"));
-        groupAllItemList.add(new GroupItem("FDS - informatique","post"));
-        groupAllItemList.add(new GroupItem("Les fans de Squeezie","post"));
+        groupAllItemList.add(new GroupItem("Les étudiants de montpellier","post", false));
+        groupAllItemList.add(new GroupItem("Les motards du 36","post", false));
+        groupAllItemList.add(new GroupItem("Végan un jour, Végan toujours","post", false));
+        groupAllItemList.add(new GroupItem("FDS - informatique","post", false));
+        groupAllItemList.add(new GroupItem("Les fans de Squeezie","post", false));
 
         List<GroupItem> groupPostItemList = new ArrayList<>();
-        groupPostItemList.add(new GroupItem("Les étudiants de montpellier","post"));
-        groupPostItemList.add(new GroupItem("Les motards du 36","post"));
+        groupPostItemList.add(new GroupItem("Les étudiants de montpellier","post", false));
+        groupPostItemList.add(new GroupItem("Les motards du 36","post", false));
 
         List<GroupItem> groupSMSItemList = new ArrayList<>();
-        groupSMSItemList.add(new GroupItem("Végan un jour, Végan toujours","post"));
+        groupSMSItemList.add(new GroupItem("Végan un jour, Végan toujours","post", false));
 
         List<GroupItem> groupEmailItemList = new ArrayList<>();
-        groupEmailItemList.add(new GroupItem("FDS - informatique","post"));
-        groupEmailItemList.add(new GroupItem("Les fans de Squeezie","post"));
+        groupEmailItemList.add(new GroupItem("FDS - informatique","post", false));
+        groupEmailItemList.add(new GroupItem("Les fans de Squeezie","post", false));
 
 
         // get grid view
