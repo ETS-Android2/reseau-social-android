@@ -37,5 +37,9 @@
             app:key="group_exit"
             app:title="@string/group_exit"/>
 
+        <Preference
+            app:key="group_exit"
+            app:title="@string/delete_group"/>
+
     </PreferenceCategory>
 </PreferenceScreen>

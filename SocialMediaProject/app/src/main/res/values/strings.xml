@@ -87,6 +87,7 @@
     <string name="group_moderators">Gérer les modérateurs</string>
     <string name="group_edit">Modifier le groupe</string>
     <string name="title_settings_alerts">Alertes</string>
+    <string name="delete_group">Supprimer le groupe</string>
 
     <string-array name="list_group_type">
         <item>Post</item>
@@ -111,4 +112,13 @@
         <item>Administrateurs et modérateurs</item>
         <item>Tout le monde</item>
     </string-array>
+    <string name="title_activity_new_post">newPostActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

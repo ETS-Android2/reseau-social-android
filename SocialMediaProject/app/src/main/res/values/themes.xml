@@ -21,9 +21,18 @@
         <!--<item name="colorSurface" >@color/colorBackgroundCard</item>-->
 
         <!-- Error color indicates errors states, for components such as text fields -->
-        <item name="colorError" >#111111</item>
-        <item name="colorOnError" >#111111</item>
+        <item name="colorError">#111111</item>
+        <item name="colorOnError">#111111</item>
 
 
     </style>
+
+    <style name="Theme.SocialMediaProject.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.SocialMediaProject.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.SocialMediaProject.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

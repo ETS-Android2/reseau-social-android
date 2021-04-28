@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +71,15 @@ public class GroupItemAdapter extends BaseAdapter {
         // get item title view
         TextView itemTitleView = (TextView) view.findViewById(R.id.item_title);
         itemTitleView.setText(itemName);
+
+        // Affichage de l'icon cadena en fonction du group privé ou public
+        ImageView iv_imageAccess = (ImageView) view.findViewById(R.id.groupItem_access_image);
+        if(currentItem.isPrivate()){
+            iv_imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
+        }else{
+
+            iv_imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);
+        }
 
 
         // accéder à la notification

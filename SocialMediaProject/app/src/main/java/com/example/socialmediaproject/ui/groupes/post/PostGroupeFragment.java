@@ -4,6 +4,7 @@ package com.example.socialmediaproject.ui.groupes.post;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,12 +25,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmediaproject.MainActivity;
 import com.example.socialmediaproject.R;
 
 import com.example.socialmediaproject.adapters.PostInGroupAdapter;
 import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.models.GroupItem;
 import com.example.socialmediaproject.models.PostItem;
+import com.example.socialmediaproject.newPostActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -109,7 +112,8 @@ public class PostGroupeFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), newPostActivity.class));
             }
         });
 
