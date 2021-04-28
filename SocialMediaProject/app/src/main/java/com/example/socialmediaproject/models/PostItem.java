@@ -1,16 +1,17 @@
 package com.example.socialmediaproject.models;
 
+import java.util.Date;
+
 /**
- * Created by Antoine Barbier on 3/30/21.
+ * Created by Antoine Barbier and Antoine Brahimi on 3/30/21.
  */
 public class PostItem {
 
     // fields
-    private String group;
-    private String author;
-    private String content;
+    private String id;
+    private String group, author, content;
     private String media;
-    private String date;
+    private Date date;
     private int nbViews;
     private int nbStars;
 
@@ -37,12 +38,18 @@ public class PostItem {
     }
 
     // methods
+    public String getId(){ return this.id;}
     public String getGroup(){ return this.group;}
     public String getAuthor(){ return this.author;}
     public String getContent(){ return this.content;}
     public int getNbViews(){ return this.nbViews;}
     public int getNbStars(){ return  this.nbStars;}
     public Boolean getIsLike(){ return  this.isLike;}
+
+    public void setGroup(String groupName){  this.group = groupName;}
+    public void setAuthor(String author){ this.author = author;}
+    public void setContent(String content){ this.content = content;}
+
 
     public void changeLike(){
         this.isLike = !this.isLike;
@@ -51,7 +58,6 @@ public class PostItem {
         }else{
             this.nbStars -=1; // donc on enlève une étoile
         }
-
     }
 
 }

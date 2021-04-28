@@ -3,19 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-        <PreferenceCategory app:title="Paramètre du groupe">
+        <PreferenceCategory app:title="Alertes">
 
             <SwitchPreferenceCompat
-                app:key="notif_newPost"
-                app:title="@string/notif_newPost" />
-
-            <SwitchPreferenceCompat
-                app:key="notif_newLike"
-                app:title="@string/notif_newLike" />
-
-            <SwitchPreferenceCompat
-                app:key="notif_groupProposition"
-                app:title="@string/notif_groupProposition" />
+                app:key="group_notification"
+                app:title="@string/group_notification" />
 
         </PreferenceCategory>
+
+    <PreferenceCategory app:title="Invitations">
+
+        <Preference
+            app:key="group_invite"
+            app:title="Générer un code d'invitation" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Général">
+
+        <Preference
+            app:key="group_edit"
+            app:title="@string/group_edit" />
+
+        <Preference
+            app:key="group_moderators"
+            app:title="@string/group_moderators" />
+
+        <Preference
+            app:key="group_members"
+            app:title="@string/group_members" />
+
+        <Preference
+            app:key="group_exit"
+            app:title="@string/group_exit"/>
+
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -45,22 +45,22 @@ public class DashboardFragment extends Fragment {
 
         // list of posts
         List<GroupItem> groupAllItemList = new ArrayList<>();
-        groupAllItemList.add(new GroupItem("Les étudiants de montpellier","post", false));
-        groupAllItemList.add(new GroupItem("Les motards du 36","post", false));
-        groupAllItemList.add(new GroupItem("Végan un jour, Végan toujours","post", false));
-        groupAllItemList.add(new GroupItem("FDS - informatique","post", false));
-        groupAllItemList.add(new GroupItem("Les fans de Squeezie","post", false));
+        groupAllItemList.add(new GroupItem("Les étudiants de montpellier","post", "test","antoine","public"));
+        groupAllItemList.add(new GroupItem("Les motards du 36","sms", "test","antoine","private"));
+        groupAllItemList.add(new GroupItem("Végan un jour, Végan toujours","email", "test","antoine","private"));
+        groupAllItemList.add(new GroupItem("FDS - informatique","tchat", "test","antoine","public"));
+        groupAllItemList.add(new GroupItem("Les fans de Squeezie","post", "test","antoine","public"));
 
         List<GroupItem> groupPostItemList = new ArrayList<>();
-        groupPostItemList.add(new GroupItem("Les étudiants de montpellier","post", false));
-        groupPostItemList.add(new GroupItem("Les motards du 36","post", false));
+        //groupPostItemList.add(new GroupItem("Les étudiants de montpellier","post", "test"));
+        //groupPostItemList.add(new GroupItem("Les motards du 36","post", "test"));
 
         List<GroupItem> groupSMSItemList = new ArrayList<>();
-        groupSMSItemList.add(new GroupItem("Végan un jour, Végan toujours","post", false));
+        //groupSMSItemList.add(new GroupItem("Végan un jour, Végan toujours","post", "test"));
 
         List<GroupItem> groupEmailItemList = new ArrayList<>();
-        groupEmailItemList.add(new GroupItem("FDS - informatique","post", false));
-        groupEmailItemList.add(new GroupItem("Les fans de Squeezie","post", false));
+        //groupEmailItemList.add(new GroupItem("FDS - informatique","post", "test"));
+        //groupEmailItemList.add(new GroupItem("Les fans de Squeezie","post", "test"));
 
 
         // get grid view

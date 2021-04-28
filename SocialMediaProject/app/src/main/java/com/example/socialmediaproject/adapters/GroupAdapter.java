@@ -17,7 +17,7 @@ import com.example.socialmediaproject.models.PostItem;
 import java.util.List;
 
 /**
- * Created by Antoine Barbier on 4/26/21.
+ * Created by Antoine Barbier and Antoine Brahimi on 4/26/21.
  */
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder> {
 

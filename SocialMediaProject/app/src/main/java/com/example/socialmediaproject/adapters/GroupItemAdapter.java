@@ -19,7 +19,7 @@ import com.example.socialmediaproject.models.GroupItem;
 import java.util.List;
 
 /**
- * Created by Antoine Barbier on 3/30/21.
+ * Created by Antoine Barbier and Antoine Brahimi on 3/30/21.
  */
 public class GroupItemAdapter extends BaseAdapter {
 
@@ -61,9 +61,9 @@ public class GroupItemAdapter extends BaseAdapter {
 
         String itemName = currentItem.getName();
         String itemType = currentItem.getType();
-        String itemAccess = currentItem.getName();
-        String itemPublication = currentItem.getType();
-        String itemSubject = currentItem.getType();
+        String itemAccess = currentItem.getAccess();
+        String itemPublication = currentItem.getPublication();
+        String itemSubject = currentItem.getField();
 
         // get item title view
         TextView itemTitleView = (TextView) view.findViewById(R.id.item_title);
@@ -81,9 +81,9 @@ public class GroupItemAdapter extends BaseAdapter {
                 Bundle bundle = new Bundle();
                 bundle.putString("groupName", itemName);
                 bundle.putString("groupType", itemType);
-                bundle.putString("groupAccess", itemType);
-                bundle.putString("groupPublication", itemType);
-                bundle.putString("groupSubject", itemType);
+                bundle.putString("groupAccess", itemAccess);
+                bundle.putString("groupPublication", itemPublication);
+                bundle.putString("groupSubject", itemSubject);
                 Navigation.findNavController(finalView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post, bundle);
             }
         });

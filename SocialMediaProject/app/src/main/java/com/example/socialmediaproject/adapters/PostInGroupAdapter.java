@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by Antoine Barbier on 4/26/21.
+ * Created by Antoine Barbier and Antoine Brahimi on 4/26/21.
  *
  * Contrairement à Post Adapter, le title du post n'est pas le nom du groupe mais le nom de l'autheur
  */

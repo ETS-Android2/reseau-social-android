@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by Antoine Barbier on 4/26/21.
+ * Created by Antoine Barbier and Antoine Brahimi on 4/26/21.
  */
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
 

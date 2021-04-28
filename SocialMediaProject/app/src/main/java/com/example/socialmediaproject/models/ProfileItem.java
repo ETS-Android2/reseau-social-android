@@ -1,7 +1,7 @@
 package com.example.socialmediaproject.models;
 
 /**
- * Created by Antoine Barbier on 3/31/21.
+ * Created by Antoine Barbier and Antoine Brahimi on 3/31/21.
  */
 public class ProfileItem {
     // fields
@@ -16,7 +16,6 @@ public class ProfileItem {
 
     // methods
     public String getTitle(){ return this.title;}
-
     public String getMnenonic() {
         return mnenonic;
     }

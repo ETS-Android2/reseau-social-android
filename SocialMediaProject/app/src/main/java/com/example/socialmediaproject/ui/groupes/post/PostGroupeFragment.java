@@ -61,7 +61,7 @@ public class PostGroupeFragment extends Fragment {
 
 
         // group
-        GroupItem group = new GroupItem(groupName, groupType, false);
+        GroupItem group = new GroupItem(groupName, groupType, groupSubject, "antoine", groupAccess);
 
         ImageView imageAccess = root.findViewById(R.id.group_acces_image);
         TextView tv_groupTitle = root.findViewById(R.id.group_title);

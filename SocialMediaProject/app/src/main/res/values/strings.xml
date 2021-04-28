@@ -81,6 +81,12 @@
     <string name="group_subject">Sujet du groupe</string>
     <string name="group_access">Accès au groupe</string>
     <string name="group_publication">Publication</string>
+    <string name="group_notification">Notifications</string>
+    <string name="group_exit">Quitter le groupe</string>
+    <string name="group_members">Gérer les adhérents</string>
+    <string name="group_moderators">Gérer les modérateurs</string>
+    <string name="group_edit">Modifier le groupe</string>
+    <string name="title_settings_alerts">Alertes</string>
 
     <string-array name="list_group_type">
         <item>Post</item>

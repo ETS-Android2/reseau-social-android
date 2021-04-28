@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by Antoine Barbier on 3/30/21.
+ * Created by Antoine Barbier and Antoine Brahimi on 3/30/21.
  */
 public class PostItemAdapter extends BaseAdapter {
 

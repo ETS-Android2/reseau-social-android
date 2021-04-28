@@ -25,6 +25,7 @@
             android:textSize="15dp"
             android:textStyle="bold"
             android:paddingRight="10dp"
+            android:layout_marginRight="30dp"
 
             android:text="@string/item_title_default" />
 
