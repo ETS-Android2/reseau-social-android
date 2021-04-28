@@ -1,6 +1,7 @@
 package com.example.socialmediaproject.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -10,8 +11,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialmediaproject.R;
@@ -58,11 +61,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
         holder.shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String akpath = context.getApplicationInfo().sourceDir;
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("application/vnd.android.package-archive");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(akpath)));
-                context.startActivity(Intent.createChooser(intent,"Share post"));
+                // setup the alert builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Choisir une action");
+                // add a list
+                String[] actions = {"Modifier", "Supprimer", "Partager"};
+                builder.setItems(actions, new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0: // Modifier
+                                Toast.makeText(context, "Modifier le post !"  , Toast.LENGTH_SHORT).show();
+                                break;
+                            case 1: // Supprimer
+                                // les 3 lignes suivantes permettent de supprimer l'item de la liste et du recyclerView
+                                postList.remove(position);
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position,postList.size());
+                                Toast.makeText(context, "Supprimer le post !"  , Toast.LENGTH_SHORT).show();
+                                break;
+                            case 2: // Partager
+                                Toast.makeText(context, "Partager le post !"  , Toast.LENGTH_SHORT).show();
+                                break;
+                        } } }); // create and show the alert dialog
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
