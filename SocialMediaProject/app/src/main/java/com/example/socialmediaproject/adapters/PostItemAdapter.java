@@ -59,7 +59,7 @@ public class PostItemAdapter extends BaseAdapter {
 
         // get informations about item
         PostItem currentItem = getItem(i);
-        String itemTitle = currentItem.getGroup();
+        String itemTitle = currentItem.getGroup().getName();
         String itemSubtitle = currentItem.getAuthor();
         String itemContent = currentItem.getContent();
         int itemNbViews = currentItem.getNbViews();

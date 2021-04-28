@@ -27,6 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.PostAdapter;
 import com.example.socialmediaproject.adapters.PostItemAdapter;
+import com.example.socialmediaproject.enums.Access;
+import com.example.socialmediaproject.models.GroupItem;
 import com.example.socialmediaproject.models.PostItem;
 
 import java.util.ArrayList;
@@ -45,13 +47,22 @@ public class HomeFragment extends Fragment {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        // list of group
+        List<GroupItem> groupAllItemList = new ArrayList<>();
+        groupAllItemList.add(new GroupItem("Les étudiants de montpellier","post", "test","antoine", Access.PUBLIC));
+        groupAllItemList.add(new GroupItem("Les motards du 36","sms", "test","antoine",Access.PRIVATE));
+        groupAllItemList.add(new GroupItem("Végan un jour, Végan toujours","email", "test","antoine",Access.PRIVATE));
+        groupAllItemList.add(new GroupItem("FDS - informatique","tchat", "test","antoine",Access.PUBLIC));
+        groupAllItemList.add(new GroupItem("Les fans de Squeezie","post", "test","antoine",Access.PUBLIC));
+
+
         // list of posts
         List<PostItem> postItemList = new ArrayList<>();
-        postItemList.add(new PostItem("Les étudiants de montpellier", "Antoine"));
-        postItemList.add(new PostItem("Les motards du 36", "Thomas"));
-        postItemList.add(new PostItem("Végan un jour, Végan toujours", "Enzo"));
-        postItemList.add(new PostItem("FDS - informatique", "Pedro"));
-        postItemList.add(new PostItem("Les fans de Squeezie", "José"));
+        postItemList.add(new PostItem(groupAllItemList.get(1), "Antoine"));
+        postItemList.add(new PostItem(groupAllItemList.get(1), "Thomas"));
+        postItemList.add(new PostItem(groupAllItemList.get(1), "Enzo"));
+        postItemList.add(new PostItem(groupAllItemList.get(1), "Pedro"));
+        postItemList.add(new PostItem(groupAllItemList.get(1), "José"));
 
         // get list view
         //ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);

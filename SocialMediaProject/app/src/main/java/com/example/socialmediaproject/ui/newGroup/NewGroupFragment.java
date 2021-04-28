@@ -81,14 +81,23 @@ public class NewGroupFragment extends Fragment {
         createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"Ajouter un groupe!" , Toast.LENGTH_SHORT).show();
+
                 Bundle bundle = new Bundle();
                 bundle.putString("groupName", editText_groupName.getText().toString());
                 bundle.putString("groupType", spinnerGroupType.getText().toString());
                 bundle.putString("groupAccess", spinnerGroupAccess.getText().toString());
                 bundle.putString("groupPublication", spinnerGroupPublication.getText().toString());
                 bundle.putString("groupSubject", spinnerGroupSubject.getText().toString());
-                Navigation.findNavController(view).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post, bundle);
+                if(editText_groupName.getText().toString().matches("") &&
+                        spinnerGroupType.getText().toString().matches("") &&
+                        spinnerGroupAccess.getText().toString().matches("") &&
+                        spinnerGroupPublication.getText().toString().matches("") &&
+                        spinnerGroupSubject.getText().toString().matches("")){
+                    Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
+                }else{
+                    Navigation.findNavController(view).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post, bundle);
+                }
+
 
             }
         });

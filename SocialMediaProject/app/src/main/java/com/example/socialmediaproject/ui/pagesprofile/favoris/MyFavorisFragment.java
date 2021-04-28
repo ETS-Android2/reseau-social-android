@@ -20,6 +20,8 @@ import android.view.ViewGroup;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.PostAdapter;
+import com.example.socialmediaproject.enums.Access;
+import com.example.socialmediaproject.models.GroupItem;
 import com.example.socialmediaproject.models.PostItem;
 
 import java.util.ArrayList;
@@ -45,13 +47,19 @@ public class MyFavorisFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes favoris");
 
+        // list of group
+        List<GroupItem> groupAllItemList = new ArrayList<>();
+        groupAllItemList.add(new GroupItem("Les étudiants de montpellier","post", "test","antoine", Access.PUBLIC));
+        groupAllItemList.add(new GroupItem("Les motards du 36","sms", "test","antoine",Access.PRIVATE));
+        groupAllItemList.add(new GroupItem("Végan un jour, Végan toujours","email", "test","antoine",Access.PRIVATE));
+        groupAllItemList.add(new GroupItem("FDS - informatique","tchat", "test","antoine",Access.PUBLIC));
+        groupAllItemList.add(new GroupItem("Les fans de Squeezie","post", "test","antoine",Access.PUBLIC));
+
+
         // list of posts
         List<PostItem> postItemList = new ArrayList<>();
-        postItemList.add(new PostItem("Les étudiants de montpellier", "Antoine"));
-        postItemList.add(new PostItem("Les motards du 36", "Thomas"));
-        postItemList.add(new PostItem("Végan un jour, Végan toujours", "Enzo"));
-        postItemList.add(new PostItem("FDS - informatique", "Pedro"));
-        postItemList.add(new PostItem("Les fans de Squeezie", "José"));
+        postItemList.add(new PostItem(groupAllItemList.get(1), "Antoine"));
+        postItemList.add(new PostItem(groupAllItemList.get(1), "Thomas"));
 
         recyclerView = view.findViewById(R.id.recyclerView_myFavoris);
 

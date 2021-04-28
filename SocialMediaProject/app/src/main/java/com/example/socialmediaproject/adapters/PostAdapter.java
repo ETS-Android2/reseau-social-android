@@ -47,11 +47,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         PostItem currentItem = this.postList.get(position);
 
-        holder.itemTitleView.setText(currentItem.getGroup());
+        holder.itemTitleView.setText(currentItem.getGroup().getName());
         holder.itemSubtitleView.setText(currentItem.getAuthor());
         holder.itemContentView.setText(currentItem.getContent());
         holder.itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));
         holder.itemNbViewsView.setText(String.valueOf(currentItem.getNbViews()));
+
+        holder.itemDateAgo.setText(String.valueOf(currentItem.getTimeAgo()));
 
         holder.shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +88,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView itemTitleView, itemSubtitleView, itemContentView, itemNbViewsView, itemNbStarsView;
+        TextView itemTitleView, itemSubtitleView, itemContentView, itemNbViewsView, itemNbStarsView, itemDateAgo;
         ImageView imageLike;
         ImageButton shareButton;
         LinearLayout likeButton;
@@ -100,6 +102,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             itemContentView = (TextView) itemView.findViewById(R.id.item_content);
             itemNbViewsView = (TextView) itemView.findViewById(R.id.item_nbViews);
             itemNbStarsView = (TextView) itemView.findViewById(R.id.item_nbStars);
+
+            itemDateAgo = (TextView)  itemView.findViewById(R.id.item_date_ago);
+
 
             imageLike = (ImageView) itemView.findViewById(R.id.image_star);
             shareButton = (ImageButton) itemView.findViewById(R.id.item_share);

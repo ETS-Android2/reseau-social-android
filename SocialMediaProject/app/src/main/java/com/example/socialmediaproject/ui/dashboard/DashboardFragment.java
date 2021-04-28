@@ -46,7 +46,7 @@ public class DashboardFragment extends Fragment {
         // on enlève la fleche de retour en arrière
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        // list of posts
+        // list of group
         List<GroupItem> groupAllItemList = new ArrayList<>();
         groupAllItemList.add(new GroupItem("Les étudiants de montpellier","post", "test","antoine", Access.PUBLIC));
         groupAllItemList.add(new GroupItem("Les motards du 36","sms", "test","antoine",Access.PRIVATE));

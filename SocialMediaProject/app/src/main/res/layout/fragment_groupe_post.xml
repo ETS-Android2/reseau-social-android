@@ -38,5 +38,5 @@
         android:src="@drawable/ic_baseline_create_24"
         android:contentDescription="@string/addPost"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="70dp"/>
+        android:layout_marginBottom="16dp"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

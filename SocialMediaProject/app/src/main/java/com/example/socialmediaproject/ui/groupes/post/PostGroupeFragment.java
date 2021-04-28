@@ -87,11 +87,11 @@ public class PostGroupeFragment extends Fragment {
 
         // list d'exemple
         List<PostItem> postItemList = new ArrayList<>();
-        postItemList.add(new PostItem(group.getName(), "Antoine"));
-        postItemList.add(new PostItem(group.getName(), "Thomas"));
-        postItemList.add(new PostItem(group.getName(), "Enzo"));
-        postItemList.add(new PostItem(group.getName(), "Pedro"));
-        postItemList.add(new PostItem(group.getName(), "José"));
+        postItemList.add(new PostItem(group, "Antoine"));
+        postItemList.add(new PostItem(group, "Thomas"));
+        postItemList.add(new PostItem(group, "Enzo"));
+        postItemList.add(new PostItem(group, "Pedro"));
+        postItemList.add(new PostItem(group, "José"));
 
 
         recyclerView = root.findViewById(R.id.recyclerView_group_posts);
