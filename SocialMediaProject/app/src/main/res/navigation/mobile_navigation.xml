@@ -24,6 +24,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_newGroup"
+        android:name="com.example.socialmediaproject.ui.newGroup.NewGroupFragment"
+        android:label="new_group_fragment"
+        tools:layout="@layout/new_group_fragment" >
+        <action
+            android:id="@+id/action_newGroupFragment_to_navigation_groupe_post"
+            app:destination="@id/navigation_groupe_post" />
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.socialmediaproject.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
@@ -100,14 +110,6 @@
         android:id="@+id/settingsGroupFragment"
         android:name="com.example.socialmediaproject.ui.settings.SettingsGroupFragment"
         android:label="SettingsGroupFragment" />
-    <fragment
-        android:id="@+id/newGroupFragment"
-        android:name="com.example.socialmediaproject.ui.newGroup.NewGroupFragment"
-        android:label="new_group_fragment"
-        tools:layout="@layout/new_group_fragment" >
-        <action
-            android:id="@+id/action_newGroupFragment_to_navigation_groupe_post"
-            app:destination="@id/navigation_groupe_post" />
-    </fragment>
+
 
 </navigation>
