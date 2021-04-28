@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.Toast;
+
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -26,6 +26,9 @@ import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.GroupItemAdapter;
 import com.example.socialmediaproject.models.GroupItem;
 import com.google.android.material.tabs.TabLayout;
+
+import com.example.socialmediaproject.enums.Access;
+import com.example.socialmediaproject.enums.Publication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,23 +48,30 @@ public class DashboardFragment extends Fragment {
 
         // list of posts
         List<GroupItem> groupAllItemList = new ArrayList<>();
-        groupAllItemList.add(new GroupItem("Les étudiants de montpellier","post", "test","antoine","public"));
-        groupAllItemList.add(new GroupItem("Les motards du 36","sms", "test","antoine","private"));
-        groupAllItemList.add(new GroupItem("Végan un jour, Végan toujours","email", "test","antoine","private"));
-        groupAllItemList.add(new GroupItem("FDS - informatique","tchat", "test","antoine","public"));
-        groupAllItemList.add(new GroupItem("Les fans de Squeezie","post", "test","antoine","public"));
+        groupAllItemList.add(new GroupItem("Les étudiants de montpellier","post", "test","antoine", Access.PUBLIC));
+        groupAllItemList.add(new GroupItem("Les motards du 36","sms", "test","antoine",Access.PRIVATE));
+        groupAllItemList.add(new GroupItem("Végan un jour, Végan toujours","email", "test","antoine",Access.PRIVATE));
+        groupAllItemList.add(new GroupItem("FDS - informatique","tchat", "test","antoine",Access.PUBLIC));
+        groupAllItemList.add(new GroupItem("Les fans de Squeezie","post", "test","antoine",Access.PUBLIC));
+
+
+
+
 
         List<GroupItem> groupPostItemList = new ArrayList<>();
-        //groupPostItemList.add(new GroupItem("Les étudiants de montpellier","post", "test"));
-        //groupPostItemList.add(new GroupItem("Les motards du 36","post", "test"));
-
+        List<GroupItem> groupTchatItemList = new ArrayList<>();
         List<GroupItem> groupSMSItemList = new ArrayList<>();
-        //groupSMSItemList.add(new GroupItem("Végan un jour, Végan toujours","post", "test"));
-
         List<GroupItem> groupEmailItemList = new ArrayList<>();
-        //groupEmailItemList.add(new GroupItem("FDS - informatique","post", "test"));
-        //groupEmailItemList.add(new GroupItem("Les fans de Squeezie","post", "test"));
 
+        for(GroupItem item : groupAllItemList){
+            switch (item.getType()){
+                case "post": groupPostItemList.add(item); break;
+                case "email": groupEmailItemList.add(item); break;
+                case "sms": groupSMSItemList.add(item); break;
+                case "tchat": groupTchatItemList.add(item); break;
+            }
+
+        }
 
         // get grid view
         GridView allPost = (GridView) root.findViewById(R.id.gridView_mes_reseaux);
@@ -77,12 +87,13 @@ public class DashboardFragment extends Fragment {
                         allPost.setAdapter(new GroupItemAdapter(getContext(), groupAllItemList));
                         break;
                     case 1: // posts
-                    case 2: // Tchat
                         allPost.setAdapter(new GroupItemAdapter(getContext(), groupPostItemList));
+                        break;
+                    case 2: // Tchat
+                        allPost.setAdapter(new GroupItemAdapter(getContext(), groupTchatItemList));
                         break;
                     case 3: // email
                         allPost.setAdapter(new GroupItemAdapter(getContext(), groupEmailItemList));
-
                         break;
                     case 4: // sms
                         allPost.setAdapter(new GroupItemAdapter(getContext(), groupSMSItemList));

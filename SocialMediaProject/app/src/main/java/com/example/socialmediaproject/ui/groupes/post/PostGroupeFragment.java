@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.socialmediaproject.R;
 
 import com.example.socialmediaproject.adapters.PostInGroupAdapter;
+import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.models.GroupItem;
 import com.example.socialmediaproject.models.PostItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -58,10 +59,13 @@ public class PostGroupeFragment extends Fragment {
 
 
 
+        GroupItem group;
+        if(groupAccess.equals("public")){
+            group = new GroupItem(groupName, groupType, groupSubject, "antoine", Access.PUBLIC);
+        }else{
+            group = new GroupItem(groupName, groupType, groupSubject, "antoine", Access.PRIVATE);
+        }
 
-
-        // group
-        GroupItem group = new GroupItem(groupName, groupType, groupSubject, "antoine", groupAccess);
 
         ImageView imageAccess = root.findViewById(R.id.group_acces_image);
         TextView tv_groupTitle = root.findViewById(R.id.group_title);
