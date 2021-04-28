@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,7 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
 
@@ -47,6 +51,8 @@ public class NewGroupFragment extends Fragment {
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        EditText editText_groupName = view.findViewById(R.id.editText_group_name);
+
         spinnerGroupType = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_type);
         spinnerGroupAccess = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_access);
         spinnerGroupSubject = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_subject);
@@ -69,10 +75,23 @@ public class NewGroupFragment extends Fragment {
         spinnerGroupPublication.setAdapter(adapterPublicationGroup);
         spinnerGroupSubject.setAdapter(adapterSubjectGroup);
 
-        //spinnerGroupType = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_type);
 
-        // adapter input select
 
+        Button createGroup = view.findViewById(R.id.button_create_group);
+        createGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"Ajouter un groupe!" , Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("groupName", editText_groupName.getText().toString());
+                bundle.putString("groupType", spinnerGroupType.getText().toString());
+                bundle.putString("groupAccess", spinnerGroupAccess.getText().toString());
+                bundle.putString("groupPublication", spinnerGroupPublication.getText().toString());
+                bundle.putString("groupSubject", spinnerGroupSubject.getText().toString());
+                Navigation.findNavController(view).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post, bundle);
+
+            }
+        });
 
         return view;
     }

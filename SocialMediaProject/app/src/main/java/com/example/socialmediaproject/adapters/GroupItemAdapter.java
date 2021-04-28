@@ -2,6 +2,7 @@ package com.example.socialmediaproject.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,11 +59,15 @@ public class GroupItemAdapter extends BaseAdapter {
         // get informations about item
         GroupItem currentItem = getItem(i);
 
-        String itemTitle = currentItem.getName();
+        String itemName = currentItem.getName();
+        String itemType = currentItem.getType();
+        String itemAccess = currentItem.getName();
+        String itemPublication = currentItem.getType();
+        String itemSubject = currentItem.getType();
 
         // get item title view
         TextView itemTitleView = (TextView) view.findViewById(R.id.item_title);
-        itemTitleView.setText(itemTitle);
+        itemTitleView.setText(itemName);
 
 
         // accéder à la notification
@@ -71,7 +76,15 @@ public class GroupItemAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(context, "Voir le groupe : " + itemTitle , Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(finalView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post);
+
+                // envoyer des données entre fragments
+                Bundle bundle = new Bundle();
+                bundle.putString("groupName", itemName);
+                bundle.putString("groupType", itemType);
+                bundle.putString("groupAccess", itemType);
+                bundle.putString("groupPublication", itemType);
+                bundle.putString("groupSubject", itemType);
+                Navigation.findNavController(finalView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post, bundle);
             }
         });
 

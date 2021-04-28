@@ -104,6 +104,10 @@
         android:id="@+id/newGroupFragment"
         android:name="com.example.socialmediaproject.ui.newGroup.NewGroupFragment"
         android:label="new_group_fragment"
-        tools:layout="@layout/new_group_fragment" />
+        tools:layout="@layout/new_group_fragment" >
+        <action
+            android:id="@+id/action_newGroupFragment_to_navigation_groupe_post"
+            app:destination="@id/navigation_groupe_post" />
+    </fragment>
 
 </navigation>

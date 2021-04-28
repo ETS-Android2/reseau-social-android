@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,17 +48,37 @@ public class PostGroupeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_groupe_post, container, false);
 
-        // group
-        GroupItem group = new GroupItem("Les étudiants de montpellier","post", false);
 
+        // Récupération des variables venant d'autres fragments
+        String groupName = getArguments().getString("groupName");
+        String groupType = getArguments().getString("groupType");
+        String groupAccess = getArguments().getString("groupAccess");
+        String groupPublication = getArguments().getString("groupPublication");
+        String groupSubject = getArguments().getString("groupSubject");
+
+
+
+
+
+        // group
+        GroupItem group = new GroupItem(groupName, groupType, false);
+
+        ImageView imageAccess = root.findViewById(R.id.group_acces_image);
         TextView tv_groupTitle = root.findViewById(R.id.group_title);
         TextView tv_groupType = root.findViewById(R.id.group_type);
         TextView tv_groupAccess = root.findViewById(R.id.group_acces);
         TextView tv_groupNbMembers = root.findViewById(R.id.group_members);
         tv_groupTitle.setText(group.getName());
         tv_groupType.setText(group.getType());
-        tv_groupAccess.setText(group.isPrivate() ? "private" : "public" );
         tv_groupNbMembers.setText("50 members");
+
+        if(group.isPrivate()){
+            tv_groupAccess.setText("private");
+            imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
+        }else{
+            tv_groupAccess.setText("public");
+            imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);
+        }
 
 
         // list d'exemple
