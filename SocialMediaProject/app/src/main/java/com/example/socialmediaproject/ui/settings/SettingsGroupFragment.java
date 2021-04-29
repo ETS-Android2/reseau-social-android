@@ -34,10 +34,35 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         Bundle bundle = getArguments();
         currentGroup = (GroupItem) bundle.getSerializable("group");
 
-        Preference preferenceInvitation = findPreference("category_invitations");
 
-        // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
-        preferenceInvitation.setVisible(currentGroup.isPrivate());
+
+        Preference preferenceInvitation = findPreference("category_invitations");
+        Preference preferenceExitGroup = findPreference("group_exit");
+        Preference preferenceEditGroup = findPreference("group_edit");
+        Preference preferenceEditMembersGroup = findPreference("group_members");
+        Preference preferenceDeleteGroup = findPreference("group_delete");
+
+        // Si le compte connecté est un membre
+        if(true){
+            preferenceInvitation.setVisible(false);
+            preferenceExitGroup.setVisible(true);
+
+            preferenceEditGroup.setVisible(false);
+            preferenceEditMembersGroup.setVisible(false);
+            preferenceDeleteGroup.setVisible(false);
+        }else{ // Si le compte connecté est l'admin
+
+            // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
+            preferenceInvitation.setVisible(currentGroup.isPrivate());
+
+            preferenceExitGroup.setVisible(false);
+
+            preferenceEditGroup.setVisible(true);
+            preferenceEditMembersGroup.setVisible(true);
+            preferenceDeleteGroup.setVisible(true);
+        }
+
+
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

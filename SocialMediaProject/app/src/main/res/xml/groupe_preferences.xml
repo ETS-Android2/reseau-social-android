@@ -33,12 +33,13 @@
             app:title="@string/group_members" />
 
         <Preference
+            app:key="group_delete"
+            app:title="@string/delete_group"/>
+
+        <Preference
             app:key="group_exit"
             app:title="@string/group_exit"/>
 
-        <Preference
-            app:key="group_delete"
-            app:title="@string/delete_group"/>
 
     </PreferenceCategory>
 </PreferenceScreen>
