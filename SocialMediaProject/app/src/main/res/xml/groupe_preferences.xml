@@ -14,7 +14,7 @@
 
         </PreferenceCategory>
 
-    <PreferenceCategory app:title="Invitations">
+    <PreferenceCategory app:title="Invitations" android:key="category_invitations">
 
         <Preference
             app:key="group_invite"

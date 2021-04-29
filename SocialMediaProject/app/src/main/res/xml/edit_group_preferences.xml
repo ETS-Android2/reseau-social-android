@@ -36,9 +36,5 @@
             app:title="@string/group_edit_publication"
             app:useSimpleSummaryProvider="true" />
 
-        <Preference
-            app:key="group_delete"
-            app:title="@string/delete_group"/>
-
     </PreferenceCategory>
 </PreferenceScreen>

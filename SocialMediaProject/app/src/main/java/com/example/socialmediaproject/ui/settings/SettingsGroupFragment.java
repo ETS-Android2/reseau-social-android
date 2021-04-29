@@ -1,5 +1,6 @@
 package com.example.socialmediaproject.ui.settings;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 
 import com.example.socialmediaproject.R;
@@ -27,14 +29,20 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.groupe_preferences, rootKey);
+
+        // on récupère l'objet du fragment précédent
+        Bundle bundle = getArguments();
+        currentGroup = (GroupItem) bundle.getSerializable("group");
+
+        Preference preferenceInvitation = findPreference("category_invitations");
+
+        // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
+        preferenceInvitation.setVisible(currentGroup.isPrivate());
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
-
-        // affichage de la flèche retour en arrière dans le menu
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();
@@ -43,6 +51,8 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         // title fragment in the header bar
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
 
+        // affichage de la flèche retour en arrière dans le menu
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
