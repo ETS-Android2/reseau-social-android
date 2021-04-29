@@ -13,6 +13,14 @@ public class UserHelperClass {
         this.password = password;
     }
 
+    // pour les test
+    public UserHelperClass(String name) {
+        this.name = name;
+        this.phoneNumber = "phoneNumber";
+        this.email = "email";
+        this.password = "password";
+    }
+
     public String getName() {
         return name;
     }

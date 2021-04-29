@@ -20,10 +20,9 @@
 
         <SwitchPreferenceCompat
             app:key="theme"
-            app:title="Dark mode"
             app:summaryOff="Désactivé"
             app:summaryOn="Activé"
-            />
+            app:title="Dark mode" />
 
         <Preference
             app:key="help"
@@ -34,7 +33,29 @@
             app:title="Log Out" />
 
     </PreferenceCategory>
+    <PreferenceCategory app:title="@string/messages_header">
 
+        <EditTextPreference
+            app:key="signature"
+            app:title="@string/signature_title"
+            app:useSimpleSummaryProvider="true" />
+
+
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/sync_header">
+
+        <SwitchPreferenceCompat
+            app:key="sync"
+            app:title="@string/sync_title" />
+
+        <SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="attachment"
+            app:summaryOff="@string/attachment_summary_off"
+            app:summaryOn="@string/attachment_summary_on"
+            app:title="@string/attachment_title" />
+
+    </PreferenceCategory>
 
 
 </PreferenceScreen>

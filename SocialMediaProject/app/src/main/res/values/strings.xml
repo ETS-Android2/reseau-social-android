@@ -81,9 +81,9 @@
     <string name="group_subject">Sujet du groupe</string>
     <string name="group_access">Accès au groupe</string>
     <string name="group_publication">Publication</string>
-    <string name="group_notification">Notifications</string>
+    <string name="group_notification">Disable notifications</string>
     <string name="group_exit">Quitter le groupe</string>
-    <string name="group_members">Gérer les adhérents</string>
+    <string name="group_members">Gérer les membres</string>
     <string name="group_moderators">Gérer les modérateurs</string>
     <string name="group_edit">Modifier le groupe</string>
     <string name="title_settings_alerts">Alertes</string>
@@ -122,4 +122,11 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_new_group">New group</string>
+    <string name="notif_disable">Disable notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="group_edit_name">Nom du groupe</string>
+    <string name="group_edit_privacy">Groupe privé</string>
+    <string name="group_edit_subject">Sujet du groupe</string>
+    <string name="group_edit_publication">Publication</string>
 </resources>
