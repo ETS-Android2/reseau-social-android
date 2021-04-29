@@ -81,10 +81,6 @@ public class LoginTabFragment extends Fragment {
                 if(validateFields(email_value, password_value))
                     isUser(email_value, password_value);
 
-                /*
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                */
             }
         });
 
@@ -117,8 +113,6 @@ public class LoginTabFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                Log.d("HERE ========>", snapshot.getValue().toString());
-
                 String userId = "";
 
                 for(DataSnapshot child : snapshot.getChildren()){
@@ -126,6 +120,7 @@ public class LoginTabFragment extends Fragment {
                 }
 
                 if(snapshot.exists()){
+                    Log.d("HERE :", snapshot.getValue().toString());
                     String passwordFromDB = snapshot.child(userId).child("password").getValue(String.class);
 
                     if(passwordFromDB != null && passwordFromDB.equals(password)){
