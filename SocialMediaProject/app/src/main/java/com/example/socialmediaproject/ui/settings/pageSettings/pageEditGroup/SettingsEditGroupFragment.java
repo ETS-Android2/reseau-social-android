@@ -10,12 +10,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.models.GroupItem;
 
 public class SettingsEditGroupFragment extends PreferenceFragmentCompat {
+
+    GroupItem currentGroup;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.edit_group_preferences, rootKey);
+
+        // on récupère l'objet du fragment précédent
+        Bundle bundle = getArguments();
+        currentGroup = (GroupItem) bundle.getSerializable("group");
     }
 
     @Override
@@ -25,6 +32,7 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat {
 
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
     }
 

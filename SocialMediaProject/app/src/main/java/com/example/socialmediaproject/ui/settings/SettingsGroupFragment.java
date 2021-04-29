@@ -18,8 +18,11 @@ import androidx.preference.PreferenceScreen;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.enums.Publication;
+import com.example.socialmediaproject.models.GroupItem;
 
 public class SettingsGroupFragment extends PreferenceFragmentCompat {
+
+    GroupItem currentGroup;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -33,11 +36,20 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // on récupère l'objet du fragment précédent
+        Bundle bundle = getArguments();
+        currentGroup = (GroupItem) bundle.getSerializable("group");
+
+        // title fragment in the header bar
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
+
     }
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
         String key = preference.getKey();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("group", currentGroup);
 
         if(key.equals("group_invite")){
             Toast.makeText(getContext(),"Générer un code d'invitation !" , Toast.LENGTH_SHORT).show();
@@ -45,11 +57,11 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
         if(key.equals("group_edit")){
             Toast.makeText(getContext(),"Modifier le groupe !" , Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsEditGroupFragment);
+            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsEditGroupFragment, bundle);
         }
         if(key.equals("group_members")){
             Toast.makeText(getContext(),"Gérer les adhérents !" , Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsGroupFragment_pageMembers);
+            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsGroupFragment_pageMembers, bundle);
         }
 
         if(key.equals("group_exit")){

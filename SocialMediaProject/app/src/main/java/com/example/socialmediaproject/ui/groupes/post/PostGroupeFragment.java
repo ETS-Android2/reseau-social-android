@@ -23,23 +23,19 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.socialmediaproject.MainActivity;
+
 import com.example.socialmediaproject.R;
 
 import com.example.socialmediaproject.adapters.PostInGroupAdapter;
-import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.models.GroupItem;
-import com.example.socialmediaproject.models.PostItem;
 import com.example.socialmediaproject.newPostActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class PostGroupeFragment extends Fragment {
 
+    GroupItem currentGroup;
     private RecyclerView recyclerView;
     private PostGroupeViewModel mViewModel;
 
@@ -53,21 +49,10 @@ public class PostGroupeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_groupe_post, container, false);
 
 
-        // Récupération des variables venant d'autres fragments
-        String groupName = getArguments().getString("groupName");
-        String groupType = getArguments().getString("groupType");
-        String groupAccess = getArguments().getString("groupAccess");
-        String groupPublication = getArguments().getString("groupPublication");
-        String groupSubject = getArguments().getString("groupSubject");
+        // on récupère l'objet du fragment précédent
+        Bundle bundle = getArguments();
+        currentGroup = (GroupItem) bundle.getSerializable("group");
 
-
-
-        GroupItem group;
-        if(groupAccess.equals("public")){
-            group = new GroupItem(groupName, groupType, groupSubject, "antoine", Access.PUBLIC);
-        }else{
-            group = new GroupItem(groupName, groupType, groupSubject, "antoine", Access.PRIVATE);
-        }
 
 
         ImageView imageAccess = root.findViewById(R.id.group_acces_image);
@@ -75,11 +60,12 @@ public class PostGroupeFragment extends Fragment {
         TextView tv_groupType = root.findViewById(R.id.group_type);
         TextView tv_groupAccess = root.findViewById(R.id.group_acces);
         TextView tv_groupNbMembers = root.findViewById(R.id.group_members);
-        tv_groupTitle.setText(group.getName());
-        tv_groupType.setText(group.getType());
+
+        tv_groupTitle.setText(currentGroup.getName());
+        tv_groupType.setText(currentGroup.getType());
         tv_groupNbMembers.setText("50 members");
 
-        if(group.isPrivate()){
+        if(currentGroup.isPrivate()){
             tv_groupAccess.setText("private");
             imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
         }else{
@@ -88,23 +74,17 @@ public class PostGroupeFragment extends Fragment {
         }
 
 
-        // list d'exemple
-        List<PostItem> postItemList = new ArrayList<>();
-        postItemList.add(new PostItem(group, "Antoine"));
-        postItemList.add(new PostItem(group, "Thomas"));
-        postItemList.add(new PostItem(group, "Enzo"));
-        postItemList.add(new PostItem(group, "Pedro"));
-        postItemList.add(new PostItem(group, "José"));
-
-
         recyclerView = root.findViewById(R.id.recyclerView_group_posts);
 
-        PostInGroupAdapter myAdapter = new PostInGroupAdapter(getContext(), postItemList);
+        PostInGroupAdapter myAdapter = new PostInGroupAdapter(getContext(), currentGroup.getPosts());
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // title fragment in the header bar
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
 
 
         // action sur le bouton flottant pour ajouter un post
@@ -148,7 +128,9 @@ public class PostGroupeFragment extends Fragment {
                 getActivity().onBackPressed();
                 break;
             case R.id.group_menu_settings:
-                NavHostFragment.findNavController(this).navigate(R.id.action_navigation_groupe_post_to_settingsGroupFragment);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("group", currentGroup);
+                NavHostFragment.findNavController(this).navigate(R.id.action_navigation_groupe_post_to_settingsGroupFragment, bundle);
                 break;
         }
         return super.onOptionsItemSelected(item);

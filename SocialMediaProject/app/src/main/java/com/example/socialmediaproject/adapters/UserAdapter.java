@@ -69,12 +69,12 @@ public class UserAdapter extends BaseAdapter {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle(itemName);
                 // add a list
-                String[] actions = {"Consulter", "Promouvoir", "Supprimer"};
+                String[] actions = {"Contacter", "Promouvoir", "Supprimer"};
                 builder.setItems(actions, new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
-                            case 0: // Consulter
-                                Toast.makeText(context, "Consulter les informations de l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                            case 0: // Contacter
+                                Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
                                 break;
                             case 1: // Promouvoir
                                 Toast.makeText(context, "Promouvoir l'utilisateur !"  , Toast.LENGTH_SHORT).show();

@@ -2,6 +2,7 @@ package com.example.socialmediaproject.models;
 
 import android.annotation.SuppressLint;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -9,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Antoine Barbier and Antoine Brahimi on 3/30/21.
  */
-public class PostItem {
+public class PostItem implements Serializable {
 
     // fields
     private String id;

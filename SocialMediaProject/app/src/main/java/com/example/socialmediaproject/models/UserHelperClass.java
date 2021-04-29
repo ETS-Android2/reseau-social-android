@@ -1,6 +1,8 @@
 package com.example.socialmediaproject.models;
 
-public class UserHelperClass {
+import java.io.Serializable;
+
+public class UserHelperClass implements Serializable {
 
     String name, phoneNumber, email, password;
 

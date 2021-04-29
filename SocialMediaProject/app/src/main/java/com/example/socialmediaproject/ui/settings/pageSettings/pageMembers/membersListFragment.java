@@ -19,12 +19,15 @@ import android.widget.ListView;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.UserAdapter;
+import com.example.socialmediaproject.models.GroupItem;
 import com.example.socialmediaproject.models.UserHelperClass;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class membersListFragment extends Fragment {
+
+    GroupItem currentGroup;
 
     private MembersListViewModel mViewModel;
 
@@ -47,16 +50,14 @@ public class membersListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
             // Inflate the layout for this fragment
             View view = inflater.inflate(R.layout.fragment_members_list, container, false);
-            // list of posts
-            List<UserHelperClass> userList = new ArrayList<>();
-            userList.add(new UserHelperClass("Antoine Barbier"));
-            userList.add(new UserHelperClass("Antoine Brahimi"));
-            userList.add(new UserHelperClass("Thomas Pesquet"));
-            userList.add(new UserHelperClass("Usain Bolt"));
+
+            // on récupère l'objet du fragment précédent
+            Bundle bundle = getArguments();
+            currentGroup = (GroupItem) bundle.getSerializable("group");
 
             // get list view
             ListView allUser = (ListView) view.findViewById(R.id.listView_members);
-            allUser.setAdapter(new UserAdapter(getContext(), userList));
+            allUser.setAdapter(new UserAdapter(getContext(), currentGroup.getMembers()));
 
             // title fragment in the header
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Membres du groupe");
