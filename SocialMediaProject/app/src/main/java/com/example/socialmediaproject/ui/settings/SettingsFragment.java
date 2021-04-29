@@ -1,18 +1,35 @@
 package com.example.socialmediaproject.ui.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.socialmediaproject.LoginActivity;
+import com.example.socialmediaproject.MainActivity;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.db.UserRoomDatabase;
+import com.example.socialmediaproject.db.dao.UserDao;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.Navigation;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
+
+    Intent intent;
+    UserRoomDatabase userDB;
+    UserDao userDao;
+
+    public SettingsFragment(){
+        userDB = UserRoomDatabase.getDatabase(getActivity());
+        userDao = userDB.userDao();
+    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -27,6 +44,20 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        String key = preference.getKey();
+
+        if(key.equals("deconnexion")){
+            userDao.deleteAll();
+            Toast.makeText(getContext(),"Déconnexion" , Toast.LENGTH_SHORT).show();
+            intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onPreferenceTreeClick(preference);
     }
 
     @Override
@@ -45,4 +76,5 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

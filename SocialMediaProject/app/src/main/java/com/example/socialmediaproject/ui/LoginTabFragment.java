@@ -1,5 +1,6 @@
 package com.example.socialmediaproject.ui;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,10 @@ import androidx.fragment.app.Fragment;
 import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.MainActivity;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.db.UserRoomDatabase;
+import com.example.socialmediaproject.db.dao.UserDao;
+import com.example.socialmediaproject.db.entities.UserEntity;
+import com.example.socialmediaproject.models.UserHelperClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +42,16 @@ public class LoginTabFragment extends Fragment {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
     String userId;
+    UserHelperClass user;
     Intent intent;
+
+    UserRoomDatabase userDB;
+    UserDao userDao;
+
+    public LoginTabFragment(){
+        userDB = UserRoomDatabase.getDatabase(getActivity());
+        userDao = userDB.userDao();
+    }
 
     @Nullable
     @Override
@@ -81,10 +95,6 @@ public class LoginTabFragment extends Fragment {
                 if(validateFields(email_value, password_value))
                     isUser(email_value, password_value);
 
-                /*
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                */
             }
         });
 
@@ -117,8 +127,6 @@ public class LoginTabFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                Log.d("HERE ========>", snapshot.getValue().toString());
-
                 String userId = "";
 
                 for(DataSnapshot child : snapshot.getChildren()){
@@ -126,6 +134,7 @@ public class LoginTabFragment extends Fragment {
                 }
 
                 if(snapshot.exists()){
+                    Log.d("HERE :", snapshot.getValue().toString());
                     String passwordFromDB = snapshot.child(userId).child("password").getValue(String.class);
 
                     if(passwordFromDB != null && passwordFromDB.equals(password)){
@@ -134,9 +143,10 @@ public class LoginTabFragment extends Fragment {
                         String phoneNumberFromDB = snapshot.child(userId).child("phoneNumber").getValue(String.class);
 
                         intent = new Intent(getActivity(), MainActivity.class);
-                        intent.putExtra("email", emailFromDB);
-                        intent.putExtra("name", nameFromDB);
-                        intent.putExtra("phone", phoneNumberFromDB);
+
+                        user = new UserHelperClass(nameFromDB, phoneNumberFromDB, emailFromDB, passwordFromDB);
+                        userDao.deleteAll();
+                        userDao.insert(new UserEntity(userId, user.getEmail(), user.getName(), user.getPassword(), user.getPhoneNumber()));
 
                         startActivity(intent);
                     }

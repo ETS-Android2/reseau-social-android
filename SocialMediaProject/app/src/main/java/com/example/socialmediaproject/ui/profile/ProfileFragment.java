@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.ProfileItemAdapter;
+import com.example.socialmediaproject.db.UserRoomDatabase;
+import com.example.socialmediaproject.db.dao.UserDao;
 import com.example.socialmediaproject.models.ProfileItem;
 
 import java.util.ArrayList;
@@ -27,11 +30,22 @@ import java.util.List;
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;
+    private TextView username;
+    private UserRoomDatabase userDB;
+    private UserDao userDao;
+
+    public ProfileFragment(){
+        userDB = UserRoomDatabase.getDatabase(getActivity());
+        userDao = userDB.userDao();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        username = (TextView) root.findViewById(R.id.username);
+        username.setText(userDao.getAll().get(0).name);
 
         // on enlève la fleche de retour en arrière
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);

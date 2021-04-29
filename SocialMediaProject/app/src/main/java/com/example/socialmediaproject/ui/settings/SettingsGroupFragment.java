@@ -107,8 +107,6 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
             Toast.makeText(getContext(),"Supprimer le groupe !" , Toast.LENGTH_SHORT).show();
         }
 
-
-
         return super.onPreferenceTreeClick(preference);
     }
 
