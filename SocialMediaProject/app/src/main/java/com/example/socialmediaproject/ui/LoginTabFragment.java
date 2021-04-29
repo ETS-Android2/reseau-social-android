@@ -1,5 +1,6 @@
 package com.example.socialmediaproject.ui;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +18,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.MainActivity;
+import com.example.socialmediaproject.MyApplication;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.db.UserRoomDatabase;
+import com.example.socialmediaproject.db.dao.UserDao;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +42,14 @@ public class LoginTabFragment extends Fragment {
     DatabaseReference reference;
     String userId;
     Intent intent;
+
+    UserRoomDatabase userDB;
+    UserDao userDao;
+
+    public LoginTabFragment(){
+        userDB = UserRoomDatabase.getDatabase(MyApplication.getAppContext());
+        userDao = userDB.userDao();
+    }
 
     @Nullable
     @Override

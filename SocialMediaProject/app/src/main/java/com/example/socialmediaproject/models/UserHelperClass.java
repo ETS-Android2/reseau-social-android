@@ -1,5 +1,10 @@
 package com.example.socialmediaproject.models;
 
+/*
+* Modele utilisé lors de l'inscription d'un utilisateur
+* et de son ajout dans la BDD distante (Firebase)
+*/
+
 public class UserHelperClass {
 
     String name, phoneNumber, email, password;
