@@ -1,39 +1,43 @@
-package com.example.socialmediaproject.ui.settings;
+package com.example.socialmediaproject.ui.settings.pageSettings.pageEditGroup;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.example.socialmediaproject.LoginActivity;
-import com.example.socialmediaproject.MainActivity;
-import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.db.UserRoomDatabase;
-import com.example.socialmediaproject.db.dao.UserDao;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.Navigation;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
-public class SettingsFragment extends PreferenceFragmentCompat {
+import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.models.GroupItem;
 
-    Intent intent;
-    UserRoomDatabase userDB;
-    UserDao userDao;
+public class SettingsEditGroupFragment extends PreferenceFragmentCompat {
 
-    public SettingsFragment(){
-        userDB = UserRoomDatabase.getDatabase(getActivity());
-        userDao = userDB.userDao();
-    }
+    GroupItem currentGroup;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        setPreferencesFromResource(R.xml.edit_group_preferences, rootKey);
+
+        // on récupère l'objet du fragment précédent
+        Bundle bundle = getArguments();
+        currentGroup = (GroupItem) bundle.getSerializable("group");
+
+        Preference preferencePublication = findPreference("group_edit_publication");
+
+        // si on est en mode post alors on affiche sinon on ne l'affiche pas
+        preferencePublication.setVisible(currentGroup.getType().equals("post"));
+
+        // initialisation des paramètre du groupe
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+        prefs.putBoolean("group_edit_privacy", currentGroup.isPrivate());
+        prefs.putString("group_edit_name", currentGroup.getName());
+        prefs.apply();
     }
 
     @Override
@@ -44,20 +48,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-    }
-
-    @Override
-    public boolean onPreferenceTreeClick(Preference preference) {
-        String key = preference.getKey();
-
-        if(key.equals("deconnexion")){
-            userDao.deleteAll();
-            Toast.makeText(getContext(),"Déconnexion" , Toast.LENGTH_SHORT).show();
-            intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
-        }
-
-        return super.onPreferenceTreeClick(preference);
     }
 
     @Override
@@ -76,5 +66,4 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

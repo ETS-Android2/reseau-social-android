@@ -9,8 +9,7 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SocialMediaProject"
-        android:name="com.example.socialmediaproject.MyApplication">
+        android:theme="@style/Theme.SocialMediaProject">
         <activity
             android:name=".newPostActivity"
             android:label="@string/title_activity_new_post"

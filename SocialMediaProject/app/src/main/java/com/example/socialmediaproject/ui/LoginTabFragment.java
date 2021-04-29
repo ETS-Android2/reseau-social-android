@@ -18,10 +18,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.MainActivity;
-import com.example.socialmediaproject.MyApplication;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.db.UserRoomDatabase;
 import com.example.socialmediaproject.db.dao.UserDao;
+import com.example.socialmediaproject.db.entities.UserEntity;
+import com.example.socialmediaproject.models.UserHelperClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,13 +42,14 @@ public class LoginTabFragment extends Fragment {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
     String userId;
+    UserHelperClass user;
     Intent intent;
 
     UserRoomDatabase userDB;
     UserDao userDao;
 
     public LoginTabFragment(){
-        userDB = UserRoomDatabase.getDatabase(MyApplication.getAppContext());
+        userDB = UserRoomDatabase.getDatabase(getActivity());
         userDao = userDB.userDao();
     }
 
@@ -141,9 +143,10 @@ public class LoginTabFragment extends Fragment {
                         String phoneNumberFromDB = snapshot.child(userId).child("phoneNumber").getValue(String.class);
 
                         intent = new Intent(getActivity(), MainActivity.class);
-                        intent.putExtra("email", emailFromDB);
-                        intent.putExtra("name", nameFromDB);
-                        intent.putExtra("phone", phoneNumberFromDB);
+
+                        user = new UserHelperClass(nameFromDB, phoneNumberFromDB, emailFromDB, passwordFromDB);
+                        userDao.deleteAll();
+                        userDao.insert(new UserEntity(userId, user.getEmail(), user.getName(), user.getPassword(), user.getPhoneNumber()));
 
                         startActivity(intent);
                     }

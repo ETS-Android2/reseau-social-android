@@ -1,7 +1,6 @@
 package com.example.socialmediaproject.ui.home;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -12,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.PostAdapter;
-import com.example.socialmediaproject.adapters.PostItemAdapter;
 import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.models.GroupItem;
 import com.example.socialmediaproject.models.PostItem;

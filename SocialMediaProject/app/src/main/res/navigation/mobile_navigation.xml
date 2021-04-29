@@ -106,10 +106,36 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.socialmediaproject.ui.settings.SettingsFragment"
         android:label="SettingsFragment" />
+
     <fragment
         android:id="@+id/settingsGroupFragment"
         android:name="com.example.socialmediaproject.ui.settings.SettingsGroupFragment"
-        android:label="SettingsGroupFragment" />
+        android:label="SettingsGroupFragment" >
+        <action
+            android:id="@+id/action_settingsGroupFragment_to_settingsGroupFragment_pageMembers"
+            app:destination="@id/settingsGroupFragment_pageMembers" />
+        <action
+            android:id="@+id/action_settingsGroupFragment_to_settingsEditGroupFragment"
+            app:destination="@id/settingsEditGroupFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsGroupFragment_pageMembers"
+        android:name="com.example.socialmediaproject.ui.settings.pageSettings.pageMembers.membersListFragment"
+        android:label="MembersList"
+        tools:layout="@layout/fragment_members_list">
+        <action
+            android:id="@+id/action_settingsGroupFragment_pageMembers_to_settingsGroupFragment"
+            app:destination="@id/settingsGroupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsEditGroupFragment"
+        android:name="com.example.socialmediaproject.ui.settings.pageSettings.pageEditGroup.SettingsEditGroupFragment"
+        android:label="SettingsEditGroupFragment" >
+        <action
+            android:id="@+id/action_settingsEditGroupFragment_to_settingsGroupFragment"
+            app:destination="@id/settingsGroupFragment" />
+    </fragment>
 
 
 </navigation>

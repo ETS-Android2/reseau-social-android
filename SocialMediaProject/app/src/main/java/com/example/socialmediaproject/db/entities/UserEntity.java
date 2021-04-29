@@ -40,4 +40,29 @@ public class UserEntity {
         this.password = password;
         this.phone = phone;
     }
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    @NonNull
+    public String getEmail() {
+        return email;
+    }
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+
+    @NonNull
+    public String getPassword() {
+        return password;
+    }
+
+    @NonNull
+    public String getPhone() {
+        return phone;
+    }
 }

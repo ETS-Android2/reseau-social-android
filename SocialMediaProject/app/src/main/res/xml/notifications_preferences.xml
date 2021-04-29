@@ -6,14 +6,27 @@
         <PreferenceCategory app:title="Notifications">
 
             <SwitchPreferenceCompat
+                app:key="notif_disabled"
+                app:title="@string/notif_disable"
+                android:disableDependentsState="true"
+                android:summaryOn="You will no longer receive notifications"
+                android:summaryOff="You will receive notifications"/>
+
+            <SwitchPreferenceCompat
+                android:dependency="notif_disabled"
+
                 app:key="notif_newPost"
                 app:title="@string/notif_newPost" />
 
             <SwitchPreferenceCompat
+                android:dependency="notif_disabled"
+
                 app:key="notif_newLike"
                 app:title="@string/notif_newLike" />
 
             <SwitchPreferenceCompat
+                android:dependency="notif_disabled"
+
                 app:key="notif_groupProposition"
                 app:title="@string/notif_groupProposition" />
 

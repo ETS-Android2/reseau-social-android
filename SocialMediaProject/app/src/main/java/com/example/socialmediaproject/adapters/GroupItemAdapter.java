@@ -19,6 +19,7 @@ import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.enums.Publication;
 import com.example.socialmediaproject.models.GroupItem;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -89,13 +90,11 @@ public class GroupItemAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //Toast.makeText(context, "Voir le groupe : " + itemTitle , Toast.LENGTH_SHORT).show();
 
-                // envoyer des données entre fragments
+                // envoyer l'objet group dans le fragment de destination
                 Bundle bundle = new Bundle();
-                bundle.putString("groupName", itemName);
-                bundle.putString("groupType", itemType);
-                bundle.putString("groupAccess", itemAccess.equals(Access.PRIVATE) ? "private" :"public" );
-                bundle.putString("groupPublication", itemPublication.equals(Publication.ALL) ? "all" :"moderators");
-                bundle.putString("groupSubject", itemSubject);
+                GroupItem obj = currentItem;
+                bundle.putSerializable("group", (Serializable) obj);
+
                 Navigation.findNavController(finalView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post, bundle);
             }
         });

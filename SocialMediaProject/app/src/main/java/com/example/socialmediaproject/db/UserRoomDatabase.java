@@ -24,7 +24,7 @@ public abstract class UserRoomDatabase extends RoomDatabase {
         if(userRoomDatabase == null){
             synchronized (UserRoomDatabase.class){
                 if(userRoomDatabase == null){
-                    userRoomDatabase = Room.databaseBuilder(context.getApplicationContext(), UserRoomDatabase.class, "user_database").build();
+                    userRoomDatabase = Room.databaseBuilder(context.getApplicationContext(), UserRoomDatabase.class, "user_database").allowMainThreadQueries().build();
                 }
             }
         }

@@ -5,7 +5,9 @@ package com.example.socialmediaproject.models;
 * et de son ajout dans la BDD distante (Firebase)
 */
 
-public class UserHelperClass {
+import java.io.Serializable;
+
+public class UserHelperClass implements Serializable {
 
     String name, phoneNumber, email, password;
 
@@ -16,6 +18,14 @@ public class UserHelperClass {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
+    }
+
+    // pour les test
+    public UserHelperClass(String name) {
+        this.name = name;
+        this.phoneNumber = "phoneNumber";
+        this.email = "email";
+        this.password = "password";
     }
 
     public String getName() {

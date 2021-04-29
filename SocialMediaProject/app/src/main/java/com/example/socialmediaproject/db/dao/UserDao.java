@@ -27,6 +27,9 @@ public interface UserDao {
     @Delete
     public void delete(UserEntity user);
 
+    @Query("DELETE FROM User")
+    public void deleteAll();
+
     @Query("SELECT * FROM User")
     public List<UserEntity> getAll();
 }
