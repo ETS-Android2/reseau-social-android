@@ -14,21 +14,11 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.db.UserRoomDatabase;
-import com.example.socialmediaproject.db.dao.UserDao;
 import com.example.socialmediaproject.models.Group;
 
 public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
     Group currentGroup;
-
-    private UserRoomDatabase userDB;
-    private UserDao userDao;
-
-    public SettingsGroupFragment(){
-        userDB = UserRoomDatabase.getDatabase(getActivity());
-        userDao = userDB.userDao();
-    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -48,7 +38,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
 
         // Si le compte connecté est l'admin du groupe (on compare les username car ils sont unique
-        if(userDao.getAll().get(0).name.toLowerCase().equals(currentGroup.getAdmin().getUsername().toLowerCase())){
+        if(true){
             // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
             preferenceInvitation.setVisible(currentGroup.isPrivate());
 

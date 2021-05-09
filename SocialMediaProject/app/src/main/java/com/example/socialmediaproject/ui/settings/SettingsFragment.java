@@ -8,10 +8,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.socialmediaproject.LoginActivity;
-import com.example.socialmediaproject.MainActivity;
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.db.UserRoomDatabase;
-import com.example.socialmediaproject.db.dao.UserDao;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

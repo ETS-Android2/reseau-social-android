@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,10 +26,17 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.enums.Access;
+import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.models.Notif;
 import com.example.socialmediaproject.models.User;
+
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.jetbrains.annotations.NotNull;
 
 public class NewGroupFragment extends Fragment {
 
@@ -37,7 +45,7 @@ public class NewGroupFragment extends Fragment {
     private AutoCompleteTextView spinnerGroupPublication;
     private AutoCompleteTextView spinnerGroupSubject;
 
-
+    private FirebaseFirestore fStore;
 
     private NewGroupViewModel mViewModel;
 
@@ -50,6 +58,8 @@ public class NewGroupFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_group_fragment, container, false);
 
+        fStore = FirebaseFirestore.getInstance();
+
         // title fragment in the header
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nouveau Groupe");
         // affichage de la flèche retour en arrière dans le menu
@@ -57,10 +67,10 @@ public class NewGroupFragment extends Fragment {
 
         EditText editText_groupName = view.findViewById(R.id.editText_group_name);
 
-        spinnerGroupType = view.findViewById(R.id.spinner_group_type);
-        spinnerGroupAccess = view.findViewById(R.id.spinner_group_access);
-        spinnerGroupSubject = view.findViewById(R.id.spinner_group_subject);
-        spinnerGroupPublication = view.findViewById(R.id.spinner_group_publication);
+        spinnerGroupType = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_type);
+        spinnerGroupAccess = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_access);
+        spinnerGroupSubject = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_subject);
+        spinnerGroupPublication = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_publication);
         ArrayAdapter<CharSequence> adapterTypeGroup = ArrayAdapter.createFromResource(getContext(), R.array.list_group_type, android.R.layout.simple_spinner_item);
         adapterTypeGroup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -84,38 +94,55 @@ public class NewGroupFragment extends Fragment {
         Button createGroup = view.findViewById(R.id.button_create_group);
         createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(view).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post);
-            GroupHelper.createGroup("test",
-                    "test type",
-                    "test domaine",
-                    new User("steve"),
-                    Access.PRIVATE).addOnFailureListener(onFailureListener());
-            /*if(editText_groupName.getText().toString().matches("") &&
-                    spinnerGroupType.getText().toString().matches("") &&
-                    spinnerGroupAccess.getText().toString().matches("") &&
-                    spinnerGroupPublication.getText().toString().matches("") &&
-                    spinnerGroupSubject.getText().toString().matches("")){
-                Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
-            }else{
-                //Navigation.findNavController(view1).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post);
-                GroupHelper.createGroup(editText_groupName.getText().toString(),
-                                        spinnerGroupType.getText().toString(),
-                                        spinnerGroupSubject.getText().toString(),
-                                        new User("steve"),
-                                        Access.PRIVATE).addOnFailureListener(onFailureListener());
+            public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                /*
+                bundle.putString("groupName", editText_groupName.getText().toString());
+                bundle.putString("groupType", spinnerGroupType.getText().toString());
+                bundle.putString("groupAccess", spinnerGroupAccess.getText().toString());
+                bundle.putString("groupPublication", spinnerGroupPublication.getText().toString());
+                bundle.putString("groupSubject", spinnerGroupSubject.getText().toString());
+                 */
 
 
-            }*/
+                Group currentGroup = new Group("Chess Club", "SMS", "Chess", new User("John"), Access.PRIVATE);
+                bundle.putSerializable("group", currentGroup);
+
+                Notif notif = new Notif("Salut1", "Salut2");
+
+                if(editText_groupName.getText().toString().matches("") ||
+                        spinnerGroupType.getText().toString().matches("") ||
+                        spinnerGroupAccess.getText().toString().matches("") ||
+                        spinnerGroupPublication.getText().toString().matches("") ||
+                        spinnerGroupSubject.getText().toString().matches("")){
+                    Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getContext(),"Groupe créé !" , Toast.LENGTH_SHORT).show();
+
+                    /****/
+                    DocumentReference documentReference = fStore.collection("groups").document("ID_3");
+
+                    documentReference.set(notif).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d("SIGNUP SUCCESS :", "onSuccess: group is created");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull @NotNull Exception e) {
+                            Log.d("SIGNUP ERROR :", "onFailure :" + e.toString());
+                        }
+                    });
+                    /****/
+
+                    Navigation.findNavController(view).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post, bundle);
+                }
+
             }
         });
 
         return view;
-    }
-
-    protected OnFailureListener onFailureListener(){
-        return e -> Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
     }
 
     @Override
