@@ -2,11 +2,13 @@ package com.example.socialmediaproject.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,13 +17,17 @@ import androidx.fragment.app.Fragment;
 
 import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.api.UserHelper;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.example.socialmediaproject.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.jetbrains.annotations.NotNull;
 
 public class SignupTabFragment extends Fragment {
 
@@ -29,13 +35,17 @@ public class SignupTabFragment extends Fragment {
     Button signup;
     float v=0;
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
+    String userID;
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_signup_tab, container, false);
+
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         email = root.findViewById(R.id.email);
         name = root.findViewById(R.id.name);
@@ -61,6 +71,7 @@ public class SignupTabFragment extends Fragment {
         password.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
         signup.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();
 
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,41 +80,8 @@ public class SignupTabFragment extends Fragment {
                 final String phone_value = phone.getText().toString();
                 final String password_value = password.getText().toString();
 
-                Query emailAddress = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("email").equalTo(email_value);
-                Query phoneNumber = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("phoneNumber").equalTo(phone_value);
-
-                emailAddress.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.getChildrenCount() > 0) {
-                            Toast.makeText(getContext(), "This Email Address is already using...", Toast.LENGTH_LONG).show();
-                        }
-                        else{
-                            phoneNumber.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(snapshot.getChildrenCount() > 0) {
-                                        Toast.makeText(getContext(), "This Phone Number is already using...", Toast.LENGTH_LONG).show();
-                                    }
-                                    else{
-                                        if(validateFields(name_value, phone_value, email_value, password_value))
-                                            registerUser(name_value, phone_value, email_value, password_value);
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    throw error.toException();
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        throw error.toException();
-                    }
-                });
+                if(validateFields(name_value, phone_value, email_value, password_value))
+                    registerUser(name_value, phone_value, email_value, password_value);
 
             }
         });
@@ -112,17 +90,38 @@ public class SignupTabFragment extends Fragment {
     }
 
     public void registerUser(String name, String phone, String email, String password){
-        rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("users");
-        String key =  rootNode.getReference("users").push().getKey();
 
-        UserHelper helperClass = new UserHelper(name, phone, email, password);
-        reference.child(key).setValue(helperClass);
+        fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(getContext(), "User created !", Toast.LENGTH_LONG).show();
 
-        Toast.makeText(getContext(), "User created !", Toast.LENGTH_LONG).show();
+                    userID = fAuth.getCurrentUser().getUid();
+                    DocumentReference documentReference = fStore.collection("users").document(userID);
 
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
+                    User user = new User(userID ,name, phone, email);
+
+                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d("SIGNUP SUCCESS :", "onSuccess: user is created for " + userID);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull @NotNull Exception e) {
+                            Log.d("SIGNUP ERROR :", "onFailure :" + e.toString());
+                        }
+                    });
+
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(getContext(), "Error ! " + task.getException().getMessage(), Toast.LENGTH_LONG);
+                }
+            }
+        });
     }
 
     public boolean validateFields(String name, String phone, String email, String password){
@@ -147,5 +146,14 @@ public class SignupTabFragment extends Fragment {
         }
 
         return validate;
+    }
+
+    protected OnFailureListener onFailureListener(){
+        return new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), getString(R.string.welcome_login), Toast.LENGTH_LONG).show();
+            }
+        };
     }
 }

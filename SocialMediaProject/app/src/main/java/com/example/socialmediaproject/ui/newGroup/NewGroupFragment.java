@@ -87,11 +87,11 @@ public class NewGroupFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(view).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post);
-            /*GroupHelper.createGroup("test",
+            GroupHelper.createGroup("test",
                     "test type",
                     "test domaine",
                     new User("steve"),
-                    Access.PRIVATE).addOnFailureListener(onFailureListener());*/
+                    Access.PRIVATE).addOnFailureListener(onFailureListener());
             /*if(editText_groupName.getText().toString().matches("") &&
                     spinnerGroupType.getText().toString().matches("") &&
                     spinnerGroupAccess.getText().toString().matches("") &&

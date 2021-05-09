@@ -17,16 +17,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.socialmediaproject.MainActivity;
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.db.UserRoomDatabase;
-import com.example.socialmediaproject.db.dao.UserDao;
-import com.example.socialmediaproject.db.entities.UserEntity;
-import com.example.socialmediaproject.api.UserHelper;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+
+import org.jetbrains.annotations.NotNull;
 
 public class LoginTabFragment extends Fragment {
 
@@ -35,24 +33,15 @@ public class LoginTabFragment extends Fragment {
     Button login;
     float v=0;
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
-    String userId;
-    UserHelper user;
     Intent intent;
-
-    UserRoomDatabase userDB;
-    UserDao userDao;
-
-    public LoginTabFragment(){
-        userDB = UserRoomDatabase.getDatabase(getActivity());
-        userDao = userDB.userDao();
-    }
+    FirebaseAuth fAuth;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_login_tab, container, false);
+
+        fAuth = FirebaseAuth.getInstance();
 
         email = root.findViewById(R.id.email);
         password = root.findViewById(R.id.password);
@@ -89,7 +78,7 @@ public class LoginTabFragment extends Fragment {
                 final String password_value = password.getText().toString();
 
                 if(validateFields(email_value, password_value))
-                    isUser(email_value, password_value);
+                    authenticate(email_value, password_value);
 
             }
         });
@@ -113,52 +102,21 @@ public class LoginTabFragment extends Fragment {
         return validate;
     }
 
-    public void isUser(String email, String password){
-        rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("users");
-
-        Query checkUser = reference.orderByChild("email").equalTo(email);
-
-        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void authenticate(String email, String password){
+        fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(getContext(),"User logged sucessfully", Toast.LENGTH_LONG).show();
 
-                String userId = "";
-
-                for(DataSnapshot child : snapshot.getChildren()){
-                    userId = child.getKey();
-                }
-
-                if(snapshot.exists()){
-                    Log.d("HERE :", snapshot.getValue().toString());
-                    String passwordFromDB = snapshot.child(userId).child("password").getValue(String.class);
-
-                    if(passwordFromDB != null && passwordFromDB.equals(password)){
-                        String emailFromDB = snapshot.child(userId).child("email").getValue(String.class);
-                        String nameFromDB = snapshot.child(userId).child("name").getValue(String.class);
-                        String phoneNumberFromDB = snapshot.child(userId).child("phoneNumber").getValue(String.class);
-
-                        intent = new Intent(getActivity(), MainActivity.class);
-
-                        user = new UserHelper(nameFromDB, phoneNumberFromDB, emailFromDB, passwordFromDB);
-                        userDao.deleteAll();
-                        userDao.insert(new UserEntity(userId, user.getEmail(), user.getName(), user.getPassword(), user.getPhoneNumber()));
-
-                        startActivity(intent);
-                    }
-                    else{
-                        Toast.makeText(getContext(), "Wrong Password", Toast.LENGTH_LONG).show();
-                    }
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
                 }
                 else{
-                    Toast.makeText(getContext(), "No such User exist", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Error ! " + task.getException().getMessage(), Toast.LENGTH_LONG);
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                throw error.toException();
             }
         });
     }
+
 }
