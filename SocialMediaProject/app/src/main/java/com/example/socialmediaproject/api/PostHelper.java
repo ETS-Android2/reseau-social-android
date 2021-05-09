@@ -11,9 +11,9 @@ public class PostHelper {
     private static final String COLLECTION_NAME = "posts";
 
     // --- GET ---
-    public static Query getAllMessageForGroup(String group){
+    public static Query getAllMessageForGroup(String groupId){
         return GroupHelper.getGroupCollection()
-                .document(group)
+                .document(groupId)
                 .collection(COLLECTION_NAME)
                 .orderBy("dateCreated")
                 .limit(50);

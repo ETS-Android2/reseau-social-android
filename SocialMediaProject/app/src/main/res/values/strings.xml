@@ -129,4 +129,5 @@
     <string name="group_edit_privacy">Groupe privé</string>
     <string name="group_edit_subject">Sujet du groupe</string>
     <string name="group_edit_publication">Publication</string>
+    <string name="error_unknown_error">erreur inconnu</string>
 </resources>
