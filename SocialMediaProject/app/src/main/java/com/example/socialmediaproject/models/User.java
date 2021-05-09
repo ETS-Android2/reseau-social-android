@@ -25,6 +25,14 @@ public class User {
         this.urlPicture = "urlPicture";
     }
 
+    public User(String uid, String username, String phone, String email) {
+        this.uid = uid;
+        this.username = username;
+        this.phoneNumber = phone;
+        this.email = email;
+        this.urlPicture = "null";
+    }
+
     public User(String uid, String username, String phone, String email, String urlPicture) {
         this.uid = uid;
         this.username = username;

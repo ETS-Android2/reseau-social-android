@@ -3,7 +3,6 @@ package com.example.socialmediaproject;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,43 +10,20 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.socialmediaproject.adapters.LoginAdapter;
-import com.example.socialmediaproject.db.UserRoomDatabase;
-import com.example.socialmediaproject.db.dao.UserDao;
-import com.example.socialmediaproject.db.entities.UserEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
     FloatingActionButton microsoft, google, apple;
-    Intent intent;
     float v=0;
-
-    UserRoomDatabase userDB;
-    UserDao userDao;
-    List<UserEntity> listUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        userDB = UserRoomDatabase.getDatabase(getApplicationContext());
-        userDao = userDB.userDao();
-        listUser = userDao.getAll();
-
-        Log.d("LOGIN :", String.valueOf(listUser.size()));
-
-        if(listUser.size() > 0) {
-            intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }
-
 
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
