@@ -121,7 +121,7 @@ public class NewGroupFragment extends Fragment {
                     Toast.makeText(getContext(),"Groupe créé !" , Toast.LENGTH_SHORT).show();
 
                     /****/
-                    DocumentReference documentReference = fStore.collection("groups").document("ID_2");
+                    DocumentReference documentReference = fStore.collection("groups").document("ID_3");
 
                     documentReference.set(notif).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

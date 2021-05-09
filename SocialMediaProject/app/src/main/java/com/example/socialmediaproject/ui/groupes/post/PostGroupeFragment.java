@@ -23,13 +23,20 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.socialmediaproject.R;
 
 import com.example.socialmediaproject.adapters.PostInGroupAdapter;
+import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.models.User;
 import com.example.socialmediaproject.newPostActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -51,7 +58,13 @@ public class PostGroupeFragment extends Fragment {
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();
-        currentGroup = (Group) bundle.getSerializable("group");
+
+        if(bundle != null){
+            currentGroup = (Group) bundle.getSerializable("group");
+        }else{
+            currentGroup = new Group("salut","type","test", new User("test"), Access.PUBLIC);
+        }
+
 
 
         ImageView imageAccess = root.findViewById(R.id.group_acces_image);
