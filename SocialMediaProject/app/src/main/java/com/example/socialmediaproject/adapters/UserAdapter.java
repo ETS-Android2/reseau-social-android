@@ -13,7 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.models.UserHelperClass;
+import com.example.socialmediaproject.api.UserHelper;
+import com.example.socialmediaproject.models.User;
 
 import java.util.List;
 
@@ -24,11 +25,11 @@ public class UserAdapter extends BaseAdapter {
 
     // fields
     private Context context;
-    private List<UserHelperClass> userList;
+    private List<User> userList;
     private LayoutInflater inflater;
 
     // constructor
-    public UserAdapter(Context context, List<UserHelperClass> userList){
+    public UserAdapter(Context context, List<User> userList){
         this.context = context;
         this.userList = userList;
         this.inflater = LayoutInflater.from(context);
@@ -40,7 +41,7 @@ public class UserAdapter extends BaseAdapter {
     }
 
     @Override
-    public UserHelperClass getItem(int position) {
+    public User getItem(int position) {
         return userList.get(position);
     }
 
@@ -55,8 +56,8 @@ public class UserAdapter extends BaseAdapter {
         view = this.inflater.inflate(R.layout.adapter_user_item, null);
 
         // get informations about item
-        UserHelperClass currentItem = getItem(i);
-        String itemName = currentItem.getName();
+        User currentItem = getItem(i);
+        String itemName = currentItem.getUsername();
 
         // get item name view
         TextView itemNameView = (TextView) view.findViewById(R.id.user_name);

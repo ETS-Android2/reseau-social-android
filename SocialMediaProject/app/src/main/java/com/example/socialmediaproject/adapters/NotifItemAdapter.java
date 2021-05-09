@@ -8,10 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.navigation.Navigation;
-
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.models.NotifItem;
+import com.example.socialmediaproject.models.Notif;
 
 import java.util.List;
 
@@ -22,11 +20,11 @@ public class NotifItemAdapter extends BaseAdapter {
 
     // fields
     private Context context;
-    private List<NotifItem> notifItemList;
+    private List<Notif> notifItemList;
     private LayoutInflater inflater;
 
     // constructor
-    public NotifItemAdapter(Context context, List<NotifItem> notifItemList){
+    public NotifItemAdapter(Context context, List<Notif> notifItemList){
         this.context = context;
         this.notifItemList = notifItemList;
         this.inflater = LayoutInflater.from(context);
@@ -38,7 +36,7 @@ public class NotifItemAdapter extends BaseAdapter {
     }
 
     @Override
-    public NotifItem getItem(int position) {
+    public Notif getItem(int position) {
         return notifItemList.get(position);
     }
 
@@ -53,7 +51,7 @@ public class NotifItemAdapter extends BaseAdapter {
         view = this.inflater.inflate(R.layout.adapter_notif_item, null);
 
         // get informations about item
-        NotifItem currentItem = getItem(i);
+        Notif currentItem = getItem(i);
 
         String itemType = currentItem.getType();
         String itemTitle = currentItem.getTitle();

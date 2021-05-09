@@ -2,8 +2,6 @@ package com.example.socialmediaproject.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +16,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.models.PostItem;
+import com.example.socialmediaproject.models.Post;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -32,10 +29,10 @@ public class PostInGroupAdapter extends RecyclerView.Adapter<PostInGroupAdapter.
 
     // fields
     private Context context;
-    private List<PostItem> postList;
+    private List<Post> postList;
 
     // constructor
-    public PostInGroupAdapter(Context context, List<PostItem> postList){
+    public PostInGroupAdapter(Context context, List<Post> postList){
         this.context = context;
         this.postList = postList;
     }
@@ -50,9 +47,9 @@ public class PostInGroupAdapter extends RecyclerView.Adapter<PostInGroupAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        PostItem currentItem = this.postList.get(position);
+        Post currentItem = this.postList.get(position);
 
-        holder.itemTitleView.setText(currentItem.getAuthor());
+        holder.itemTitleView.setText(currentItem.getUserSender().getUsername());
         holder.itemSubtitleView.setText("");
         holder.itemContentView.setText(currentItem.getContent());
         holder.itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));

@@ -8,17 +8,16 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.models.GroupItem;
+import com.example.socialmediaproject.models.Group;
 
 public class SettingsEditGroupFragment extends PreferenceFragmentCompat {
 
-    GroupItem currentGroup;
+    Group currentGroup;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -26,7 +25,7 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat {
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();
-        currentGroup = (GroupItem) bundle.getSerializable("group");
+        currentGroup = (Group) bundle.getSerializable("group");
 
         Preference preferencePublication = findPreference("group_edit_publication");
 
@@ -41,13 +40,25 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        // on récupère l'objet du fragment précédent
+        Bundle bundle = getArguments();
+        currentGroup = (Group) bundle.getSerializable("group");
+
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+        prefs.putBoolean("group_edit_privacy", currentGroup.isPrivate());
+        prefs.putString("group_edit_name", currentGroup.getName());
+        prefs.apply();
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
-
-        // affichage de la flèche retour en arrière dans le menu
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        // on récupère l'objet du fragment précédent
+        Bundle bundle = getArguments();
+        currentGroup = (Group) bundle.getSerializable("group");
     }
 
     @Override

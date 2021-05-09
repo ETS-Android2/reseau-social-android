@@ -9,15 +9,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.navigation.Navigation;
 
-import com.example.socialmediaproject.MainActivity;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.enums.Publication;
-import com.example.socialmediaproject.models.GroupItem;
+import com.example.socialmediaproject.models.Group;
 
 import java.io.Serializable;
 import java.util.List;
@@ -29,11 +27,11 @@ public class GroupItemAdapter extends BaseAdapter {
 
     // fields
     private Context context;
-    private List<GroupItem> groupItemList;
+    private List<Group> groupItemList;
     private LayoutInflater inflater;
 
     // constructor
-    public GroupItemAdapter(Context context, List<GroupItem> groupItemList){
+    public GroupItemAdapter(Context context, List<Group> groupItemList){
         this.context = context;
         this.groupItemList = groupItemList;
         this.inflater = LayoutInflater.from(context);
@@ -45,7 +43,7 @@ public class GroupItemAdapter extends BaseAdapter {
     }
 
     @Override
-    public GroupItem getItem(int position) {
+    public Group getItem(int position) {
         return groupItemList.get(position);
     }
 
@@ -61,7 +59,7 @@ public class GroupItemAdapter extends BaseAdapter {
         view = this.inflater.inflate(R.layout.adapter_group_item, null);
 
         // get informations about item
-        GroupItem currentItem = getItem(i);
+        Group currentItem = getItem(i);
 
         String itemName = currentItem.getName();
         String itemType = currentItem.getType();
@@ -92,7 +90,7 @@ public class GroupItemAdapter extends BaseAdapter {
 
                 // envoyer l'objet group dans le fragment de destination
                 Bundle bundle = new Bundle();
-                GroupItem obj = currentItem;
+                Group obj = currentItem;
                 bundle.putSerializable("group", (Serializable) obj);
 
                 Navigation.findNavController(finalView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post, bundle);

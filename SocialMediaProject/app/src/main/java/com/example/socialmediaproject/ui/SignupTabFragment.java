@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.models.UserHelperClass;
+import com.example.socialmediaproject.api.UserHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -116,7 +116,7 @@ public class SignupTabFragment extends Fragment {
         reference = rootNode.getReference("users");
         String key =  rootNode.getReference("users").push().getKey();
 
-        UserHelperClass helperClass = new UserHelperClass(name, phone, email, password);
+        UserHelper helperClass = new UserHelper(name, phone, email, password);
         reference.child(key).setValue(helperClass);
 
         Toast.makeText(getContext(), "User created !", Toast.LENGTH_LONG).show();

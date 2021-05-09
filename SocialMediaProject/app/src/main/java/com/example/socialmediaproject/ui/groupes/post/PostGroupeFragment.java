@@ -28,14 +28,14 @@ import android.widget.TextView;
 import com.example.socialmediaproject.R;
 
 import com.example.socialmediaproject.adapters.PostInGroupAdapter;
-import com.example.socialmediaproject.models.GroupItem;
+import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.newPostActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class PostGroupeFragment extends Fragment {
 
-    GroupItem currentGroup;
+    Group currentGroup;
     private RecyclerView recyclerView;
     private PostGroupeViewModel mViewModel;
 
@@ -51,7 +51,7 @@ public class PostGroupeFragment extends Fragment {
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();
-        currentGroup = (GroupItem) bundle.getSerializable("group");
+        currentGroup = (Group) bundle.getSerializable("group");
 
 
 

@@ -29,6 +29,15 @@ public class SettingsNotificationFragment extends PreferenceFragmentCompat {
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // title fragment in the header
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Notifications");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // title fragment in the header
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Notifications");
     }
 
     @Override

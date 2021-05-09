@@ -11,8 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.models.GroupItem;
-import com.example.socialmediaproject.models.PostItem;
+import com.example.socialmediaproject.models.Group;
 
 import java.util.List;
 
@@ -23,10 +22,10 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
 
     // fields
     private Context context;
-    private List<GroupItem> groupList;
+    private List<Group> groupList;
 
     //constructor
-    public GroupAdapter(Context context, List<GroupItem> groupList){
+    public GroupAdapter(Context context, List<Group> groupList){
         this.context = context;
         this.groupList = groupList;
     }
@@ -41,7 +40,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        GroupItem currentItem = this.groupList.get(position);
+        Group currentItem = this.groupList.get(position);
 
         holder.itemTitleView.setText(currentItem.getName());
     }

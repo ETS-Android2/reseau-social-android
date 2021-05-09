@@ -19,15 +19,11 @@ import android.widget.ListView;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.UserAdapter;
-import com.example.socialmediaproject.models.GroupItem;
-import com.example.socialmediaproject.models.UserHelperClass;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.socialmediaproject.models.Group;
 
 public class membersListFragment extends Fragment {
 
-    GroupItem currentGroup;
+    Group currentGroup;
 
     private MembersListViewModel mViewModel;
 
@@ -53,7 +49,7 @@ public class membersListFragment extends Fragment {
 
             // on récupère l'objet du fragment précédent
             Bundle bundle = getArguments();
-            currentGroup = (GroupItem) bundle.getSerializable("group");
+            currentGroup = (Group) bundle.getSerializable("group");
 
             // get list view
             ListView allUser = (ListView) view.findViewById(R.id.listView_members);

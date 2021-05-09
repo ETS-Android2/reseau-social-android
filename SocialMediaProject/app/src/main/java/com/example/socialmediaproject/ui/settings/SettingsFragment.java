@@ -44,11 +44,25 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // title fragment in the header
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Paramètres");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // title fragment in the header
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Paramètres");
     }
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
         String key = preference.getKey();
+
+        if(key.equals("notifications")){
+            Toast.makeText(getContext(),"Afficher page settings notifications !" , Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(getView()).navigate(R.id.action_settingsFragment_to_settingsNotificationFragment);
+        }
 
         if(key.equals("deconnexion")){
             userDao.deleteAll();
@@ -56,6 +70,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         }
+
 
         return super.onPreferenceTreeClick(preference);
     }

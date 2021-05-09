@@ -1,8 +1,6 @@
 package com.example.socialmediaproject.ui.settings;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,17 +12,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
-import androidx.preference.PreferenceScreen;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.enums.Access;
-import com.example.socialmediaproject.enums.Publication;
-import com.example.socialmediaproject.models.GroupItem;
+import com.example.socialmediaproject.db.UserRoomDatabase;
+import com.example.socialmediaproject.db.dao.UserDao;
+import com.example.socialmediaproject.models.Group;
 
 public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
-    GroupItem currentGroup;
+    Group currentGroup;
+
+    private UserRoomDatabase userDB;
+    private UserDao userDao;
+
+    public SettingsGroupFragment(){
+        userDB = UserRoomDatabase.getDatabase(getActivity());
+        userDao = userDB.userDao();
+    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -32,7 +36,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();
-        currentGroup = (GroupItem) bundle.getSerializable("group");
+        currentGroup = (Group) bundle.getSerializable("group");
 
 
 
@@ -42,16 +46,9 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         Preference preferenceEditMembersGroup = findPreference("group_members");
         Preference preferenceDeleteGroup = findPreference("group_delete");
 
-        // Si le compte connecté est un membre
-        if(true){
-            preferenceInvitation.setVisible(false);
-            preferenceExitGroup.setVisible(true);
 
-            preferenceEditGroup.setVisible(false);
-            preferenceEditMembersGroup.setVisible(false);
-            preferenceDeleteGroup.setVisible(false);
-        }else{ // Si le compte connecté est l'admin
-
+        // Si le compte connecté est l'admin du groupe (on compare les username car ils sont unique
+        if(userDao.getAll().get(0).name.toLowerCase().equals(currentGroup.getAdmin().getUsername().toLowerCase())){
             // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
             preferenceInvitation.setVisible(currentGroup.isPrivate());
 
@@ -60,6 +57,14 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
             preferenceEditGroup.setVisible(true);
             preferenceEditMembersGroup.setVisible(true);
             preferenceDeleteGroup.setVisible(true);
+        }else{
+            // Si le compte connecté est un membre
+            preferenceInvitation.setVisible(false);
+            preferenceExitGroup.setVisible(true);
+
+            preferenceEditGroup.setVisible(false);
+            preferenceEditMembersGroup.setVisible(false);
+            preferenceDeleteGroup.setVisible(false);
         }
 
 
@@ -71,13 +76,24 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();
-        currentGroup = (GroupItem) bundle.getSerializable("group");
+        currentGroup = (Group) bundle.getSerializable("group");
 
         // title fragment in the header bar
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
 
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // on récupère l'objet du fragment précédent
+        Bundle bundle = getArguments();
+        currentGroup = (Group) bundle.getSerializable("group");
+
+        // title fragment in the header bar
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
     }
 
     @Override

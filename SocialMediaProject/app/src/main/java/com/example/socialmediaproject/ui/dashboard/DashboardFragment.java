@@ -24,11 +24,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.GroupItemAdapter;
-import com.example.socialmediaproject.models.GroupItem;
+import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.models.User;
 import com.google.android.material.tabs.TabLayout;
 
 import com.example.socialmediaproject.enums.Access;
-import com.example.socialmediaproject.enums.Publication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,23 +47,23 @@ public class DashboardFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // list of group
-        List<GroupItem> groupAllItemList = new ArrayList<>();
-        groupAllItemList.add(new GroupItem("Les étudiants de montpellier","post", "test","antoine", Access.PUBLIC));
-        groupAllItemList.add(new GroupItem("Les motards du 36","sms", "test","antoine",Access.PRIVATE));
-        groupAllItemList.add(new GroupItem("Végan un jour, Végan toujours","email", "test","antoine",Access.PRIVATE));
-        groupAllItemList.add(new GroupItem("FDS - informatique","tchat", "test","antoine",Access.PUBLIC));
-        groupAllItemList.add(new GroupItem("Les fans de Squeezie","post", "test","antoine",Access.PUBLIC));
+        List<Group> groupAllItemList = new ArrayList<>();
+        groupAllItemList.add(new Group("Les étudiants de montpellier","post", "test",new User("antoine"), Access.PUBLIC));
+        groupAllItemList.add(new Group("Les motards du 36","sms", "test",new User("steve"),Access.PRIVATE));
+        groupAllItemList.add(new Group("Végan un jour, Végan toujours","email", "test",new User("steve"),Access.PRIVATE));
+        groupAllItemList.add(new Group("FDS - informatique","tchat", "test",new User("antoine"),Access.PUBLIC));
+        groupAllItemList.add(new Group("Les fans de Squeezie","post", "test",new User("antoine"),Access.PUBLIC));
 
 
 
 
 
-        List<GroupItem> groupPostItemList = new ArrayList<>();
-        List<GroupItem> groupTchatItemList = new ArrayList<>();
-        List<GroupItem> groupSMSItemList = new ArrayList<>();
-        List<GroupItem> groupEmailItemList = new ArrayList<>();
+        List<Group> groupPostItemList = new ArrayList<>();
+        List<Group> groupTchatItemList = new ArrayList<>();
+        List<Group> groupSMSItemList = new ArrayList<>();
+        List<Group> groupEmailItemList = new ArrayList<>();
 
-        for(GroupItem item : groupAllItemList){
+        for(Group item : groupAllItemList){
             switch (item.getType()){
                 case "post": groupPostItemList.add(item); break;
                 case "email": groupEmailItemList.add(item); break;

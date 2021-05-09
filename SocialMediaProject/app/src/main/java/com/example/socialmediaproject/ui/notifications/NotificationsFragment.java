@@ -1,6 +1,5 @@
 package com.example.socialmediaproject.ui.notifications;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,14 +14,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.NotifItemAdapter;
-import com.example.socialmediaproject.models.NotifItem;
-import com.example.socialmediaproject.ui.settings.SettingsNotificationFragment;
+import com.example.socialmediaproject.models.Notif;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +38,10 @@ public class NotificationsFragment extends Fragment {
 
 
         // list of posts
-        List<NotifItem> notifItemList = new ArrayList<>();
-        notifItemList.add(new NotifItem("Alerte de sécurité"));
-        notifItemList.add(new NotifItem("Un nouveau membre à été ajouté au groupe"));
-        notifItemList.add(new NotifItem("Antoine à aimé votre post"));
+        List<Notif> notifItemList = new ArrayList<>();
+        notifItemList.add(new Notif("Alerte de sécurité"));
+        notifItemList.add(new Notif("Un nouveau membre à été ajouté au groupe"));
+        notifItemList.add(new Notif("Antoine à aimé votre post"));
 
         // get list view
         ListView allPost = (ListView) root.findViewById(R.id.notificationsListView);

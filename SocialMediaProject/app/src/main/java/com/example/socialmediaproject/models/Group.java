@@ -1,5 +1,6 @@
 package com.example.socialmediaproject.models;
 
+import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.enums.Publication;
 
@@ -11,20 +12,21 @@ import java.util.List;
  * Created by Antoine Barbier and Antoine Brahimi on 3/30/21.
  */
 
-public class GroupItem  implements Serializable {
-    // fields
-    private String name, type, field, admin;
+public class Group implements Serializable {
+
+    private String name, type, field;
+    private User admin;
     private Publication publication;
     private Access access;
     private Boolean is_private; // if private : true, else is public
 
-    private List<PostItem> postList;
+    private List<Post> postList;
 
-    private List<UserHelperClass> membersList;
+    private List<User> membersList;
 
 
-    // constructor
-    public GroupItem(String _name, String _type, String _field, String _admin,  Access _access){
+    //  --- CONSTRUCTORS ---
+    public Group(String _name, String _type, String _field, User _admin, Access _access){
         this.type   = _type;
         this.name   = _name;
         this.field  = _field;
@@ -33,39 +35,43 @@ public class GroupItem  implements Serializable {
         this.publication = Publication.ALL;
         this.is_private = this.access.equals(Access.PRIVATE);
 
-        this.postList = new ArrayList<>();
-        this.postList.add(new PostItem(this, "Antoine"));
-        this.postList.add(new PostItem(this, "Thomas"));
-        this.postList.add(new PostItem(this, "Enzo"));
-        this.postList.add(new PostItem(this, "Pedro"));
-        this.postList.add(new PostItem(this, "José"));
-
         this.membersList = new ArrayList<>();
-        this.membersList.add(new UserHelperClass("Antoine Barbier"));
-        this.membersList.add(new UserHelperClass("Antoine Brahimi"));
-        this.membersList.add(new UserHelperClass("Thomas Pesquet"));
-        this.membersList.add(new UserHelperClass("Usain Bolt"));
-        this.membersList.add(new UserHelperClass("Andrés Pérès"));
+        this.membersList.add(new User("Antoine Barbier"));
+        this.membersList.add(new User("Antoine Brahimi"));
+        this.membersList.add(new User("Thomas Pesquet"));
+        this.membersList.add(new User("Usain Bolt"));
+        this.membersList.add(new User("Andrés Pérès"));
+
+        this.postList = new ArrayList<>();
+        this.postList.add(new Post(this, membersList.get(0)));
+        this.postList.add(new Post(this, membersList.get(1)));
+        this.postList.add(new Post(this, membersList.get(2)));
+        this.postList.add(new Post(this, membersList.get(3)));
+        this.postList.add(new Post(this, membersList.get(4)));
+
+
     }
 
-    // methods get
+    // --- GETTERS ---
     public String getName(){ return this.name;}
     public String getType() { return this.type;}
     public String getField() { return this.field;}
-    public String getAdmin(){ return this.admin;}
+    public User getAdmin(){ return this.admin;}
     public Access getAccess(){ return this.access;}
     public Publication getPublication(){ return this.publication;}
 
-    public List<PostItem> getPosts(){ return this.postList; }
-    public List<UserHelperClass> getMembers(){ return this.membersList; }
+    public List<Post> getPosts(){ return this.postList; }
+    public List<User> getMembers(){ return this.membersList; }
 
-    // methods set
+
+    // --- SETTERS ---
     public void setName(String name){ this.name = name;}
     public void setType(String type) { this.type = type;}
     public void setField(String field) { this.field = field;}
-    public void setAdmin(String admin){ this.admin = admin;}
+    public void setAdmin(User admin){ this.admin = admin;}
     public void setAccess(Access access){ this.access = access;}
 
 
+    // --- METHODS ---
     public Boolean isPrivate(){  return this.is_private; }
 }

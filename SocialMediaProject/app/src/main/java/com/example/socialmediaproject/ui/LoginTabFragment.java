@@ -1,6 +1,5 @@
 package com.example.socialmediaproject.ui;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,15 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.MainActivity;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.db.UserRoomDatabase;
 import com.example.socialmediaproject.db.dao.UserDao;
 import com.example.socialmediaproject.db.entities.UserEntity;
-import com.example.socialmediaproject.models.UserHelperClass;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.socialmediaproject.api.UserHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,7 +38,7 @@ public class LoginTabFragment extends Fragment {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
     String userId;
-    UserHelperClass user;
+    UserHelper user;
     Intent intent;
 
     UserRoomDatabase userDB;
@@ -144,7 +140,7 @@ public class LoginTabFragment extends Fragment {
 
                         intent = new Intent(getActivity(), MainActivity.class);
 
-                        user = new UserHelperClass(nameFromDB, phoneNumberFromDB, emailFromDB, passwordFromDB);
+                        user = new UserHelper(nameFromDB, phoneNumberFromDB, emailFromDB, passwordFromDB);
                         userDao.deleteAll();
                         userDao.insert(new UserEntity(userId, user.getEmail(), user.getName(), user.getPassword(), user.getPhoneNumber()));
 

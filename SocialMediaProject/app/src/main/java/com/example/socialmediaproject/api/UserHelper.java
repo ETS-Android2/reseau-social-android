@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.models;
+package com.example.socialmediaproject.api;
 
 /*
 * Modele utilisé lors de l'inscription d'un utilisateur
@@ -7,13 +7,13 @@ package com.example.socialmediaproject.models;
 
 import java.io.Serializable;
 
-public class UserHelperClass implements Serializable {
+public class UserHelper implements Serializable {
 
     String name, phoneNumber, email, password;
 
-    public UserHelperClass(){}
+    public UserHelper(){}
 
-    public UserHelperClass(String name, String phoneNumber, String email, String password) {
+    public UserHelper(String name, String phoneNumber, String email, String password) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
@@ -21,7 +21,7 @@ public class UserHelperClass implements Serializable {
     }
 
     // pour les test
-    public UserHelperClass(String name) {
+    public UserHelper(String name) {
         this.name = name;
         this.phoneNumber = "phoneNumber";
         this.email = "email";
@@ -60,3 +60,5 @@ public class UserHelperClass implements Serializable {
         this.password = password;
     }
 }
+
+
