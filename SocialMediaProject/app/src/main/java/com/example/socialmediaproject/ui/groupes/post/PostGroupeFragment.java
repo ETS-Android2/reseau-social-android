@@ -54,7 +54,6 @@ public class PostGroupeFragment extends Fragment {
         currentGroup = (Group) bundle.getSerializable("group");
 
 
-
         ImageView imageAccess = root.findViewById(R.id.group_acces_image);
         TextView tv_groupTitle = root.findViewById(R.id.group_title);
         TextView tv_groupType = root.findViewById(R.id.group_type);

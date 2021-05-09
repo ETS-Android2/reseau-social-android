@@ -1,6 +1,5 @@
 package com.example.socialmediaproject.models;
 
-import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.enums.Publication;
 
