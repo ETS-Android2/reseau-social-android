@@ -23,13 +23,6 @@ import androidx.preference.PreferenceFragmentCompat;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     Intent intent;
-    UserRoomDatabase userDB;
-    UserDao userDao;
-
-    public SettingsFragment(){
-        userDB = UserRoomDatabase.getDatabase(getActivity());
-        userDao = userDB.userDao();
-    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -65,7 +58,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         if(key.equals("deconnexion")){
-            userDao.deleteAll();
             Toast.makeText(getContext(),"Déconnexion" , Toast.LENGTH_SHORT).show();
             intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
