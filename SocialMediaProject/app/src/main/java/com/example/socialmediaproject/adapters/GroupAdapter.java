@@ -57,16 +57,13 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            itemTitleView = (TextView) itemView.findViewById(R.id.item_title);
+            itemTitleView = itemView.findViewById(R.id.item_title);
 
 
             // accéder à la notification
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Toast.makeText(context, "Voir le groupe : " + itemTitle , Toast.LENGTH_SHORT).show();
-                    Navigation.findNavController(itemView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post);
-                }
+            itemView.setOnClickListener(v -> {
+                //Toast.makeText(context, "Voir le groupe : " + itemTitle , Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(itemView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post);
             });
 
 

@@ -49,7 +49,7 @@ public class ProfileItemAdapter extends BaseAdapter {
         return 0;
     }
 
-    @SuppressLint("ViewHolder")
+    @SuppressLint({"ViewHolder", "InflateParams"})
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
@@ -68,34 +68,31 @@ public class ProfileItemAdapter extends BaseAdapter {
         itemIconView.setImageResource(resId);
 
         // get item title view
-        TextView itemTitleView = (TextView) view.findViewById(R.id.item_title);
+        TextView itemTitleView = view.findViewById(R.id.item_title);
         itemTitleView.setText(itemTitle);
 
 
         View finalView = view;
         // accéder à la notification
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (itemTitle){
-                    case "Mes favoris":
-                        Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myFavorisFragment);
-                        break;
-                    case "Mes posts":
-                        Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myPostsFragment);
-                        break;
-                    case "Mes groupes":
-                        Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myGroupsFragment);
-                        break;
-                    case "Mes informations":
-                        Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_my_informationsFragment);
-                        break;
-                    default:
-                        Toast.makeText(context, "Voir : " + itemTitle , Toast.LENGTH_SHORT).show();
-                        break;
-                }
-
+        view.setOnClickListener(v -> {
+            switch (itemTitle){
+                case "Mes favoris":
+                    Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myFavorisFragment);
+                    break;
+                case "Mes posts":
+                    Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myPostsFragment);
+                    break;
+                case "Mes groupes":
+                    Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myGroupsFragment);
+                    break;
+                case "Mes informations":
+                    Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_my_informationsFragment);
+                    break;
+                default:
+                    Toast.makeText(context, "Voir : " + itemTitle , Toast.LENGTH_SHORT).show();
+                    break;
             }
+
         });
 
         return view;

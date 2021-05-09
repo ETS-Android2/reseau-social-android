@@ -1,5 +1,6 @@
 package com.example.socialmediaproject.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ public class NotifItemAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
@@ -59,21 +61,16 @@ public class NotifItemAdapter extends BaseAdapter {
 
 
         // get item title view
-        TextView itemTitleView = (TextView) view.findViewById(R.id.item_title);
+        TextView itemTitleView = view.findViewById(R.id.item_title);
         itemTitleView.setText(itemTitle);
 
         // get item content view
-        TextView itemContentView = (TextView) view.findViewById(R.id.item_content);
+        TextView itemContentView = view.findViewById(R.id.item_content);
         itemContentView.setText(itemContent);
 
         View finalView = view;
         // accéder à la notification
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Voir la notification : " + itemTitle , Toast.LENGTH_SHORT).show();
-            }
-        });
+        view.setOnClickListener(v -> Toast.makeText(context, "Voir la notification : " + itemTitle , Toast.LENGTH_SHORT).show());
 
         return view;
     }

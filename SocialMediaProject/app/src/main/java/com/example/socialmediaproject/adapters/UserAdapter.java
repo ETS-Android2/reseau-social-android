@@ -2,7 +2,6 @@ package com.example.socialmediaproject.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.User;
 
 import java.util.List;
@@ -63,31 +61,27 @@ public class UserAdapter extends BaseAdapter {
         TextView itemNameView = (TextView) view.findViewById(R.id.user_name);
         itemNameView.setText(itemName);
         
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // setup the alert builder
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(itemName);
-                // add a list
-                String[] actions = {"Contacter", "Promouvoir", "Supprimer"};
-                builder.setItems(actions, new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0: // Contacter
-                                Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
-                                break;
-                            case 1: // Promouvoir
-                                Toast.makeText(context, "Promouvoir l'utilisateur !"  , Toast.LENGTH_SHORT).show();
-                                break;
-                            case 2: // Supprimer
-                                Toast.makeText(context, "Partager le post !"  , Toast.LENGTH_SHORT).show();
-                                break;
-                        } } }); // create and show the alert dialog
+        view.setOnClickListener(v -> {
+            // setup the alert builder
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(itemName);
+            // add a list
+            String[] actions = {"Contacter", "Promouvoir", "Supprimer"};
+            builder.setItems(actions, (dialog, which) -> {
+                switch (which) {
+                    case 0: // Contacter
+                        Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1: // Promouvoir
+                        Toast.makeText(context, "Promouvoir l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2: // Supprimer
+                        Toast.makeText(context, "Partager le post !"  , Toast.LENGTH_SHORT).show();
+                        break;
+                } }); // create and show the alert dialog
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
         return view;

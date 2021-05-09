@@ -17,7 +17,6 @@ import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.enums.Publication;
 import com.example.socialmediaproject.models.Group;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -72,7 +71,7 @@ public class GroupItemAdapter extends BaseAdapter {
         itemTitleView.setText(itemName);
 
         // Affichage de l'icon cadena en fonction du group privé ou public
-        ImageView iv_imageAccess = (ImageView) view.findViewById(R.id.groupItem_access_image);
+        ImageView iv_imageAccess = view.findViewById(R.id.groupItem_access_image);
         if(currentItem.isPrivate()){
             iv_imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
         }else{
@@ -90,8 +89,7 @@ public class GroupItemAdapter extends BaseAdapter {
 
                 // envoyer l'objet group dans le fragment de destination
                 Bundle bundle = new Bundle();
-                Group obj = currentItem;
-                bundle.putSerializable("group", (Serializable) obj);
+                bundle.putSerializable("group", currentItem);
 
                 Navigation.findNavController(finalView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post, bundle);
             }
