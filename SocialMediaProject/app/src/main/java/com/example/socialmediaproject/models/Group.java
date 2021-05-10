@@ -25,6 +25,15 @@ public class Group implements Serializable {
 
 
     //  --- CONSTRUCTORS ---
+    public Group(){
+        this.type   = "_type";
+        this.name   = "_name";
+        this.field  = "_field";
+        this.admin  = new User("test");
+        //this.access = _access;
+        //this.publication = Publication.ALL;
+        this.is_private = true; //this.access.equals(Access.PRIVATE);
+    }
     public Group(String _name, String _type, String _field, User _admin){
         this.type   = _type;
         this.name   = _name;

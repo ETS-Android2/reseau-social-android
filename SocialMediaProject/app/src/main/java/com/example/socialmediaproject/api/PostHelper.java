@@ -18,9 +18,9 @@ public class PostHelper {
     private static final String COLLECTION_NAME = "posts";
 
     // --- CREATE ---
-    public static Task<DocumentReference> createPostForGroup(){
+    public static Task<DocumentReference> createPostForGroup(String content){
         // 1 - Create the Message object
-        Notif post = new Notif("group", "userSender");
+        Post post = new Post(content);
         // 2 - Store Message to Firestore
         return GroupHelper.getGroupCollection()
                 .document("test")
@@ -29,11 +29,17 @@ public class PostHelper {
     }
 
     // --- GET ---
-    public static Query getAllMessageForGroup(String name){
+    public static Query getAllPostForGroup(String name){
         return GroupHelper.getGroupCollection()
                 .document(name)
                 .collection(COLLECTION_NAME)
                 .orderBy("dateCreated")
                 .limit(50);
+    }
+
+    // --- DELETE ---
+    public static Task<Void> deletePost(String groupId, String postId) {
+        return GroupHelper.getGroupCollection().document(groupId)
+                .collection(COLLECTION_NAME).document(postId).delete();
     }
 }

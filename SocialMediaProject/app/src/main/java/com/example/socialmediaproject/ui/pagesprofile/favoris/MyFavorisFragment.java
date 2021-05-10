@@ -64,9 +64,9 @@ public class MyFavorisFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView_myFavoris);
 
-        PostAdapter myAdapter = new PostAdapter(getContext(), postItemList);
-        recyclerView.setAdapter(myAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //PostAdapter myAdapter = new PostAdapter(getContext(), postItemList);
+        //recyclerView.setAdapter(myAdapter);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return view;
     }

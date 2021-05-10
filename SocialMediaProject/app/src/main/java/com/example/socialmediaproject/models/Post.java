@@ -25,6 +25,27 @@ public class Post implements Serializable {
     private int nbStars;
     private Boolean isLike;
 
+
+    public Post(){
+        this.content = null;
+        this.group = new Group("test","test","test",new User("yesy"));
+        this.userSender = null;
+        this.urlImage = null;
+        this.nbViews = 0;
+        this.nbStars =  0;
+        this.isLike = false;
+    }
+
+    public Post(String content){
+        this.content = content;
+        this.group = new Group("test","test","test",new User("yesy"));
+        this.userSender = null;
+        this.urlImage = null;
+        this.nbViews = 0;
+        this.nbStars =  0;
+        this.isLike = false;
+    }
+
     public Post(Group group, User userSender){
         this.content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut " +
                 "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco " +

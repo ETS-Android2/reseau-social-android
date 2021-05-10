@@ -68,9 +68,9 @@ public class HomeFragment extends Fragment {
 
         recyclerView = root.findViewById(R.id.recyclerView_home_posts);
 
-        PostAdapter myAdapter = new PostAdapter(getContext(), postItemList);
-        recyclerView.setAdapter(myAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //PostAdapter myAdapter = new PostAdapter(getContext(), postItemList);
+        //ecyclerView.setAdapter(myAdapter);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // on enlève la fleche de retour en arrière
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);

@@ -26,27 +26,44 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
 
+import com.example.socialmediaproject.adapters.PostAdapter;
 import com.example.socialmediaproject.adapters.PostInGroupAdapter;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.example.socialmediaproject.newPostActivity;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.Query;
 
 
-public class PostGroupeFragment extends Fragment {
+public class PostGroupeFragment extends Fragment implements PostAdapter.Listener {
+
+    // FOR DESIGN
+    // 1 - Getting all views needed
+
+
+    // FOR DATA
+    // 2 - Declaring Adapter and data
+    private PostAdapter postAdapter;
+    @Nullable private User modelCurrentUser;
+    private String currentGroupName;
 
     Group currentGroup;
     private RecyclerView recyclerView;
     private PostGroupeViewModel mViewModel;
+
+    private TextView textViewRecyclerViewEmpty;
 
     public static PostGroupeFragment newInstance() {
         return new PostGroupeFragment();
@@ -59,15 +76,16 @@ public class PostGroupeFragment extends Fragment {
 
 
         // on récupère l'objet du fragment précédent
-        Bundle bundle = getArguments();
+        /*Bundle bundle = getArguments();
 
         if(bundle != null){
             currentGroup = (Group) bundle.getSerializable("group");
-        }else{
+        }else{*/
             currentGroup = new Group("salut","type","test", new User("test"));
-        }
+        //}
 
 
+        textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
 
         ImageView imageAccess = root.findViewById(R.id.group_acces_image);
         TextView tv_groupTitle = root.findViewById(R.id.group_title);
@@ -93,6 +111,7 @@ public class PostGroupeFragment extends Fragment {
         //PostInGroupAdapter myAdapter = new PostInGroupAdapter(getContext(), currentGroup.getPosts());
         //recyclerView.setAdapter(myAdapter);
         //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        this.configureRecyclerView("test");
 
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -107,15 +126,11 @@ public class PostGroupeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
-                PostHelper.createPostForGroup()
-                        .addOnFailureListener(onFailureListener());
+
                 UserHelper.addUserInGroup()
                         .addOnFailureListener(onFailureListener());
 
                 Intent intent = new Intent(getActivity(), newPostActivity.class);
-                Bundle b = new Bundle();
-                b.putInt("key", 1); //Your id
-                intent.putExtras(b); //Put your id to your next Intent
                 startActivity(intent);
             }
         });
@@ -131,6 +146,55 @@ public class PostGroupeFragment extends Fragment {
             }
         };
     }
+    // --------------------
+    // REST REQUESTS
+    // --------------------
+    // 4 - Get Current User from Firestore
+
+
+
+    // --------------------
+    // UI
+    // --------------------
+    // 5 - Configure RecyclerView with a Query
+    private void configureRecyclerView(String groupName){
+        //Track current group name
+        this.currentGroupName = groupName;
+        //Configure Adapter & RecyclerView
+        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(this.currentGroupName)),
+                Glide.with(this), this, "idUser");
+        postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                recyclerView.smoothScrollToPosition(postAdapter.getItemCount()); // Scroll to bottom on new messages
+            }
+        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(this.postAdapter);
+    }
+
+    // 6 - Create options for RecyclerView from a Query
+    private FirestoreRecyclerOptions<Post> generateOptionsForAdapter(Query query){
+        return new FirestoreRecyclerOptions.Builder<Post>()
+                .setQuery(query, Post.class)
+                .setLifecycleOwner(this)
+                .build();
+    }
+
+    // --------------------
+    // CALLBACK
+    // --------------------
+
+
+    @Override
+    public void onDataChanged() {
+        // 7 - Show TextView in case RecyclerView is empty
+        textViewRecyclerViewEmpty.setVisibility(this.postAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+    }
+
+    // --------------------
+    // OTHERS
+    // --------------------
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
