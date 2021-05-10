@@ -1,8 +1,10 @@
 package com.example.socialmediaproject.api;
 
+import com.example.socialmediaproject.models.Notif;
 import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -10,7 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * Created by Antoine Barbier and Antoine Brahimi on 5/9/21.
  */
 
-public class UserHelperNewVersion {
+public class UserHelper {
 
     private static final String COLLECTION_NAME = "users";
 
@@ -24,24 +26,35 @@ public class UserHelperNewVersion {
         // 1 - Create User object
         User userToCreate = new User(uid, username, phone, email, urlPicture);
         // 2 - Add a new User Document to Firestore
-        return UserHelperNewVersion.getUsersCollection()
+        return UserHelper.getUsersCollection()
                 .document(uid)
                 .set(userToCreate);
     }
 
+    // --- ADD USER TO A GROUP ---
+    public static Task<DocumentReference> addUserInGroup(){
+        // 1 - Create the Message object
+        User user = new User("antoine");
+        // 2 - Store Message to Firestore
+        return GroupHelper.getGroupCollection()
+                .document("test")
+                .collection(COLLECTION_NAME)
+                .add(user);
+    }
+
     // --- GET ---
     public static Task<DocumentSnapshot> getUser(String uid){
-        return UserHelperNewVersion.getUsersCollection().document(uid).get();
+        return UserHelper.getUsersCollection().document(uid).get();
     }
 
     // --- UPDATE ---
     public static Task<Void> updateUsername(String username, String uid) {
-        return UserHelperNewVersion.getUsersCollection().document(uid).update("username", username);
+        return UserHelper.getUsersCollection().document(uid).update("username", username);
     }
 
     // --- DELETE ---
     public static Task<Void> deleteUser(String uid) {
-        return UserHelperNewVersion.getUsersCollection().document(uid).delete();
+        return UserHelper.getUsersCollection().document(uid).delete();
     }
 
 }

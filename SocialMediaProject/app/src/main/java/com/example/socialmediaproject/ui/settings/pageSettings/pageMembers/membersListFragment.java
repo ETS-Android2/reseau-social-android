@@ -53,7 +53,7 @@ public class membersListFragment extends Fragment {
 
             // get list view
             ListView allUser = (ListView) view.findViewById(R.id.listView_members);
-            allUser.setAdapter(new UserAdapter(getContext(), currentGroup.getMembers()));
+            //allUser.setAdapter(new UserAdapter(getContext(), currentGroup.getMembers()));
 
             // title fragment in the header
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Membres du groupe");

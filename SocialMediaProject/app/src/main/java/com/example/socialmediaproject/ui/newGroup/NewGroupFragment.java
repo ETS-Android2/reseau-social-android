@@ -26,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Notif;
@@ -58,7 +59,6 @@ public class NewGroupFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_group_fragment, container, false);
 
-        fStore = FirebaseFirestore.getInstance();
 
         // title fragment in the header
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nouveau Groupe");
@@ -106,10 +106,9 @@ public class NewGroupFragment extends Fragment {
                  */
 
 
-                Group currentGroup = new Group("Chess Club", "SMS", "Chess", new User("John"), Access.PRIVATE);
+                Group currentGroup = new Group("Chess Club", "SMS", "Chess", new User("John"));
                 bundle.putSerializable("group", currentGroup);
 
-                Notif notif = new Notif("Salut1", "Salut2");
 
                 if(editText_groupName.getText().toString().matches("") ||
                         spinnerGroupType.getText().toString().matches("") ||
@@ -120,21 +119,8 @@ public class NewGroupFragment extends Fragment {
                 }else{
                     Toast.makeText(getContext(),"Groupe créé !" , Toast.LENGTH_SHORT).show();
 
-                    /****/
-                    DocumentReference documentReference = fStore.collection("groups").document("ID_3");
-
-                    documentReference.set(notif).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Log.d("SIGNUP SUCCESS :", "onSuccess: group is created");
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull @NotNull Exception e) {
-                            Log.d("SIGNUP ERROR :", "onFailure :" + e.toString());
-                        }
-                    });
-                    /****/
+                    GroupHelper.createGroup("test","test","test",new User("test"))
+                            .addOnFailureListener(onFailureListener());
 
                     Navigation.findNavController(view).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post, bundle);
                 }
@@ -144,6 +130,16 @@ public class NewGroupFragment extends Fragment {
 
         return view;
     }
+
+    protected OnFailureListener onFailureListener(){
+        return new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), getString(R.string.error_unknown_error), Toast.LENGTH_LONG).show();
+            }
+        };
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

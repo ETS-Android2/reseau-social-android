@@ -21,14 +21,13 @@ public class GroupHelper {
     }
 
     // --- CREATE ---
-    public static Task<DocumentReference> createGroup(String name, String type, String field, User admin, Access access) {
+    public static Task<Void> createGroup(String name, String type, String field, User admin) {
         // 1 - Create User object
-        Group groupToCreate = new Group(name, type, field, admin, access);
+        Group groupToCreate = new Group(name, type, field, admin);
         // 2 - Add a new User Document to Firestore
         return GroupHelper.getGroupCollection()
                 .document(name)
-                .collection(COLLECTION_NAME)
-                .add(groupToCreate);
+                .set(groupToCreate); // set :  Crée (ou écrase) un Document à partir d'un objet POJO.
     }
 
     // --- GET ---

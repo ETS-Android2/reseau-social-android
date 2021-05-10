@@ -1,9 +1,11 @@
 package com.example.socialmediaproject.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Antoine Barbier and Antoine Brahimi on 3/30/21.
  */
-public class Notif {
+public class Notif implements Serializable {
 
     private String type;    // type de notification
     private String title;   // titre de la notification

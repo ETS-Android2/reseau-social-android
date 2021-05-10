@@ -2,11 +2,13 @@ package com.example.socialmediaproject.models;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
+
 /**
  * Created by Antoine Barbier on 5/9/21.
  */
 
-public class User {
+public class User implements Serializable {
 
     private String uid;
     private String username;

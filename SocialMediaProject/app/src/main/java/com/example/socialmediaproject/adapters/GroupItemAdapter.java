@@ -62,8 +62,8 @@ public class GroupItemAdapter extends BaseAdapter {
 
         String itemName = currentItem.getName();
         String itemType = currentItem.getType();
-        Access itemAccess = currentItem.getAccess();
-        Publication itemPublication = currentItem.getPublication();
+        //Access itemAccess = currentItem.getAccess();
+        //Publication itemPublication = currentItem.getPublication();
         String itemSubject = currentItem.getField();
 
         // get item title view

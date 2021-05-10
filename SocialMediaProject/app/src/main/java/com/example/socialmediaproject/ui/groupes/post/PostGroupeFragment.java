@@ -30,6 +30,8 @@ import com.example.socialmediaproject.R;
 
 import com.example.socialmediaproject.adapters.PostInGroupAdapter;
 import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.api.PostHelper;
+import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
@@ -62,7 +64,7 @@ public class PostGroupeFragment extends Fragment {
         if(bundle != null){
             currentGroup = (Group) bundle.getSerializable("group");
         }else{
-            currentGroup = new Group("salut","type","test", new User("test"), Access.PUBLIC);
+            currentGroup = new Group("salut","type","test", new User("test"));
         }
 
 
@@ -88,9 +90,9 @@ public class PostGroupeFragment extends Fragment {
 
         recyclerView = root.findViewById(R.id.recyclerView_group_posts);
 
-        PostInGroupAdapter myAdapter = new PostInGroupAdapter(getContext(), currentGroup.getPosts());
-        recyclerView.setAdapter(myAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //PostInGroupAdapter myAdapter = new PostInGroupAdapter(getContext(), currentGroup.getPosts());
+        //recyclerView.setAdapter(myAdapter);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -104,12 +106,30 @@ public class PostGroupeFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getActivity(), newPostActivity.class));
+                Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
+                PostHelper.createPostForGroup()
+                        .addOnFailureListener(onFailureListener());
+                UserHelper.addUserInGroup()
+                        .addOnFailureListener(onFailureListener());
+
+                Intent intent = new Intent(getActivity(), newPostActivity.class);
+                Bundle b = new Bundle();
+                b.putInt("key", 1); //Your id
+                intent.putExtras(b); //Put your id to your next Intent
+                startActivity(intent);
             }
         });
 
         return root;
+    }
+
+    protected OnFailureListener onFailureListener(){
+        return new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), getString(R.string.error_unknown_error), Toast.LENGTH_LONG).show();
+            }
+        };
     }
 
     @Override
