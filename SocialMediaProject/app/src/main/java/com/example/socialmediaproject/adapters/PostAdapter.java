@@ -78,8 +78,6 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                         break;
                     case 1: // Supprimer
                         getSnapshots().getSnapshot(position).getReference().delete();
-
-
                         notifyDataSetChanged();
                         Toast.makeText(context, "Supprimer le post : "+ getSnapshots().getSnapshot(position).getReference().getId()  , Toast.LENGTH_SHORT).show();
                         break;

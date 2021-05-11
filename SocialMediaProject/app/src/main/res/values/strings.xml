@@ -90,10 +90,10 @@
     <string name="delete_group">Supprimer le groupe</string>
 
     <string-array name="list_group_type">
-        <item>Post</item>
-        <item>Tchat</item>
-        <item>SMS</item>
-        <item>E-mail</item>
+        <item>post</item>
+        <item>chat</item>
+        <item>sms</item>
+        <item>email</item>
     </string-array>
 
     <string-array name="list_group_access">

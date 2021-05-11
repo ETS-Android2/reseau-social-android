@@ -96,7 +96,7 @@ public class NewGroupFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Bundle bundle = new Bundle();
+
                 /*
                 bundle.putString("groupName", editText_groupName.getText().toString());
                 bundle.putString("groupType", spinnerGroupType.getText().toString());
@@ -107,7 +107,7 @@ public class NewGroupFragment extends Fragment {
 
 
                 Group currentGroup = new Group("Chess Club", "SMS", "Chess", new User("John"));
-                bundle.putSerializable("group", currentGroup);
+
 
 
                 if(editText_groupName.getText().toString().matches("") ||
@@ -119,9 +119,13 @@ public class NewGroupFragment extends Fragment {
                 }else{
                     Toast.makeText(getContext(),"Groupe créé !" , Toast.LENGTH_SHORT).show();
 
-                    GroupHelper.createGroup("test","test","test",new User("test"))
+                    GroupHelper.createGroup(editText_groupName.getText().toString(),spinnerGroupType.getText().toString(),spinnerGroupSubject.getText().toString(),new User("test"))
                             .addOnFailureListener(onFailureListener());
 
+                    // On passe le nom du groupe entre les fragments
+                    Bundle bundle = new Bundle();
+                    bundle.putString("group_name", editText_groupName.getText().toString());
+                    // Navigation vers le fragment qui affiche le groupe
                     Navigation.findNavController(view).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post, bundle);
                 }
 

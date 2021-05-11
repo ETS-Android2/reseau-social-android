@@ -2,7 +2,6 @@ package com.example.socialmediaproject;
 
 import android.os.Bundle;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.PostHelper;
+import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 
 public class newPostActivity extends AppCompatActivity {
@@ -26,6 +27,10 @@ public class newPostActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Bundle bundle = getIntent().getExtras();
+        String groupeName =  bundle.getString("group_name");
+
+
         EditText editText_content = findViewById(R.id.editTextTextMultiLine);
 
 
@@ -35,7 +40,6 @@ public class newPostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Fermeture de l'activité
                 Toast.makeText(getApplicationContext(),"Fermer l'activité !" , Toast.LENGTH_SHORT).show();
-                editText_content.setText("");
                 finish();
             }
         });
@@ -49,9 +53,9 @@ public class newPostActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Vous devez saisir du texte pour poster !" , Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getApplicationContext(),"Poster sur le groupe !" , Toast.LENGTH_SHORT).show();
-                    PostHelper.createPostForGroup(editText_content.getText().toString())
+
+                    PostHelper.createPostForGroup(editText_content.getText().toString(), groupeName)
                             .addOnFailureListener(onFailureListener());
-                    editText_content.setText("");
                     finish();
                 }
 

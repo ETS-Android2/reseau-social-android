@@ -1,6 +1,7 @@
 package com.example.socialmediaproject.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,45 +11,59 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.models.Post;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.util.List;
 
 /**
  * Created by Antoine Barbier and Antoine Brahimi on 4/26/21.
  */
-public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder> {
+public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.MyViewHolder> {
 
-    // fields
+    public interface Listener {
+        void onDataChanged();
+    }
+
     private Context context;
-    private List<Group> groupList;
 
-    //constructor
-    public GroupAdapter(Context context, List<Group> groupList){
-        this.context = context;
-        this.groupList = groupList;
-    }
+    //FOR DATA
+    private final RequestManager glide;
+    private final String idCurrentUser;
 
-    @NonNull
-    @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.adapter_group_item, parent, false);
-        return new GroupAdapter.MyViewHolder(view);
-    }
+    //FOR COMMUNICATION
+    private Listener callback;
 
-    @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Group currentItem = this.groupList.get(position);
-
-        holder.itemTitleView.setText(currentItem.getName());
+    public GroupAdapter(@NonNull FirestoreRecyclerOptions<Group> options, RequestManager glide, Listener callback, String idCurrentUser) {
+        super(options);
+        this.glide = glide;
+        this.callback = callback;
+        this.idCurrentUser = idCurrentUser;
     }
 
     @Override
-    public int getItemCount() {
-        return this.groupList.size();
+    protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Group model) {
+        Group currentItem = model;
+
+        holder.updateWithMessage(model, this.idCurrentUser, this.glide);
     }
+
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new MyViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.adapter_group_item, parent, false));
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        this.callback.onDataChanged();
+    }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
@@ -59,14 +74,19 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
 
             itemTitleView = itemView.findViewById(R.id.item_title);
 
+        }
+
+        public void updateWithMessage(Group model, String currentUserId, RequestManager glide){
+
+            itemTitleView.setText(model.getName());
 
             // accéder à la notification
             itemView.setOnClickListener(v -> {
                 //Toast.makeText(context, "Voir le groupe : " + itemTitle , Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(itemView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post);
+                Bundle bundle = new Bundle();
+                bundle.putString("group_name", model.getName());
+                Navigation.findNavController(itemView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post, bundle);
             });
-
-
         }
     }
 }

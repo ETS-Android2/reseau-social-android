@@ -42,9 +42,13 @@ import com.example.socialmediaproject.newPostActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+
+import java.util.Map;
 
 
 public class PostGroupeFragment extends Fragment implements PostAdapter.Listener {
@@ -74,17 +78,6 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_groupe_post, container, false);
 
-
-        // on récupère l'objet du fragment précédent
-        /*Bundle bundle = getArguments();
-
-        if(bundle != null){
-            currentGroup = (Group) bundle.getSerializable("group");
-        }else{*/
-            currentGroup = new Group("salut","type","test", new User("test"));
-        //}
-
-
         textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
 
         ImageView imageAccess = root.findViewById(R.id.group_acces_image);
@@ -93,48 +86,64 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
         TextView tv_groupAccess = root.findViewById(R.id.group_acces);
         TextView tv_groupNbMembers = root.findViewById(R.id.group_members);
 
-        tv_groupTitle.setText(currentGroup.getName());
-        tv_groupType.setText(currentGroup.getType());
-        tv_groupNbMembers.setText("50 members");
+        // on récupère l'objet du fragment précédent
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            GroupHelper.getGroup(bundle.getString("group_name"))
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if(documentSnapshot.exists()){
+                                Map<String, Object> dataGroup = documentSnapshot.getData();
+                                currentGroup = new Group((String) dataGroup.get("name"), (String) dataGroup.get("type"),"test", new User("test"));
+                                Toast.makeText(getContext(),"Le groupe exist"+  dataGroup.get("type") , Toast.LENGTH_SHORT).show();
 
-        if(currentGroup.isPrivate()){
-            tv_groupAccess.setText("private");
-            imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
-        }else{
-            tv_groupAccess.setText("public");
-            imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);
+                                tv_groupTitle.setText(currentGroup.getName());
+                                tv_groupType.setText(currentGroup.getType());
+                                tv_groupNbMembers.setText("50 members");
+
+                                if(currentGroup.isPrivate()){
+                                    tv_groupAccess.setText("private");
+                                    imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
+                                }else{
+                                    tv_groupAccess.setText("public");
+                                    imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);
+                                }
+
+
+                                recyclerView = root.findViewById(R.id.recyclerView_group_posts);
+
+                                //PostInGroupAdapter myAdapter = new PostInGroupAdapter(getContext(), currentGroup.getPosts());
+                                //recyclerView.setAdapter(myAdapter);
+                                //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                                configureRecyclerView(currentGroup.getName());
+                                configureToolbar();
+
+
+                                // action sur le bouton flottant pour ajouter un post
+                                FloatingActionButton fab = root.findViewById(R.id.fab);
+                                fab.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
+
+                                        UserHelper.addUserInGroup()
+                                                .addOnFailureListener(onFailureListener());
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("group_name", currentGroup.getName());
+                                        Intent intent = new Intent(getActivity(), newPostActivity.class);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                            }else{
+                                Toast.makeText(getContext(),"Le groupe n'existe pas" , Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
-
-
-        recyclerView = root.findViewById(R.id.recyclerView_group_posts);
-
-        //PostInGroupAdapter myAdapter = new PostInGroupAdapter(getContext(), currentGroup.getPosts());
-        //recyclerView.setAdapter(myAdapter);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        this.configureRecyclerView("test");
-
-        // affichage de la flèche retour en arrière dans le menu
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // title fragment in the header bar
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
-
-
-        // action sur le bouton flottant pour ajouter un post
-        FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
-
-                UserHelper.addUserInGroup()
-                        .addOnFailureListener(onFailureListener());
-
-                Intent intent = new Intent(getActivity(), newPostActivity.class);
-                startActivity(intent);
-            }
-        });
-
         return root;
     }
 
@@ -146,6 +155,15 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
             }
         };
     }
+
+    public void configureToolbar(){
+        // affichage de la flèche retour en arrière dans le menu
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // title fragment in the header bar
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
+    }
+
     // --------------------
     // REST REQUESTS
     // --------------------
