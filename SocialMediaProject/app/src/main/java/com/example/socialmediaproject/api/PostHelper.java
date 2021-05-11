@@ -7,6 +7,7 @@ import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 /**
@@ -39,11 +40,7 @@ public class PostHelper {
 
     // --- GET ---
     public static Query getAllPost(){
-        return GroupHelper.getGroupCollection()
-                .document()
-                .collection(COLLECTION_NAME)
-                .orderBy("dateCreated")
-                .limit(50);
+        return FirebaseFirestore.getInstance().collectionGroup("posts");
     }
 
     // --- DELETE ---

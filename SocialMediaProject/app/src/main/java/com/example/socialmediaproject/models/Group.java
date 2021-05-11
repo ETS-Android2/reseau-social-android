@@ -18,10 +18,7 @@ public class Group implements Serializable {
     //private Publication publication;
     //private Access access;
     private Boolean is_private; // if private : true, else is public
-
-    //private List<Post> postList;
-
-    //private List<User> membersList;
+    
 
 
     //  --- CONSTRUCTORS ---

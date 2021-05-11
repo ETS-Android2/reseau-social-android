@@ -67,10 +67,10 @@ public class NewGroupFragment extends Fragment {
 
         EditText editText_groupName = view.findViewById(R.id.editText_group_name);
 
-        spinnerGroupType = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_type);
-        spinnerGroupAccess = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_access);
-        spinnerGroupSubject = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_subject);
-        spinnerGroupPublication = (AutoCompleteTextView)view.findViewById(R.id.spinner_group_publication);
+        spinnerGroupType = view.findViewById(R.id.spinner_group_type);
+        spinnerGroupAccess = view.findViewById(R.id.spinner_group_access);
+        spinnerGroupSubject = view.findViewById(R.id.spinner_group_subject);
+        spinnerGroupPublication = view.findViewById(R.id.spinner_group_publication);
         ArrayAdapter<CharSequence> adapterTypeGroup = ArrayAdapter.createFromResource(getContext(), R.array.list_group_type, android.R.layout.simple_spinner_item);
         adapterTypeGroup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -95,20 +95,6 @@ public class NewGroupFragment extends Fragment {
         createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                /*
-                bundle.putString("groupName", editText_groupName.getText().toString());
-                bundle.putString("groupType", spinnerGroupType.getText().toString());
-                bundle.putString("groupAccess", spinnerGroupAccess.getText().toString());
-                bundle.putString("groupPublication", spinnerGroupPublication.getText().toString());
-                bundle.putString("groupSubject", spinnerGroupSubject.getText().toString());
-                 */
-
-
-                Group currentGroup = new Group("Chess Club", "SMS", "Chess", new User("John"));
-
-
 
                 if(editText_groupName.getText().toString().matches("") ||
                         spinnerGroupType.getText().toString().matches("") ||

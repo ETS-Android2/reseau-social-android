@@ -19,24 +19,36 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.adapters.GroupAdapter;
 import com.example.socialmediaproject.adapters.PostAdapter;
+import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements PostAdapter.Listener {
 
     private RecyclerView recyclerView;
     private HomeViewModel homeViewModel;
     private String m_Text = "";
+
+    // FOR DATA
+    // 2 - Declaring Adapter and data
+    private PostAdapter postAdapter;
+    @Nullable private User modelCurrentUser;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -45,39 +57,50 @@ public class HomeFragment extends Fragment {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // list of group
-        List<Group> groupAllItemList = new ArrayList<>();
-        groupAllItemList.add(new Group("Les étudiants de montpellier","post", "test",new User("antoine")));
-        groupAllItemList.add(new Group("Les motards du 36","sms", "test",new User("antoine")));
-        groupAllItemList.add(new Group("Végan un jour, Végan toujours","email", "test",new User("antoine")));
-        groupAllItemList.add(new Group("FDS - informatique","tchat", "test",new User("antoine")));
-        groupAllItemList.add(new Group("Les fans de Squeezie","post", "test",new User("antoine")));
-
-
-        // list of posts
-        List<Post> postItemList = new ArrayList<>();
-        postItemList.add(new Post(groupAllItemList.get(1), new User("antoine")));
-        postItemList.add(new Post(groupAllItemList.get(1), new User("thomas")));
-        postItemList.add(new Post(groupAllItemList.get(1), new User("enzo")));
-        postItemList.add(new Post(groupAllItemList.get(1), new User("pedro")));
-        postItemList.add(new Post(groupAllItemList.get(1), new User("josé")));
-
-        // get list view
-        //ListView allPost = (ListView) root.findViewById(R.id.ListView_posts);
-        //allPost.setAdapter(new PostItemAdapter(getContext(), postItemList));
 
         recyclerView = root.findViewById(R.id.recyclerView_home_posts);
 
-        //PostAdapter myAdapter = new PostAdapter(getContext(), postItemList);
-        //ecyclerView.setAdapter(myAdapter);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        this.configureToolbar();
+        this.configureRecyclerView();
 
-        // on enlève la fleche de retour en arrière
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("App Projet Android");
         return root;
     }
 
+
+    public void configureToolbar(){
+        // on enlève la fleche de retour en arrière
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("App Projet Android");
+    }
+
+    // --------------------
+    // UI
+    // --------------------
+    // 5 - Configure RecyclerView with a Query
+    private void configureRecyclerView(){
+        //Configure Adapter & RecyclerView
+        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPost()),
+                    Glide.with(this), this, "test user");
+
+
+        postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                recyclerView.smoothScrollToPosition(postAdapter.getItemCount()); // Scroll to bottom on new messages
+            }
+        });
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(this.postAdapter);
+    }
+
+    // 6 - Create options for RecyclerView from a Query
+    private FirestoreRecyclerOptions<Post> generateOptionsForAdapter(Query query){
+        return new FirestoreRecyclerOptions.Builder<Post>()
+                .setQuery(query, Post.class)
+                .setLifecycleOwner(this)
+                .build();
+    }
 
 
     @Override
@@ -103,6 +126,16 @@ public class HomeFragment extends Fragment {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // --------------------
+    // CALLBACK
+    // --------------------
+
+    @Override
+    public void onDataChanged() {
+        // 7 - Show TextView in case RecyclerView is empty
+        //textViewRecyclerViewEmpty.setVisibility(this.groupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     void openPrivateGroup(){

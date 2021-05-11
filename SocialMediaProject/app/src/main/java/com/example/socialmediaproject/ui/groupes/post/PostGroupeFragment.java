@@ -2,6 +2,7 @@ package com.example.socialmediaproject.ui.groupes.post;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -14,6 +15,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,7 +80,10 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.fragment_groupe_post, container, false);
+
+        CoordinatorLayout layout_group = root.findViewById(R.id.layout_group);
 
         textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
 
@@ -85,6 +92,11 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
         TextView tv_groupType = root.findViewById(R.id.group_type);
         TextView tv_groupAccess = root.findViewById(R.id.group_acces);
         TextView tv_groupNbMembers = root.findViewById(R.id.group_members);
+
+        layout_group.setVisibility(View.GONE);
+
+        // affichage de la flèche retour en arrière dans le menu
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();
@@ -98,6 +110,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                                 currentGroup = new Group((String) dataGroup.get("name"), (String) dataGroup.get("type"),"test", new User("test"));
                                 Toast.makeText(getContext(),"Le groupe exist"+  dataGroup.get("type") , Toast.LENGTH_SHORT).show();
 
+                                layout_group.setVisibility(View.VISIBLE);
                                 tv_groupTitle.setText(currentGroup.getName());
                                 tv_groupType.setText(currentGroup.getType());
                                 tv_groupNbMembers.setText("50 members");
@@ -138,6 +151,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                                     }
                                 });
 
+
                             }else{
                                 Toast.makeText(getContext(),"Le groupe n'existe pas" , Toast.LENGTH_SHORT).show();
                             }
@@ -157,9 +171,6 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
     }
 
     public void configureToolbar(){
-        // affichage de la flèche retour en arrière dans le menu
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         // title fragment in the header bar
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
     }

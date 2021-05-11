@@ -63,36 +63,6 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
 
         this.configureRecyclerView("all");
 
-        /* Ancienne version avec grid view
-        // list of group
-        List<Group> groupAllItemList = new ArrayList<>();
-        groupAllItemList.add(new Group("Les étudiants de montpellier","post", "test",new User("antoine")));
-        groupAllItemList.add(new Group("Les motards du 36","sms", "test",new User("steve")));
-        groupAllItemList.add(new Group("Végan un jour, Végan toujours","email", "test",new User("steve")));
-        groupAllItemList.add(new Group("FDS - informatique","tchat", "test",new User("antoine")));
-        groupAllItemList.add(new Group("Les fans de Squeezie","post", "test",new User("antoine")));
-
-        List<Group> groupPostItemList = new ArrayList<>();
-        List<Group> groupTchatItemList = new ArrayList<>();
-        List<Group> groupSMSItemList = new ArrayList<>();
-        List<Group> groupEmailItemList = new ArrayList<>();
-
-        for(Group item : groupAllItemList){
-            switch (item.getType()){
-                case "post": groupPostItemList.add(item); break;
-                case "email": groupEmailItemList.add(item); break;
-                case "sms": groupSMSItemList.add(item); break;
-                case "tchat": groupTchatItemList.add(item); break;
-            }
-
-        }
-
-        // get grid view
-        GridView allPost = (GridView) root.findViewById(R.id.gridView_mes_reseaux);
-        allPost.setAdapter(new GroupItemAdapter(getContext(), groupAllItemList));
-
-
-*/
 
         // we get the selected tab
         TabLayout tabLayout = root.findViewById(R.id.tabLayout_type_group);
@@ -102,39 +72,28 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
                 switch(tab.getPosition()){
                     case 0: // all
                         configureRecyclerView( "all");
-                        //allPost.setAdapter(new GroupItemAdapter(getContext(), groupAllItemList));
                         break;
                     case 1: // posts
                         configureRecyclerView( "post");
-                        //allPost.setAdapter(new GroupItemAdapter(getContext(), groupPostItemList));
                         break;
                     case 2: // Tchat
                         configureRecyclerView( "chat");
-                        //allPost.setAdapter(new GroupItemAdapter(getContext(), groupTchatItemList));
                         break;
                     case 3: // email
                         configureRecyclerView( "email");
-                        //allPost.setAdapter(new GroupItemAdapter(getContext(), groupEmailItemList));
                         break;
                     case 4: // sms
                         configureRecyclerView( "sms");
-                        //allPost.setAdapter(new GroupItemAdapter(getContext(), groupSMSItemList));
                         break;
                 }
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) { }
         });
-
-
 
         return root;
     }
