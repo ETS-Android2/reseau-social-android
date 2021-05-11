@@ -2,6 +2,8 @@ package com.example.socialmediaproject.models;
 
 import androidx.annotation.Nullable;
 
+import com.example.socialmediaproject.db.entities.UserEntity;
+
 import java.io.Serializable;
 
 /**
@@ -49,6 +51,8 @@ public class User implements Serializable {
     public String getPhoneNumber() { return phoneNumber; }
     public String getEmail() { return email; }
     public String getUrlPicture() { return urlPicture; }
+
+    public UserEntity getEntity() { return new UserEntity(this.uid, this.username, this.phoneNumber, this.email, this.urlPicture); }
 
     // --- SETTERS ---
     public void setUsername(String username) { this.username = username; }

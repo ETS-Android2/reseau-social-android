@@ -4,6 +4,7 @@ import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -20,7 +21,7 @@ public class GroupHelper {
     }
 
     // --- CREATE ---
-    public static Task<Void> createGroup(String name, String type, String field, User admin) {
+    public static Task<Void> createGroup(String name, String type, String field, DocumentReference admin) {
         // 1 - Create User object
         Group groupToCreate = new Group(name, type, field, admin);
         // 2 - Add a new User Document to Firestore

@@ -106,7 +106,7 @@ public class LoginTabFragment extends Fragment {
                 if(task.isSuccessful()){
                     Toast.makeText(getContext(),"User logged sucessfully", Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                 }
                 else{

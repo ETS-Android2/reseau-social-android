@@ -50,17 +50,17 @@ public class MyFavorisFragment extends Fragment {
 
         // list of group
         List<Group> groupAllItemList = new ArrayList<>();
-        groupAllItemList.add(new Group("Les étudiants de montpellier","post", "test",new User("antoine")));
-        groupAllItemList.add(new Group("Les motards du 36","sms", "test",new User("antoine")));
-        groupAllItemList.add(new Group("Végan un jour, Végan toujours","email", "test",new User("antoine")));
-        groupAllItemList.add(new Group("FDS - informatique","tchat", "test",new User("antoine")));
-        groupAllItemList.add(new Group("Les fans de Squeezie","post", "test",new User("antoine")));
+        //groupAllItemList.add(new Group("Les étudiants de montpellier","post", "test",new User("antoine")));
+        //groupAllItemList.add(new Group("Les motards du 36","sms", "test",new User("antoine")));
+        //groupAllItemList.add(new Group("Végan un jour, Végan toujours","email", "test",new User("antoine")));
+        //groupAllItemList.add(new Group("FDS - informatique","tchat", "test",new User("antoine")));
+        //groupAllItemList.add(new Group("Les fans de Squeezie","post", "test",new User("antoine")));
 
 
         // list of posts
         List<Post> postItemList = new ArrayList<>();
-        postItemList.add(new Post(groupAllItemList.get(1), new User("antoine")));
-        postItemList.add(new Post(groupAllItemList.get(1), new User("thomas")));
+        //postItemList.add(new Post(groupAllItemList.get(1), new User("antoine")));
+        //postItemList.add(new Post(groupAllItemList.get(1), new User("thomas")));
 
         recyclerView = view.findViewById(R.id.recyclerView_myFavoris);
 

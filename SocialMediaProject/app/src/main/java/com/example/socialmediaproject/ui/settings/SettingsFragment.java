@@ -9,6 +9,9 @@ import android.widget.Toast;
 
 import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.db.UserRoomDatabase;
+import com.example.socialmediaproject.db.dao.UserDao;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +22,11 @@ import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    Intent intent;
+    private Intent intent;
+    private FirebaseAuth fAuth;
+    private UserRoomDatabase userDB;
+    private UserDao userDao;
+
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -30,6 +37,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+
+        fAuth = FirebaseAuth.getInstance();
+        userDB = UserRoomDatabase.getDatabase(getActivity());
+        userDao = userDB.userDao();
 
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -55,7 +66,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         if(key.equals("deconnexion")){
-            Toast.makeText(getContext(),"Déconnexion" , Toast.LENGTH_SHORT).show();
+
+            if(fAuth.getCurrentUser() != null)
+                fAuth.signOut();
+
+            userDao.deleteAll();
+            Toast.makeText(getContext(), "Déconnexion", Toast.LENGTH_SHORT).show();
             intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         }

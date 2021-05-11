@@ -2,6 +2,8 @@ package com.example.socialmediaproject.models;
 
 import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.enums.Publication;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,10 +16,11 @@ import java.util.List;
 public class Group implements Serializable {
 
     private String name, type, field;
-    private User admin;
+    private DocumentReference admin;
     //private Publication publication;
     //private Access access;
     private Boolean is_private; // if private : true, else is public
+
 
     //private List<Post> postList;
 
@@ -29,16 +32,17 @@ public class Group implements Serializable {
         this.type   = "_type";
         this.name   = "_name";
         this.field  = "_field";
-        this.admin  = new User("test");
+        this.admin  = null;
         //this.access = _access;
         //this.publication = Publication.ALL;
         this.is_private = true; //this.access.equals(Access.PRIVATE);
     }
-    public Group(String _name, String _type, String _field, User _admin){
+
+    public Group(String _name, String _type, String _field, DocumentReference admin){
         this.type   = _type;
         this.name   = _name;
         this.field  = _field;
-        this.admin  = _admin;
+        this.admin  = admin;
         //this.access = _access;
         //this.publication = Publication.ALL;
         this.is_private = true; //this.access.equals(Access.PRIVATE);
@@ -65,7 +69,7 @@ public class Group implements Serializable {
     public String getName(){ return this.name;}
     public String getType() { return this.type;}
     public String getField() { return this.field;}
-    public User getAdmin(){ return this.admin;}
+    public DocumentReference getAdmin(){ return this.admin;}
     //public Access getAccess(){ return this.access;}
     //public Publication getPublication(){ return this.publication;}
 
@@ -77,7 +81,7 @@ public class Group implements Serializable {
     public void setName(String name){ this.name = name;}
     public void setType(String type) { this.type = type;}
     public void setField(String field) { this.field = field;}
-    public void setAdmin(User admin){ this.admin = admin;}
+    public void setAdmin(DocumentReference admin){ this.admin = admin; }
     //public void setAccess(Access access){ this.access = access;}
 
 

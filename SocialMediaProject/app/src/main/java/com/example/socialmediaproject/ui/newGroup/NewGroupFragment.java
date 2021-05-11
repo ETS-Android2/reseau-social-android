@@ -34,6 +34,7 @@ import com.example.socialmediaproject.models.User;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -46,6 +47,7 @@ public class NewGroupFragment extends Fragment {
     private AutoCompleteTextView spinnerGroupPublication;
     private AutoCompleteTextView spinnerGroupSubject;
 
+    private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
 
     private NewGroupViewModel mViewModel;
@@ -59,6 +61,8 @@ public class NewGroupFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_group_fragment, container, false);
 
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         // title fragment in the header
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nouveau Groupe");
@@ -106,10 +110,6 @@ public class NewGroupFragment extends Fragment {
                  */
 
 
-                Group currentGroup = new Group("Chess Club", "SMS", "Chess", new User("John"));
-
-
-
                 if(editText_groupName.getText().toString().matches("") ||
                         spinnerGroupType.getText().toString().matches("") ||
                         spinnerGroupAccess.getText().toString().matches("") ||
@@ -119,7 +119,7 @@ public class NewGroupFragment extends Fragment {
                 }else{
                     Toast.makeText(getContext(),"Groupe créé !" , Toast.LENGTH_SHORT).show();
 
-                    GroupHelper.createGroup(editText_groupName.getText().toString(),spinnerGroupType.getText().toString(),spinnerGroupSubject.getText().toString(),new User("test"))
+                    GroupHelper.createGroup(editText_groupName.getText().toString(),spinnerGroupType.getText().toString(),spinnerGroupSubject.getText().toString(), fStore.document("users/" + fAuth.getCurrentUser().getUid()))
                             .addOnFailureListener(onFailureListener());
 
                     // On passe le nom du groupe entre les fragments

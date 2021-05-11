@@ -2,6 +2,7 @@ package com.example.socialmediaproject.models;
 
 import android.annotation.SuppressLint;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.io.Serializable;
@@ -28,7 +29,7 @@ public class Post implements Serializable {
 
     public Post(){
         this.content = null;
-        this.group = new Group("test","test","test",new User("yesy"));
+        this.group = new Group("test","test","test", FirebaseFirestore.getInstance().document("MNGLupdbc0RfgZfysQGwDzyzE9h2"));
         this.userSender = null;
         this.urlImage = null;
         this.nbViews = 0;
@@ -38,7 +39,7 @@ public class Post implements Serializable {
 
     public Post(String content){
         this.content = content;
-        this.group = new Group("test","test","test",new User("yesy"));
+        this.group = new Group("test","test","test", FirebaseFirestore.getInstance().document("MNGLupdbc0RfgZfysQGwDzyzE9h2"));
         this.userSender = null;
         this.urlImage = null;
         this.nbViews = 0;

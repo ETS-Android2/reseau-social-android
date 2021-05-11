@@ -46,6 +46,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.Map;
@@ -95,7 +96,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if(documentSnapshot.exists()){
                                 Map<String, Object> dataGroup = documentSnapshot.getData();
-                                currentGroup = new Group((String) dataGroup.get("name"), (String) dataGroup.get("type"),"test", new User("test"));
+                                currentGroup = new Group((String) dataGroup.get("name"), (String) dataGroup.get("type"),"test", FirebaseFirestore.getInstance().document("users/MNGLupdbc0RfgZfysQGwDzyzE9h2"));
                                 Toast.makeText(getContext(),"Le groupe exist"+  dataGroup.get("type") , Toast.LENGTH_SHORT).show();
 
                                 tv_groupTitle.setText(currentGroup.getName());
