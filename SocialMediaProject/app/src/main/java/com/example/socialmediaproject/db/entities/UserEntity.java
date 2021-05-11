@@ -1,68 +1,85 @@
 package com.example.socialmediaproject.db.entities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-/*
- * Modele utilisé lors du stockage d'un utilisateur
- * dans la BDD locale (Room database)
- */
+import com.example.socialmediaproject.models.User;
+
+import java.io.Serializable;
 
 @Entity(tableName = "User")
 public class UserEntity {
 
     @PrimaryKey
     @NonNull
-    public String id; // Correspond à l'id de l'utilisateur dans la BDD distante (Firebase)
+    private String uid;
 
-    @ColumnInfo(name = "email")
+    @ColumnInfo(name = "username")
     @NonNull
-    public String email;
-
-    @ColumnInfo(name = "name")
-    @NonNull
-    public String name;
-
-    @ColumnInfo(name = "password")
-    @NonNull
-    public String password;
+    private String username;
 
     @ColumnInfo(name = "phone")
     @NonNull
-    public String phone;
+    private String phoneNumber;
 
-    public UserEntity(String id, String email, String name, String password, String phone){
-        this.id = id;
+    @ColumnInfo(name = "email")
+    @NonNull
+    private String email;
+
+    @ColumnInfo(name = "urlPicture")
+    @NonNull
+    private String urlPicture;
+
+    // --- CONSTRUCTORS ---
+    public UserEntity() { }
+
+    public UserEntity(String username) {
+        this.uid = "uid";
+        this.username = username;
+        this.phoneNumber = "phone";
+        this.email = "email";
+        this.urlPicture = "urlPicture";
+    }
+
+    public UserEntity(String uid, String username, String phone, String email) {
+        this.uid = uid;
+        this.username = username;
+        this.phoneNumber = phone;
         this.email = email;
-        this.name = name;
-        this.password = password;
-        this.phone = phone;
+        this.urlPicture = "null";
     }
 
-    @NonNull
-    public String getId() {
-        return id;
+    public UserEntity(String uid, String username, String phone, String email, String urlPicture) {
+        this.uid = uid;
+        this.username = username;
+        this.phoneNumber = phone;
+        this.email = email;
+        this.urlPicture = urlPicture;
     }
 
+    // --- GETTERS ---
     @NonNull
-    public String getEmail() {
-        return email;
+    public String getUid() { return uid; }
+    @NonNull
+    public String getUsername() { return username; }
+    @NonNull
+    public String getPhoneNumber() { return phoneNumber; }
+    @NonNull
+    public String getEmail() { return email; }
+    @NonNull
+    public String getUrlPicture() { return urlPicture; }
+
+    public User getUser() {
+        return new User(uid, username, phoneNumber, email, urlPicture);
     }
 
-    @NonNull
-    public String getName() {
-        return name;
-    }
-
-    @NonNull
-    public String getPassword() {
-        return password;
-    }
-
-    @NonNull
-    public String getPhone() {
-        return phone;
-    }
+    // --- SETTERS ---
+    public void setUsername(String username) { this.username = username; }
+    public void setUid(String uid) { this.uid = uid; }
+    public void setPhoneNumber(String phone) { this.phoneNumber =  phone; }
+    public void setEmail(String email) { this.email =  email; }
+    public void setUrlPicture(String urlPicture) { this.urlPicture = urlPicture; }
 }

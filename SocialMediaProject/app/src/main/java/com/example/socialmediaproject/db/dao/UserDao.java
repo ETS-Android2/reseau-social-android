@@ -3,6 +3,7 @@ package com.example.socialmediaproject.db.dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -18,14 +19,17 @@ import java.util.List;
 @Dao
 public interface UserDao {
 
-    @Insert
-    public void insert(UserEntity user);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertOnlySingleRecord(UserEntity user);
 
     @Update
     public void update(UserEntity user);
 
     @Delete
     public void delete(UserEntity user);
+
+    @Query("SELECT * FROM User WHERE uid LIKE :userID")
+    UserEntity getUser(String userID);
 
     @Query("DELETE FROM User")
     public void deleteAll();
