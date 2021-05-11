@@ -37,6 +37,15 @@ public class PostHelper {
                 .limit(50);
     }
 
+    // --- GET ---
+    public static Query getAllPost(){
+        return GroupHelper.getGroupCollection()
+                .document()
+                .collection(COLLECTION_NAME)
+                .orderBy("dateCreated")
+                .limit(50);
+    }
+
     // --- DELETE ---
     public static Task<Void> deletePost(String groupId, String postId) {
         return GroupHelper.getGroupCollection().document(groupId)

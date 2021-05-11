@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -68,17 +69,26 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView itemTitleView;
+        ImageView iv_imageAccess;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             itemTitleView = itemView.findViewById(R.id.item_title);
+            iv_imageAccess = itemView.findViewById(R.id.groupItem_access_image);
 
         }
 
         public void updateWithMessage(Group model, String currentUserId, RequestManager glide){
 
             itemTitleView.setText(model.getName());
+
+            // Affichage de l'icone cadena en fonction du group privé ou public
+            if(model.isPrivate()){
+                iv_imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
+            }else{
+                iv_imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);
+            }
 
             // accéder à la notification
             itemView.setOnClickListener(v -> {
