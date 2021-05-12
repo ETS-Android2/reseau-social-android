@@ -17,6 +17,10 @@ public class Group implements Serializable {
     //private Publication publication;
     //private Access access;
     private Boolean is_private; // if private : true, else is publics
+
+    // Les user qui sont en attente d'acceptation
+    List<String> waitingList;
+
     List<String> members;
     List<String> moderators;
 
@@ -29,8 +33,10 @@ public class Group implements Serializable {
         //this.access = _access;
         //this.publication = Publication.ALL;
         this.is_private = true; //this.access.equals(Access.PRIVATE);
+
         this.members = Arrays.asList(this.admin);
         this.moderators = Arrays.asList(this.admin);
+        this.waitingList =  Arrays.asList();
     }
     public Group(String _name, String _type, String _field, String _admin){
         this.type   = _type;
@@ -42,6 +48,8 @@ public class Group implements Serializable {
         this.is_private = true; //this.access.equals(Access.PRIVATE);
         this.members = Arrays.asList(this.admin);
         this.moderators = Arrays.asList(this.admin);
+
+        this.waitingList =  Arrays.asList();
     }
 
 
@@ -54,6 +62,7 @@ public class Group implements Serializable {
     public List<String> getMembers(){ return this.members; }
     public List<String> getModerators(){ return this.moderators; }
 
+    public List<String> getWaitingList(){ return this.waitingList; }
 
 
 
