@@ -12,6 +12,8 @@ import com.example.socialmediaproject.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -68,6 +70,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     // --------------------
 
     @Nullable
+    public static FirebaseFirestore getStore() { return FirebaseFirestore.getInstance(); }
+    @Nullable
     public static FirebaseAuth getAuth(){ return FirebaseAuth.getInstance(); }
     @Nullable
     public static FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
@@ -75,4 +79,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static String getUid(){ return getCurrentUser().getUid(); }
 
     public static Boolean isCurrentUserLogged(){ return (getCurrentUser() != null); }
+
+    public static DocumentReference getRefUser() { return getStore().collection("users").document(getUid()); }
 }
