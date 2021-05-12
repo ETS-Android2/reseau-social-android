@@ -1,7 +1,10 @@
 package com.example.socialmediaproject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.example.socialmediaproject.base.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,8 +42,19 @@ public class MainActivity extends AppCompatActivity {
                 Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.newGroupFragment);
             }
         });*/
+    }
 
-
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(BaseActivity.isCurrentUserLogged()){
+            Log.d("===========> ", "USER IS LOGGED !");
+        }
+        else{
+            Log.d("===========> ", "USER IS NOT LOGGED !");
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
     }
 
 }

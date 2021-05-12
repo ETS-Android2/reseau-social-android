@@ -21,24 +21,26 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.api.UserHelper;
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.db.UserRoomDatabase;
 import com.example.socialmediaproject.db.dao.UserDao;
 import com.example.socialmediaproject.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.jetbrains.annotations.NotNull;
 
 public class MyInformationsFragment extends Fragment {
 
     private MyInformationsViewModel mViewModel;
     private Button btn;
-
-    private FirebaseAuth fAuth;
-    private FirebaseFirestore fStore;
-    private UserRoomDatabase userDB;
-    private UserDao userDao;
     private User user;
 
     public static MyInformationsFragment newInstance() {
@@ -60,8 +62,15 @@ public class MyInformationsFragment extends Fragment {
         TextInputEditText textEdit_email = view.findViewById(R.id.editText_email);
         TextInputEditText textEdit_phone = view.findViewById(R.id.editText_phone);
         TextInputEditText textEdit_birth_date = view.findViewById(R.id.editText_birth_date);
-        textEdit_email.setText(user.getEmail());
-        textEdit_phone.setText(user.getPhoneNumber());
+
+        UserHelper.getUser(BaseActivity.getUid()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                user = task.getResult().toObject(User.class);
+                textEdit_email.setText(user.getEmail());
+                textEdit_phone.setText(user.getPhoneNumber());
+            }
+        });
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +95,6 @@ public class MyInformationsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
-
-        fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
-        userDB = UserRoomDatabase.getDatabase(getActivity());
-        userDao = userDB.userDao();
-        user = userDao.getUser(fAuth.getCurrentUser().getUid()).getUser();
     }
 
     @Override
@@ -129,9 +132,11 @@ public class MyInformationsFragment extends Fragment {
     }
 
     public void updateInformations(String email, String phone){
-        DocumentReference ref = fStore.collection("users").document(fAuth.getUid());
-        ref.update("email", email);
-        ref.update("phoneNumber", phone);
+        BaseActivity.getCurrentUser().updateEmail(email);
+        BaseActivity.getRefUser().update("email", email);
+        BaseActivity.getRefUser().update("phoneNumber", phone);
+
+        Toast.makeText(getContext(), "User's informations updated !", Toast.LENGTH_LONG).show();
     }
 
 }
