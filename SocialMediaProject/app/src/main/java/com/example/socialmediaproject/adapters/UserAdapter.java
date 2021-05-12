@@ -76,7 +76,7 @@ public class UserAdapter extends BaseAdapter {
                         Toast.makeText(context, "Promouvoir l'utilisateur !"  , Toast.LENGTH_SHORT).show();
                         break;
                     case 2: // Supprimer
-                        Toast.makeText(context, "Partager le post !"  , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Exclure l'utilisateur !"  , Toast.LENGTH_SHORT).show();
                         break;
                 } }); // create and show the alert dialog
 

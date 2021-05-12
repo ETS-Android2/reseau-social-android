@@ -34,6 +34,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+
 public class NewGroupFragment extends Fragment {
 
     private AutoCompleteTextView spinnerGroupType;

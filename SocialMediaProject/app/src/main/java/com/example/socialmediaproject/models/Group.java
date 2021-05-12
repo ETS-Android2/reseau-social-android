@@ -2,6 +2,8 @@ package com.example.socialmediaproject.models;
 
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -14,9 +16,9 @@ public class Group implements Serializable {
     private String admin;
     //private Publication publication;
     //private Access access;
-    private Boolean is_private; // if private : true, else is public
-    
-
+    private Boolean is_private; // if private : true, else is publics
+    List<String> members;
+    List<String> moderators;
 
     //  --- CONSTRUCTORS ---
     public Group(){
@@ -27,6 +29,8 @@ public class Group implements Serializable {
         //this.access = _access;
         //this.publication = Publication.ALL;
         this.is_private = true; //this.access.equals(Access.PRIVATE);
+        this.members = Arrays.asList(this.admin);
+        this.moderators = Arrays.asList(this.admin);
     }
     public Group(String _name, String _type, String _field, String _admin){
         this.type   = _type;
@@ -36,19 +40,21 @@ public class Group implements Serializable {
         //this.access = _access;
         //this.publication = Publication.ALL;
         this.is_private = true; //this.access.equals(Access.PRIVATE);
-
+        this.members = Arrays.asList(this.admin);
+        this.moderators = Arrays.asList(this.admin);
     }
+
 
     // --- GETTERS ---
     public String getName(){ return this.name;}
     public String getType() { return this.type;}
     public String getField() { return this.field;}
     public String getAdmin(){ return this.admin;}
-    //public Access getAccess(){ return this.access;}
-    //public Publication getPublication(){ return this.publication;}
 
-    //public List<Post> getPosts(){ return this.postList; }
-    //public List<User> getMembers(){ return this.membersList; }
+    public List<String> getMembers(){ return this.members; }
+    public List<String> getModerators(){ return this.moderators; }
+
+
 
 
     // --- SETTERS ---
@@ -56,7 +62,6 @@ public class Group implements Serializable {
     public void setType(String type) { this.type = type;}
     public void setField(String field) { this.field = field;}
     public void setAdmin(String admin){ this.admin = admin;}
-    //public void setAccess(Access access){ this.access = access;}
 
 
     // --- METHODS ---

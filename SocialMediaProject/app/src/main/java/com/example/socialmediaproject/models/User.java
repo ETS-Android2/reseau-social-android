@@ -3,6 +3,7 @@ package com.example.socialmediaproject.models;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Antoine Barbier on 5/9/21.
