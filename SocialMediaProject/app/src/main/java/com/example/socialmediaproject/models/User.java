@@ -3,6 +3,7 @@ package com.example.socialmediaproject.models;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,6 +18,9 @@ public class User implements Serializable {
     private String email;
     @Nullable private String urlPicture;
 
+    // les groupes dont l'utilisateur est membre
+    List<String> groups;
+
     // --- CONSTRUCTORS ---
     public User() { }
 
@@ -26,6 +30,7 @@ public class User implements Serializable {
         this.phoneNumber = "phone";
         this.email = "email";
         this.urlPicture = "urlPicture";
+        this.groups =  Arrays.asList();
     }
 
     public User(String uid, String username, String phone, String email) {
@@ -34,6 +39,7 @@ public class User implements Serializable {
         this.phoneNumber = phone;
         this.email = email;
         this.urlPicture = "null";
+        this.groups =  Arrays.asList();
     }
 
     public User(String uid, String username, String phone, String email, String urlPicture) {
@@ -42,6 +48,7 @@ public class User implements Serializable {
         this.phoneNumber = phone;
         this.email = email;
         this.urlPicture = urlPicture;
+        this.groups =  Arrays.asList();
     }
 
     // --- GETTERS ---
@@ -50,6 +57,8 @@ public class User implements Serializable {
     public String getPhoneNumber() { return phoneNumber; }
     public String getEmail() { return email; }
     public String getUrlPicture() { return urlPicture; }
+
+    public List<String> getGroups(){ return this.groups; }
 
     // --- SETTERS ---
     public void setUsername(String username) { this.username = username; }
