@@ -3,6 +3,7 @@ package com.example.socialmediaproject;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -14,10 +15,19 @@ import android.widget.Toast;
 
 
 import com.example.socialmediaproject.api.PostHelper;
+import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.Post;
+import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class newPostActivity extends AppCompatActivity {
+
+
+    @Nullable private User modelCurrentUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,8 @@ public class newPostActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String groupeName =  bundle.getString("group_name");
+
+        this.getCurrentUserFromFirestore();
 
 
         EditText editText_content = findViewById(R.id.editTextTextMultiLine);
@@ -53,7 +65,7 @@ public class newPostActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(getApplicationContext(),"Poster sur le groupe !" , Toast.LENGTH_SHORT).show();
 
-                    Post post = new Post(editText_content.getText().toString(), groupeName,"MNGLupdbc0RfgZfysQGwDzyzE9h2");
+                    Post post = new Post(editText_content.getText().toString(), groupeName, modelCurrentUser.getUid());
                     PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
                     finish();
                 }
@@ -68,5 +80,18 @@ public class newPostActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), getString(R.string.error_unknown_error), Toast.LENGTH_LONG).show();
             }
         };
+    }
+
+    // --------------------
+    // REST REQUESTS
+    // --------------------
+    // 4 - Get Current User from Firestore
+    private void getCurrentUserFromFirestore(){
+        UserHelper.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                modelCurrentUser = documentSnapshot.toObject(User.class);
+            }
+        });
     }
 }

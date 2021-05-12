@@ -17,9 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.Post;
+import com.example.socialmediaproject.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 
 /**
@@ -135,7 +140,14 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             if(currentItem.getUserSender() == null){
                 itemSubtitleView.setText("null");
             }else{
-                itemSubtitleView.setText(currentItem.getUserSender());
+                UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        //modelCurrentUser = documentSnapshot.toObject(User.class);
+                        itemSubtitleView.setText(documentSnapshot.toObject(User.class).getUsername());
+                    }
+                });
+
             }
             itemContentView.setText(currentItem.getContent());
             itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));
