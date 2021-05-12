@@ -246,7 +246,8 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                 break;
             case R.id.group_menu_settings:
                 Bundle bundle = new Bundle();
-                NavHostFragment.findNavController(this).navigate(R.id.action_navigation_groupe_post_to_settingsGroupFragment);
+                bundle.putString("group_name", currentGroup.getName());
+                NavHostFragment.findNavController(this).navigate(R.id.action_navigation_groupe_post_to_settingsGroupFragment, bundle);
                 break;
         }
         return super.onOptionsItemSelected(item);

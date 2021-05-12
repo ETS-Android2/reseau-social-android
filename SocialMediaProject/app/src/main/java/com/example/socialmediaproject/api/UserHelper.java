@@ -10,6 +10,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,6 +47,7 @@ public class UserHelper {
                 .collection(COLLECTION_NAME)
                 .add(user);
     }
+
 
     // --- GET ---
     public static Task<DocumentSnapshot> getUser(String uid){

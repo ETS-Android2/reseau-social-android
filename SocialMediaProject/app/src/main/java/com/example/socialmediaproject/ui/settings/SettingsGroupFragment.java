@@ -14,18 +14,20 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.models.Group;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
     Group currentGroup;
 
+    String groupName;
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.groupe_preferences, rootKey);
-
-
-        currentGroup = new Group("test","test","test","test");
 
 
         Preference preferenceInvitation = findPreference("category_invitations");
@@ -35,25 +37,43 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         Preference preferenceDeleteGroup = findPreference("group_delete");
 
 
-        // Si le compte connecté est l'admin du groupe (on compare les username car ils sont unique
-        if(true){
-            // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
-            preferenceInvitation.setVisible(currentGroup.isPrivate());
+        // on récupère l'objet du fragment précédent
+        Bundle bundle = getArguments();
+        groupName = bundle.getString("group_name");
 
-            preferenceExitGroup.setVisible(false);
+        GroupHelper.getGroup(groupName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                currentGroup = documentSnapshot.toObject(Group.class);
 
-            preferenceEditGroup.setVisible(true);
-            preferenceEditMembersGroup.setVisible(true);
-            preferenceDeleteGroup.setVisible(true);
-        }else{
-            // Si le compte connecté est un membre
-            preferenceInvitation.setVisible(false);
-            preferenceExitGroup.setVisible(true);
+                // title fragment in the header bar
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
+                // affichage de la flèche retour en arrière dans le menu
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            preferenceEditGroup.setVisible(false);
-            preferenceEditMembersGroup.setVisible(false);
-            preferenceDeleteGroup.setVisible(false);
-        }
+                // Si le compte connecté est l'admin du groupe (on compare les username car ils sont unique
+                if(true){
+                    // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
+                    preferenceInvitation.setVisible(currentGroup.isPrivate());
+
+                    preferenceExitGroup.setVisible(false);
+
+                    preferenceEditGroup.setVisible(true);
+                    preferenceEditMembersGroup.setVisible(true);
+                    preferenceDeleteGroup.setVisible(true);
+                }else{
+                    // Si le compte connecté est un membre
+                    preferenceInvitation.setVisible(false);
+                    preferenceExitGroup.setVisible(true);
+
+                    preferenceEditGroup.setVisible(false);
+                    preferenceEditMembersGroup.setVisible(false);
+                    preferenceDeleteGroup.setVisible(false);
+                }
+
+            }
+        });
+
 
 
     }
@@ -61,27 +81,6 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
-
-        // on récupère l'objet du fragment précédent
-        Bundle bundle = getArguments();
-        currentGroup = (Group) bundle.getSerializable("group");
-
-        // title fragment in the header bar
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
-
-        // affichage de la flèche retour en arrière dans le menu
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // on récupère l'objet du fragment précédent
-        Bundle bundle = getArguments();
-        currentGroup = (Group) bundle.getSerializable("group");
-
-        // title fragment in the header bar
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
     }
 
     @Override
@@ -96,10 +95,12 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
         if(key.equals("group_edit")){
             Toast.makeText(getContext(),"Modifier le groupe !" , Toast.LENGTH_SHORT).show();
+            bundle.putString("group_name", currentGroup.getName());
             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsEditGroupFragment, bundle);
         }
         if(key.equals("group_members")){
             Toast.makeText(getContext(),"Gérer les adhérents !" , Toast.LENGTH_SHORT).show();
+            bundle.putString("group_name", currentGroup.getName());
             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsGroupFragment_pageMembers, bundle);
         }
 

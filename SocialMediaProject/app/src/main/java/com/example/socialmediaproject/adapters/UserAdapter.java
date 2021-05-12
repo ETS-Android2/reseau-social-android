@@ -12,7 +12,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.List;
 
@@ -25,12 +29,15 @@ public class UserAdapter extends BaseAdapter {
     private Context context;
     private List<User> userList;
     private LayoutInflater inflater;
+    private Group currentGroup;
 
     // constructor
-    public UserAdapter(Context context, List<User> userList){
+    public UserAdapter(Context context, List<User> userList, Group group){
         this.context = context;
         this.userList = userList;
         this.inflater = LayoutInflater.from(context);
+        this.currentGroup = group;
+
     }
 
     @Override
@@ -60,30 +67,68 @@ public class UserAdapter extends BaseAdapter {
         // get item name view
         TextView itemNameView = (TextView) view.findViewById(R.id.user_name);
         itemNameView.setText(itemName);
-        
-        view.setOnClickListener(v -> {
-            // setup the alert builder
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(itemName);
-            // add a list
-            String[] actions = {"Contacter", "Promouvoir", "Supprimer"};
-            builder.setItems(actions, (dialog, which) -> {
-                switch (which) {
-                    case 0: // Contacter
-                        Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1: // Promouvoir
-                        Toast.makeText(context, "Promouvoir l'utilisateur !"  , Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2: // Supprimer
-                        Toast.makeText(context, "Exclure l'utilisateur !"  , Toast.LENGTH_SHORT).show();
-                        break;
-                } }); // create and show the alert dialog
 
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        });
+        // si l'utilisateur selectionné est l'admin
+        if(isAdmin(currentItem.getUid())){
+            // on ne fait rien
+        }else if(isModerator(currentItem.getUid())){ // si l'utilisateur est modérateur
+            view.setOnClickListener(v -> {
+                // setup the alert builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Actions");
+                // add a list
+                String[] actions = {"Contact", "Demote to member", "Kick Out"};
+                builder.setItems(actions, (dialog, which) -> {
+                    switch (which) {
+                        case 0: // Contacter
+                            Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                            break;
+                        case 1: // Retrograder à simple membre
+                            Toast.makeText(context, "Suppression des modérateur !"  , Toast.LENGTH_SHORT).show();
+                            break;
+                        case 2: // Exclure l'utilisateur
+                            Toast.makeText(context, "Exclure l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                            break;
+                    } }); // create and show the alert dialog
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            });
+        }else{ // sinon l'utilisateur est un utilisateur lambda
+            view.setOnClickListener(v -> {
+                // setup the alert builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Actions");
+                // add a list
+                String[] actions = {"Contact", "Promote to Moderator", "Kick Out"};
+                builder.setItems(actions, (dialog, which) -> {
+                    switch (which) {
+                        case 0: // Contacter
+                            Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                            break;
+                        case 1: // Promouvoir au role de modérateur
+                            Toast.makeText(context, "Promouvoir l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                            break;
+                        case 2: // Exclure l'utilisateur
+                            Toast.makeText(context, "Exclure l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                            break;
+                    } }); // create and show the alert dialog
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            });
+        }
+
 
         return view;
     }
+
+    private boolean isAdmin(String uid){
+        return currentGroup.getAdmin().equals(uid);
+    }
+
+    private boolean isModerator(String uid){
+        return currentGroup.getModerators().contains(uid);
+    }
+
 }

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,7 +20,19 @@ import android.widget.ListView;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.UserAdapter;
+import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.models.User;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class membersListFragment extends Fragment {
 
@@ -47,11 +60,37 @@ public class membersListFragment extends Fragment {
             // Inflate the layout for this fragment
             View view = inflater.inflate(R.layout.fragment_members_list, container, false);
 
-            currentGroup = new Group("test","test","test","test");
+            Bundle bundle = getArguments();
+            String groupName = bundle.getString("group_name");
 
-            // get list view
-            ListView allUser = view.findViewById(R.id.listView_members);
-            //allUser.setAdapter(new UserAdapter(getContext(), currentGroup.getMembers()));
+        // get list view
+        ListView allUser = view.findViewById(R.id.listView_members);
+
+
+            GroupHelper.getGroup(groupName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    currentGroup = documentSnapshot.toObject(Group.class);
+                    ArrayList<User> userList = new ArrayList<>();
+
+                    Log.d("TAAAAAAAAAG", currentGroup.toString());
+
+                    for(String id : currentGroup.getMembers()){
+
+                        UserHelper.getUser(id).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                userList.add(documentSnapshot.toObject(User.class));
+
+                                // on set l'adapter
+                                allUser.setAdapter(new UserAdapter(getContext(), userList, currentGroup));
+                            }
+                        });
+                    }
+                }
+            });
+
+
 
             // title fragment in the header
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Membres du groupe");
