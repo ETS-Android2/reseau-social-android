@@ -17,7 +17,7 @@ public class PostHelper {
     // --- CREATE ---
     public static Task<DocumentReference> createPostForGroup(String content, String groupName){
         // 1 - Create the Message object
-        Post post = new Post(content, "MNGLupdbc0RfgZfysQGwDzyzE9h2", groupName);
+        Post post = new Post(content, groupName,"MNGLupdbc0RfgZfysQGwDzyzE9h2");
         // 2 - Store Message to Firestore
         return GroupHelper.getGroupCollection()
                 .document(groupName)
