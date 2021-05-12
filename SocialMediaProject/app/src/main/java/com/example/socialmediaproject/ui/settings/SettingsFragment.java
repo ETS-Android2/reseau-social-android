@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.base.BaseActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import java.util.Base64;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -56,6 +59,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         if(key.equals("deconnexion")){
             Toast.makeText(getContext(),"Déconnexion" , Toast.LENGTH_SHORT).show();
+
+            if(isCurrent)
+
             intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         }

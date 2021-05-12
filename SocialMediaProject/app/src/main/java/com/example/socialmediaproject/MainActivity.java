@@ -1,20 +1,15 @@
 package com.example.socialmediaproject;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-import android.widget.Toolbar;
+import android.util.Log;
 
+import com.example.socialmediaproject.base.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -46,8 +41,18 @@ public class MainActivity extends AppCompatActivity {
                 Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.newGroupFragment);
             }
         });*/
-
-
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(BaseActivity.isCurrentUserLogged()){
+            Log.d("===========> ", "USER IS LOGGED !");
+        }
+        else{
+            Log.d("===========> ", "USER IS NOT LOGGED !");
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+    }
 }
