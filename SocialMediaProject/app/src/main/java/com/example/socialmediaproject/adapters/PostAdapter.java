@@ -2,7 +2,6 @@ package com.example.socialmediaproject.adapters;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.models.Post;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -132,12 +130,12 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             if(currentItem.getGroup() == null){
                 itemTitleView.setText("null");
             }else{
-                itemTitleView.setText(currentItem.getGroup().getName());
+                itemTitleView.setText(currentItem.getGroup());
             }
             if(currentItem.getUserSender() == null){
                 itemSubtitleView.setText("null");
             }else{
-                itemSubtitleView.setText(currentItem.getUserSender().getUsername());
+                itemSubtitleView.setText(currentItem.getUserSender());
             }
             itemContentView.setText(currentItem.getContent());
             itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));

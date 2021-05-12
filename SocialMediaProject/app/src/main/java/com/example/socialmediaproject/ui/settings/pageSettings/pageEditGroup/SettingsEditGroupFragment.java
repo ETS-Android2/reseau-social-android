@@ -23,9 +23,7 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.edit_group_preferences, rootKey);
 
-        // on récupère l'objet du fragment précédent
-        Bundle bundle = getArguments();
-        currentGroup = (Group) bundle.getSerializable("group");
+        currentGroup = new Group("test","test","test","test");
 
         Preference preferencePublication = findPreference("group_edit_publication");
 

@@ -1,6 +1,5 @@
 package com.example.socialmediaproject.api;
 
-import com.example.socialmediaproject.models.Notif;
 import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;

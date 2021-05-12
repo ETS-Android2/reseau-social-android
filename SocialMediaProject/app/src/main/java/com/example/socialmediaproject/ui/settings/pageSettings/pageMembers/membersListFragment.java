@@ -47,12 +47,10 @@ public class membersListFragment extends Fragment {
             // Inflate the layout for this fragment
             View view = inflater.inflate(R.layout.fragment_members_list, container, false);
 
-            // on récupère l'objet du fragment précédent
-            Bundle bundle = getArguments();
-            currentGroup = (Group) bundle.getSerializable("group");
+            currentGroup = new Group("test","test","test","test");
 
             // get list view
-            ListView allUser = (ListView) view.findViewById(R.id.listView_members);
+            ListView allUser = view.findViewById(R.id.listView_members);
             //allUser.setAdapter(new UserAdapter(getContext(), currentGroup.getMembers()));
 
             // title fragment in the header

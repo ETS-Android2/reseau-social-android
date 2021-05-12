@@ -12,10 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.socialmediaproject.R;
+
 import com.example.socialmediaproject.api.PostHelper;
-import com.example.socialmediaproject.models.Group;
-import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 
 public class newPostActivity extends AppCompatActivity {

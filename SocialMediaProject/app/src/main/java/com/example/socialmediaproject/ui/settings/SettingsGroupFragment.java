@@ -24,10 +24,8 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.groupe_preferences, rootKey);
 
-        // on récupère l'objet du fragment précédent
-        Bundle bundle = getArguments();
-        currentGroup = (Group) bundle.getSerializable("group");
 
+        currentGroup = new Group("test","test","test","test");
 
 
         Preference preferenceInvitation = findPreference("category_invitations");
