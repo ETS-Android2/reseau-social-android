@@ -15,14 +15,14 @@ public class PostHelper {
     private static final String COLLECTION_NAME = "posts";
 
     // --- CREATE ---
-    public static Task<DocumentReference> createPostForGroup(String content, String groupName){
+    public static Task<DocumentReference> createPostForGroup(Post postToCreate){
         // 1 - Create the Message object
-        Post post = new Post(content, groupName,"MNGLupdbc0RfgZfysQGwDzyzE9h2");
+
         // 2 - Store Message to Firestore
         return GroupHelper.getGroupCollection()
-                .document(groupName)
+                .document(postToCreate.getGroup())
                 .collection(COLLECTION_NAME)
-                .add(post);
+                .add(postToCreate);
     }
 
     // --- GET ---

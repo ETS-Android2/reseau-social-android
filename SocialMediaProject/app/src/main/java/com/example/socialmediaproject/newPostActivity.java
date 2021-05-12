@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 
 import com.example.socialmediaproject.api.PostHelper;
+import com.example.socialmediaproject.models.Post;
 import com.google.android.gms.tasks.OnFailureListener;
 
 public class newPostActivity extends AppCompatActivity {
@@ -52,8 +53,8 @@ public class newPostActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(getApplicationContext(),"Poster sur le groupe !" , Toast.LENGTH_SHORT).show();
 
-                    PostHelper.createPostForGroup(editText_content.getText().toString(), groupeName)
-                            .addOnFailureListener(onFailureListener());
+                    Post post = new Post(editText_content.getText().toString(), groupeName,"MNGLupdbc0RfgZfysQGwDzyzE9h2");
+                    PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
                     finish();
                 }
 
