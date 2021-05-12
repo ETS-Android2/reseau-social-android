@@ -19,7 +19,16 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.ProfileItemAdapter;
+import com.example.socialmediaproject.adapters.UserAdapter;
+import com.example.socialmediaproject.api.UserHelper;
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.ProfileItem;
+import com.example.socialmediaproject.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,17 +37,22 @@ public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;
     private TextView username;
+    private User user;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        /*
         username = (TextView) root.findViewById(R.id.username);
-        username.setText(userDao.getAll().get(0).name);
-        */
 
+        UserHelper.getUser(BaseActivity.getUid()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                user = task.getResult().toObject(User.class);
+                username.setText(user.getUsername());
+            }
+        });
 
         // on enlève la fleche de retour en arrière
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);

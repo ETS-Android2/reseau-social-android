@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 public class Post implements Serializable {
 
     private String content;
-    private Group group;
-    private User userSender;
+    private String group;
+    private String userSender;
     private Date dateCreated;
     private String urlImage;
 
@@ -27,9 +27,9 @@ public class Post implements Serializable {
 
 
     public Post(){
-        this.content = null;
-        this.group = new Group("test","test","test",new User("yesy"));
-        this.userSender = null;
+        this.content = "content";
+        this.group = "content";
+        this.userSender = "content";
         this.urlImage = null;
         this.nbViews = 0;
         this.nbStars =  0;
@@ -38,20 +38,16 @@ public class Post implements Serializable {
 
     public Post(String content){
         this.content = content;
-        this.group = new Group("test","test","test",new User("yesy"));
-        this.userSender = null;
+        this.group = "content";
+        this.userSender = "content";
         this.urlImage = null;
         this.nbViews = 0;
         this.nbStars =  0;
         this.isLike = false;
     }
 
-    public Post(Group group, User userSender){
-        this.content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut " +
-                "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco " +
-                "laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in " +
-                "voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " +
-                "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+    public Post(String content, String group, String userSender){
+        this.content = content;
         this.group = group;
         this.userSender = userSender;
         this.urlImage = null;
@@ -62,13 +58,12 @@ public class Post implements Serializable {
         this.nbStars =  ( Math.abs((int)(Math.random() * randomView)));
 
         this.isLike = false;
-
     }
 
     // --- GETTERS ---
     public String getContent(){ return this.content;}
-    public Group getGroup(){ return this.group;}
-    public User getUserSender(){ return this.userSender;}
+    public String getGroup(){ return this.group;}
+    public String getUserSender(){ return this.userSender;}
     @ServerTimestamp public Date getDateCreated(){ return this.dateCreated;}
     public String getUrlImage() { return urlImage; }
 
@@ -78,8 +73,8 @@ public class Post implements Serializable {
 
     // --- SETTERS ---
     public void setContent(String content){ this.content = content;}
-    public void setGroup(Group group){  this.group = group;}
-    public void setUserSender(User userSender) { this.userSender = userSender; }
+    public void setGroup(String group){  this.group = group;}
+    public void setUserSender(String userSender) { this.userSender = userSender; }
     public void setDateCreated(Date dateCreated) { this.dateCreated = dateCreated; }
     public void setUrlImage(String urlImage) { this.urlImage = urlImage; }
 

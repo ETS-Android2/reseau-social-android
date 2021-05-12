@@ -60,7 +60,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         if(key.equals("deconnexion")){
             Toast.makeText(getContext(),"Déconnexion" , Toast.LENGTH_SHORT).show();
 
-            if(isCurrent)
+            if(BaseActivity.isCurrentUserLogged())
+                BaseActivity.getAuth().signOut();
 
             intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);

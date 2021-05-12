@@ -1,12 +1,17 @@
 package com.example.socialmediaproject.api;
 
-import com.example.socialmediaproject.models.Notif;
+import androidx.annotation.NonNull;
+
 import com.example.socialmediaproject.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Antoine Barbier and Antoine Brahimi on 5/9/21.

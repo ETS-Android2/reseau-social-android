@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -19,11 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.adapters.PostAdapter;
-import com.example.socialmediaproject.enums.Access;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
-import com.example.socialmediaproject.models.User;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,25 +45,9 @@ public class MyFavorisFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes favoris");
 
-        // list of group
-        List<Group> groupAllItemList = new ArrayList<>();
-        //groupAllItemList.add(new Group("Les étudiants de montpellier","post", "test",new User("antoine")));
-        //groupAllItemList.add(new Group("Les motards du 36","sms", "test",new User("antoine")));
-        //groupAllItemList.add(new Group("Végan un jour, Végan toujours","email", "test",new User("antoine")));
-        //groupAllItemList.add(new Group("FDS - informatique","tchat", "test",new User("antoine")));
-        //groupAllItemList.add(new Group("Les fans de Squeezie","post", "test",new User("antoine")));
-
-
-        // list of posts
-        List<Post> postItemList = new ArrayList<>();
-        //postItemList.add(new Post(groupAllItemList.get(1), new User("antoine")));
-        //postItemList.add(new Post(groupAllItemList.get(1), new User("thomas")));
 
         recyclerView = view.findViewById(R.id.recyclerView_myFavoris);
 
-        //PostAdapter myAdapter = new PostAdapter(getContext(), postItemList);
-        //recyclerView.setAdapter(myAdapter);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return view;
     }

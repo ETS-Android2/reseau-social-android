@@ -1,10 +1,6 @@
 package com.example.socialmediaproject.api;
 
-import com.example.socialmediaproject.models.Group;
-import com.example.socialmediaproject.models.Message;
-import com.example.socialmediaproject.models.Notif;
 import com.example.socialmediaproject.models.Post;
-import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,7 +17,7 @@ public class PostHelper {
     // --- CREATE ---
     public static Task<DocumentReference> createPostForGroup(String content, String groupName){
         // 1 - Create the Message object
-        Post post = new Post(content);
+        Post post = new Post(content, "MNGLupdbc0RfgZfysQGwDzyzE9h2", groupName);
         // 2 - Store Message to Firestore
         return GroupHelper.getGroupCollection()
                 .document(groupName)

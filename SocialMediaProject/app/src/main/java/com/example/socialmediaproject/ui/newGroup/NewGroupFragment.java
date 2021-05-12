@@ -3,7 +3,6 @@ package com.example.socialmediaproject.ui.newGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,19 +21,15 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+
 import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.GroupHelper;
-import com.example.socialmediaproject.enums.Access;
-import com.example.socialmediaproject.models.Group;
-import com.example.socialmediaproject.models.Notif;
-import com.example.socialmediaproject.models.User;
 
+
+import com.example.socialmediaproject.models.Group;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
@@ -105,8 +100,9 @@ public class NewGroupFragment extends Fragment {
                 }else{
                     Toast.makeText(getContext(),"Groupe créé !" , Toast.LENGTH_SHORT).show();
 
-                    GroupHelper.createGroup(editText_groupName.getText().toString(),spinnerGroupType.getText().toString(),spinnerGroupSubject.getText().toString(),new User("test"))
-                            .addOnFailureListener(onFailureListener());
+                    //GroupHelper.createGroup(editText_groupName.getText().toString(),spinnerGroupType.getText().toString(),spinnerGroupSubject.getText().toString(),"MNGLupdbc0RfgZfysQGwDzyzE9h2")
+                    Group groupToCreate = new Group(editText_groupName.getText().toString(),"type","field","MNGLupdbc0RfgZfysQGwDzyzE9h2");
+                    GroupHelper.createGroup(groupToCreate).addOnFailureListener(onFailureListener());
 
                     // On passe le nom du groupe entre les fragments
                     Bundle bundle = new Bundle();

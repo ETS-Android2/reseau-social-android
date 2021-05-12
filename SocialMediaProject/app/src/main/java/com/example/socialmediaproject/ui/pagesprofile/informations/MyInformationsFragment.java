@@ -1,7 +1,7 @@
 package com.example.socialmediaproject.ui.pagesprofile.informations;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,12 +21,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.db.UserRoomDatabase;
 import com.example.socialmediaproject.db.dao.UserDao;
 import com.example.socialmediaproject.models.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
+
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -132,6 +133,10 @@ public class MyInformationsFragment extends Fragment {
         DocumentReference ref = fStore.collection("users").document(fAuth.getUid());
         ref.update("email", email);
         ref.update("phoneNumber", phone);
+
+        BaseActivity.getCurrentUser().updateEmail(email);
+
+        Toast.makeText(getContext(), "User's informations updated !", Toast.LENGTH_LONG).show();
     }
 
 }

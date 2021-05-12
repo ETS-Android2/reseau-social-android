@@ -15,8 +15,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,7 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.AbsListView;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,23 +32,20 @@ import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
 
 import com.example.socialmediaproject.adapters.PostAdapter;
-import com.example.socialmediaproject.adapters.PostInGroupAdapter;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.api.UserHelper;
-import com.example.socialmediaproject.enums.Access;
+
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.example.socialmediaproject.newPostActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.Map;
@@ -108,8 +103,10 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if(documentSnapshot.exists()){
                                 Map<String, Object> dataGroup = documentSnapshot.getData();
-                                currentGroup = new Group((String) dataGroup.get("name"), (String) dataGroup.get("type"),"test", new User("test"));
-                                Toast.makeText(getContext(),"Le groupe exist"+  dataGroup.get("type") , Toast.LENGTH_SHORT).show();
+                                currentGroup = new Group((String) dataGroup.get("name"), (String) dataGroup.get("type"),(String) dataGroup.get("field"), (String) dataGroup.get("admin"));
+                                //Toast.makeText(getContext(),"Le groupe exist"+  dataGroup.get("type") , Toast.LENGTH_SHORT).show();
+
+                                //currentGroup = new Group(documentSnapshot.get("name"), "type","field", "admin");
 
                                 layout_group.setVisibility(View.VISIBLE);
                                 tv_groupTitle.setText(currentGroup.getName());
@@ -126,11 +123,6 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
 
 
                                 recyclerView = root.findViewById(R.id.recyclerView_group_posts);
-
-                                //PostInGroupAdapter myAdapter = new PostInGroupAdapter(getContext(), currentGroup.getPosts());
-                                //recyclerView.setAdapter(myAdapter);
-                                //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
                                 configureRecyclerView(currentGroup.getName());
                                 configureToolbar();
 
@@ -142,8 +134,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                                     public void onClick(View view) {
                                         Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
 
-                                        UserHelper.addUserInGroup()
-                                                .addOnFailureListener(onFailureListener());
+                                        //UserHelper.addUserInGroup().addOnFailureListener(onFailureListener());
                                         Bundle bundle = new Bundle();
                                         bundle.putString("group_name", currentGroup.getName());
                                         Intent intent = new Intent(getActivity(), newPostActivity.class);
@@ -255,8 +246,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                 break;
             case R.id.group_menu_settings:
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("group", currentGroup);
-                NavHostFragment.findNavController(this).navigate(R.id.action_navigation_groupe_post_to_settingsGroupFragment, bundle);
+                NavHostFragment.findNavController(this).navigate(R.id.action_navigation_groupe_post_to_settingsGroupFragment);
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -15,11 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.models.Group;
-import com.example.socialmediaproject.models.Post;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import java.util.List;
 
 /**
  * Created by Antoine Barbier and Antoine Brahimi on 4/26/21.

@@ -19,24 +19,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.GroupAdapter;
-import com.example.socialmediaproject.adapters.GroupItemAdapter;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.tabs.TabLayout;
 
-import com.example.socialmediaproject.enums.Access;
 import com.google.firebase.firestore.Query;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DashboardFragment extends Fragment implements GroupAdapter.Listener{
 
