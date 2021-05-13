@@ -4,6 +4,7 @@ import com.example.socialmediaproject.models.Group;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -43,6 +44,31 @@ public class GroupHelper {
     }
 
     // --- UPDATE ---
+    // -- Gestion des adhérants dans le groupe --
+    public static Task<Void> remoreUserFromGroup(String groupName, String uid) {
+        return GroupHelper.getGroupCollection()
+                .document(groupName)
+                .update("members", FieldValue.arrayRemove(uid),
+                        "moderators",FieldValue.arrayRemove(uid));
+    }
+
+    public static Task<Void> addUserInGroup(String groupName, String uid) {
+        return GroupHelper.getGroupCollection()
+                .document(groupName)
+                .update("members", FieldValue.arrayUnion(uid));
+    }
+
+    public static Task<Void> promoteMemberToModerator(String groupName, String uid) {
+        return GroupHelper.getGroupCollection()
+                .document(groupName)
+                .update("moderators", FieldValue.arrayUnion(uid));
+    }
+
+    public static Task<Void> demoteModeratorToMember(String groupName, String uid) {
+        return GroupHelper.getGroupCollection()
+                .document(groupName)
+                .update("moderators", FieldValue.arrayRemove(uid));
+    }
 
 
     // --- DELETE ---

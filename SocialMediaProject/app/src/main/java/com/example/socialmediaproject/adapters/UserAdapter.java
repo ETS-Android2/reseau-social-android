@@ -84,10 +84,23 @@ public class UserAdapter extends BaseAdapter {
                             Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
                             break;
                         case 1: // Retrograder à simple membre
-                            Toast.makeText(context, "Suppression des modérateur !"  , Toast.LENGTH_SHORT).show();
+                            GroupHelper.demoteModeratorToMember(currentGroup.getName(),currentItem.getUid())
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(context, "Retrograder à simple membre !", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
                             break;
                         case 2: // Exclure l'utilisateur
-                            Toast.makeText(context, "Exclure l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                            GroupHelper.remoreUserFromGroup(currentGroup.getName(),currentItem.getUid())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(context, "Exclure l'utilisateur !", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                             break;
                     } }); // create and show the alert dialog
 
@@ -107,10 +120,23 @@ public class UserAdapter extends BaseAdapter {
                             Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
                             break;
                         case 1: // Promouvoir au role de modérateur
-                            Toast.makeText(context, "Promouvoir l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                            GroupHelper.promoteMemberToModerator(currentGroup.getName(),currentItem.getUid())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(context, "Promouvoir au role de modérateur !"  , Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
                             break;
                         case 2: // Exclure l'utilisateur
-                            Toast.makeText(context, "Exclure l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                            GroupHelper.remoreUserFromGroup(currentGroup.getName(),currentItem.getUid())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(context, "Exclure l'utilisateur !", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                             break;
                     } }); // create and show the alert dialog
 
