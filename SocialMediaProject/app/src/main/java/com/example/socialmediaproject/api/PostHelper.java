@@ -1,11 +1,17 @@
 package com.example.socialmediaproject.api;
 
+import com.example.socialmediaproject.adapters.UserAdapter;
 import com.example.socialmediaproject.models.Post;
+import com.example.socialmediaproject.models.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import java.util.List;
 
 /**
  * Created by Antoine Barbier and Antoine Brahimi on 5/9/21.
@@ -29,17 +35,21 @@ public class PostHelper {
     }
 
     // --- GET ---
-    public static Query getAllPostForGroup(String name){
+    public static Query getAllPostForGroup(String groupName){
         return PostHelper.getPostCollection()
-                .whereEqualTo("group", name)
+                .whereEqualTo("group", groupName)
                 .orderBy("dateCreated")
                 .limit(50);
+
     }
 
     // --- GET ---
-    public static Query getAllPost(){
+    public static Query getAllPost(String uid){
+
         return FirebaseFirestore.getInstance().collectionGroup("posts");
     }
+
+
 
 
 

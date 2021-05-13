@@ -25,11 +25,15 @@ import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.GroupAdapter;
 import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
 public class DashboardFragment extends Fragment implements GroupAdapter.Listener{
@@ -53,41 +57,46 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
         recyclerView = root.findViewById(R.id.recyclerView_groups);
 
         this.configureToolbar();
-        this.getCurrentUserFromFirestore();
 
-        this.configureRecyclerView("all");
-
-
-        // we get the selected tab
-        TabLayout tabLayout = root.findViewById(R.id.tabLayout_type_group);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        UserHelper.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch(tab.getPosition()){
-                    case 0: // all
-                        configureRecyclerView( "all");
-                        break;
-                    case 1: // posts
-                        configureRecyclerView( "post");
-                        break;
-                    case 2: // Tchat
-                        configureRecyclerView( "chat");
-                        break;
-                    case 3: // email
-                        configureRecyclerView( "email");
-                        break;
-                    case 4: // sms
-                        configureRecyclerView( "sms");
-                        break;
-                }
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                modelCurrentUser = documentSnapshot.toObject(User.class);
+                configureRecyclerView("all");
+
+                // we get the selected tab
+                TabLayout tabLayout = root.findViewById(R.id.tabLayout_type_group);
+                tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        switch(tab.getPosition()){
+                            case 0: // all
+                                configureRecyclerView( "all");
+                                break;
+                            case 1: // posts
+                                configureRecyclerView( "post");
+                                break;
+                            case 2: // Tchat
+                                configureRecyclerView( "chat");
+                                break;
+                            case 3: // email
+                                configureRecyclerView( "email");
+                                break;
+                            case 4: // sms
+                                configureRecyclerView( "sms");
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) { }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) { }
+                });
             }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) { }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) { }
         });
+
 
         return root;
     }
@@ -97,6 +106,8 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+
+        getCurrentUserFromFirestore();
     }
 
     @Override
@@ -133,12 +144,12 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
     // --------------------
     // 4 - Get Current User from Firestore
     private void getCurrentUserFromFirestore(){
-        /*UserHelper.getUser(getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        UserHelper.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 modelCurrentUser = documentSnapshot.toObject(User.class);
             }
-        });*/
+        });
     }
 
     // --------------------
@@ -149,7 +160,7 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
 
         //Configure Adapter & RecyclerView
         if(type.equals("all")){
-            this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(GroupHelper.getAllGroup()),
+            this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(GroupHelper.getAllGroup(modelCurrentUser.getUid())),
                     Glide.with(this), this, "test user");
         }else{
             this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(GroupHelper.getAllGroupByType(type)),

@@ -30,9 +30,13 @@ import com.example.socialmediaproject.adapters.PostAdapter;
 
 import com.example.socialmediaproject.api.PostHelper;
 
+import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
 
@@ -58,7 +62,13 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
         recyclerView = root.findViewById(R.id.recyclerView_home_posts);
 
         this.configureToolbar();
-        this.configureRecyclerView();
+        UserHelper.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                modelCurrentUser = documentSnapshot.toObject(User.class);
+                configureRecyclerView();
+
+            }});
 
         return root;
     }
@@ -76,7 +86,7 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
     // 5 - Configure RecyclerView with a Query
     private void configureRecyclerView(){
         //Configure Adapter & RecyclerView
-        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPost()),
+        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPost(modelCurrentUser.getUid())),
                     Glide.with(this), this, "test user");
 
 

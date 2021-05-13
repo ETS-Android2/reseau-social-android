@@ -31,6 +31,10 @@ public class GroupHelper {
         return GroupHelper.getGroupCollection();
     }
 
+    public static Query getAllGroup(String uid){
+        return GroupHelper.getGroupCollection().whereArrayContains("members",uid);
+    }
+
     // --- GET ---
     public static Task<DocumentSnapshot> getGroup(String groupName){
         return GroupHelper.getGroupCollection().document(groupName).get();

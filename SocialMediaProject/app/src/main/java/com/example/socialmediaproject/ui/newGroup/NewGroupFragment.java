@@ -28,8 +28,13 @@ import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.GroupHelper;
 
 
+import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +51,7 @@ public class NewGroupFragment extends Fragment {
     private FirebaseFirestore fStore;
 
     private NewGroupViewModel mViewModel;
+    @Nullable private User modelCurrentUser;
 
     public static NewGroupFragment newInstance() {
         return new NewGroupFragment();
@@ -86,35 +92,42 @@ public class NewGroupFragment extends Fragment {
         spinnerGroupPublication.setAdapter(adapterPublicationGroup);
         spinnerGroupSubject.setAdapter(adapterSubjectGroup);
 
-
-
         Button createGroup = view.findViewById(R.id.button_create_group);
-        createGroup.setOnClickListener(new View.OnClickListener() {
+
+        UserHelper.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View view) {
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                modelCurrentUser = documentSnapshot.toObject(User.class);
 
-                if(editText_groupName.getText().toString().matches("") ||
-                        spinnerGroupType.getText().toString().matches("") ||
-                        spinnerGroupAccess.getText().toString().matches("") ||
-                        spinnerGroupPublication.getText().toString().matches("") ||
-                        spinnerGroupSubject.getText().toString().matches("")){
-                    Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getContext(),"Groupe créé !" , Toast.LENGTH_SHORT).show();
 
-                    //GroupHelper.createGroup(editText_groupName.getText().toString(),spinnerGroupType.getText().toString(),spinnerGroupSubject.getText().toString(),"MNGLupdbc0RfgZfysQGwDzyzE9h2")
-                    Group groupToCreate = new Group(editText_groupName.getText().toString(),"type","field","MNGLupdbc0RfgZfysQGwDzyzE9h2");
-                    GroupHelper.createGroup(groupToCreate).addOnFailureListener(onFailureListener());
+                createGroup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                    // On passe le nom du groupe entre les fragments
-                    Bundle bundle = new Bundle();
-                    bundle.putString("group_name", editText_groupName.getText().toString());
-                    // Navigation vers le fragment qui affiche le groupe
-                    Navigation.findNavController(view).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post, bundle);
-                }
+                        if(editText_groupName.getText().toString().matches("") ||
+                                spinnerGroupType.getText().toString().matches("") ||
+                                spinnerGroupAccess.getText().toString().matches("") ||
+                                spinnerGroupPublication.getText().toString().matches("") ||
+                                spinnerGroupSubject.getText().toString().matches("")){
+                            Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
+                        }else{
+                             Group groupToCreate = new Group(editText_groupName.getText().toString(),
+                                                                spinnerGroupType.getText().toString(),
+                                                                spinnerGroupSubject.getText().toString(),
+                                                                modelCurrentUser.getUid());
+                            GroupHelper.createGroup(groupToCreate).addOnFailureListener(onFailureListener());
 
-            }
-        });
+                            // On passe le nom du groupe entre les fragments
+                            Bundle bundle = new Bundle();
+                            bundle.putString("group_name", editText_groupName.getText().toString());
+                            // Navigation vers le fragment qui affiche le groupe
+                            Navigation.findNavController(view).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post, bundle);
+                        }
+
+                    }
+                });
+
+            }});
 
         return view;
     }
