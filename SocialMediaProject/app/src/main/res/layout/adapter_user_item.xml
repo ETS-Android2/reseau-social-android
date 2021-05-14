@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="15dp">
 
     <TextView
@@ -15,5 +15,14 @@
         android:paddingRight="15dp"
         android:paddingLeft="15dp"
         android:text="User name"/>
+
+    <TextView
+        android:id="@+id/user_role"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="10sp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:text="User role"/>
 
 </LinearLayout>

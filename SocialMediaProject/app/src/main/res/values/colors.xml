@@ -34,4 +34,6 @@
     <color name="purple">#ba53de</color>
     <color name="pink">#f469a9</color>
     <color name="blue">#88bef5</color>
+    <color name="red">#D32F2F</color>
+    <color name="green">#388E3C</color>
 </resources>

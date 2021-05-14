@@ -75,4 +75,10 @@ public class Group implements Serializable {
 
     // --- METHODS ---
     public Boolean isPrivate(){  return this.is_private; }
+
+    public void addToModerators(String uid){ this.moderators.add(uid);}
+    public void removeToModerators(String uid){ this.moderators.remove(uid);}
+
+    public void addToMembers(String uid){ this.members.add(uid);}
+    public void removeToMembers(String uid){ this.members.remove(uid);}
 }
