@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:persistent="false">
 
 
 
@@ -17,7 +18,7 @@
 
         <EditTextPreference
             app:key="group_edit_name"
-            android:defaultValue="Les rigolos de l'espace"
+            android:defaultValue="Nom du groupe"
             app:title="@string/group_edit_name"
             app:useSimpleSummaryProvider="true" />
 

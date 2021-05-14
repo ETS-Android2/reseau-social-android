@@ -108,7 +108,8 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                                 layout_group.setVisibility(View.VISIBLE);
                                 tv_groupTitle.setText(currentGroup.getName());
                                 tv_groupType.setText(currentGroup.getType());
-                                tv_groupNbMembers.setText("50 members");
+                                String nbMembers = currentGroup.getMembers().size() + " members";
+                                tv_groupNbMembers.setText(nbMembers);
 
                                 if(currentGroup.getAccessPrivate()){
                                     tv_groupAccess.setText("private");

@@ -88,6 +88,20 @@ public class GroupHelper {
                 .update("accessPrivate",state);
     }
 
+    public static Task<Void> setSubjectGroup(String groupName, String name) {
+        return GroupHelper.getGroupCollection()
+                .document(groupName)
+                .update("field",name);
+    }
+
+    public static Task<Void> setPublicationModerator(String groupName, Boolean onlyModerator) {
+        return GroupHelper.getGroupCollection()
+                .document(groupName)
+                .update("publicationOnlyModerator",onlyModerator);
+    }
+
+
+
     // --- DELETE ---
     public static Task<Void> deleteGroup(String id) {
         return GroupHelper.getGroupCollection().document(id).delete();

@@ -102,15 +102,15 @@
     </string-array>
 
     <string-array name="list_group_subject">
-        <item>Localisation</item>
-        <item>Theme</item>
-        <item>Centre d\'interet</item>
-        <item>Service</item>
+        <item>lieu</item>
+        <item>theme</item>
+        <item>centre_interet</item>
+        <item>service</item>
     </string-array>
 
     <string-array name="list_group_publication">
-        <item>Administrateurs et modérateurs</item>
-        <item>Tout le monde</item>
+        <item>onlyModerator</item>
+        <item>allMembers</item>
     </string-array>
     <string name="title_activity_new_post">newPostActivity</string>
     <!-- Strings used for fragments for navigation -->

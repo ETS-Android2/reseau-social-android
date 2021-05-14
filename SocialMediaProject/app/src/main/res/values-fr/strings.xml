@@ -96,9 +96,9 @@
     </string-array>
 
     <string-array name="list_group_subject">
-        <item>Localisation</item>
-        <item>Theme</item>
-        <item>Centre d\'interet</item>
-        <item>Service</item>
+        <item>lieu</item>
+        <item>theme</item>
+        <item>centre_interet</item>
+        <item>service</item>
     </string-array>
 </resources>

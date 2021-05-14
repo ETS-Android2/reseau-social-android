@@ -14,7 +14,7 @@ public class Group implements Serializable {
 
     private String name, type, field;
     private String admin;
-    //private Publication publication;
+    private Boolean publicationOnlyModerator;
     private Boolean accessPrivate;
 
     // Les user qui sont en attente d'acceptation
@@ -29,8 +29,7 @@ public class Group implements Serializable {
         this.name   = "name";
         this.field  = "field";
         this.admin  = "idAdmin";
-        //this.access = _access;
-        //this.publication = Publication.ALL;
+        this.publicationOnlyModerator = false;
         this.accessPrivate =true;
 
         this.members = Arrays.asList(this.admin);
@@ -42,8 +41,7 @@ public class Group implements Serializable {
         this.name   = _name;
         this.field  = _field;
         this.admin  = _admin;
-        //this.access = _access;
-        //this.publication = Publication.ALL;
+        this.publicationOnlyModerator = false;
         this.accessPrivate = access.equals("private"); // alors true sinon public
         this.members = Arrays.asList(this.admin);
         this.moderators = Arrays.asList(this.admin);
@@ -58,11 +56,13 @@ public class Group implements Serializable {
     public String getField() { return this.field;}
     public String getAdmin(){ return this.admin;}
     public Boolean getAccessPrivate(){return this.accessPrivate; }
+    public Boolean getPublicationOnlyModerator(){ return this.publicationOnlyModerator;}
 
     public List<String> getMembers(){ return this.members; }
     public List<String> getModerators(){ return this.moderators; }
 
     public List<String> getWaitlist(){ return this.waitlist; }
+
 
 
 
@@ -72,8 +72,9 @@ public class Group implements Serializable {
     public void setField(String field) { this.field = field;}
     public void setAdmin(String admin){ this.admin = admin;}
     public void setAccessPrivate(Boolean access){ this.accessPrivate = access;}
-
-
+    public void setPublicationOnlyModerator(Boolean publicationOnlyModerator) {
+        this.publicationOnlyModerator = publicationOnlyModerator;
+    }
     // --- METHODS ---
     //public Boolean isPrivate(){  return this.accessPrivate; }
 

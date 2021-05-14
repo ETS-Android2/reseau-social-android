@@ -73,15 +73,11 @@ public class NewGroupFragment extends Fragment {
         spinnerGroupType = view.findViewById(R.id.spinner_group_type);
         spinnerGroupAccess = view.findViewById(R.id.spinner_group_access);
         spinnerGroupSubject = view.findViewById(R.id.spinner_group_subject);
-        spinnerGroupPublication = view.findViewById(R.id.spinner_group_publication);
         ArrayAdapter<CharSequence> adapterTypeGroup = ArrayAdapter.createFromResource(getContext(), R.array.list_group_type, android.R.layout.simple_spinner_item);
         adapterTypeGroup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ArrayAdapter<CharSequence> adapterAccessGroup = ArrayAdapter.createFromResource(getContext(), R.array.list_group_access, android.R.layout.simple_spinner_item);
         adapterAccessGroup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        ArrayAdapter<CharSequence> adapterPublicationGroup = ArrayAdapter.createFromResource(getContext(), R.array.list_group_publication, android.R.layout.simple_spinner_item);
-        adapterPublicationGroup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ArrayAdapter<CharSequence> adapterSubjectGroup = ArrayAdapter.createFromResource(getContext(), R.array.list_group_subject, android.R.layout.simple_spinner_item);
         adapterSubjectGroup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -89,7 +85,6 @@ public class NewGroupFragment extends Fragment {
         // Apply the adapter to the spinner
         spinnerGroupType.setAdapter(adapterTypeGroup);
         spinnerGroupAccess.setAdapter(adapterAccessGroup);
-        spinnerGroupPublication.setAdapter(adapterPublicationGroup);
         spinnerGroupSubject.setAdapter(adapterSubjectGroup);
 
         Button createGroup = view.findViewById(R.id.button_create_group);
@@ -107,7 +102,6 @@ public class NewGroupFragment extends Fragment {
                         if(editText_groupName.getText().toString().matches("") ||
                                 spinnerGroupType.getText().toString().matches("") ||
                                 spinnerGroupAccess.getText().toString().matches("") ||
-                                spinnerGroupPublication.getText().toString().matches("") ||
                                 spinnerGroupSubject.getText().toString().matches("")){
                             Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
                         }else{

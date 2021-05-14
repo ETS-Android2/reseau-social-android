@@ -54,9 +54,10 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
+        Bundle bundle = getArguments();
+        groupName = bundle.getString("group_name");
+
         String key = preference.getKey();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("group", currentGroup);
 
         if(key.equals("group_invite")){
             Toast.makeText(getContext(),"Générer un code d'invitation !" , Toast.LENGTH_SHORT).show();
@@ -64,19 +65,19 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
         if(key.equals("group_edit")){
             Toast.makeText(getContext(),"Modifier le groupe !" , Toast.LENGTH_SHORT).show();
-            bundle.putString("group_name", currentGroup.getName());
+            bundle.putString("group_name", groupName);
             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsEditGroupFragment, bundle);
         }
 
 
         if(key.equals("group_waitlist")){
             Toast.makeText(getContext(),"Gérer les demandes d'adhésions !" , Toast.LENGTH_SHORT).show();
-            bundle.putString("group_name", currentGroup.getName());
+            bundle.putString("group_name", groupName);
             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_waitlistFragment, bundle);
         }
         if(key.equals("group_members")){
             Toast.makeText(getContext(),"Gérer les adhérents !" , Toast.LENGTH_SHORT).show();
-            bundle.putString("group_name", currentGroup.getName());
+            bundle.putString("group_name", groupName);
             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsGroupFragment_pageMembers, bundle);
         }
 
@@ -96,9 +97,17 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         Preference preferenceInvitation = findPreference("category_invitations");
         Preference preferenceExitGroup = findPreference("group_exit");
         Preference preferenceEditGroup = findPreference("group_edit");
+        Preference preferenceEditWaitlistGroup = findPreference("group_waitlist");
         Preference preferenceEditMembersGroup = findPreference("group_members");
         Preference preferenceDeleteGroup = findPreference("group_delete");
-
+/*
+        preferenceInvitation.setVisible(false);
+        preferenceExitGroup.setVisible(false);
+        preferenceEditWaitlistGroup.setVisible(false);
+        preferenceEditGroup.setVisible(false);
+        preferenceEditMembersGroup.setVisible(false);
+        preferenceDeleteGroup.setVisible(false);
+*/
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();
@@ -112,14 +121,14 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
 
 
-                // Si le compte connecté est l'admin du groupe (on compare les username car ils sont unique
+                // Si le compte connecté est l'admin du groupe
                 if(true){
 
                     // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
                     preferenceInvitation.setVisible(currentGroup.getAccessPrivate());
 
                     preferenceExitGroup.setVisible(false);
-
+                    preferenceEditWaitlistGroup.setVisible(true);
                     preferenceEditGroup.setVisible(true);
                     preferenceEditMembersGroup.setVisible(true);
                     preferenceDeleteGroup.setVisible(true);
@@ -127,7 +136,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     // Si le compte connecté est un membre
                     preferenceInvitation.setVisible(false);
                     preferenceExitGroup.setVisible(true);
-
+                    preferenceEditWaitlistGroup.setVisible(false);
                     preferenceEditGroup.setVisible(false);
                     preferenceEditMembersGroup.setVisible(false);
                     preferenceDeleteGroup.setVisible(false);
