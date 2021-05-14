@@ -121,6 +121,9 @@
         <action
             android:id="@+id/action_settingsGroupFragment_to_settingsEditGroupFragment"
             app:destination="@id/settingsEditGroupFragment" />
+        <action
+            android:id="@+id/action_settingsGroupFragment_to_waitlistFragment"
+            app:destination="@id/waitlistFragment" />
     </fragment>
 
     <fragment
@@ -138,6 +141,15 @@
         android:label="SettingsEditGroupFragment" >
         <action
             android:id="@+id/action_settingsEditGroupFragment_to_settingsGroupFragment"
+            app:destination="@id/settingsGroupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/waitlistFragment"
+        android:name="com.example.socialmediaproject.ui.settings.pageSettings.pageWaitlist.WaitlistFragment"
+        android:label="fragment_waitlist"
+        tools:layout="@layout/fragment_waitlist" >
+        <action
+            android:id="@+id/action_waitlistFragment_to_settingsGroupFragment"
             app:destination="@id/settingsGroupFragment" />
     </fragment>
 

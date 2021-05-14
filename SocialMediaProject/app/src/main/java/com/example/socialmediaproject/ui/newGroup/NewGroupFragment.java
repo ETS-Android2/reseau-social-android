@@ -114,6 +114,7 @@ public class NewGroupFragment extends Fragment {
                              Group groupToCreate = new Group(editText_groupName.getText().toString(),
                                                                 spinnerGroupType.getText().toString(),
                                                                 spinnerGroupSubject.getText().toString(),
+                                                                spinnerGroupAccess.getText().toString(),
                                                                 modelCurrentUser.getUid());
                             GroupHelper.createGroup(groupToCreate).addOnFailureListener(onFailureListener());
 

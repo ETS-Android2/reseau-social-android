@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
+import androidx.preference.SwitchPreference;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.GroupHelper;
@@ -19,7 +21,8 @@ import com.example.socialmediaproject.models.Group;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-public class SettingsEditGroupFragment extends PreferenceFragmentCompat {
+
+public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
 
     Group currentGroup;
 
@@ -31,7 +34,6 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat {
         String groupName = bundle.getString("group_name");
 
         Preference preferencePublication = findPreference("group_edit_publication");
-        preferencePublication.setVisible(false);
 
         GroupHelper.getGroup(groupName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -43,13 +45,40 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat {
 
                 // initialisation des paramètre du groupe
                 SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-                prefs.putBoolean("group_edit_privacy", currentGroup.isPrivate());
+                prefs.putBoolean("group_edit_privacy", currentGroup.getAccessPrivate());
                 prefs.putString("group_edit_name", currentGroup.getName());
                 prefs.apply();
+
+                Preference preferencePublication = findPreference("group_edit_publication");
+
+                // Changer le groupe en privé ou public
+                SwitchPreference preferenceSwitch = findPreference("group_edit_privacy");
+                preferenceSwitch.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        if(newValue.equals(true)){
+                            GroupHelper.setGroupAccess(currentGroup.getName(),true)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getContext(),"private : true" , Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }else{
+                            GroupHelper.setGroupAccess(currentGroup.getName(),false)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getContext(),"private : false" , Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                        return true;
+
+                    }
+                });
             }
         });
-
-
     }
 
 
@@ -57,6 +86,8 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+        // title fragment in the header
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Modifier le groupe");
     }
 
     @Override

@@ -15,11 +15,10 @@ public class Group implements Serializable {
     private String name, type, field;
     private String admin;
     //private Publication publication;
-    //private Access access;
-    private Boolean is_private; // if private : true, else is publics
+    private Boolean accessPrivate;
 
     // Les user qui sont en attente d'acceptation
-    List<String> waitingList;
+    List<String> waitlist;
 
     List<String> members;
     List<String> moderators;
@@ -32,24 +31,24 @@ public class Group implements Serializable {
         this.admin  = "idAdmin";
         //this.access = _access;
         //this.publication = Publication.ALL;
-        this.is_private = true; //this.access.equals(Access.PRIVATE);
+        this.accessPrivate =true;
 
         this.members = Arrays.asList(this.admin);
         this.moderators = Arrays.asList(this.admin);
-        this.waitingList =  Arrays.asList();
+        this.waitlist =  Arrays.asList();
     }
-    public Group(String _name, String _type, String _field, String _admin){
+    public Group(String _name, String _type, String _field, String access, String _admin){
         this.type   = _type;
         this.name   = _name;
         this.field  = _field;
         this.admin  = _admin;
         //this.access = _access;
         //this.publication = Publication.ALL;
-        this.is_private = true; //this.access.equals(Access.PRIVATE);
+        this.accessPrivate = access.equals("private"); // alors true sinon public
         this.members = Arrays.asList(this.admin);
         this.moderators = Arrays.asList(this.admin);
 
-        this.waitingList =  Arrays.asList();
+        this.waitlist =  Arrays.asList();
     }
 
 
@@ -58,11 +57,12 @@ public class Group implements Serializable {
     public String getType() { return this.type;}
     public String getField() { return this.field;}
     public String getAdmin(){ return this.admin;}
+    public Boolean getAccessPrivate(){return this.accessPrivate; }
 
     public List<String> getMembers(){ return this.members; }
     public List<String> getModerators(){ return this.moderators; }
 
-    public List<String> getWaitingList(){ return this.waitingList; }
+    public List<String> getWaitlist(){ return this.waitlist; }
 
 
 
@@ -71,14 +71,17 @@ public class Group implements Serializable {
     public void setType(String type) { this.type = type;}
     public void setField(String field) { this.field = field;}
     public void setAdmin(String admin){ this.admin = admin;}
+    public void setAccessPrivate(Boolean access){ this.accessPrivate = access;}
 
 
     // --- METHODS ---
-    public Boolean isPrivate(){  return this.is_private; }
+    //public Boolean isPrivate(){  return this.accessPrivate; }
 
     public void addToModerators(String uid){ this.moderators.add(uid);}
     public void removeToModerators(String uid){ this.moderators.remove(uid);}
 
     public void addToMembers(String uid){ this.members.add(uid);}
     public void removeToMembers(String uid){ this.members.remove(uid);}
+
+    public void removeFromWaitlist(String uid){ this.waitlist.remove(uid);}
 }

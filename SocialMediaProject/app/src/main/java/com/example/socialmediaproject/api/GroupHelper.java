@@ -49,17 +49,23 @@ public class GroupHelper {
 
     // --- UPDATE ---
     // -- Gestion des adhérants dans le groupe --
-    public static Task<Void> remoreUserFromGroup(String groupName, String uid) {
+    public static Task<Void> removeUserFromGroup(String groupName, String uid) {
         return GroupHelper.getGroupCollection()
                 .document(groupName)
                 .update("members", FieldValue.arrayRemove(uid),
                         "moderators",FieldValue.arrayRemove(uid));
     }
 
+    public static Task<Void> removeUserFromWaitlistGroup(String groupName, String uid) {
+        return GroupHelper.getGroupCollection()
+                .document(groupName)
+                .update("waitlist", FieldValue.arrayRemove(uid));
+    }
+
     public static Task<Void> addUserInGroup(String groupName, String uid) {
         return GroupHelper.getGroupCollection()
                 .document(groupName)
-                .update("members", FieldValue.arrayUnion(uid));
+                .update("members", FieldValue.arrayUnion(uid),"waitlist",FieldValue.arrayRemove(uid));
     }
 
     public static Task<Void> promoteMemberToModerator(String groupName, String uid) {
@@ -74,6 +80,13 @@ public class GroupHelper {
                 .update("moderators", FieldValue.arrayRemove(uid));
     }
 
+    // --- UPDATE Setting ---
+
+    public static Task<Void> setGroupAccess(String groupName, Boolean state) {
+        return GroupHelper.getGroupCollection()
+                .document(groupName)
+                .update("accessPrivate",state);
+    }
 
     // --- DELETE ---
     public static Task<Void> deleteGroup(String id) {

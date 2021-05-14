@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,14 +34,25 @@ public class UserAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private Group currentGroup;
 
+    private boolean adapterForWaitlist;
+
     // constructor
     public UserAdapter(Context context, List<User> userList, Group group){
         this.context = context;
         this.userList = userList;
         this.inflater = LayoutInflater.from(context);
         this.currentGroup = group;
-
+        this.adapterForWaitlist = false;
     }
+
+    public UserAdapter(Context context, List<User> userList, Group group, Boolean adapterForwaitlist){
+        this.context = context;
+        this.userList = userList;
+        this.inflater = LayoutInflater.from(context);
+        this.currentGroup = group;
+        this.adapterForWaitlist = adapterForwaitlist;
+    }
+
 
     @Override
     public int getCount() {
@@ -59,29 +72,82 @@ public class UserAdapter extends BaseAdapter {
     @SuppressLint({"ViewHolder", "InflateParams", "ResourceAsColor"})
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = this.inflater.inflate(R.layout.adapter_user_item, null);
-
         // get informations about item
         User currentItem = getItem(i);
 
-        // get item name view
-        TextView itemNameView = (TextView) view.findViewById(R.id.user_name);
-        itemNameView.setText(currentItem.getUsername());
+        // si on veut l'adapteur pour la waitlist alors on charge le layout en question
+        if(this.adapterForWaitlist){
+            view = this.inflater.inflate(R.layout.adapter_user_waitlist_item, null);
 
-        TextView itemRoleView = (TextView) view.findViewById(R.id.user_role);
-        // on écrit le role de l'utilisateur
-        if(this.isAdmin(currentItem.getUid())){
-            itemRoleView.setText("Admin");
-            itemRoleView.setTextColor(Color.RED);
-        }else if(this.isModerator(currentItem.getUid())){
-            itemRoleView.setText("Moderator");
-            itemRoleView.setTextColor(Color.parseColor("#388E3C"));
-            dialogForModerator(view, i, currentItem);
+            // get item name view
+            TextView itemNameView =  view.findViewById(R.id.user_name);
+            itemNameView.setText(currentItem.getUsername());
+
+            Button button_add =  view.findViewById(R.id.button_add);
+            ImageButton button_delete =  view.findViewById(R.id.button_delete);
+
+            button_add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GroupHelper.addUserInGroup(currentGroup.getName(),currentItem.getUid())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //on le supprime de la liste d'attente et on l'ajoute dans la liste des membres
+                                    currentGroup.removeFromWaitlist(currentItem.getUid());
+                                    userList.remove(i);
+                                    notifyDataSetChanged();
+                                    Toast.makeText(context, "Utilisateur ajouté !", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                }
+            });
+
+            button_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GroupHelper.removeUserFromWaitlistGroup(currentGroup.getName(),currentItem.getUid())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //on le supprime de la liste d'attente et on l'ajoute dans la liste des membres
+                                    currentGroup.removeFromWaitlist(currentItem.getUid());
+                                    userList.remove(i);
+                                    notifyDataSetChanged();
+                                    Toast.makeText(context, "Utilisateur supprimé de la liste d'attente! ", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                }
+            });
+
+
         }else{
-            itemRoleView.setText("Member");
-            itemRoleView.setTextColor(Color.GRAY);
-            dialogForMember(view, i, currentItem);
+            view = this.inflater.inflate(R.layout.adapter_user_item, null);
+
+            // get item name view
+            TextView itemNameView = (TextView) view.findViewById(R.id.user_name);
+            itemNameView.setText(currentItem.getUsername());
+
+            TextView itemRoleView = (TextView) view.findViewById(R.id.user_role);
+            // on écrit le role de l'utilisateur
+            if(this.isAdmin(currentItem.getUid())){
+                itemRoleView.setText("Admin");
+                itemRoleView.setTextColor(Color.RED);
+            }else if(this.isModerator(currentItem.getUid())){
+                itemRoleView.setText("Moderator");
+                itemRoleView.setTextColor(Color.parseColor("#388E3C"));
+                dialogForModerator(view, i, currentItem);
+            }else{
+                itemRoleView.setText("Member");
+                itemRoleView.setTextColor(Color.GRAY);
+                dialogForMember(view, i, currentItem);
+            }
         }
+
+
+
 
 
         return view;
@@ -133,7 +199,7 @@ public class UserAdapter extends BaseAdapter {
 
                         break;
                     case 2: // Exclure l'utilisateur
-                        GroupHelper.remoreUserFromGroup(currentGroup.getName(),currentItem.getUid())
+                        GroupHelper.removeUserFromGroup(currentGroup.getName(),currentItem.getUid())
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -178,7 +244,7 @@ public class UserAdapter extends BaseAdapter {
 
                         break;
                     case 2: // Exclure l'utilisateur
-                        GroupHelper.remoreUserFromGroup(currentGroup.getName(),currentItem.getUid())
+                        GroupHelper.removeUserFromGroup(currentGroup.getName(),currentItem.getUid())
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {

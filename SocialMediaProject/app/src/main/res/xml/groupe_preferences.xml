@@ -29,6 +29,10 @@
             app:title="@string/group_edit" />
 
         <Preference
+            app:key="group_waitlist"
+            app:title="@string/group_waitlist" />
+
+        <Preference
             app:key="group_members"
             app:title="@string/group_members" />
 

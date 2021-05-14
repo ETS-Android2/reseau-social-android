@@ -6,7 +6,7 @@
 
     <PreferenceCategory app:title="Group privacy">
 
-        <SwitchPreferenceCompat
+        <SwitchPreference
             app:key="group_edit_privacy"
             app:title="@string/group_edit_privacy" />
 

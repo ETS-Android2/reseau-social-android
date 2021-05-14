@@ -82,7 +82,7 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
             itemTitleView.setText(model.getName());
 
             // Affichage de l'icone cadena en fonction du group privé ou public
-            if(model.isPrivate()){
+            if(model.getAccessPrivate()){
                 iv_imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
             }else{
                 iv_imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);

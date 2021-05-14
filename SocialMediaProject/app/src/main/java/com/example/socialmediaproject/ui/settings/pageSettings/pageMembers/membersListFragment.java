@@ -52,6 +52,8 @@ public class membersListFragment extends Fragment {
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // title fragment in the header
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Membres du groupe");
     }
 
     @Override
@@ -73,8 +75,6 @@ public class membersListFragment extends Fragment {
                     currentGroup = documentSnapshot.toObject(Group.class);
                     ArrayList<User> userList = new ArrayList<>();
 
-                    Log.d("TAAAAAAAAAG", currentGroup.toString());
-
                     for(String id : currentGroup.getMembers()){
 
                         UserHelper.getUser(id).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -89,11 +89,6 @@ public class membersListFragment extends Fragment {
                     }
                 }
             });
-
-
-
-            // title fragment in the header
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Membres du groupe");
 
             return view;
     }

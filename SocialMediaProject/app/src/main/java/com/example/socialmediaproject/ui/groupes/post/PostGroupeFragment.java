@@ -102,18 +102,15 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if(documentSnapshot.exists()){
-                                Map<String, Object> dataGroup = documentSnapshot.getData();
-                                currentGroup = new Group((String) dataGroup.get("name"), (String) dataGroup.get("type"),(String) dataGroup.get("field"), (String) dataGroup.get("admin"));
-                                //Toast.makeText(getContext(),"Le groupe exist"+  dataGroup.get("type") , Toast.LENGTH_SHORT).show();
+                                currentGroup = documentSnapshot.toObject(Group.class);
 
-                                //currentGroup = new Group(documentSnapshot.get("name"), "type","field", "admin");
 
                                 layout_group.setVisibility(View.VISIBLE);
                                 tv_groupTitle.setText(currentGroup.getName());
                                 tv_groupType.setText(currentGroup.getType());
                                 tv_groupNbMembers.setText("50 members");
 
-                                if(currentGroup.isPrivate()){
+                                if(currentGroup.getAccessPrivate()){
                                     tv_groupAccess.setText("private");
                                     imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
                                 }else{
