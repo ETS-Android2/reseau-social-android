@@ -18,7 +18,7 @@
     <string name="description_fragment3">You can share whatever you want : message, media, emails and be notified !</string>
 
     <!-- Home page -->
-    <string name="welcome_login">Welcome to Socializing</string>
+    <string name="welcome_login">Welcome to our App</string>
     <!-- Login -->
     <string name="email_login">Email</string>
     <string name="password_login">Password</string>

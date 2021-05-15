@@ -19,18 +19,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.bottomAppBar);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_newGroup, R.id.navigation_notifications, R.id.navigation_profile)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        setSupportActionBar(findViewById(R.id.materialToolbar));
-        NavigationUI.setupWithNavController(navView, navController);
+        if(BaseActivity.isCurrentUserLogged()){
+            Log.d("===========> ", "USER IS LOGGED !");
+            setContentView(R.layout.activity_main);
+            BottomNavigationView navView = findViewById(R.id.bottomAppBar);
+            // Passing each menu ID as a set of Ids because each
+            // menu should be considered as top level destinations.
+            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_newGroup, R.id.navigation_notifications, R.id.navigation_profile)
+                    .build();
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+            setSupportActionBar(findViewById(R.id.materialToolbar));
+            NavigationUI.setupWithNavController(navView, navController);
 
+
+        }
 
         // action sur le bouton flottant du menu pour ajouter un groupe
         /*
