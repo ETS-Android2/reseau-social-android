@@ -16,14 +16,16 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"
             android:theme="@style/Theme.SocialMediaProject.NoActionBar" />
+        <!--
         <activity
             android:name=".IntroductoryActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"></activity>
+
+            android:windowSoftInputMode="adjustNothing"></activity>-->
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".MainActivity"
