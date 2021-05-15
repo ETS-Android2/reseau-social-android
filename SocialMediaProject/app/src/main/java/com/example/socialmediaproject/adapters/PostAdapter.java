@@ -20,6 +20,7 @@ import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.UserHelper;
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
@@ -83,26 +84,36 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Post model){
         holder.updateWithPost(model, this.idCurrentUser, this.glide, postLayoutForGroup);
 
+        boolean currentUserIsAuthor = model.getUserSender().equals(BaseActivity.getUid());
+
         holder.shareButton.setOnClickListener(v -> {
             // setup the alert builder
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Choisir une action");
             // add a list
-            String[] actions = {"Modifier", "Supprimer", "Partager"};
-            builder.setItems(actions, (dialog, which) -> {
-                switch (which) {
-                    case 0: // Modifier
-                        Toast.makeText(context, "Modifier le post !"  , Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1: // Supprimer
-                        getSnapshots().getSnapshot(position).getReference().delete();
-                        notifyDataSetChanged();
-                        Toast.makeText(context, "Supprimer le post : "+ getSnapshots().getSnapshot(position).getReference().getId()  , Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2: // Partager
-                        Toast.makeText(context, "Partager le post !"  , Toast.LENGTH_SHORT).show();
-                        break;
-                } }); // create and show the alert dialog
+            if(currentUserIsAuthor){
+                String[] actions = {"Modifier", "Supprimer"};
+                builder.setItems(actions, (dialog, which) -> {
+                    switch (which) {
+                        case 0: // Modifier
+                            Toast.makeText(context, "Modifier le post !"  , Toast.LENGTH_SHORT).show();
+                            break;
+                        case 1: // Supprimer
+                            getSnapshots().getSnapshot(position).getReference().delete();
+                            notifyDataSetChanged();
+                            Toast.makeText(context, "Supprimer le post : "+ getSnapshots().getSnapshot(position).getReference().getId()  , Toast.LENGTH_SHORT).show();
+                            break;
+                    } }); // create and show the alert dialog
+            }else{
+                String[] actions = {"Report abuse"};
+                builder.setItems(actions, (dialog, which) -> {
+                    switch (which) {
+                        case 0: // Report abuse
+                            Toast.makeText(context, "Reporter le post ! (à faire)"  , Toast.LENGTH_SHORT).show();
+                            break;
+                    } }); // create and show the alert dialog
+            }
+
 
             AlertDialog dialog = builder.create();
             dialog.show();
