@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.pagesprofile.favoris.MyFavorisFragment">
+    tools:context=".ui.profile.pagesprofile.favoris.MyFavorisFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_myFavoris"

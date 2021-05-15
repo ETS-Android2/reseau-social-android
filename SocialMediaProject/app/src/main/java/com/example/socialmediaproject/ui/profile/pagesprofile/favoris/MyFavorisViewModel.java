@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.pagesprofile.favoris;
+package com.example.socialmediaproject.ui.profile.pagesprofile.favoris;
 
 import androidx.lifecycle.ViewModel;
 

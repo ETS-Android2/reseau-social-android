@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.groupes.post;
+package com.example.socialmediaproject.ui.reseaux.groupes.post;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +34,6 @@ import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.PostAdapter;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
-import com.example.socialmediaproject.api.UserHelper;
 
 import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
@@ -48,8 +47,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
-
-import java.util.Map;
 
 
 public class PostGroupeFragment extends Fragment implements PostAdapter.Listener {

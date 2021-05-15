@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.pagesprofile.favoris;
+package com.example.socialmediaproject.ui.profile.pagesprofile.favoris;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,12 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.socialmediaproject.R;
-import com.example.socialmediaproject.models.Group;
-import com.example.socialmediaproject.models.Post;
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MyFavorisFragment extends Fragment {
 

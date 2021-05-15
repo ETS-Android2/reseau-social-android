@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.pagesprofile.informations;
+package com.example.socialmediaproject.ui.profile.pagesprofile.informations;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,17 +23,12 @@ import android.widget.Toast;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;
-import com.example.socialmediaproject.db.UserRoomDatabase;
-import com.example.socialmediaproject.db.dao.UserDao;
 import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
 
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 

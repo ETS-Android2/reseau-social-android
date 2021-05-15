@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.groupes.email;
+package com.example.socialmediaproject.ui.reseaux.groupes.email;
 
 import androidx.lifecycle.ViewModel;
 

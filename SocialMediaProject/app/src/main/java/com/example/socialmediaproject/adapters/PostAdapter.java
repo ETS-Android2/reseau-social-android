@@ -129,10 +129,11 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView itemTitleView, itemSubtitleView, itemContentView, itemNbViewsView, itemNbStarsView, itemDateAgo;
+        TextView itemTitleView, itemSubtitleView, itemContentView, itemDateAgo;
+        //TextView itemNbViewsView, itemNbStarsView;
         ImageView imageLike;
         ImageButton shareButton;
-        LinearLayout likeButton;
+        //LinearLayout likeButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -141,16 +142,16 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             itemTitleView = itemView.findViewById(R.id.item_title);
             itemSubtitleView = itemView.findViewById(R.id.item_subtitle);
             itemContentView = itemView.findViewById(R.id.item_content);
-            itemNbViewsView = itemView.findViewById(R.id.item_nbViews);
-            itemNbStarsView = itemView.findViewById(R.id.item_nbStars);
+            //itemNbViewsView = itemView.findViewById(R.id.item_nbViews);
+            //itemNbStarsView = itemView.findViewById(R.id.item_nbStars);
 
             itemDateAgo = itemView.findViewById(R.id.item_date_ago);
 
 
-            imageLike = itemView.findViewById(R.id.image_star);
+            //imageLike = itemView.findViewById(R.id.image_star);
             shareButton = itemView.findViewById(R.id.item_share);
 
-            likeButton = itemView.findViewById(R.id.button_like_post);
+            //likeButton = itemView.findViewById(R.id.button_like_post);
         }
 
         public void updateWithPost(Post post, String currentUserId, RequestManager glide, boolean _postLayoutForGroup){
@@ -223,13 +224,13 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
             }
             itemContentView.setText(currentItem.getContent());
-            itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));
-            itemNbViewsView.setText(String.valueOf(currentItem.getNbViews()));
+            //itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));
+            //itemNbViewsView.setText(String.valueOf(currentItem.getNbViews()));
 
             itemDateAgo.setText(String.valueOf(currentItem.getTimeAgo()));
 
 
-            likeButton.setOnClickListener(v -> {
+            /*likeButton.setOnClickListener(v -> {
                 // on inverse l'état du like lors du clique sur le button
                 currentItem.changeLike();
                 if(currentItem.getIsLike()){ // si true alors
@@ -237,8 +238,8 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                 }else{
                     imageLike.setImageResource(R.drawable.ic_baseline_star_outline_24);
                 }
-                itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));
-            });
+                //itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));
+            });*/
         }
     }
 }

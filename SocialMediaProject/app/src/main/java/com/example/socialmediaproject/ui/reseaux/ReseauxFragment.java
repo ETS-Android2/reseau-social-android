@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.dashboard;
+package com.example.socialmediaproject.ui.reseaux;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -27,21 +27,16 @@ import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.GroupAdapter;
 import com.example.socialmediaproject.api.GroupHelper;
-import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
-import com.example.socialmediaproject.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
-public class DashboardFragment extends Fragment implements GroupAdapter.Listener{
+public class ReseauxFragment extends Fragment implements GroupAdapter.Listener{
 
-    private DashboardViewModel dashboardViewModel;
+    private ReseauxViewModel reseauxViewModel;
     private String m_Text = "";
 
     private RecyclerView recyclerView;
@@ -53,7 +48,7 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        reseauxViewModel = new ViewModelProvider(this).get(ReseauxViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         recyclerView = root.findViewById(R.id.recyclerView_groups);
@@ -105,7 +100,7 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         // inflate menu
-        inflater.inflate(R.menu.home_menu, menu);
+        inflater.inflate(R.menu.reseaux_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

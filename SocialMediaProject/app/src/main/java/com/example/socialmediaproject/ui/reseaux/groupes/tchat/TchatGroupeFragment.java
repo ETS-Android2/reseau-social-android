@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.groupes.sms;
+package com.example.socialmediaproject.ui.reseaux.groupes.tchat;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,24 +14,24 @@ import android.view.ViewGroup;
 
 import com.example.socialmediaproject.R;
 
-public class SmsGroupeFragment extends Fragment {
+public class TchatGroupeFragment extends Fragment {
 
-    private SmsGroupeViewModel mViewModel;
+    private TchatGroupeViewModel mViewModel;
 
-    public static SmsGroupeFragment newInstance() {
-        return new SmsGroupeFragment();
+    public static TchatGroupeFragment newInstance() {
+        return new TchatGroupeFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_groupe_sms, container, false);
+        return inflater.inflate(R.layout.fragment_groupe_tchat, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SmsGroupeViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(TchatGroupeViewModel.class);
         // TODO: Use the ViewModel
     }
 

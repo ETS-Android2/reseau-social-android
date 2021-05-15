@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.pagesprofile.informations;
+package com.example.socialmediaproject.ui.profile.pagesprofile.informations;
 
 import androidx.lifecycle.ViewModel;
 

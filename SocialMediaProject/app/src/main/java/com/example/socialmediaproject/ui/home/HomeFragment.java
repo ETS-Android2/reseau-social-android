@@ -115,17 +115,17 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         // inflate menu
-        inflater.inflate(R.menu.home_menu, menu);
+        inflater.inflate(R.menu.reseaux_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
-            case R.id.home_menu_add_private_group:
+            /*case R.id.home_menu_add_private_group:
                 // ouverture de l'activité des paramètres de l'application
                 openPrivateGroup();
-                return true;
+                return true;*/
             case R.id.home_menu_search:
                 Toast.makeText(getContext(), "Page de recherche ouverte !", Toast.LENGTH_SHORT).show();
                 return true;
