@@ -124,6 +124,9 @@
         <action
             android:id="@+id/action_settingsGroupFragment_to_waitlistFragment"
             app:destination="@id/waitlistFragment" />
+        <action
+            android:id="@+id/action_settingsGroupFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
     </fragment>
 
     <fragment

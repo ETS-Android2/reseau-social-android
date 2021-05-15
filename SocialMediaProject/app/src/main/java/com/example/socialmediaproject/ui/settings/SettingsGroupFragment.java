@@ -16,6 +16,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -82,10 +83,26 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         }
 
         if(key.equals("group_exit")){
-            Toast.makeText(getContext(),"Quitter le groupe !" , Toast.LENGTH_SHORT).show();
+            GroupHelper.removeUserFromGroup(currentGroup.getName(), BaseActivity.getUid())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_dashboard);
+                            Toast.makeText(getContext(), "Quitter le groupe  !", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
 
         if(key.equals("group_delete")){
+
+            GroupHelper.deleteGroup(currentGroup.getName())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_dashboard);
+                            Toast.makeText(getContext(), "Quitter le groupe  !", Toast.LENGTH_SHORT).show();
+                        }
+                    });
             Toast.makeText(getContext(),"Supprimer le groupe !" , Toast.LENGTH_SHORT).show();
         }
 
@@ -122,7 +139,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
 
                 // Si le compte connecté est l'admin du groupe
-                if(true){
+                if(currentGroup.getAdmin().equals(BaseActivity.getUid())){
 
                     // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
                     preferenceInvitation.setVisible(currentGroup.getAccessPrivate());

@@ -103,7 +103,7 @@ public class GroupHelper {
 
 
     // --- DELETE ---
-    public static Task<Void> deleteGroup(String id) {
-        return GroupHelper.getGroupCollection().document(id).delete();
+    public static Task<Void> deleteGroup(String groupName) {
+        return GroupHelper.getGroupCollection().document(groupName).delete();
     }
 }
