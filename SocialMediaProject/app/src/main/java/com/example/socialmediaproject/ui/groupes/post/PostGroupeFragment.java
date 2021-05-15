@@ -36,6 +36,7 @@ import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.api.UserHelper;
 
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
@@ -89,6 +90,10 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
         TextView tv_groupAccess = root.findViewById(R.id.group_acces);
         TextView tv_groupNbMembers = root.findViewById(R.id.group_members);
 
+        // action sur le bouton flottant pour ajouter un post
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        // on cache le bouton et on l'aiichera une fois les donnees du groupe récupérer si on a l'autorisation de post
+        fab.setVisibility(View.GONE);
         layout_group.setVisibility(View.GONE);
 
         // affichage de la flèche retour en arrière dans le menu
@@ -125,8 +130,21 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                                 configureToolbar();
 
 
-                                // action sur le bouton flottant pour ajouter un post
-                                FloatingActionButton fab = root.findViewById(R.id.fab);
+
+
+                                // on cache le bouton si publication onlyModerator et qu'on est membre
+                                boolean currentUserisModerator = currentGroup.getModerators().contains(BaseActivity.getUid());
+                                boolean publicationOnlyModerator = currentGroup.getPublicationOnlyModerator();
+                                if(!publicationOnlyModerator){
+                                    // tous le monde peut post si c'est pas reservé au moderateurs
+                                    fab.setVisibility(View.VISIBLE);
+                                }else{
+                                    // seul les modérateurs peuvent post
+                                    fab.setVisibility(currentUserisModerator ? View.VISIBLE : View.GONE);
+                                }
+
+
+
                                 fab.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
