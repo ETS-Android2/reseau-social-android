@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -89,14 +90,6 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
         this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPost(modelCurrentUser.getUid())),
                     Glide.with(this), this, "test user");
 
-
-        postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                recyclerView.smoothScrollToPosition(postAdapter.getItemCount()); // Scroll to bottom on new messages
-            }
-        });
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(this.postAdapter);
     }
@@ -129,6 +122,9 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
             case R.id.home_menu_add_private_group:
                 // ouverture de l'activité des paramètres de l'application
                 openPrivateGroup();
+                return true;
+            case R.id.home_menu_search:
+                Toast.makeText(getContext(), "Page de recherche ouverte !", Toast.LENGTH_SHORT).show();
                 return true;
 
         }

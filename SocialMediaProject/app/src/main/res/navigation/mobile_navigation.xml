@@ -21,6 +21,9 @@
             app:destination="@id/navigation_groupe_post"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_searchPageFragment"
+            app:destination="@id/searchPageFragment" />
     </fragment>
 
     <fragment
@@ -154,6 +157,15 @@
         <action
             android:id="@+id/action_waitlistFragment_to_settingsGroupFragment"
             app:destination="@id/settingsGroupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchPageFragment"
+        android:name="com.example.socialmediaproject.ui.searchPage.SearchPageFragment"
+        android:label="search_page_fragment"
+        tools:layout="@layout/search_page_fragment" >
+        <action
+            android:id="@+id/action_searchPageFragment_to_navigation_groupe_post"
+            app:destination="@id/navigation_groupe_post" />
     </fragment>
 
 

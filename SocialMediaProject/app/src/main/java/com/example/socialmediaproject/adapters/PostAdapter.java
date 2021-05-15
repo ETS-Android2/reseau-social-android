@@ -144,9 +144,6 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
         public void updateWithPost(Post post, String currentUserId, RequestManager glide, boolean _postLayoutForGroup){
             Post currentItem = post;
-
-
-
             // title
             if(currentItem.getGroup() == null){
                 itemTitleView.setText("null");

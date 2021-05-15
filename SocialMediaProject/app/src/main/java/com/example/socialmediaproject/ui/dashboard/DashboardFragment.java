@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +28,7 @@ import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.GroupAdapter;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.UserHelper;
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -46,7 +49,6 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
     // FOR DATA
     // 2 - Declaring Adapter and data
     private GroupAdapter groupAdapter;
-    @Nullable private User modelCurrentUser;
     private String currentGroupName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -57,46 +59,38 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
         recyclerView = root.findViewById(R.id.recyclerView_groups);
 
         this.configureToolbar();
+        configureRecyclerView("all");
 
-        UserHelper.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        // we get the selected tab
+        TabLayout tabLayout = root.findViewById(R.id.tabLayout_type_group);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                modelCurrentUser = documentSnapshot.toObject(User.class);
-                configureRecyclerView("all");
-
-                // we get the selected tab
-                TabLayout tabLayout = root.findViewById(R.id.tabLayout_type_group);
-                tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        switch(tab.getPosition()){
-                            case 0: // all
-                                configureRecyclerView( "all");
-                                break;
-                            case 1: // posts
-                                configureRecyclerView( "post");
-                                break;
-                            case 2: // Tchat
-                                configureRecyclerView( "chat");
-                                break;
-                            case 3: // email
-                                configureRecyclerView( "email");
-                                break;
-                            case 4: // sms
-                                configureRecyclerView( "sms");
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) { }
-
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) { }
-                });
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch(tab.getPosition()){
+                    case 0: // all
+                        configureRecyclerView( "all");
+                        break;
+                    case 1: // posts
+                        configureRecyclerView( "post");
+                        break;
+                    case 2: // Tchat
+                        configureRecyclerView( "chat");
+                        break;
+                    case 3: // email
+                        configureRecyclerView( "email");
+                        break;
+                    case 4: // sms
+                        configureRecyclerView( "sms");
+                        break;
+                }
             }
-        });
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
 
         return root;
     }
@@ -106,8 +100,6 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
-
-        getCurrentUserFromFirestore();
     }
 
     @Override
@@ -125,6 +117,10 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
                 // ouverture de l'activité des paramètres de l'application
                 openPrivateGroup();
                 return true;
+            case R.id.home_menu_search:
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_dashboard_to_searchPageFragment);
+                Toast.makeText(getContext(), "Page de recherche ouverte !", Toast.LENGTH_SHORT).show();
+                return true;
 
         }
         return super.onOptionsItemSelected(item);
@@ -139,18 +135,6 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
     }
 
 
-    // --------------------
-    // REST REQUESTS
-    // --------------------
-    // 4 - Get Current User from Firestore
-    private void getCurrentUserFromFirestore(){
-        UserHelper.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                modelCurrentUser = documentSnapshot.toObject(User.class);
-            }
-        });
-    }
 
     // --------------------
     // UI
@@ -160,10 +144,10 @@ public class DashboardFragment extends Fragment implements GroupAdapter.Listener
 
         //Configure Adapter & RecyclerView
         if(type.equals("all")){
-            this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(GroupHelper.getAllGroup(modelCurrentUser.getUid())),
+            this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(GroupHelper.getAllGroup(BaseActivity.getUid())),
                     Glide.with(this), this, "test user");
         }else{
-            this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(GroupHelper.getAllGroupByType(type)),
+            this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(GroupHelper.getAllGroupByType(type, BaseActivity.getUid())),
                     Glide.with(this), this, "test user");
         }
 

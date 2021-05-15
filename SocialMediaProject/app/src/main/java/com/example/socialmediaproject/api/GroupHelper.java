@@ -41,9 +41,10 @@ public class GroupHelper {
     }
 
     // --- GET BY TYPE---
-    public static Query getAllGroupByType(String type){
+    public static Query getAllGroupByType(String type, String uid){
         return GroupHelper.getGroupCollection()
-                .whereEqualTo("type", type);
+                .whereEqualTo("type", type)
+                .whereArrayContains("members",uid);
 
     }
 
@@ -60,6 +61,12 @@ public class GroupHelper {
         return GroupHelper.getGroupCollection()
                 .document(groupName)
                 .update("waitlist", FieldValue.arrayRemove(uid));
+    }
+
+    public static Task<Void> addUserInWaitlistGroup(String groupName, String uid) {
+        return GroupHelper.getGroupCollection()
+                .document(groupName)
+                .update("waitlist", FieldValue.arrayUnion(uid));
     }
 
     public static Task<Void> addUserInGroup(String groupName, String uid) {
