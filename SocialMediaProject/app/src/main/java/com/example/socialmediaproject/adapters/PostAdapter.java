@@ -2,6 +2,7 @@ package com.example.socialmediaproject.adapters;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.UserHelper;
+import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -38,6 +41,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
     private Context context;
 
+    private boolean postLayoutForGroup;
     //FOR DATA
     private final RequestManager glide;
     private final String idCurrentUser;
@@ -54,6 +58,17 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
         this.glide = glide;
         this.callback = callback;
         this.idCurrentUser = idCurrentUser;
+        this.postLayoutForGroup = false;
+    }
+
+    public PostAdapter(@NonNull FirestoreRecyclerOptions<Post> options,
+                       RequestManager glide,
+                       Listener callback, String idCurrentUser, boolean postLayoutForGroup){
+        super(options);
+        this.glide = glide;
+        this.callback = callback;
+        this.idCurrentUser = idCurrentUser;
+        this.postLayoutForGroup = postLayoutForGroup;
     }
 
     @NonNull
@@ -66,7 +81,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Post model){
-        holder.updateWithPost(model, this.idCurrentUser, this.glide);
+        holder.updateWithPost(model, this.idCurrentUser, this.glide, postLayoutForGroup);
 
         holder.shareButton.setOnClickListener(v -> {
             // setup the alert builder
@@ -127,26 +142,76 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             likeButton = itemView.findViewById(R.id.button_like_post);
         }
 
-        public void updateWithPost(Post post, String currentUserId, RequestManager glide){
+        public void updateWithPost(Post post, String currentUserId, RequestManager glide, boolean _postLayoutForGroup){
             Post currentItem = post;
 
 
 
+            // title
             if(currentItem.getGroup() == null){
                 itemTitleView.setText("null");
             }else{
-                itemTitleView.setText(currentItem.getGroup());
+                itemTitleView.setVisibility(View.GONE);
+                if(_postLayoutForGroup){
+                    // si c'est le post qui est afficher dans un group alors on affiche le nom de l'utilisateur dans le titre
+                    UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            itemTitleView.setVisibility(View.VISIBLE);
+                            itemTitleView.setText(documentSnapshot.toObject(User.class).getUsername());
+                        }
+                    });
+                }else{
+                    // sinon on affiche le nom du groupe
+                    itemTitleView.setVisibility(View.VISIBLE);
+                    itemTitleView.setText(currentItem.getGroup());
+                }
+
             }
+
+            // subtitle
             if(currentItem.getUserSender() == null){
                 itemSubtitleView.setText("null");
             }else{
-                UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        //modelCurrentUser = documentSnapshot.toObject(User.class);
-                        itemSubtitleView.setText(documentSnapshot.toObject(User.class).getUsername());
-                    }
-                });
+                // tant qu'on a pas charger les données on affiche rien
+                itemSubtitleView.setVisibility(View.GONE);
+                if(_postLayoutForGroup){
+                    // si c'est le post qui est afficher dans un group alors on le role de l'utilisateur
+                    GroupHelper.getGroup(currentItem.getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                            itemSubtitleView.setVisibility(View.VISIBLE);
+
+                            Group groupPost = documentSnapshot.toObject(Group.class);
+                            boolean isAdmin  = groupPost.getAdmin().equals(currentItem.getUserSender());
+                            boolean isModerator  = groupPost.getModerators().contains(currentItem.getUserSender());
+                            boolean isMember  = groupPost.getMembers().contains(currentItem.getUserSender());
+                            itemSubtitleView.setTextColor(Color.GRAY);
+                            if(isAdmin){
+                                itemSubtitleView.setText("Admin");
+                            }else if(isModerator){
+                                itemSubtitleView.setText("Moderator");
+                            }else if(isMember){
+                                itemSubtitleView.setText("Member");
+                            }else{
+                                itemSubtitleView.setText("Former member (n'est plus dans le group)");
+                            }
+                        }
+                    });
+                }else{
+                    // sinon on affiche le nom de l'utilisateur
+                    UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                            itemSubtitleView.setVisibility(View.VISIBLE);
+
+                            itemSubtitleView.setText(documentSnapshot.toObject(User.class).getUsername());
+                        }
+                    });
+                }
+
 
             }
             itemContentView.setText(currentItem.getContent());
