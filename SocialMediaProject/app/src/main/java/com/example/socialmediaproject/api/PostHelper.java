@@ -38,15 +38,15 @@ public class PostHelper {
     public static Query getAllPostForGroup(String groupName){
         return PostHelper.getPostCollection()
                 .whereEqualTo("group", groupName)
-                .orderBy("dateCreated")
+                .orderBy("dateCreated",Query.Direction.DESCENDING)
                 .limit(50);
 
     }
 
     // --- GET ---
     public static Query getAllPost(String uid){
-
-        return FirebaseFirestore.getInstance().collectionGroup("posts");
+        return FirebaseFirestore.getInstance().collectionGroup("posts")
+                .orderBy("dateCreated", Query.Direction.DESCENDING);
     }
 
 
