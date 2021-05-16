@@ -76,8 +76,8 @@ public class ProfileItemAdapter extends BaseAdapter {
         // accéder à la notification
         view.setOnClickListener(v -> {
             switch (itemTitle){
-                case "Mes favoris":
-                    Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myFavorisFragment);
+                case "Créer un groupe":
+                    Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_navigation_newGroup);
                     break;
                 case "Mes posts":
                     Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myPostsFragment);

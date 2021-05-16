@@ -66,7 +66,7 @@ public class NewGroupFragment extends Fragment {
         // title fragment in the header
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nouveau Groupe");
         // affichage de la flèche retour en arrière dans le menu
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         EditText editText_groupName = view.findViewById(R.id.editText_group_name);
 
@@ -116,7 +116,7 @@ public class NewGroupFragment extends Fragment {
                             Bundle bundle = new Bundle();
                             bundle.putString("group_name", editText_groupName.getText().toString());
                             // Navigation vers le fragment qui affiche le groupe
-                            Navigation.findNavController(view).navigate(R.id.action_newGroupFragment_to_navigation_groupe_post, bundle);
+                            Navigation.findNavController(view).navigate(R.id.action_navigation_newGroup_to_navigation_groupe_post, bundle);
                         }
 
                     }
@@ -154,7 +154,7 @@ public class NewGroupFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         // inflate menu
-        inflater.inflate(R.menu.close_menu, menu);
+        inflater.inflate(R.menu.create_group_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -162,12 +162,14 @@ public class NewGroupFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch(item.getItemId()) {
-            case R.id.close_menu_exit: // action sur la flèche de retour en arrière
+            case android.R.id.home: // action sur la flèche de retour en arrière
                 getActivity().onBackPressed();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 
 }

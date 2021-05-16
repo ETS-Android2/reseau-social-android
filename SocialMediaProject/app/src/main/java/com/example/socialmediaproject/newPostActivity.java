@@ -50,7 +50,7 @@ public class newPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Fermeture de l'activité
-                Toast.makeText(getApplicationContext(),"Fermer l'activité !" , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Fermer l'activité !" , Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -61,9 +61,9 @@ public class newPostActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(editText_content.getText().toString().matches("")){
-                    Toast.makeText(getApplicationContext(),"Vous devez saisir du texte pour poster !" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Vous devez saisir du texte avant de poster votre message !" , Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getApplicationContext(),"Poster sur le groupe !" , Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"Poster sur le groupe !" , Toast.LENGTH_SHORT).show();
 
                     Post post = new Post(editText_content.getText().toString(), groupeName, modelCurrentUser.getUid());
                     PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());

@@ -12,6 +12,16 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/navigation_searchPage"
+        android:name="com.example.socialmediaproject.ui.searchPage.SearchPageFragment"
+        android:label="search_page_fragment"
+        tools:layout="@layout/search_page_fragment" >
+        <action
+            android:id="@+id/action_searchPageFragment_to_navigation_groupe_post"
+            app:destination="@id/navigation_groupe_post" />
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.socialmediaproject.ui.reseaux.ReseauxFragment"
         android:label="@string/title_dashboard"
@@ -23,7 +33,7 @@
             app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_navigation_dashboard_to_searchPageFragment"
-            app:destination="@id/searchPageFragment" />
+            app:destination="@id/navigation_searchPage" />
     </fragment>
 
     <fragment
@@ -32,7 +42,7 @@
         android:label="new_group_fragment"
         tools:layout="@layout/new_group_fragment" >
         <action
-            android:id="@+id/action_newGroupFragment_to_navigation_groupe_post"
+            android:id="@+id/action_navigation_newGroup_to_navigation_groupe_post"
             app:destination="@id/navigation_groupe_post" />
     </fragment>
 
@@ -66,6 +76,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_newGroup"
+            app:destination="@id/navigation_newGroup" />
     </fragment>
 
     <fragment
@@ -158,15 +171,7 @@
             android:id="@+id/action_waitlistFragment_to_settingsGroupFragment"
             app:destination="@id/settingsGroupFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/searchPageFragment"
-        android:name="com.example.socialmediaproject.ui.searchPage.SearchPageFragment"
-        android:label="search_page_fragment"
-        tools:layout="@layout/search_page_fragment" >
-        <action
-            android:id="@+id/action_searchPageFragment_to_navigation_groupe_post"
-            app:destination="@id/navigation_groupe_post" />
-    </fragment>
+
 
 
 </navigation>

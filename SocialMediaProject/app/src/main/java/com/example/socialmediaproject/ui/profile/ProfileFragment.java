@@ -59,7 +59,7 @@ public class ProfileFragment extends Fragment {
 
         // list of posts
         List<ProfileItem> profileItemList = new ArrayList<>();
-        profileItemList.add(new ProfileItem("Mes favoris","star"));
+        profileItemList.add(new ProfileItem("Créer un groupe","add_circle"));
         profileItemList.add(new ProfileItem("Mes posts","article"));
         profileItemList.add(new ProfileItem("Mes groupes","groups"));
         profileItemList.add(new ProfileItem("Mes informations","info"));

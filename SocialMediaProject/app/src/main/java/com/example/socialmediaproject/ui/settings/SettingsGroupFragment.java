@@ -65,19 +65,24 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         }
 
         if(key.equals("group_edit")){
-            Toast.makeText(getContext(),"Modifier le groupe !" , Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(),"Modifier le groupe !" , Toast.LENGTH_SHORT).show();
             bundle.putString("group_name", groupName);
             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsEditGroupFragment, bundle);
         }
 
 
         if(key.equals("group_waitlist")){
-            Toast.makeText(getContext(),"Gérer les demandes d'adhésions !" , Toast.LENGTH_SHORT).show();
-            bundle.putString("group_name", groupName);
-            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_waitlistFragment, bundle);
+
+            if(currentGroup.getWaitlist().size() == 0){
+                Toast.makeText(getContext(),"Il n'y a personne dans la liste d'attente !" , Toast.LENGTH_SHORT).show();
+            }else{
+                bundle.putString("group_name", groupName);
+                Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_waitlistFragment, bundle);
+            }
+
         }
         if(key.equals("group_members")){
-            Toast.makeText(getContext(),"Gérer les adhérents !" , Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(),"Gérer les adhérents !" , Toast.LENGTH_SHORT).show();
             bundle.putString("group_name", groupName);
             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsGroupFragment_pageMembers, bundle);
         }

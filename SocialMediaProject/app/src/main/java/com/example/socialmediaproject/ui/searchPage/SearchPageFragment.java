@@ -82,8 +82,8 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
     }
 
     public void configureToolbar(){
-        // affichage de la flèche retour en arrière dans le menu
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // on enlève l'affichage de la flèche retour en arrière dans le menu
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Les groupes");
     }
 
@@ -94,7 +94,7 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
     // 5 - Configure RecyclerView with a Query
     private void configureRecyclerView(){
         //Configure Adapter & RecyclerView
-        this.searchGroupAdapter = new SearchGroupAdapter(generateOptionsForAdapter(GroupHelper.getAllGroup()),
+        this.searchGroupAdapter = new SearchGroupAdapter(generateOptionsForAdapter(GroupHelper.getAllPublicGroup()),
                 Glide.with(this), this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -119,29 +119,4 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
         // 7 - Show TextView in case RecyclerView is empty
         //textViewRecyclerViewEmpty.setVisibility(this.groupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        // inflate menu
-        inflater.inflate(R.menu.search_group_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch(item.getItemId()) {
-            case android.R.id.home: // action sur la flèche de retour en arrière
-                getActivity().onBackPressed();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 }

@@ -145,7 +145,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                                 fab.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
 
                                         //UserHelper.addUserInGroup().addOnFailureListener(onFailureListener());
                                         Bundle bundle = new Bundle();
