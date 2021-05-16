@@ -82,6 +82,7 @@
     <string name="group_subject">Sujet du groupe</string>
     <string name="group_access">Accès au groupe</string>
     <string name="group_publication">Publication</string>
+    <string name="notification_title">Titre notification</string>
 
     <string-array name="list_group_type">
         <item>post</item>
