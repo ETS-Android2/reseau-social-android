@@ -1,25 +1,20 @@
 package com.example.socialmediaproject.ui.mes_reseaux;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +34,10 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
     private MesReseauxViewModel mesReseauxViewModel;
     private String m_Text = "";
 
+    private TextView textViewRecyclerViewEmpty;
     private RecyclerView recyclerView;
+
+    private String typeGroupFragment;
 
     // FOR DATA
     // 2 - Declaring Adapter and data
@@ -49,12 +47,15 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mesReseauxViewModel = new ViewModelProvider(this).get(MesReseauxViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View root = inflater.inflate(R.layout.fragment_mes_reseaux, container, false);
 
         recyclerView = root.findViewById(R.id.recyclerView_groups);
+        textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
 
         this.configureToolbar();
-        configureRecyclerView("all");
+
+        this.typeGroupFragment = "all";
+        configureRecyclerView(this.typeGroupFragment);
 
         // we get the selected tab
         TabLayout tabLayout = root.findViewById(R.id.tabLayout_type_group);
@@ -63,19 +64,24 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
             public void onTabSelected(TabLayout.Tab tab) {
                 switch(tab.getPosition()){
                     case 0: // all
-                        configureRecyclerView( "all");
+                        typeGroupFragment = "all";
+                        configureRecyclerView( typeGroupFragment);
                         break;
                     case 1: // posts
-                        configureRecyclerView( "post");
+                        typeGroupFragment = "post";
+                        configureRecyclerView( typeGroupFragment);
                         break;
                     case 2: // Tchat
-                        configureRecyclerView( "chat");
+                        typeGroupFragment = "chat";
+                        configureRecyclerView( typeGroupFragment);
                         break;
                     case 3: // email
-                        configureRecyclerView( "email");
+                        typeGroupFragment = "email";
+                        configureRecyclerView( typeGroupFragment);
                         break;
                     case 4: // sms
-                        configureRecyclerView( "sms");
+                        typeGroupFragment = "sms";
+                        configureRecyclerView( typeGroupFragment);
                         break;
                 }
             }
@@ -102,19 +108,53 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
         // inflate menu
         inflater.inflate(R.menu.reseaux_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+
+        // Mise en place de la logique métier de la search bar
+        MenuItem menuItem = menu.findItem(R.id.search);
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) menuItem.getActionView();
+
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // on met en minuscule pour gérer le cas "case sensitive"
+                processSearch(query.toLowerCase());
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // on met en minuscule pour gérer le cas "case sensitive"
+                processSearch(newText.toLowerCase());
+                return false;
+            }
+        });
     }
 
+    private void processSearch(String query) {
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.home_menu_search:
-                Toast.makeText(getContext(), "Recherche !", Toast.LENGTH_SHORT).show();
-                return true;
-
+        // en fonction du fragment selectionner on recherche le groupe
+        if(typeGroupFragment.equals("all")){
+            this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(
+                    GroupHelper.getAllGroup(BaseActivity.getUid())
+                            .orderBy("search")
+                            .startAt(query)
+                            .endAt(query+"\uf8ff")
+            ), Glide.with(this), this, "test user");
+        }else{
+            this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(
+                    GroupHelper.getAllGroupByType(typeGroupFragment, BaseActivity.getUid())
+                            .orderBy("search")
+                            .startAt(query)
+                            .endAt(query+"\uf8ff")), Glide.with(this), this, "test user");
         }
-        return super.onOptionsItemSelected(item);
+
+        groupAdapter.startListening();
+        recyclerView.setAdapter(groupAdapter);
+        textViewRecyclerViewEmpty.setText("Aucun groupe trouvé.");
+        textViewRecyclerViewEmpty.setVisibility(this.groupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
+
+
 
 
     public void configureToolbar(){
@@ -167,7 +207,8 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
     @Override
     public void onDataChanged() {
         // 7 - Show TextView in case RecyclerView is empty
-        //textViewRecyclerViewEmpty.setVisibility(this.groupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+        textViewRecyclerViewEmpty.setText("Il n'y a pas de groupe");
+        textViewRecyclerViewEmpty.setVisibility(this.groupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
 

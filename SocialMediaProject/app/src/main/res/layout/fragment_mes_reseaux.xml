@@ -63,5 +63,14 @@
         android:layout_below="@+id/tabLayout_type_group"
         />
 
+    <TextView
+        android:id="@+id/textViewRecyclerViewEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textAlignment="center"
+        android:layout_below="@+id/tabLayout_type_group"
+        android:text="Il n'y a pas de groupe "/>
+
 
 </RelativeLayout>

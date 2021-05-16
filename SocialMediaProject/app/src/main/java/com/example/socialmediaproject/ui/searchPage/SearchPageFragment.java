@@ -25,6 +25,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -55,6 +57,8 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
     // 2 - Declaring Adapter and data
     private SearchGroupAdapter searchGroupAdapter;
 
+    private TextView textViewRecyclerViewEmpty;
+
     public static SearchPageFragment newInstance() {
         return new SearchPageFragment();
     }
@@ -72,6 +76,7 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
         mViewModel = new ViewModelProvider(this).get(SearchPageViewModel.class);
         View root = inflater.inflate(R.layout.search_page_fragment, container, false);
 
+        textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
 
         this.configureToolbar();
 
@@ -111,16 +116,6 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
     }
 
 
-    // --------------------
-    // CALLBACK
-    // --------------------
-
-    @Override
-    public void onDataChanged() {
-        // 7 - Show TextView in case RecyclerView is empty
-        //textViewRecyclerViewEmpty.setVisibility(this.groupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -132,6 +127,40 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
         // inflate menu
         inflater.inflate(R.menu.search_group_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+
+        // Mise en place de la logique métier de la search bar
+        MenuItem menuItem = menu.findItem(R.id.search);
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) menuItem.getActionView();
+
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // on met en minuscule pour gérer le cas "case sensitive"
+                processSearch(query.toLowerCase());
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // on met en minuscule pour gérer le cas "case sensitive"
+                processSearch(newText.toLowerCase());
+                return false;
+            }
+        });
+    }
+
+    private void processSearch(String query) {
+        FirestoreRecyclerOptions<Group> options =
+                new FirestoreRecyclerOptions.Builder<Group>()
+                    .setQuery(GroupHelper.getAllPublicGroup().orderBy("search").startAt(query).endAt(query+"\uf8ff"), Group.class)
+                    .setLifecycleOwner(this)
+                    .build();
+
+        searchGroupAdapter = new SearchGroupAdapter(options, Glide.with(this), this);
+        searchGroupAdapter.startListening();
+        recyclerView.setAdapter(searchGroupAdapter);
+        textViewRecyclerViewEmpty.setText("Aucun groupe trouvé.");
+        textViewRecyclerViewEmpty.setVisibility(this.searchGroupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
 
@@ -141,10 +170,6 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
             case R.id.home_menu_add_private_group:
                 // ouverture de l'activité des paramètres de l'application
                 openPrivateGroup();
-                return true;
-            case R.id.home_menu_search:
-                Navigation.findNavController(getView()).navigate(R.id.action_navigation_dashboard_to_searchPageFragment);
-                Toast.makeText(getContext(), "Page de recherche ouverte !", Toast.LENGTH_SHORT).show();
                 return true;
 
         }
@@ -176,5 +201,16 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
         });
 
         builder.show();
+    }
+
+    // --------------------
+    // CALLBACK
+    // --------------------
+
+    @Override
+    public void onDataChanged() {
+        // 7 - Show TextView in case RecyclerView is empty
+        textViewRecyclerViewEmpty.setText("Il n'existe pas de groupe public dans l'application");
+        textViewRecyclerViewEmpty.setVisibility(this.searchGroupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 }

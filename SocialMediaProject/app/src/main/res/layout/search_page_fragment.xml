@@ -10,4 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <TextView
+        android:id="@+id/textViewRecyclerViewEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textAlignment="center" />
+
+
 </FrameLayout>

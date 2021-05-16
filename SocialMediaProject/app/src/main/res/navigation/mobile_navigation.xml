@@ -25,7 +25,7 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.socialmediaproject.ui.mes_reseaux.MesReseauxFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" >
+        tools:layout="@layout/fragment_mes_reseaux" >
         <action
             android:id="@+id/action_navigation_dashboard_to_navigation_groupe_post"
             app:destination="@id/navigation_groupe_post"
