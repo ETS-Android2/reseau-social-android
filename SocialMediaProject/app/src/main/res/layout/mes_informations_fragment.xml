@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.informations.MyInformationsFragment"
+    tools:context=".ui.profile.mes_informations.MesInformationsFragment"
     android:orientation="vertical"
     android:layout_marginTop="10dp">
 
@@ -40,22 +40,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:id="@+id/label_birth_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:hint="@string/date_of_birth"
-        android:layout_below="@+id/label_phone">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_birth_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/button_update_informations"

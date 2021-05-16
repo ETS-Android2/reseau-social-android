@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.profile.informations;
+package com.example.socialmediaproject.ui.profile.mes_informations;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,20 +32,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import org.jetbrains.annotations.NotNull;
 
-public class MyInformationsFragment extends Fragment {
+public class MesInformationsFragment extends Fragment {
 
-    private MyInformationsViewModel mViewModel;
+    private MesInformationsViewModel mViewModel;
     private Button btn;
     private User user;
 
-    public static MyInformationsFragment newInstance() {
-        return new MyInformationsFragment();
+    public static MesInformationsFragment newInstance() {
+        return new MesInformationsFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.my_informations_fragment, container, false);
+        View view = inflater.inflate(R.layout.mes_informations_fragment, container, false);
 
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -56,7 +56,6 @@ public class MyInformationsFragment extends Fragment {
         // on rempli les informations de l'utilisateur
         TextInputEditText textEdit_email = view.findViewById(R.id.editText_email);
         TextInputEditText textEdit_phone = view.findViewById(R.id.editText_phone);
-        TextInputEditText textEdit_birth_date = view.findViewById(R.id.editText_birth_date);
 
         UserHelper.getUser(BaseActivity.getUid()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -82,7 +81,7 @@ public class MyInformationsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MyInformationsViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MesInformationsViewModel.class);
         // TODO: Use the ViewModel
     }
 

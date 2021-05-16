@@ -100,9 +100,9 @@
     </fragment>
     <fragment
         android:id="@+id/my_informationsFragment"
-        android:name="com.example.socialmediaproject.ui.profile.informations.MyInformationsFragment"
+        android:name="com.example.socialmediaproject.ui.profile.mes_informations.MesInformationsFragment"
         android:label="my_informations_fragment"
-        tools:layout="@layout/my_informations_fragment" />
+        tools:layout="@layout/mes_informations_fragment" />
     <fragment
         android:id="@+id/myFavorisFragment"
         android:name="com.example.socialmediaproject.ui.profile.pagesprofile.favoris.MyFavorisFragment"

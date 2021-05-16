@@ -82,7 +82,7 @@ public class ProfileItemAdapter extends BaseAdapter {
                 case "Mes posts":
                     Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myPostsFragment);
                     break;
-                case "Mes groupes":
+                case "Mes groupes (admin)":
                     Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myGroupsFragment);
                     break;
                 case "Mes informations":
