@@ -93,7 +93,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_dashboard);
-                            Toast.makeText(getContext(), "Quitter le groupe  !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Vous avez quitté le groupe !", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -105,10 +105,9 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_dashboard);
-                            Toast.makeText(getContext(), "Quitter le groupe  !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Le groupe à été supprimé !", Toast.LENGTH_SHORT).show();
                         }
                     });
-            Toast.makeText(getContext(),"Supprimer le groupe !" , Toast.LENGTH_SHORT).show();
         }
 
         return super.onPreferenceTreeClick(preference);
@@ -122,14 +121,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         Preference preferenceEditWaitlistGroup = findPreference("group_waitlist");
         Preference preferenceEditMembersGroup = findPreference("group_members");
         Preference preferenceDeleteGroup = findPreference("group_delete");
-/*
-        preferenceInvitation.setVisible(false);
-        preferenceExitGroup.setVisible(false);
-        preferenceEditWaitlistGroup.setVisible(false);
-        preferenceEditGroup.setVisible(false);
-        preferenceEditMembersGroup.setVisible(false);
-        preferenceDeleteGroup.setVisible(false);
-*/
+
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();

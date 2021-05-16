@@ -94,7 +94,7 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(getContext(),"private" , Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(),"Changement effectué !" , Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
