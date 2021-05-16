@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -40,6 +42,9 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
     // 2 - Declaring Adapter and data
     private PostAdapter postAdapter;
 
+    private TextView textViewRecyclerViewEmpty;
+    private ProgressBar progressBar;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +52,9 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
+
+        progressBar = root.findViewById(R.id.idProgressBar);
 
         recyclerView = root.findViewById(R.id.recyclerView_home_posts);
         // Add a divider between posts
@@ -108,7 +116,11 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
     @Override
     public void onDataChanged() {
         // 7 - Show TextView in case RecyclerView is empty
-        //textViewRecyclerViewEmpty.setVisibility(this.groupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+
+
+        // La progresse bar est afficher quand il n'y a pas d'article
+        progressBar.setVisibility(this.postAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+        textViewRecyclerViewEmpty.setVisibility(this.postAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
 }
