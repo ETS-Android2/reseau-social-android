@@ -196,7 +196,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
         this.currentGroupName = groupName;
         //Configure Adapter & RecyclerView
         this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(this.currentGroupName)),
-                Glide.with(this), this, "idUser", true);
+                Glide.with(this), this, true);
 
         postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override

@@ -42,7 +42,6 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
     private boolean postLayoutForGroup;
     //FOR DATA
     private final RequestManager glide;
-    private final String idCurrentUser;
 
     //FOR COMMUNICATION
     private Listener callback;
@@ -51,21 +50,19 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
     // constructor
     public PostAdapter(@NonNull FirestoreRecyclerOptions<Post> options,
                        RequestManager glide,
-                       Listener callback, String idCurrentUser){
+                       Listener callback){
         super(options);
         this.glide = glide;
         this.callback = callback;
-        this.idCurrentUser = idCurrentUser;
         this.postLayoutForGroup = false;
     }
 
     public PostAdapter(@NonNull FirestoreRecyclerOptions<Post> options,
                        RequestManager glide,
-                       Listener callback, String idCurrentUser, boolean postLayoutForGroup){
+                       Listener callback, boolean postLayoutForGroup){
         super(options);
         this.glide = glide;
         this.callback = callback;
-        this.idCurrentUser = idCurrentUser;
         this.postLayoutForGroup = postLayoutForGroup;
     }
 
@@ -98,6 +95,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                             break;
                         case 1: // Supprimer
                             getSnapshots().getSnapshot(position).getReference().delete();
+                            // notifyDataSetChanged();
                             Toast.makeText(context, "Supprimer le post : "+ getSnapshots().getSnapshot(position).getReference().getId()  , Toast.LENGTH_SHORT).show();
                             break;
                     } }); // create and show the alert dialog
@@ -114,7 +112,6 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             AlertDialog dialog = builder.create();
             dialog.show();
         });
-
 
     }
 
@@ -147,7 +144,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
         public void updateWithPost(Post currentItem, boolean _postLayoutForGroup){
 
             itemContentView.setText(currentItem.getContent());
-            itemDateAgo.setText(String.valueOf(currentItem.getTimeAgo()));
+            itemDateAgo.setText(String.valueOf(BaseActivity.getTimeAgo(currentItem.getDateCreated())));
 
             // title
             if(currentItem.getGroup() == null){

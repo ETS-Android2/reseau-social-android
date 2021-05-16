@@ -46,7 +46,6 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
 
     @Override
     protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Group model) {
-        Group currentItem = model;
 
         holder.updateWithMessage(model, this.idCurrentUser, this.glide);
     }

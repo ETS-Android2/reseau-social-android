@@ -20,22 +20,12 @@ public class Post implements Serializable {
     private Date dateCreated;
     private String urlImage;
 
-
-
     public Post(){
         this.content = "content";
         this.group = "content";
         this.userSender = "content";
         this.urlImage = null;
     }
-
-    public Post(String content){
-        this.content = content;
-        this.group = "content";
-        this.userSender = "content";
-        this.urlImage = null;
-    }
-
     public Post(String content, String group, String userSender){
         this.content = content;
         this.group = group;
@@ -56,40 +46,5 @@ public class Post implements Serializable {
     public void setUserSender(String userSender) { this.userSender = userSender; }
     public void setDateCreated(Date dateCreated) { this.dateCreated = dateCreated; }
     public void setUrlImage(String urlImage) { this.urlImage = urlImage; }
-
-
-    // --- METHODS ---
-    public String getTimeAgo(){
-        try {
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            //Date past = format.parse("27/04/2021");
-            Date past = this.dateCreated;
-            Date now = new Date();
-            if(TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) < 60){
-                if(TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) < 1){
-                    return "maintenant";
-                }else{
-                    return TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) + " min";
-                }
-
-            }else{
-                if(TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime()) < 24){
-                    return TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime()) + " h";
-                }else{
-                    if(TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) == 1){
-                        return TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + " jour";
-                    }else{
-                        return TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + " jours";
-                    }
-
-                }
-            }
-
-        }
-        catch (Exception j){
-            j.printStackTrace();
-            return "error";
-        }
-    }
 
 }

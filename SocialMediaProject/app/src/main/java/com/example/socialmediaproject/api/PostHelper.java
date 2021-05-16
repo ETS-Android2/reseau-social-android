@@ -1,6 +1,7 @@
 package com.example.socialmediaproject.api;
 
 import com.example.socialmediaproject.adapters.UserAdapter;
+import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,11 +29,9 @@ public class PostHelper {
 
     // --- CREATE ---
     public static Task<DocumentReference> createPostForGroup(Post postToCreate){
-        // 1 - Create the Message object
-
-        // 2 - Store Message to Firestore
-        return PostHelper.getPostCollection().add(postToCreate);
+        return PostHelper.getPostCollection().add(postToCreate); // set :  Crée (ou écrase) un Document à partir d'un objet POJO.
     }
+
 
     // --- GET ---
     public static Query getAllPostForGroup(String groupName){
@@ -40,12 +39,11 @@ public class PostHelper {
                 .whereEqualTo("group", groupName)
                 .orderBy("dateCreated",Query.Direction.DESCENDING)
                 .limit(50);
-
     }
 
     // --- GET ---
-    public static Query getAllPost(String uid){
-        return FirebaseFirestore.getInstance().collectionGroup("posts")
+    public static Query getAllPost(){
+        return PostHelper.getPostCollection()
                 .orderBy("dateCreated", Query.Direction.DESCENDING);
     }
 

@@ -26,12 +26,9 @@ import com.example.socialmediaproject.adapters.PostAdapter;
 
 import com.example.socialmediaproject.api.PostHelper;
 
-import com.example.socialmediaproject.api.UserHelper;
-import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Post;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
-
 
 public class HomeFragment extends Fragment implements PostAdapter.Listener {
 
@@ -74,9 +71,16 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
     // --------------------
     // 5 - Configure RecyclerView with a Query
     private void configureRecyclerView(){
-        //Configure Adapter & RecyclerView
-        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPost(BaseActivity.getUid())),
-                    Glide.with(this), this, "test user");
+        //Configure Adapter & RecyclerView //PostHelper.getAllPost(BaseActivity.getUid())
+        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPost()),
+                    Glide.with(this), this);
+
+        postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                recyclerView.smoothScrollToPosition(postAdapter.getItemCount()); // Scroll to bottom on new messages
+            }
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(this.postAdapter);
