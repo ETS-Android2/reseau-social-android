@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,17 +32,20 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.adapters.GroupAdapter;
 import com.example.socialmediaproject.adapters.PostAdapter;
 import com.example.socialmediaproject.adapters.SearchGroupAdapter;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.api.UserHelper;
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.example.socialmediaproject.ui.home.HomeViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
@@ -56,6 +60,9 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
     // FOR DATA
     // 2 - Declaring Adapter and data
     private SearchGroupAdapter searchGroupAdapter;
+
+    // type de groupe selectionne dans le tab
+    private String typeGroupFragment;
 
     private TextView textViewRecyclerViewEmpty;
 
@@ -82,7 +89,46 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
 
 
         recyclerView = root.findViewById(R.id.recyclerView_search_group);
-        this.configureRecyclerView();
+
+        this.typeGroupFragment = "all";
+        configureRecyclerView(this.typeGroupFragment);
+
+        // we get the selected tab
+        TabLayout tabLayout = root.findViewById(R.id.tabLayout_type_group);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch(tab.getPosition()){
+                    case 0: // all
+                        typeGroupFragment = "all";
+                        configureRecyclerView(typeGroupFragment);
+                        break;
+                    case 1: // posts
+                        typeGroupFragment = "post";
+                        configureRecyclerView(typeGroupFragment);
+                        break;
+                    case 2: // Tchat
+                        typeGroupFragment = "chat";
+                        configureRecyclerView(typeGroupFragment);
+                        break;
+                    case 3: // email
+                        typeGroupFragment = "email";
+                        configureRecyclerView(typeGroupFragment);
+                        break;
+                    case 4: // sms
+                        typeGroupFragment = "sms";
+                        configureRecyclerView(typeGroupFragment);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
+
 
         return root;
     }
@@ -98,10 +144,15 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
     // UI
     // --------------------
     // 5 - Configure RecyclerView with a Query
-    private void configureRecyclerView(){
+    private void configureRecyclerView(String type){
         //Configure Adapter & RecyclerView
-        this.searchGroupAdapter = new SearchGroupAdapter(generateOptionsForAdapter(GroupHelper.getAllPublicGroup()),
-                Glide.with(this), this);
+        if(type.equals("all")){
+            this.searchGroupAdapter = new SearchGroupAdapter(generateOptionsForAdapter(GroupHelper.getAllPublicGroup()),
+                    Glide.with(this), this);
+        }else{
+            this.searchGroupAdapter = new SearchGroupAdapter(generateOptionsForAdapter(GroupHelper.getAllPublicGroupByType(type)),
+                    Glide.with(this), this);
+        }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(this.searchGroupAdapter);
@@ -150,13 +201,22 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
     }
 
     private void processSearch(String query) {
-        FirestoreRecyclerOptions<Group> options =
-                new FirestoreRecyclerOptions.Builder<Group>()
-                    .setQuery(GroupHelper.getAllPublicGroup().orderBy("search").startAt(query).endAt(query+"\uf8ff"), Group.class)
-                    .setLifecycleOwner(this)
-                    .build();
 
-        searchGroupAdapter = new SearchGroupAdapter(options, Glide.with(this), this);
+        // en fonction du fragment selectionner on recherche le groupe
+        if(typeGroupFragment.equals("all")){
+            this.searchGroupAdapter = new SearchGroupAdapter(generateOptionsForAdapter(
+                    GroupHelper.getAllPublicGroup()
+                            .orderBy("search")
+                            .startAt(query)
+                            .endAt(query+"\uf8ff")
+            ), Glide.with(this), this);
+        }else{
+            this.searchGroupAdapter = new SearchGroupAdapter(generateOptionsForAdapter(
+                    GroupHelper.getAllPublicGroupByType(typeGroupFragment)
+                            .orderBy("search")
+                            .startAt(query)
+                            .endAt(query+"\uf8ff")), Glide.with(this), this);
+        }
         searchGroupAdapter.startListening();
         recyclerView.setAdapter(searchGroupAdapter);
         textViewRecyclerViewEmpty.setText("Aucun groupe trouvé.");
@@ -207,10 +267,16 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
     // CALLBACK
     // --------------------
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onDataChanged() {
         // 7 - Show TextView in case RecyclerView is empty
-        textViewRecyclerViewEmpty.setText("Il n'existe pas de groupe public dans l'application");
+        if(typeGroupFragment.equals("all")){
+            textViewRecyclerViewEmpty.setText("Il n'existe pas de groupe public dans l'application.");
+        }else{
+            textViewRecyclerViewEmpty.setText("Il n'existe pas de groupe public de ce type dans l'application.");
+        }
+
         textViewRecyclerViewEmpty.setVisibility(this.searchGroupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 }

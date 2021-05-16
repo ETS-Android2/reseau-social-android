@@ -207,7 +207,12 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
     @Override
     public void onDataChanged() {
         // 7 - Show TextView in case RecyclerView is empty
-        textViewRecyclerViewEmpty.setText("Il n'y a pas de groupe");
+
+        if(typeGroupFragment.equals("all")){
+            textViewRecyclerViewEmpty.setText("Il n'y a pas de groupe");
+        }else{
+            textViewRecyclerViewEmpty.setText("Il n'y a pas de groupe de ce type.");
+        }
         textViewRecyclerViewEmpty.setVisibility(this.groupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 

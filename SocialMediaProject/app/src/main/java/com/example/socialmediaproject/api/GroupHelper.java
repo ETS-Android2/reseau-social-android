@@ -36,6 +36,12 @@ public class GroupHelper {
                .whereEqualTo("accessPrivate", false);
     }
 
+    public static Query getAllPublicGroupByType( String type){
+        return GroupHelper.getGroupCollection()
+                .whereEqualTo("type", type)
+                .whereEqualTo("accessPrivate", false);
+    }
+
     public static Query getAllGroup(String uid){
         return GroupHelper.getGroupCollection().whereArrayContains("members",uid);
     }
