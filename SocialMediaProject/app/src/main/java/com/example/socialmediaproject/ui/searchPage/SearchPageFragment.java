@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,20 +36,25 @@ import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.GroupAdapter;
 import com.example.socialmediaproject.adapters.PostAdapter;
 import com.example.socialmediaproject.adapters.SearchGroupAdapter;
+import com.example.socialmediaproject.api.CodeAccessHelper;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;
+import com.example.socialmediaproject.models.CodeAccess;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.example.socialmediaproject.ui.home.HomeViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+
+import java.util.Objects;
 
 
 public class SearchPageFragment extends Fragment implements SearchGroupAdapter.Listener {
@@ -238,19 +244,50 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
 
     void openPrivateGroup(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Entre le code d'accès à un groupe privé pour le rejoindre");
+        builder.setTitle("Saisir un code d'accès à un groupe privé pour le rejoindre : ");
 
         // Set up the input
         final EditText input = new EditText(getContext());
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        //input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
+
         builder.setView(input);
+
 
         // Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                m_Text = input.getText().toString();
+                String inputTextCode = input.getText().toString();
+                CodeAccessHelper.getCode(inputTextCode).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            String groupName = documentSnapshot.toObject(CodeAccess.class).getGroupName();
+                            // Le code est correct, on ajoute l'utilisateur dans la liste des membres
+                            GroupHelper.addUserInGroup(groupName, BaseActivity.getUid()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(getContext(), "Code correct ! Accès au groupe -> " + groupName, Toast.LENGTH_SHORT).show();
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("group_name", groupName);
+                                    Navigation.findNavController(getView()).navigate(R.id.action_searchPageFragment_to_navigation_groupe_post, bundle);
+                                    CodeAccessHelper.deleteCode(inputTextCode).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // suppression du code car l'utilisation d'un code est unique.
+                                        }
+                                    });
+                                };
+                            });
+                        } else {
+                            Toast.makeText(getContext(), "Code non valide !" , Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

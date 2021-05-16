@@ -86,7 +86,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         catch (Exception j){
             j.printStackTrace();
-            return "error";
+            return "Maintenant";
         }
     }
 

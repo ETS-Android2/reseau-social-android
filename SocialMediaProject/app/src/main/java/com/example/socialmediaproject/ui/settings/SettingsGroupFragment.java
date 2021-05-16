@@ -1,6 +1,10 @@
 package com.example.socialmediaproject.ui.settings;
 
-import android.content.SharedPreferences;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+
+
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,11 +19,18 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.api.CodeAccessHelper;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.base.BaseActivity;
+import com.example.socialmediaproject.models.CodeAccess;
 import com.example.socialmediaproject.models.Group;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.Objects;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
@@ -61,7 +72,20 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         String key = preference.getKey();
 
         if(key.equals("group_invite")){
-            Toast.makeText(getContext(),"Générer un code d'invitation !" , Toast.LENGTH_SHORT).show();
+            // On créer un code d'accès pour le groupe
+            CodeAccess newCode = new CodeAccess(groupName);
+            CodeAccessHelper.generateCode(newCode).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Toast.makeText(getContext(),"Le code est copié dans le presse-papier." , Toast.LENGTH_LONG).show();
+
+                    // On copie dans le presse papier le code généré
+                    ClipboardManager clipboard = getSystemService(requireContext(), ClipboardManager.class);
+                    ClipData clip = ClipData.newPlainText("invitation", documentReference.getId());
+                    assert clipboard != null;
+                    clipboard.setPrimaryClip(clip);
+                }
+            });
         }
 
         if(key.equals("group_edit")){
