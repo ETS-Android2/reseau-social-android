@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.settings.pageSettings.pageMembers;
+package com.example.socialmediaproject.ui.settings.pageMembers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,14 +24,9 @@ import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class membersListFragment extends Fragment {
 

@@ -131,4 +131,5 @@
     <string name="group_edit_publication">Publication</string>
     <string name="error_unknown_error">erreur inconnu</string>
     <string name="group_waitlist">Demandes d\'adhésions</string>
+    <string name="group_infos">Informations</string>
 </resources>

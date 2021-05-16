@@ -1,10 +1,9 @@
-package com.example.socialmediaproject.ui.settings.pageSettings.pageEditGroup;
+package com.example.socialmediaproject.ui.settings.pageEditGroup;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,8 +20,6 @@ import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.models.Group;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-
-import java.util.ArrayList;
 
 
 public class SettingsEditGroupFragment extends PreferenceFragmentCompat{

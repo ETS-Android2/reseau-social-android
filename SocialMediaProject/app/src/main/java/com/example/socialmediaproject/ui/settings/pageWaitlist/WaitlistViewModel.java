@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.settings.pageSettings.pageWaitlist;
+package com.example.socialmediaproject.ui.settings.pageWaitlist;
 
 import androidx.lifecycle.ViewModel;
 

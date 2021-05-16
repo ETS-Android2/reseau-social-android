@@ -147,7 +147,7 @@
 
     <fragment
         android:id="@+id/settingsGroupFragment_pageMembers"
-        android:name="com.example.socialmediaproject.ui.settings.pageSettings.pageMembers.membersListFragment"
+        android:name="com.example.socialmediaproject.ui.settings.pageMembers.membersListFragment"
         android:label="MembersList"
         tools:layout="@layout/fragment_members_list">
         <action
@@ -156,7 +156,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsEditGroupFragment"
-        android:name="com.example.socialmediaproject.ui.settings.pageSettings.pageEditGroup.SettingsEditGroupFragment"
+        android:name="com.example.socialmediaproject.ui.settings.pageEditGroup.SettingsEditGroupFragment"
         android:label="SettingsEditGroupFragment" >
         <action
             android:id="@+id/action_settingsEditGroupFragment_to_settingsGroupFragment"
@@ -164,7 +164,7 @@
     </fragment>
     <fragment
         android:id="@+id/waitlistFragment"
-        android:name="com.example.socialmediaproject.ui.settings.pageSettings.pageWaitlist.WaitlistFragment"
+        android:name="com.example.socialmediaproject.ui.settings.pageWaitlist.WaitlistFragment"
         android:label="fragment_waitlist"
         tools:layout="@layout/fragment_waitlist" >
         <action

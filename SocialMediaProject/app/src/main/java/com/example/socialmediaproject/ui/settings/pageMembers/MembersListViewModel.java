@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.settings.pageSettings.pageMembers;
+package com.example.socialmediaproject.ui.settings.pageMembers;
 
 import androidx.lifecycle.ViewModel;
 
