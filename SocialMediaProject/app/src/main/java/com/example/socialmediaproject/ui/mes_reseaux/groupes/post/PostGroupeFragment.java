@@ -197,6 +197,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
         //Configure Adapter & RecyclerView
         this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(this.currentGroupName)),
                 Glide.with(this), this, "idUser", true);
+
         postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {

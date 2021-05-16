@@ -33,7 +33,7 @@ public class GroupHelper {
 
     public static Query getAllPublicGroup(){
         return GroupHelper.getGroupCollection()
-                .whereEqualTo("accessPrivate", false);
+               .whereEqualTo("accessPrivate", false);
     }
 
     public static Query getAllGroup(String uid){

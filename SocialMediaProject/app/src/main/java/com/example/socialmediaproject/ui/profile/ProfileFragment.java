@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment {
         List<ProfileItem> profileItemList = new ArrayList<>();
         profileItemList.add(new ProfileItem("Créer un groupe","add_circle"));
         profileItemList.add(new ProfileItem("Mes posts","article"));
-        profileItemList.add(new ProfileItem("Mes groupes (admin)","groups"));
+        profileItemList.add(new ProfileItem("Gérer mes groupes","groups"));
         profileItemList.add(new ProfileItem("Mes informations","info"));
 
         // get list view

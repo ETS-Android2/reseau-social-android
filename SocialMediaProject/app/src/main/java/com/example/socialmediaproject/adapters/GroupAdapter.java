@@ -64,7 +64,7 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView itemTitleView;
         ImageView iv_imageAccess;

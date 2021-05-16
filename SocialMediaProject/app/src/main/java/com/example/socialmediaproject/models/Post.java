@@ -21,19 +21,12 @@ public class Post implements Serializable {
     private String urlImage;
 
 
-    private int nbViews;
-    private int nbStars;
-    private Boolean isLike;
-
 
     public Post(){
         this.content = "content";
         this.group = "content";
         this.userSender = "content";
         this.urlImage = null;
-        this.nbViews = 0;
-        this.nbStars =  0;
-        this.isLike = false;
     }
 
     public Post(String content){
@@ -41,9 +34,6 @@ public class Post implements Serializable {
         this.group = "content";
         this.userSender = "content";
         this.urlImage = null;
-        this.nbViews = 0;
-        this.nbStars =  0;
-        this.isLike = false;
     }
 
     public Post(String content, String group, String userSender){
@@ -51,13 +41,6 @@ public class Post implements Serializable {
         this.group = group;
         this.userSender = userSender;
         this.urlImage = null;
-
-        // Générer des nombres random pour le template
-        int randomView = (int) (Math.random() * 1000);
-        this.nbViews = randomView ;
-        this.nbStars =  ( Math.abs((int)(Math.random() * randomView)));
-
-        this.isLike = false;
     }
 
     // --- GETTERS ---
@@ -66,10 +49,6 @@ public class Post implements Serializable {
     public String getUserSender(){ return this.userSender;}
     @ServerTimestamp public Date getDateCreated(){ return this.dateCreated;}
     public String getUrlImage() { return urlImage; }
-
-    public Boolean getIsLike(){ return  this.isLike;}
-    public int getNbViews(){ return this.nbViews;}
-    public int getNbStars(){ return  this.nbStars;}
 
     // --- SETTERS ---
     public void setContent(String content){ this.content = content;}
@@ -110,15 +89,6 @@ public class Post implements Serializable {
         catch (Exception j){
             j.printStackTrace();
             return "error";
-        }
-    }
-
-    public void changeLike(){
-        this.isLike = !this.isLike;
-        if(this.isLike){
-            this.nbStars +=1; // donc on rajoute une étoile
-        }else{
-            this.nbStars -=1; // donc on enlève une étoile
         }
     }
 
