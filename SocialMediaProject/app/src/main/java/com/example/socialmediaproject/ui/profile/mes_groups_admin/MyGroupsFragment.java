@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.profile.pagesprofile.favoris;
+package com.example.socialmediaproject.ui.profile.mes_groups_admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,37 +18,29 @@ import android.view.ViewGroup;
 
 import com.example.socialmediaproject.R;
 
-public class MyFavorisFragment extends Fragment {
+public class MyGroupsFragment extends Fragment {
 
-    private RecyclerView recyclerView;
+    private MyGroupsViewModel mViewModel;
 
-    private MyFavorisViewModel mViewModel;
-
-    public static MyFavorisFragment newInstance() {
-        return new MyFavorisFragment();
+    public static MyGroupsFragment newInstance() {
+        return new MyGroupsFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-        View view =  inflater.inflate(R.layout.my_favoris_fragment, container, false);
+        View view = inflater.inflate(R.layout.my_groups_fragment, container, false);
 
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes favoris");
-
-
-        recyclerView = view.findViewById(R.id.recyclerView_myFavoris);
-
-
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes groupes");
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MyFavorisViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MyGroupsViewModel.class);
         // TODO: Use the ViewModel
     }
 

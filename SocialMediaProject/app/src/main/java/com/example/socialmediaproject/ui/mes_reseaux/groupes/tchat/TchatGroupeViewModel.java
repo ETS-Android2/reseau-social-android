@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.reseaux.groupes.tchat;
+package com.example.socialmediaproject.ui.mes_reseaux.groupes.tchat;
 
 import androidx.lifecycle.ViewModel;
 

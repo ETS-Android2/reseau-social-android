@@ -1,14 +1,14 @@
-package com.example.socialmediaproject.ui.reseaux;
+package com.example.socialmediaproject.ui.mes_reseaux;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ReseauxViewModel extends ViewModel {
+public class MesReseauxViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ReseauxViewModel() {
+    public MesReseauxViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is dashboard fragment");
     }

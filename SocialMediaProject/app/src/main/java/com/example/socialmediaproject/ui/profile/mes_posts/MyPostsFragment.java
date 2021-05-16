@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.profile.pagesprofile.groups;
+package com.example.socialmediaproject.ui.profile.mes_posts;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,29 +18,29 @@ import android.view.ViewGroup;
 
 import com.example.socialmediaproject.R;
 
-public class MyGroupsFragment extends Fragment {
+public class MyPostsFragment extends Fragment {
 
-    private MyGroupsViewModel mViewModel;
+    private MyPostsViewModel mViewModel;
 
-    public static MyGroupsFragment newInstance() {
-        return new MyGroupsFragment();
+    public static MyPostsFragment newInstance() {
+        return new MyPostsFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.my_groups_fragment, container, false);
+        View view = inflater.inflate(R.layout.my_posts_fragment, container, false);
 
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes groupes");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes posts");
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MyGroupsViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MyPostsViewModel.class);
         // TODO: Use the ViewModel
     }
 

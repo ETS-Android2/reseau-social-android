@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.reseaux.groupes.sms;
+package com.example.socialmediaproject.ui.mes_reseaux.groupes.email;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,24 +14,24 @@ import android.view.ViewGroup;
 
 import com.example.socialmediaproject.R;
 
-public class SmsGroupeFragment extends Fragment {
+public class EmailGroupeFragment extends Fragment {
 
-    private SmsGroupeViewModel mViewModel;
+    private EmailGroupeViewModel mViewModel;
 
-    public static SmsGroupeFragment newInstance() {
-        return new SmsGroupeFragment();
+    public static EmailGroupeFragment newInstance() {
+        return new EmailGroupeFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_groupe_sms, container, false);
+        return inflater.inflate(R.layout.fragment_groupe_email, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SmsGroupeViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(EmailGroupeViewModel.class);
         // TODO: Use the ViewModel
     }
 

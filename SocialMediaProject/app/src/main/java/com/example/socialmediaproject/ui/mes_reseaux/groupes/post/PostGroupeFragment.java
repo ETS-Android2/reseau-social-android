@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.reseaux.groupes.post;
+package com.example.socialmediaproject.ui.mes_reseaux.groupes.post;
 
 
 import androidx.appcompat.app.AppCompatActivity;

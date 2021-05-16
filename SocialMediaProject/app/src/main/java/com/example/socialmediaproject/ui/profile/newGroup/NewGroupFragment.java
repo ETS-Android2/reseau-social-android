@@ -1,8 +1,10 @@
-package com.example.socialmediaproject.ui.newGroup;
+package com.example.socialmediaproject.ui.profile.newGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -37,9 +40,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
+import static androidx.core.content.ContextCompat.getSystemService;
 
 public class NewGroupFragment extends Fragment {
 
@@ -141,7 +142,6 @@ public class NewGroupFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(NewGroupViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 
@@ -168,8 +168,6 @@ public class NewGroupFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
 }

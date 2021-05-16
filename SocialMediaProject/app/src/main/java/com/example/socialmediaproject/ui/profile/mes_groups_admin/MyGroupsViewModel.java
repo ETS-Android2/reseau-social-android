@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.profile.pagesprofile.groups;
+package com.example.socialmediaproject.ui.profile.mes_groups_admin;
 
 import androidx.lifecycle.ViewModel;
 

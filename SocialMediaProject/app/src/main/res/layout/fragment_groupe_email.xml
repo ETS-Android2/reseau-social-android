@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.reseaux.groupes.email.EmailGroupeFragment">
+    tools:context=".ui.mes_reseaux.groupes.email.EmailGroupeFragment">
 
     <TextView
         android:layout_width="match_parent"

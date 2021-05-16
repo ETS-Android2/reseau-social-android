@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.newGroup;
+package com.example.socialmediaproject.ui.profile.newGroup;
 
 import androidx.lifecycle.ViewModel;
 

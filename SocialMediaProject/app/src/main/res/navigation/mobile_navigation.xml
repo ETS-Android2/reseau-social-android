@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.socialmediaproject.ui.reseaux.ReseauxFragment"
+        android:name="com.example.socialmediaproject.ui.mes_reseaux.MesReseauxFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" >
         <action
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/navigation_newGroup"
-        android:name="com.example.socialmediaproject.ui.newGroup.NewGroupFragment"
+        android:name="com.example.socialmediaproject.ui.profile.newGroup.NewGroupFragment"
         android:label="new_group_fragment"
         tools:layout="@layout/new_group_fragment" >
         <action
@@ -83,7 +83,7 @@
 
     <fragment
         android:id="@+id/navigation_groupe_post"
-        android:name="com.example.socialmediaproject.ui.reseaux.groupes.post.PostGroupeFragment"
+        android:name="com.example.socialmediaproject.ui.mes_reseaux.groupes.post.PostGroupeFragment"
         android:label="@string/title_groupe_post"
         tools:layout="@layout/fragment_groupe_post">
         <action
@@ -100,7 +100,7 @@
     </fragment>
     <fragment
         android:id="@+id/my_informationsFragment"
-        android:name="com.example.socialmediaproject.ui.profile.pagesprofile.informations.MyInformationsFragment"
+        android:name="com.example.socialmediaproject.ui.profile.informations.MyInformationsFragment"
         android:label="my_informations_fragment"
         tools:layout="@layout/my_informations_fragment" />
     <fragment
@@ -110,12 +110,12 @@
         tools:layout="@layout/my_favoris_fragment" />
     <fragment
         android:id="@+id/myGroupsFragment"
-        android:name="com.example.socialmediaproject.ui.profile.pagesprofile.groups.MyGroupsFragment"
+        android:name="com.example.socialmediaproject.ui.profile.mes_groups_admin.MyGroupsFragment"
         android:label="my_groups_fragment"
         tools:layout="@layout/my_groups_fragment" />
     <fragment
         android:id="@+id/myPostsFragment"
-        android:name="com.example.socialmediaproject.ui.profile.pagesprofile.posts.MyPostsFragment"
+        android:name="com.example.socialmediaproject.ui.profile.mes_posts.MyPostsFragment"
         android:label="my_posts_fragment"
         tools:layout="@layout/my_posts_fragment" />
     <fragment
