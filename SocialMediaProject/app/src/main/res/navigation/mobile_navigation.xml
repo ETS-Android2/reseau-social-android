@@ -83,9 +83,9 @@
 
     <fragment
         android:id="@+id/navigation_groupe_post"
-        android:name="com.example.socialmediaproject.ui.mes_reseaux.groupes.post.PostGroupeFragment"
+        android:name="com.example.socialmediaproject.ui.mes_reseaux.groupe.PostGroupeFragment"
         android:label="@string/title_groupe_post"
-        tools:layout="@layout/fragment_groupe_post">
+        tools:layout="@layout/fragment_groupe">
         <action
             android:id="@+id/action_navigation_groupe_post_to_settingsGroupFragment"
             app:destination="@id/settingsGroupFragment" />

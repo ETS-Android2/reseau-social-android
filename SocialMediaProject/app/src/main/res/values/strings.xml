@@ -134,4 +134,5 @@
     <string name="group_infos">Informations</string>
     <string name="notification_title">Titre notification</string>
     <string name="default_notification_channel_id">messages</string>
+    <string name="item_username">Username</string>
 </resources>

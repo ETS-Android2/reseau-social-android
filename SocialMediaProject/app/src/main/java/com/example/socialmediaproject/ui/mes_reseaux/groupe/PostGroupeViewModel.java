@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.mes_reseaux.groupes.post;
+package com.example.socialmediaproject.ui.mes_reseaux.groupe;
 
 import androidx.lifecycle.ViewModel;
 
