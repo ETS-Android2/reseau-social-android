@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.socialmediaproject.LoginActivity;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,17 +35,12 @@ public class SignupTabFragment extends Fragment {
     Button signup;
     float v=0;
 
-    String userID;
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    String userID;;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_signup_tab, container, false);
-
-        fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
 
         email = root.findViewById(R.id.email);
         name = root.findViewById(R.id.name);
@@ -90,16 +86,15 @@ public class SignupTabFragment extends Fragment {
 
     public void registerUser(String name, String phone, String email, String password){
 
-        fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        BaseActivity.getAuth().createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(getContext(), "User created !", Toast.LENGTH_LONG).show();
 
-                    userID = fAuth.getCurrentUser().getUid();
-                    DocumentReference documentReference = fStore.collection("users").document(userID);
+                    DocumentReference documentReference = BaseActivity.getRefUser();
 
-                    User user = new User(userID ,name, phone, email);
+                    User user = new User(BaseActivity.getUid(), name, phone, email);
 
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

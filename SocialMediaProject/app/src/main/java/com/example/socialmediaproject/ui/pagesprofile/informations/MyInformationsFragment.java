@@ -37,6 +37,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class MyInformationsFragment extends Fragment {
 
     private MyInformationsViewModel mViewModel;
@@ -61,7 +63,6 @@ public class MyInformationsFragment extends Fragment {
         // on rempli les informations de l'utilisateur
         TextInputEditText textEdit_email = view.findViewById(R.id.editText_email);
         TextInputEditText textEdit_phone = view.findViewById(R.id.editText_phone);
-        TextInputEditText textEdit_birth_date = view.findViewById(R.id.editText_birth_date);
 
         UserHelper.getUser(BaseActivity.getUid()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -132,7 +133,7 @@ public class MyInformationsFragment extends Fragment {
     }
 
     public void updateInformations(String email, String phone){
-        BaseActivity.getCurrentUser().updateEmail(email);
+        Objects.requireNonNull(BaseActivity.getCurrentUser()).updateEmail(email);
         BaseActivity.getRefUser().update("email", email);
         BaseActivity.getRefUser().update("phoneNumber", phone);
 
