@@ -1,5 +1,7 @@
 package com.example.socialmediaproject.api;
 
+import android.util.Log;
+
 import com.example.socialmediaproject.adapters.UserAdapter;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
@@ -52,6 +54,12 @@ public class PostHelper {
     public static Query getAllPost(){
         return PostHelper.getPostCollection()
                 .orderBy("dateCreated", Query.Direction.DESCENDING);
+    }
+
+    public static Query getMessageFromGroup(String name){
+        return PostHelper.getPostCollection()
+                .whereEqualTo("group",name)
+                .orderBy("dateCreated");
     }
 
 

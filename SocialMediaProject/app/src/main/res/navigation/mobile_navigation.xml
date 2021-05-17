@@ -65,9 +65,6 @@
             android:id="@+id/action_navigation_profile_to_my_informationsFragment"
             app:destination="@id/my_informationsFragment" />
         <action
-            android:id="@+id/action_navigation_profile_to_myFavorisFragment"
-            app:destination="@id/myFavorisFragment" />
-        <action
             android:id="@+id/action_navigation_profile_to_myGroupsFragment"
             app:destination="@id/myGroupsFragment" />
         <action
@@ -103,11 +100,7 @@
         android:name="com.example.socialmediaproject.ui.profile.mes_informations.MesInformationsFragment"
         android:label="my_informations_fragment"
         tools:layout="@layout/mes_informations_fragment" />
-    <fragment
-        android:id="@+id/myFavorisFragment"
-        android:name="com.example.socialmediaproject.ui.profile.pagesprofile.favoris.MyFavorisFragment"
-        android:label="my_favoris_fragment"
-        tools:layout="@layout/my_favoris_fragment" />
+
     <fragment
         android:id="@+id/myGroupsFragment"
         android:name="com.example.socialmediaproject.ui.profile.mes_groups_admin.MyGroupsFragment"
@@ -171,7 +164,15 @@
             android:id="@+id/action_waitlistFragment_to_settingsGroupFragment"
             app:destination="@id/settingsGroupFragment" />
     </fragment>
-
+    <activity
+        android:id="@+id/newPostActivity"
+        android:name="com.example.socialmediaproject.newPostActivity"
+        android:label="activity_chat"
+        tools:layout="@layout/activity_chat" />
+    <activity
+        android:id="@+id/chatActivity"
+        android:name="com.example.socialmediaproject.ui.mes_reseaux.ChatActivity"
+        android:label="ChatActivity" />
 
 
 </navigation>

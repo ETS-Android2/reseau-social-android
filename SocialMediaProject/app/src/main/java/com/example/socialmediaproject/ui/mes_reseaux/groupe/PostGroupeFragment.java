@@ -84,8 +84,6 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
 
         textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
 
-        View header_group = root.findViewById(R.id.header_group);
-        header_group.setVisibility(View.GONE);
 
 
         ImageView imageAccess = root.findViewById(R.id.group_acces_image);
@@ -115,9 +113,6 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                                 currentGroup = documentSnapshot.toObject(Group.class);
 
                                 layout_group.setVisibility(View.VISIBLE);
-                                // SI c'est un groupe chat on affiche pas le header
-                                header_group.setVisibility(currentGroup.getType().equals("chat") ? View.GONE : View.VISIBLE);
-
 
                                 tv_groupTitle.setText(currentGroup.getName());
                                 tv_groupType.setText(currentGroup.getType().toUpperCase());
@@ -209,20 +204,10 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
     // Seulement appeler quand les données du groupe sont chargé
     private void configureRecyclerView(String groupName, String groupType){
         //Configure Adapter & RecyclerView
-        if(groupType.equals("chat")){
-            // La query renvoit pas dans le même ordre les messages que les posts
-            this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroupOrderAscending(groupName)),
-                    Glide.with(this), this, true, true);
-            postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                @Override
-                public void onItemRangeInserted(int positionStart, int itemCount) {
-                    recyclerView.smoothScrollToPosition(postAdapter.getItemCount()); // Scroll to bottom on new messages
-                }
-            });
-        }else{
-            this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
-                    Glide.with(this), this, true);
-        }
+
+        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
+                Glide.with(this), this, true);
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(this.postAdapter);

@@ -1,6 +1,7 @@
 package com.example.socialmediaproject.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.newPostActivity;
+import com.example.socialmediaproject.ui.mes_reseaux.ChatActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
@@ -87,12 +90,24 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
                 iv_imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);
             }
 
+
             // accéder à la notification
             itemView.setOnClickListener(v -> {
                 //Toast.makeText(context, "Voir le groupe : " + itemTitle , Toast.LENGTH_SHORT).show();
-                Bundle bundle = new Bundle();
-                bundle.putString("group_name", model.getName());
-                Navigation.findNavController(itemView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post, bundle);
+                if(model.getType().equals("chat")){
+                    // Si on est dans un groupe de type CHAT alors on ouvre le chat
+                    Bundle bundle = new Bundle();
+                    bundle.putString("group_name", model.getName());
+                    Intent intent = new Intent(itemView.getContext(), ChatActivity.class);
+                    intent.putExtras(bundle);
+                    itemView.getContext().startActivity(intent);
+                }else{
+                    // Sinon on lance le fragment classique d'un groupe
+                    Bundle bundle = new Bundle();
+                    bundle.putString("group_name", model.getName());
+                    Navigation.findNavController(itemView).navigate(R.id.action_navigation_dashboard_to_navigation_groupe_post, bundle);
+                }
+
             });
         }
     }

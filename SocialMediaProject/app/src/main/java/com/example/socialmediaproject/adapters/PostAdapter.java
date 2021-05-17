@@ -201,9 +201,9 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                 // MESSAGE CONTAINER
                 LinearLayout.LayoutParams paramsLayoutContent = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 paramsLayoutContent.setMargins(
-                        currentUserIsAuthor ? 120 : 30,
+                        currentUserIsAuthor ? 120 : 20,
                         10,
-                        currentUserIsAuthor ? 30 : 120,
+                        currentUserIsAuthor ? 20 : 120,
                         10);
                 this.messageContainer.setLayoutParams(paramsLayoutContent);
 
