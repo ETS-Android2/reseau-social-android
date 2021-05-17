@@ -28,7 +28,7 @@ public class Group implements Serializable {
 
     //  --- CONSTRUCTORS ---
     public Group(){
-        this.type   = "type";
+        this.type   = "post";
         this.name   = "name";
         this.search = this.name.toLowerCase();
         this.field  = "field";
@@ -46,7 +46,20 @@ public class Group implements Serializable {
         this.search = this.name.toLowerCase();
         this.field  = _field;
         this.admin  = _admin;
-        this.publicationOnlyModerator = false;
+
+        // Pour les groupes de type sms et email, seul l'admin peut publié
+        switch (_type){
+            case "email":
+            case "sms":
+                this.publicationOnlyModerator = true;
+                break;
+            case "post":
+            case "chat":
+            default:
+                this.publicationOnlyModerator = false;
+                break;
+        }
+
         this.accessPrivate = access.equals("private"); // alors true sinon public
         this.members = Arrays.asList(this.admin);
         this.moderators = Arrays.asList(this.admin);

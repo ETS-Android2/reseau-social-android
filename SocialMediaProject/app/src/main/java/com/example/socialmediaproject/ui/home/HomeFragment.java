@@ -83,12 +83,13 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
         this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPost()),
                     Glide.with(this), this);
 
+        /*
         postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 recyclerView.smoothScrollToPosition(postAdapter.getItemCount()); // Scroll to bottom on new messages
             }
-        });
+        });*/
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(this.postAdapter);

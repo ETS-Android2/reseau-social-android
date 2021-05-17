@@ -181,6 +181,7 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
                     Glide.with(this), this, "test user");
         }
 
+
         groupAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {

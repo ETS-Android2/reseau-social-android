@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical"
+    android:background="@drawable/bg_message"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    android:id="@+id/messageContainer">
+
+
+    <TextView
+        android:id="@+id/item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:paddingRight="10dp"
+        android:textAllCaps="true"
+        android:text="@string/item_username" />
+
+    <TextView
+        android:id="@+id/item_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="15dp"
+        android:text="@string/item_content_text" />
+
+    <TextView
+        android:id="@+id/item_date_ago"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:textColor="@color/black"
+        android:textSize="10dp"
+
+        android:text="@string/item_date_ago" />
+
+
+
+</LinearLayout>

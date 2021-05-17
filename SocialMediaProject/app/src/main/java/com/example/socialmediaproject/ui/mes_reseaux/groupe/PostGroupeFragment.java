@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.mes_reseaux.groupes.post;
+package com.example.socialmediaproject.ui.mes_reseaux.groupe;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,6 +63,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
     private String currentGroupName;
 
     Group currentGroup;
+    String groupName;
     private RecyclerView recyclerView;
     private PostGroupeViewModel mViewModel;
 
@@ -75,11 +77,16 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_groupe_post, container, false);
+        View root = inflater.inflate(R.layout.fragment_groupe, container, false);
 
         CoordinatorLayout layout_group = root.findViewById(R.id.layout_group);
+        layout_group.setVisibility(View.GONE);
 
         textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
+
+        View header_group = root.findViewById(R.id.header_group);
+        header_group.setVisibility(View.GONE);
+
 
         ImageView imageAccess = root.findViewById(R.id.group_acces_image);
         TextView tv_groupTitle = root.findViewById(R.id.group_title);
@@ -91,26 +98,37 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
         FloatingActionButton fab = root.findViewById(R.id.fab);
         // on cache le bouton et on l'aiichera une fois les donnees du groupe récupérer si on a l'autorisation de post
         fab.setVisibility(View.GONE);
-        layout_group.setVisibility(View.GONE);
 
-        // affichage de la flèche retour en arrière dans le menu
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();
         if(bundle != null){
-            GroupHelper.getGroup(bundle.getString("group_name"))
+            this.groupName = bundle.getString("group_name");
+            configureToolbar();
+
+            GroupHelper.getGroup(this.groupName)
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if(documentSnapshot.exists()){
                                 currentGroup = documentSnapshot.toObject(Group.class);
 
-
                                 layout_group.setVisibility(View.VISIBLE);
+                                // SI c'est un groupe chat on affiche pas le header
+                                header_group.setVisibility(currentGroup.getType().equals("chat") ? View.GONE : View.VISIBLE);
+
+
                                 tv_groupTitle.setText(currentGroup.getName());
-                                tv_groupType.setText(currentGroup.getType());
-                                String nbMembers = currentGroup.getMembers().size() + " members";
+                                tv_groupType.setText(currentGroup.getType().toUpperCase());
+
+                                // On enlève l'admin du compteur de member
+                                String nbMembers;
+                                if(currentGroup.getMembers().size() <= 1){
+                                    nbMembers = currentGroup.getMembers().size() + " member"; // à l'infinitif
+                                }else{
+                                    nbMembers = currentGroup.getMembers().size() + " members"; // au pluriels
+                                }
                                 tv_groupNbMembers.setText(nbMembers);
 
                                 if(currentGroup.getAccessPrivate()){
@@ -123,8 +141,8 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
 
 
                                 recyclerView = root.findViewById(R.id.recyclerView_group_posts);
-                                configureRecyclerView(currentGroup.getName());
-                                configureToolbar();
+                                configureRecyclerView(currentGroup.getName(), currentGroup.getType());
+
 
 
 
@@ -176,34 +194,36 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
     }
 
     public void configureToolbar(){
+        // affichage de la flèche retour en arrière dans le menu
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // title fragment in the header bar
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentGroup.getName());
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(groupName);
     }
-
-    // --------------------
-    // REST REQUESTS
-    // --------------------
-    // 4 - Get Current User from Firestore
 
 
 
     // --------------------
     // UI
     // --------------------
-    // 5 - Configure RecyclerView with a Query
-    private void configureRecyclerView(String groupName){
-        //Track current group name
-        this.currentGroupName = groupName;
+    // Configure RecyclerView with a Query
+    // Seulement appeler quand les données du groupe sont chargé
+    private void configureRecyclerView(String groupName, String groupType){
         //Configure Adapter & RecyclerView
-        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(this.currentGroupName)),
-                Glide.with(this), this, true);
+        if(groupType.equals("chat")){
+            // La query renvoit pas dans le même ordre les messages que les posts
+            this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroupOrderAscending(groupName)),
+                    Glide.with(this), this, true, true);
+            postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    recyclerView.smoothScrollToPosition(postAdapter.getItemCount()); // Scroll to bottom on new messages
+                }
+            });
+        }else{
+            this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
+                    Glide.with(this), this, true);
+        }
 
-        postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                recyclerView.smoothScrollToPosition(postAdapter.getItemCount()); // Scroll to bottom on new messages
-            }
-        });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(this.postAdapter);
     }
@@ -216,16 +236,6 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                 .build();
     }
 
-    // --------------------
-    // CALLBACK
-    // --------------------
-
-
-    @Override
-    public void onDataChanged() {
-        // 7 - Show TextView in case RecyclerView is empty
-        textViewRecyclerViewEmpty.setVisibility(this.postAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
-    }
 
     // --------------------
     // OTHERS
@@ -267,5 +277,15 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
         return super.onOptionsItemSelected(item);
     }
 
+    // --------------------
+    // CALLBACK
+    // --------------------
+
+
+    @Override
+    public void onDataChanged() {
+        // 7 - Show TextView in case RecyclerView is empty
+        textViewRecyclerViewEmpty.setVisibility(this.postAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+    }
 
 }
