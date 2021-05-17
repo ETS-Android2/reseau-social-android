@@ -9,14 +9,14 @@
         android:title="@string/title_home" />
 
     <item
+        android:id="@+id/navigation_searchPage"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/title_new_group" />
+
+    <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_baseline_apps_24"
         android:title="@string/title_dashboard" />
-
-    <item
-        android:id="@+id/navigation_newGroup"
-        android:icon="@drawable/ic_baseline_add_circle_24"
-        android:title="@string/title_new_group" />
 
     <item
         android:id="@+id/navigation_notifications"

@@ -38,7 +38,7 @@ public class User implements Serializable {
         this.username = username;
         this.phoneNumber = phone;
         this.email = email;
-        this.urlPicture = "null";
+        this.urlPicture = "gs://social-media-project-f6ca2.appspot.com/images/default.png";
         this.groups =  Arrays.asList();
     }
 

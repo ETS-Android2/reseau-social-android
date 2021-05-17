@@ -18,7 +18,7 @@
     <string name="description_fragment3">You can share whatever you want : message, media, emails and be notified !</string>
 
     <!-- Home page -->
-    <string name="welcome_login">Welcome to Socializing</string>
+    <string name="welcome_login">Welcome to our App</string>
     <!-- Login -->
     <string name="email_login">Email</string>
     <string name="password_login">Password</string>
@@ -131,4 +131,7 @@
     <string name="group_edit_publication">Publication</string>
     <string name="error_unknown_error">erreur inconnu</string>
     <string name="group_waitlist">Demandes d\'adhésions</string>
+    <string name="group_infos">Informations</string>
+    <string name="notification_title">Titre notification</string>
+    <string name="default_notification_channel_id">messages</string>
 </resources>

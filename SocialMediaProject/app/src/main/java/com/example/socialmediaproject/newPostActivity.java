@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.api.UserHelper;
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,7 +51,7 @@ public class newPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Fermeture de l'activité
-                Toast.makeText(getApplicationContext(),"Fermer l'activité !" , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Fermer l'activité !" , Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -61,11 +62,12 @@ public class newPostActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(editText_content.getText().toString().matches("")){
-                    Toast.makeText(getApplicationContext(),"Vous devez saisir du texte pour poster !" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Vous devez saisir du texte avant de poster votre message !" , Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getApplicationContext(),"Poster sur le groupe !" , Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"Poster sur le groupe !" , Toast.LENGTH_SHORT).show();
 
-                    Post post = new Post(editText_content.getText().toString(), groupeName, modelCurrentUser.getUid());
+                    Post post = new Post(editText_content.getText().toString(), groupeName, BaseActivity.getUid());
+
                     PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
                     finish();
                 }

@@ -31,21 +31,39 @@ public class GroupHelper {
         return GroupHelper.getGroupCollection();
     }
 
+    // --- GET ALL PUBLIC GROUP ---
+    public static Query getAllPublicGroup(){
+        return GroupHelper.getGroupCollection()
+               .whereEqualTo("accessPrivate", false);
+    }
+
+    // --- GET ALL PUBLIC GROUP BY TYPE ---
+    public static Query getAllPublicGroupByType( String type){
+        return GroupHelper.getGroupCollection()
+                .whereEqualTo("type", type)
+                .whereEqualTo("accessPrivate", false);
+    }
+
+    // --- GET ALL CURRENT USER ' S GROUP ---
     public static Query getAllGroup(String uid){
         return GroupHelper.getGroupCollection().whereArrayContains("members",uid);
     }
 
-    // --- GET ---
+    // --- GET GROUP ---
     public static Task<DocumentSnapshot> getGroup(String groupName){
         return GroupHelper.getGroupCollection().document(groupName).get();
     }
 
-    // --- GET BY TYPE---
-    public static Query getAllGroupByType(String type){
+    // --- GET GROUP BY TYPE---
+    public static Query getAllGroupByType(String type, String uid){
         return GroupHelper.getGroupCollection()
-                .whereEqualTo("type", type);
-
+                .whereEqualTo("type", type)
+                .whereArrayContains("members",uid);
     }
+
+    // --- GENERATE PRIVATE CODE TO ACCESS TO A SPECIFIC PRIVATE GROUP  ---
+
+
 
     // --- UPDATE ---
     // -- Gestion des adhérants dans le groupe --
@@ -60,6 +78,12 @@ public class GroupHelper {
         return GroupHelper.getGroupCollection()
                 .document(groupName)
                 .update("waitlist", FieldValue.arrayRemove(uid));
+    }
+
+    public static Task<Void> addUserInWaitlistGroup(String groupName, String uid) {
+        return GroupHelper.getGroupCollection()
+                .document(groupName)
+                .update("waitlist", FieldValue.arrayUnion(uid));
     }
 
     public static Task<Void> addUserInGroup(String groupName, String uid) {
@@ -79,6 +103,7 @@ public class GroupHelper {
                 .document(groupName)
                 .update("moderators", FieldValue.arrayRemove(uid));
     }
+
 
     // --- UPDATE Setting ---
 

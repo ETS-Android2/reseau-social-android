@@ -16,14 +16,16 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"
             android:theme="@style/Theme.SocialMediaProject.NoActionBar" />
+        <!--
         <activity
             android:name=".IntroductoryActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"></activity>
+
+            android:windowSoftInputMode="adjustNothing"></activity>-->
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".MainActivity"
@@ -35,6 +37,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- NOTIFICATION SERVICE -->
+        <service
+            android:name=".notifications.NotificationsService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

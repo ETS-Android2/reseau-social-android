@@ -12,24 +12,37 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/navigation_searchPage"
+        android:name="com.example.socialmediaproject.ui.searchPage.SearchPageFragment"
+        android:label="search_page_fragment"
+        tools:layout="@layout/search_page_fragment" >
+        <action
+            android:id="@+id/action_searchPageFragment_to_navigation_groupe_post"
+            app:destination="@id/navigation_groupe_post" />
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.socialmediaproject.ui.dashboard.DashboardFragment"
+        android:name="com.example.socialmediaproject.ui.mes_reseaux.MesReseauxFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" >
+        tools:layout="@layout/fragment_mes_reseaux" >
         <action
             android:id="@+id/action_navigation_dashboard_to_navigation_groupe_post"
             app:destination="@id/navigation_groupe_post"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_searchPageFragment"
+            app:destination="@id/navigation_searchPage" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_newGroup"
-        android:name="com.example.socialmediaproject.ui.newGroup.NewGroupFragment"
+        android:name="com.example.socialmediaproject.ui.profile.newGroup.NewGroupFragment"
         android:label="new_group_fragment"
         tools:layout="@layout/new_group_fragment" >
         <action
-            android:id="@+id/action_newGroupFragment_to_navigation_groupe_post"
+            android:id="@+id/action_navigation_newGroup_to_navigation_groupe_post"
             app:destination="@id/navigation_groupe_post" />
     </fragment>
 
@@ -63,11 +76,14 @@
         <action
             android:id="@+id/action_navigation_profile_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_newGroup"
+            app:destination="@id/navigation_newGroup" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_groupe_post"
-        android:name="com.example.socialmediaproject.ui.groupes.post.PostGroupeFragment"
+        android:name="com.example.socialmediaproject.ui.mes_reseaux.groupes.post.PostGroupeFragment"
         android:label="@string/title_groupe_post"
         tools:layout="@layout/fragment_groupe_post">
         <action
@@ -84,22 +100,22 @@
     </fragment>
     <fragment
         android:id="@+id/my_informationsFragment"
-        android:name="com.example.socialmediaproject.ui.pagesprofile.informations.MyInformationsFragment"
+        android:name="com.example.socialmediaproject.ui.profile.mes_informations.MesInformationsFragment"
         android:label="my_informations_fragment"
-        tools:layout="@layout/my_informations_fragment" />
+        tools:layout="@layout/mes_informations_fragment" />
     <fragment
         android:id="@+id/myFavorisFragment"
-        android:name="com.example.socialmediaproject.ui.pagesprofile.favoris.MyFavorisFragment"
+        android:name="com.example.socialmediaproject.ui.profile.pagesprofile.favoris.MyFavorisFragment"
         android:label="my_favoris_fragment"
         tools:layout="@layout/my_favoris_fragment" />
     <fragment
         android:id="@+id/myGroupsFragment"
-        android:name="com.example.socialmediaproject.ui.pagesprofile.groups.MyGroupsFragment"
+        android:name="com.example.socialmediaproject.ui.profile.mes_groups_admin.MyGroupsFragment"
         android:label="my_groups_fragment"
         tools:layout="@layout/my_groups_fragment" />
     <fragment
         android:id="@+id/myPostsFragment"
-        android:name="com.example.socialmediaproject.ui.pagesprofile.posts.MyPostsFragment"
+        android:name="com.example.socialmediaproject.ui.profile.mes_posts.MyPostsFragment"
         android:label="my_posts_fragment"
         tools:layout="@layout/my_posts_fragment" />
     <fragment
@@ -131,7 +147,7 @@
 
     <fragment
         android:id="@+id/settingsGroupFragment_pageMembers"
-        android:name="com.example.socialmediaproject.ui.settings.pageSettings.pageMembers.membersListFragment"
+        android:name="com.example.socialmediaproject.ui.settings.pageMembers.membersListFragment"
         android:label="MembersList"
         tools:layout="@layout/fragment_members_list">
         <action
@@ -140,7 +156,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsEditGroupFragment"
-        android:name="com.example.socialmediaproject.ui.settings.pageSettings.pageEditGroup.SettingsEditGroupFragment"
+        android:name="com.example.socialmediaproject.ui.settings.pageEditGroup.SettingsEditGroupFragment"
         android:label="SettingsEditGroupFragment" >
         <action
             android:id="@+id/action_settingsEditGroupFragment_to_settingsGroupFragment"
@@ -148,13 +164,14 @@
     </fragment>
     <fragment
         android:id="@+id/waitlistFragment"
-        android:name="com.example.socialmediaproject.ui.settings.pageSettings.pageWaitlist.WaitlistFragment"
+        android:name="com.example.socialmediaproject.ui.settings.pageWaitlist.WaitlistFragment"
         android:label="fragment_waitlist"
         tools:layout="@layout/fragment_waitlist" >
         <action
             android:id="@+id/action_waitlistFragment_to_settingsGroupFragment"
             app:destination="@id/settingsGroupFragment" />
     </fragment>
+
 
 
 </navigation>

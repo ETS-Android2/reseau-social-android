@@ -1,6 +1,10 @@
 package com.example.socialmediaproject.ui.settings;
 
-import android.content.SharedPreferences;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+
+
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,11 +19,18 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.api.CodeAccessHelper;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.base.BaseActivity;
+import com.example.socialmediaproject.models.CodeAccess;
 import com.example.socialmediaproject.models.Group;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.Objects;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
@@ -61,23 +72,41 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         String key = preference.getKey();
 
         if(key.equals("group_invite")){
-            Toast.makeText(getContext(),"Générer un code d'invitation !" , Toast.LENGTH_SHORT).show();
+            // On créer un code d'accès pour le groupe
+            CodeAccess newCode = new CodeAccess(groupName);
+            CodeAccessHelper.generateCode(newCode).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Toast.makeText(getContext(),"Le code est copié dans le presse-papier." , Toast.LENGTH_LONG).show();
+
+                    // On copie dans le presse papier le code généré
+                    ClipboardManager clipboard = getSystemService(requireContext(), ClipboardManager.class);
+                    ClipData clip = ClipData.newPlainText("invitation", documentReference.getId());
+                    assert clipboard != null;
+                    clipboard.setPrimaryClip(clip);
+                }
+            });
         }
 
         if(key.equals("group_edit")){
-            Toast.makeText(getContext(),"Modifier le groupe !" , Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(),"Modifier le groupe !" , Toast.LENGTH_SHORT).show();
             bundle.putString("group_name", groupName);
             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsEditGroupFragment, bundle);
         }
 
 
         if(key.equals("group_waitlist")){
-            Toast.makeText(getContext(),"Gérer les demandes d'adhésions !" , Toast.LENGTH_SHORT).show();
-            bundle.putString("group_name", groupName);
-            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_waitlistFragment, bundle);
+
+            if(currentGroup.getWaitlist().size() == 0){
+                Toast.makeText(getContext(),"Il n'y a personne dans la liste d'attente !" , Toast.LENGTH_SHORT).show();
+            }else{
+                bundle.putString("group_name", groupName);
+                Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_waitlistFragment, bundle);
+            }
+
         }
         if(key.equals("group_members")){
-            Toast.makeText(getContext(),"Gérer les adhérents !" , Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(),"Gérer les adhérents !" , Toast.LENGTH_SHORT).show();
             bundle.putString("group_name", groupName);
             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsGroupFragment_pageMembers, bundle);
         }
@@ -88,7 +117,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_dashboard);
-                            Toast.makeText(getContext(), "Quitter le groupe  !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Vous avez quitté le groupe !", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -100,10 +129,9 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_dashboard);
-                            Toast.makeText(getContext(), "Quitter le groupe  !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Le groupe à été supprimé !", Toast.LENGTH_SHORT).show();
                         }
                     });
-            Toast.makeText(getContext(),"Supprimer le groupe !" , Toast.LENGTH_SHORT).show();
         }
 
         return super.onPreferenceTreeClick(preference);
@@ -117,14 +145,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         Preference preferenceEditWaitlistGroup = findPreference("group_waitlist");
         Preference preferenceEditMembersGroup = findPreference("group_members");
         Preference preferenceDeleteGroup = findPreference("group_delete");
-/*
-        preferenceInvitation.setVisible(false);
-        preferenceExitGroup.setVisible(false);
-        preferenceEditWaitlistGroup.setVisible(false);
-        preferenceEditGroup.setVisible(false);
-        preferenceEditMembersGroup.setVisible(false);
-        preferenceDeleteGroup.setVisible(false);
-*/
+
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();

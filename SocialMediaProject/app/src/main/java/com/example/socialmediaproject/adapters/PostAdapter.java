@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,13 +18,13 @@ import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.UserHelper;
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 
@@ -44,7 +42,6 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
     private boolean postLayoutForGroup;
     //FOR DATA
     private final RequestManager glide;
-    private final String idCurrentUser;
 
     //FOR COMMUNICATION
     private Listener callback;
@@ -53,21 +50,19 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
     // constructor
     public PostAdapter(@NonNull FirestoreRecyclerOptions<Post> options,
                        RequestManager glide,
-                       Listener callback, String idCurrentUser){
+                       Listener callback){
         super(options);
         this.glide = glide;
         this.callback = callback;
-        this.idCurrentUser = idCurrentUser;
         this.postLayoutForGroup = false;
     }
 
     public PostAdapter(@NonNull FirestoreRecyclerOptions<Post> options,
                        RequestManager glide,
-                       Listener callback, String idCurrentUser, boolean postLayoutForGroup){
+                       Listener callback, boolean postLayoutForGroup){
         super(options);
         this.glide = glide;
         this.callback = callback;
-        this.idCurrentUser = idCurrentUser;
         this.postLayoutForGroup = postLayoutForGroup;
     }
 
@@ -81,32 +76,43 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Post model){
-        holder.updateWithPost(model, this.idCurrentUser, this.glide, postLayoutForGroup);
+        holder.updateWithPost(model, postLayoutForGroup);
+
+
+        boolean currentUserIsAuthor = model.getUserSender().equals(BaseActivity.getUid());
 
         holder.shareButton.setOnClickListener(v -> {
             // setup the alert builder
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Choisir une action");
             // add a list
-            String[] actions = {"Modifier", "Supprimer", "Partager"};
-            builder.setItems(actions, (dialog, which) -> {
-                switch (which) {
-                    case 0: // Modifier
-                        Toast.makeText(context, "Modifier le post !"  , Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1: // Supprimer
-                        getSnapshots().getSnapshot(position).getReference().delete();
-                        notifyDataSetChanged();
-                        Toast.makeText(context, "Supprimer le post : "+ getSnapshots().getSnapshot(position).getReference().getId()  , Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2: // Partager
-                        Toast.makeText(context, "Partager le post !"  , Toast.LENGTH_SHORT).show();
-                        break;
-                } }); // create and show the alert dialog
+            if(currentUserIsAuthor){
+                String[] actions = {"Modifier", "Supprimer"};
+                builder.setItems(actions, (dialog, which) -> {
+                    switch (which) {
+                        case 0: // Modifier
+                            Toast.makeText(context, "Modifier le post !"  , Toast.LENGTH_SHORT).show();
+                            break;
+                        case 1: // Supprimer
+                            getSnapshots().getSnapshot(position).getReference().delete();
+                            // notifyDataSetChanged();
+                            Toast.makeText(context, "Supprimer le post : "+ getSnapshots().getSnapshot(position).getReference().getId()  , Toast.LENGTH_SHORT).show();
+                            break;
+                    } }); // create and show the alert dialog
+            }else{
+                String[] actions = {"Report abuse"};
+                builder.setItems(actions, (dialog, which) -> {
+                    if (which == 0) { // Report abuse
+                        Toast.makeText(context, "Reporter le post ! (à faire)", Toast.LENGTH_SHORT).show();
+                    }
+                }); // create and show the alert dialog
+            }
+
 
             AlertDialog dialog = builder.create();
             dialog.show();
         });
+
     }
 
 
@@ -118,10 +124,8 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView itemTitleView, itemSubtitleView, itemContentView, itemNbViewsView, itemNbStarsView, itemDateAgo;
-        ImageView imageLike;
+        TextView itemTitleView, itemSubtitleView, itemContentView, itemDateAgo;
         ImageButton shareButton;
-        LinearLayout likeButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -130,26 +134,21 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             itemTitleView = itemView.findViewById(R.id.item_title);
             itemSubtitleView = itemView.findViewById(R.id.item_subtitle);
             itemContentView = itemView.findViewById(R.id.item_content);
-            itemNbViewsView = itemView.findViewById(R.id.item_nbViews);
-            itemNbStarsView = itemView.findViewById(R.id.item_nbStars);
 
             itemDateAgo = itemView.findViewById(R.id.item_date_ago);
 
-
-            imageLike = itemView.findViewById(R.id.image_star);
             shareButton = itemView.findViewById(R.id.item_share);
 
-            likeButton = itemView.findViewById(R.id.button_like_post);
         }
 
-        public void updateWithPost(Post post, String currentUserId, RequestManager glide, boolean _postLayoutForGroup){
-            Post currentItem = post;
+        public void updateWithPost(Post currentItem, boolean _postLayoutForGroup){
 
-
+            itemContentView.setText(currentItem.getContent());
+            itemDateAgo.setText(String.valueOf(BaseActivity.getTimeAgo(currentItem.getDateCreated())));
 
             // title
             if(currentItem.getGroup() == null){
-                itemTitleView.setText("null");
+                itemTitleView.setText("");
             }else{
                 itemTitleView.setVisibility(View.GONE);
                 if(_postLayoutForGroup){
@@ -171,7 +170,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
             // subtitle
             if(currentItem.getUserSender() == null){
-                itemSubtitleView.setText("null");
+                itemSubtitleView.setText("");
             }else{
                 // tant qu'on a pas charger les données on affiche rien
                 itemSubtitleView.setVisibility(View.GONE);
@@ -206,31 +205,11 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                             itemSubtitleView.setVisibility(View.VISIBLE);
-
                             itemSubtitleView.setText(documentSnapshot.toObject(User.class).getUsername());
                         }
                     });
                 }
-
-
             }
-            itemContentView.setText(currentItem.getContent());
-            itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));
-            itemNbViewsView.setText(String.valueOf(currentItem.getNbViews()));
-
-            itemDateAgo.setText(String.valueOf(currentItem.getTimeAgo()));
-
-
-            likeButton.setOnClickListener(v -> {
-                // on inverse l'état du like lors du clique sur le button
-                currentItem.changeLike();
-                if(currentItem.getIsLike()){ // si true alors
-                   imageLike.setImageResource(R.drawable.ic_baseline_star_24);
-                }else{
-                    imageLike.setImageResource(R.drawable.ic_baseline_star_outline_24);
-                }
-                itemNbStarsView.setText(String.valueOf(currentItem.getNbStars()));
-            });
         }
     }
 }

@@ -17,6 +17,9 @@ public class Group implements Serializable {
     private Boolean publicationOnlyModerator;
     private Boolean accessPrivate;
 
+    // cet attribut est le nom du groupe écrit en minuscule pour pouvoir faire une recherche sans se soucier des majuscule
+    private String search;
+
     // Les user qui sont en attente d'acceptation
     List<String> waitlist;
 
@@ -27,6 +30,7 @@ public class Group implements Serializable {
     public Group(){
         this.type   = "type";
         this.name   = "name";
+        this.search = this.name.toLowerCase();
         this.field  = "field";
         this.admin  = "idAdmin";
         this.publicationOnlyModerator = false;
@@ -39,6 +43,7 @@ public class Group implements Serializable {
     public Group(String _name, String _type, String _field, String access, String _admin){
         this.type   = _type;
         this.name   = _name;
+        this.search = this.name.toLowerCase();
         this.field  = _field;
         this.admin  = _admin;
         this.publicationOnlyModerator = false;
@@ -57,6 +62,7 @@ public class Group implements Serializable {
     public String getAdmin(){ return this.admin;}
     public Boolean getAccessPrivate(){return this.accessPrivate; }
     public Boolean getPublicationOnlyModerator(){ return this.publicationOnlyModerator;}
+    public String getSearch() { return search; }
 
     public List<String> getMembers(){ return this.members; }
     public List<String> getModerators(){ return this.moderators; }
@@ -72,9 +78,8 @@ public class Group implements Serializable {
     public void setField(String field) { this.field = field;}
     public void setAdmin(String admin){ this.admin = admin;}
     public void setAccessPrivate(Boolean access){ this.accessPrivate = access;}
-    public void setPublicationOnlyModerator(Boolean publicationOnlyModerator) {
-        this.publicationOnlyModerator = publicationOnlyModerator;
-    }
+    public void setPublicationOnlyModerator(Boolean publicationOnlyModerator) { this.publicationOnlyModerator = publicationOnlyModerator; }
+    public void setSearch(String search) { this.search = search; }
     // --- METHODS ---
     //public Boolean isPrivate(){  return this.accessPrivate; }
 

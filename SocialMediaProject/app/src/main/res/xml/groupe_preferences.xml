@@ -25,6 +25,12 @@
 
     <PreferenceCategory app:title="Général">
 
+        <!--
+        <Preference
+            app:key="group_infos"
+            app:title="@string/group_infos" />
+            -->
+
         <Preference
             app:key="group_edit"
             app:title="@string/group_edit" />
