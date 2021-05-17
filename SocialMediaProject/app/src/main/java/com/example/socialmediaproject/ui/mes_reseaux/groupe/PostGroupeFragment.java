@@ -141,7 +141,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
 
 
                                 recyclerView = root.findViewById(R.id.recyclerView_group_posts);
-                                configureRecyclerView(currentGroup.getName());
+                                configureRecyclerView(currentGroup.getName(), currentGroup.getType());
 
 
 
@@ -207,19 +207,23 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
     // --------------------
     // Configure RecyclerView with a Query
     // Seulement appeler quand les données du groupe sont chargé
-    private void configureRecyclerView(String groupName){
-        //Track current group name
-        this.currentGroupName = groupName;
+    private void configureRecyclerView(String groupName, String groupType){
         //Configure Adapter & RecyclerView
-        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(this.currentGroupName)),
-                Glide.with(this), this, true, currentGroup.getType().equals("chat"));
+        if(groupType.equals("chat")){
+            // La query renvoit pas dans le même ordre les messages que les posts
+            this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroupOrderAscending(groupName)),
+                    Glide.with(this), this, true, true);
+            postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    recyclerView.smoothScrollToPosition(postAdapter.getItemCount()); // Scroll to bottom on new messages
+                }
+            });
+        }else{
+            this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
+                    Glide.with(this), this, true);
+        }
 
-        postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                recyclerView.smoothScrollToPosition(postAdapter.getItemCount()); // Scroll to bottom on new messages
-            }
-        });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(this.postAdapter);
     }

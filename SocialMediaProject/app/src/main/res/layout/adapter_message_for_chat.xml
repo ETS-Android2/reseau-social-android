@@ -4,10 +4,10 @@
     android:layout_height="wrap_content"
 
     android:orientation="vertical"
-    android:background="@drawable/bg_post"
+    android:background="@drawable/bg_message"
     android:padding="10dp"
     android:layout_margin="10dp"
-    android:backgroundTint="@color/colorSecondary">
+    android:id="@+id/messageContainer">
 
 
     <TextView

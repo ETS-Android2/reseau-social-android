@@ -41,6 +41,13 @@ public class PostHelper {
                 .limit(50);
     }
 
+    public static Query getAllPostForGroupOrderAscending(String groupName){
+        return PostHelper.getPostCollection()
+                .whereEqualTo("group", groupName)
+                .orderBy("dateCreated",Query.Direction.ASCENDING)
+                .limit(50);
+    }
+
     // --- GET ---
     public static Query getAllPost(){
         return PostHelper.getPostCollection()

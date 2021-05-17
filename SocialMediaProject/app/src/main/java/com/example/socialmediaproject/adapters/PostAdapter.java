@@ -3,15 +3,18 @@ package com.example.socialmediaproject.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
@@ -165,11 +168,13 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
         TextView itemTitleView, itemSubtitleView, itemContentView, itemDateAgo;
         ImageButton shareButton;
+        LinearLayout messageContainer;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             // get item title view
+            messageContainer = itemView.findViewById(R.id.messageContainer);
             itemTitleView = itemView.findViewById(R.id.item_title);
             itemSubtitleView = itemView.findViewById(R.id.item_subtitle);
             itemContentView = itemView.findViewById(R.id.item_content);
@@ -185,7 +190,22 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             itemContentView.setText(currentItem.getContent());
             itemDateAgo.setText(BaseActivity.getTimeAgo(currentItem.getDateCreated()));
 
+            int colorCurrentUser = ContextCompat.getColor(itemView.getContext(), R.color.colorSecondary);
+            int colorRemoteUser = ContextCompat.getColor(itemView.getContext(), R.color.colorLight);
+
             if(_groupTypeChat && _postLayoutForGroup){
+                boolean currentUserIsAuthor = currentItem.getUserSender().equals(BaseActivity.getUid());
+                //Update Message Color Background
+                ((GradientDrawable) messageContainer.getBackground()).setColor(currentUserIsAuthor ? colorCurrentUser : colorRemoteUser);
+
+                // MESSAGE CONTAINER
+                LinearLayout.LayoutParams paramsLayoutContent = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                paramsLayoutContent.setMargins(
+                        currentUserIsAuthor ? 120 : 30,
+                        10,
+                        currentUserIsAuthor ? 30 : 120,
+                        10);
+                this.messageContainer.setLayoutParams(paramsLayoutContent);
 
                 UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
