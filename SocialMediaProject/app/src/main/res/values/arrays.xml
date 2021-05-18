@@ -23,4 +23,28 @@
         <item>centre_interet</item>
         <item>service</item>
     </string-array>
+
+    <string-array name="list_group_type">
+        <item>post</item>
+        <item>chat</item>
+        <item>sms</item>
+        <item>email</item>
+    </string-array>
+
+    <string-array name="list_group_access">
+        <item>private</item>
+        <item>public</item>
+    </string-array>
+
+    <string-array name="list_group_subject">
+        <item>lieu</item>
+        <item>theme</item>
+        <item>centre_interet</item>
+        <item>service</item>
+    </string-array>
+
+    <string-array name="list_group_publication">
+        <item>onlyModerator</item>
+        <item>allMembers</item>
+    </string-array>
 </resources>

@@ -72,23 +72,19 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
         setSupportActionBar(toolbar);
 
         img = findViewById(R.id.item_icon);
-        EditText editText_content = findViewById(R.id.editText_content_message);
 
+        recyclerView = findViewById(R.id.recyclerView_group_chat);
+        EditText editText_content = findViewById(R.id.editText_content_message);
+        Button button_send_message = findViewById(R.id.send_message);
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             this.groupName = bundle.getString("group_name");
-            configureToolbar();
 
-            recyclerView = findViewById(R.id.recyclerView_group_chat);
+            configureToolbar();
             configureRecyclerView(groupName);
 
-            Button button_send_message = findViewById(R.id.send_message);
-
-            //
-            //button_send_message.setVisibility(View.INVISIBLE);
-            //button_send_message.setEnabled(false);
 
             // Lorsqu'il y a un changement sur l'edit text
             editText_content.addTextChangedListener(new TextWatcher() {
@@ -97,8 +93,8 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    //button_send_message.setVisibility(s.length() != 0 ? View.VISIBLE : View.INVISIBLE );
-                    //button_send_message.setEnabled(s.length() != 0);
+
+                    // Couleur du bouton envoyer un message en fonction de si il est clickable ou non
                     int colorEnabled = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary);
                     int colorNotEnabled = ContextCompat.getColor(getApplicationContext(), R.color.colorLight);
                     button_send_message.setTextColor(s.length() != 0 ? colorEnabled : colorNotEnabled);
@@ -110,22 +106,17 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
             button_send_message.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(editText_content.getText().toString().matches("")){
-                        Toast.makeText(getApplicationContext(),"Vous devez saisir du texte avant de poster votre message !" , Toast.LENGTH_SHORT).show();
-                    }else{
-                        Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid(), "gs://social-media-project-f6ca2.appspot.com/images/default.png");
-                        PostHelper.createPostForGroup(message).addOnFailureListener(onFailureListener());
-                        // On reset
-                        editText_content.setText("");
-                    }
+                    Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid(), "gs://social-media-project-f6ca2.appspot.com/images/default.png");
+                    PostHelper.createPostForGroup(message).addOnFailureListener(onFailureListener());
+                    // On reset
+                    editText_content.setText("");
+
 
                 }
             });
 
         }
     }
-
-
 
 
 
@@ -194,17 +185,11 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
                 this.onBackPressed();
                 break;
             case R.id.group_menu_settings:
-                //Bundle bundle = new Bundle();
-                //bundle.putString("group_name", currentGroup.getName());
-                //Navigation.findNavController(view).navigate(R.id.action_navigation_newGroup_to_navigation_groupe_post, bundle);
-                //Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.newGroupFragment);
+                // On n'as pas encore mis en place la navigation vers les paramètres du chat
+
+                // On ferme l'activité
                 finish();
-                //Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                //startActivity(i);
-                //Navigation.findNavController(MainActivity, R.id.nav_host_fragment).navigate(R.id.action_global_navigation_groupe_post);
 
-
-                //settingsGroupFragment
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -19,11 +19,13 @@
 
     <!-- Home page -->
     <string name="welcome_login">Welcome to our App</string>
+
     <!-- Login -->
     <string name="email_login">Email</string>
     <string name="password_login">Password</string>
     <string name="forgotPassword_login">Forgot password</string>
     <string name="button_login">Login</string>
+
     <!-- Signup -->
     <string name="email_signup">Email</string>
     <string name="name_signup">Name</string>
@@ -32,9 +34,9 @@
     <string name="button_signup">Signup</string>
 
 
-    <!-- Nav button -->
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Réseaux</string>
+    <!-- Les titres des sections principale de la navigation -->
+    <string name="title_home">Acceuil</string>
+    <string name="title_reseaux" >Mes Réseaux</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_profile">Profile</string>
 
@@ -46,25 +48,14 @@
     <string name="item_date_ago">1min</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="profile_name">Jean Pierre</string>
-    <string name="title_groupe_post">Nom du groupe</string>
+
+    <string name="profile_username">Nom utilisateur</string>
+    <string name="title_groupe">Nom du groupe</string>
+
     <string name="title_activity_settings_notification">SettingsNotificationActivity</string>
     <string name="notif_newPost">New posts</string>
-    <string name="notif_newLike">New likes</string>
     <string name="notif_groupProposition">Group proposition</string>
     <string name="title_settings_notification">Notifications</string>
     <string name="addPost">ajouter un post</string>
@@ -89,29 +80,6 @@
     <string name="title_settings_alerts">Alertes</string>
     <string name="delete_group">Supprimer le groupe</string>
 
-    <string-array name="list_group_type">
-        <item>post</item>
-        <item>chat</item>
-        <item>sms</item>
-        <item>email</item>
-    </string-array>
-
-    <string-array name="list_group_access">
-        <item>private</item>
-        <item>public</item>
-    </string-array>
-
-    <string-array name="list_group_subject">
-        <item>lieu</item>
-        <item>theme</item>
-        <item>centre_interet</item>
-        <item>service</item>
-    </string-array>
-
-    <string-array name="list_group_publication">
-        <item>onlyModerator</item>
-        <item>allMembers</item>
-    </string-array>
     <string name="title_activity_new_post">newPostActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -123,17 +91,38 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_new_group">New group</string>
     <string name="notif_disable">Disable notifications</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Champs par défault d'un groupe -->
+
     <string name="group_edit_name">Nom du groupe</string>
     <string name="group_edit_privacy">Groupe privé</string>
     <string name="group_edit_subject">Sujet du groupe</string>
     <string name="group_edit_publication">Publication</string>
-    <string name="error_unknown_error">erreur inconnu</string>
-    <string name="group_waitlist">Demandes d\'adhésions</string>
+
+    <!-- Settings d'un groupe -->
+
+    <string name="group_title_waitlist">Demandes d\'adhésions</string>
     <string name="group_infos">Informations</string>
     <string name="notification_title">Titre notification</string>
     <string name="default_notification_channel_id">messages</string>
-    <string name="item_username">Username</string>
+
     <string name="title_activity_chat">ChatActivity</string>
+
+
+    <!-- Les messages d'informations -->
+
+    <string name="messageNoGroupFound">Aucun groupe trouvé.</string>
+    <string name="messageNoGroup">Il n\'y a pas de groupe</string>
+    <string name="messageNoGroupType">Il n\'y a pas de groupe de ce type.</string>
+
+    <!-- Les messages d'erreurs -->
+
+    <string name="error_unknown_error">Erreur inconnu.</string>
+    <string name="button_send">Envoyer</string>
+    <string name="placeholder_message">Message...</string>
+
 </resources>

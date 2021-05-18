@@ -16,48 +16,6 @@ tools:context=".ui.mes_reseaux.groupe.newPostActivity">
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-<!--
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize">
-
-            <ImageButton
-                android:id="@+id/toolbar_close"
-                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center_vertical"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:src="@drawable/ic_baseline_close_24"
-                android:textAllCaps="true"
-                android:textColor="@color/white" />
-
-            <Button
-                android:id="@+id/toolbar_post"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
-                android:textColor="@color/white"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:textAlignment="center"
-                android:layout_marginRight="10dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="Post"
-                android:textAllCaps="true"
-
-                android:layout_alignParentEnd="true"
-                tools:ignore="RtlCompat" />
-
-
-        </RelativeLayout>
-        -->
-
     </com.google.android.material.appbar.MaterialToolbar>
 </com.google.android.material.appbar.AppBarLayout>
 
@@ -80,7 +38,8 @@ tools:context=".ui.mes_reseaux.groupe.newPostActivity">
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="5dp"
-            android:background="@drawable/border_edit_text_message">
+            android:background="@drawable/border_edit_text_message"
+            tools:ignore="UselessParent">
 
             <ImageButton
                 android:id="@+id/load_image"
@@ -89,7 +48,7 @@ tools:context=".ui.mes_reseaux.groupe.newPostActivity">
                 android:background="@null"
                 android:padding="5dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/ic_baseline_photo_camera_24"/>
 
             <EditText
@@ -98,9 +57,9 @@ tools:context=".ui.mes_reseaux.groupe.newPostActivity">
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:hint="Message..."
+                android:hint="@string/placeholder_message"
                 android:background="@null"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginStart="10dp"/>
 
             <Button
                 android:id="@+id/send_message"
@@ -108,7 +67,7 @@ tools:context=".ui.mes_reseaux.groupe.newPostActivity">
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@android:color/transparent"
-                android:text="Envoyer"
+                android:text="@string/button_send"
                 android:textColor="@color/colorLight" />
 
         </LinearLayout>

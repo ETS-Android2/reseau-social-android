@@ -34,22 +34,20 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
 
     //FOR DATA
     private final RequestManager glide;
-    private final String idCurrentUser;
 
     //FOR COMMUNICATION
     private Listener callback;
 
-    public GroupAdapter(@NonNull FirestoreRecyclerOptions<Group> options, RequestManager glide, Listener callback, String idCurrentUser) {
+    public GroupAdapter(@NonNull FirestoreRecyclerOptions<Group> options, RequestManager glide, Listener callback) {
         super(options);
         this.glide = glide;
         this.callback = callback;
-        this.idCurrentUser = idCurrentUser;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Group model) {
 
-        holder.updateWithMessage(model, this.idCurrentUser, this.glide);
+        holder.updateWithMessage(model, this.glide);
     }
 
     @Override
@@ -78,7 +76,7 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
 
         }
 
-        public void updateWithMessage(Group model, String currentUserId, RequestManager glide){
+        public void updateWithMessage(Group model, RequestManager glide){
 
             itemTitleView.setText(model.getName());
 

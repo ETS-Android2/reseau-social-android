@@ -32,7 +32,6 @@ import com.google.firebase.firestore.Query;
 public class MesReseauxFragment extends Fragment implements GroupAdapter.Listener{
 
     private MesReseauxViewModel mesReseauxViewModel;
-    private String m_Text = "";
 
     private TextView textViewRecyclerViewEmpty;
     private RecyclerView recyclerView;
@@ -139,18 +138,19 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
                             .orderBy("search")
                             .startAt(query)
                             .endAt(query+"\uf8ff")
-            ), Glide.with(this), this, "test user");
+            ), Glide.with(this), this);
         }else{
             this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(
                     GroupHelper.getAllGroupByType(typeGroupFragment, BaseActivity.getUid())
                             .orderBy("search")
                             .startAt(query)
-                            .endAt(query+"\uf8ff")), Glide.with(this), this, "test user");
+                            .endAt(query+"\uf8ff")), Glide.with(this), this);
         }
 
         groupAdapter.startListening();
         recyclerView.setAdapter(groupAdapter);
-        textViewRecyclerViewEmpty.setText("Aucun groupe trouvé.");
+        // Message affiché lorsque aucun groupe n'est trouvé
+        textViewRecyclerViewEmpty.setText(R.string.messageNoGroupFound);
         textViewRecyclerViewEmpty.setVisibility(this.groupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
@@ -175,13 +175,13 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
         //Configure Adapter & RecyclerView
         if(type.equals("all")){
             this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(GroupHelper.getAllGroup(BaseActivity.getUid())),
-                    Glide.with(this), this, "test user");
+                    Glide.with(this), this);
         }else{
             this.groupAdapter = new GroupAdapter(generateOptionsForAdapter(GroupHelper.getAllGroupByType(type, BaseActivity.getUid())),
-                    Glide.with(this), this, "test user");
+                    Glide.with(this), this);
         }
 
-
+        // Affichage des groupes dans un grid de deux colonnes
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerView.setAdapter(this.groupAdapter);
     }
@@ -203,9 +203,9 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
         // 7 - Show TextView in case RecyclerView is empty
 
         if(typeGroupFragment.equals("all")){
-            textViewRecyclerViewEmpty.setText("Il n'y a pas de groupe");
+            textViewRecyclerViewEmpty.setText(R.string.messageNoGroup);
         }else{
-            textViewRecyclerViewEmpty.setText("Il n'y a pas de groupe de ce type.");
+            textViewRecyclerViewEmpty.setText(R.string.messageNoGroupType);
         }
         textViewRecyclerViewEmpty.setVisibility(this.groupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
