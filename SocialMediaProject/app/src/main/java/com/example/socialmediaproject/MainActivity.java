@@ -2,6 +2,7 @@ package com.example.socialmediaproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(BaseActivity.isCurrentUserLogged()){
             Log.d("===========> ", "USER IS LOGGED !");
             setContentView(R.layout.activity_main);
@@ -36,16 +38,6 @@ public class MainActivity extends AppCompatActivity {
             NavigationUI.setupWithNavController(navView, navController);
         }
 
-        // action sur le bouton flottant du menu pour ajouter un groupe
-        /*
-        FloatingActionButton fab = findViewById(R.id.btnAddGroup);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast.makeText(getApplicationContext(),"Nouveau groupe!" , Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.newGroupFragment);
-            }
-        });*/
     }
 
     @Override

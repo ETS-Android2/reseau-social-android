@@ -16,11 +16,12 @@
 
     <PreferenceCategory app:title="Général">
 
+        <!--
         <EditTextPreference
             app:key="group_edit_name"
             android:defaultValue="Nom du groupe"
             app:title="@string/group_edit_name"
-            app:useSimpleSummaryProvider="true" />
+            app:useSimpleSummaryProvider="true" />-->
 
         <ListPreference
             app:entries="@array/subject_entries"

@@ -34,12 +34,12 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
         String groupName = bundle.getString("group_name");
 
         Preference preferencePublication = findPreference("group_edit_publication");
-        EditTextPreference preferenceNameGroup = findPreference("group_edit_name");
+        //EditTextPreference preferenceNameGroup = findPreference("group_edit_name");
         SwitchPreference preferenceSwitch = findPreference("group_edit_privacy");
         ListPreference preferenceSubjectGroup = findPreference("group_edit_subject");
 
         // initialisation tant qu'on a pas récupérer les données du groupe courant
-        preferenceNameGroup.setText("");
+        //preferenceNameGroup.setText("");
 
         GroupHelper.getGroup(groupName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -50,7 +50,7 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
                 // si on est en mode post alors on affiche sinon on ne l'affiche pas
                 preferencePublication.setVisible(currentGroup.getType().equals("post"));
 
-                preferenceNameGroup.setText(currentGroup.getName());
+                //preferenceNameGroup.setText(currentGroup.getName());
                 preferenceSwitch.setChecked(currentGroup.getAccessPrivate());
                 CharSequence[] entriesNames = {"Lieu","Thème","Centre d'intéret", "Service"};
                 CharSequence[] entriesValues = {"lieu","theme","centre_interet", "service"};
@@ -125,8 +125,10 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        String groupName = bundle.getString("group_name");
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Modifier le groupe");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(groupName);
     }
 
     @Override
