@@ -1,12 +1,10 @@
 package com.example.socialmediaproject.base;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialmediaproject.R;
@@ -15,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -107,16 +107,24 @@ public abstract class BaseActivity extends AppCompatActivity {
     // UTILS
     // --------------------
 
+    /* Firestore */
     @Nullable
     public static FirebaseFirestore getStore() { return FirebaseFirestore.getInstance(); }
+    public static DocumentReference getRefUser() { return getStore().collection("users").document(getUid()); }
+
+    /* Fireauth */
     @Nullable
     public static FirebaseAuth getAuth(){ return FirebaseAuth.getInstance(); }
     @Nullable
     public static FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
     @Nullable
     public static String getUid(){ return getCurrentUser().getUid(); }
-
     public static Boolean isCurrentUserLogged(){ return (getCurrentUser() != null); }
 
-    public static DocumentReference getRefUser() { return getStore().collection("users").document(getUid()); }
+    /* Storage */
+    @Nullable
+    public static FirebaseStorage getStorage(){ return FirebaseStorage.getInstance(); }
+    public static  StorageReference getRefStorage() { return getStorage().getReference(); }
+    public static StorageReference getRefImg(String url) { return getStorage().getReferenceFromUrl(url); }
+
 }
