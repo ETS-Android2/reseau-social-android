@@ -71,6 +71,17 @@
         android:layout_height="match_parent"
         android:text="@string/item_content_text" />
 
+    <ImageView
+        android:id="@+id/item_picture"
+        android:src="@drawable/profil_picture"
+        android:layout_width="354px"
+        android:layout_height="354px"
+        android:visibility="gone"
+        android:paddingTop="10dp"
+        android:layout_gravity="center"
+
+        android:scaleType="fitXY" />
+
     <!-- FOOTER -->
     <RelativeLayout
         android:id="@+id/item_footer"
