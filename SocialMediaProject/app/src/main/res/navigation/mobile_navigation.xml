@@ -169,10 +169,17 @@
         android:name="com.example.socialmediaproject.newPostActivity"
         android:label="activity_chat"
         tools:layout="@layout/activity_chat" />
-    <activity
-        android:id="@+id/chatActivity"
-        android:name="com.example.socialmediaproject.ui.mes_reseaux.ChatActivity"
-        android:label="ChatActivity" />
+
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/chatActivity">
+        <activity
+            android:id="@+id/chatActivity"
+            android:name="com.example.socialmediaproject.ui.mes_reseaux.ChatActivity"
+            android:label="ChatActivity" />
+        <action
+            android:id="@+id/action_global_navigation_groupe_post"
+            app:destination="@id/navigation_groupe_post" />
+    </navigation>
 
 
 </navigation>

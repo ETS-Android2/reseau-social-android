@@ -101,15 +101,38 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
         holder.updateWithPost(model, postLayoutForGroup, groupTypeChat);
 
 
+
+
         boolean currentUserIsAuthor = model.getUserSender().equals(BaseActivity.getUid());
 
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Choisir une action");
+
         if(this.groupTypeChat){
-            // On fait un truc s
+            if(currentUserIsAuthor){
+                // Un appui long pour poucoir supprimer le message
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        String[] actions = {"Supprimer"};
+                        builder.setItems(actions, (dialog, which) -> {
+                            if (which == 0) { // Supprimer
+                                getSnapshots().getSnapshot(position).getReference().delete();
+                                // notifyDataSetChanged();
+                                Toast.makeText(context, "Suppression du post ! ", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        // create and show the alert dialog
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        return true;
+                    }
+                    });
+                }
         }else{
             holder.shareButton.setOnClickListener(v -> {
-                // setup the alert builder
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Choisir une action");
 
                 // add a list
                 if(currentUserIsAuthor){
@@ -158,13 +181,14 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
     }
 
 
+
     @Override
     public void onDataChanged() {
         super.onDataChanged();
         this.callback.onDataChanged();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView itemTitleView, itemSubtitleView, itemContentView, itemDateAgo;
         ImageButton shareButton;
@@ -283,5 +307,13 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             }
 
         }
+
+
+        /*@Override
+        public boolean onLongClick(View v) {
+            Toast.makeText(v.getContext(),"test",Toast.LENGTH_SHORT).show();
+            return true;
+        }*/
+
     }
 }

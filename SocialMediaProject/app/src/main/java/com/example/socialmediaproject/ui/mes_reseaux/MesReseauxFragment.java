@@ -182,13 +182,6 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
         }
 
 
-        groupAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                recyclerView.smoothScrollToPosition(groupAdapter.getItemCount()); // Scroll to bottom on new messages
-            }
-        });
-
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerView.setAdapter(this.groupAdapter);
     }
