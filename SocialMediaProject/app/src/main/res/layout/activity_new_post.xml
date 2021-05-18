@@ -67,7 +67,6 @@
         android:autofillHints=""
         android:padding="10dp"
         android:background="@null"
-        android:ems="10"
         android:gravity="start|top"
         android:layout_marginTop="?attr/actionBarSize"
         android:inputType="textMultiLine" />
