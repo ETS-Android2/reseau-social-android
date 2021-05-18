@@ -66,7 +66,7 @@ public class newPostActivity extends AppCompatActivity {
                 }else{
                     //Toast.makeText(getApplicationContext(),"Poster sur le groupe !" , Toast.LENGTH_SHORT).show();
 
-                    Post post = new Post(editText_content.getText().toString(), groupeName, BaseActivity.getUid());
+                    Post post = new Post(editText_content.getText().toString(), groupeName, BaseActivity.getUid(), "gs://social-media-project-f6ca2.appspot.com/images/default.png");
 
                     PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
                     finish();
