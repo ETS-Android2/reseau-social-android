@@ -71,4 +71,38 @@
         android:layout_marginTop="?attr/actionBarSize"
         android:inputType="textMultiLine" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addPicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_baseline_add_24"
+        android:contentDescription="@string/addPost"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:visibility="gone"
+        android:layout_gravity="bottom|left"
+        app:cardBackgroundColor="@color/browser_actions_bg_grey"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="16dp">
+
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/image_uploaded"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_centerHorizontal="true"
+            app:civ_border_color="@color/colorPrimary"
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/colorPrimary"
+            tools:ignore="MissingClass" />
+
+    </com.google.android.material.card.MaterialCardView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
