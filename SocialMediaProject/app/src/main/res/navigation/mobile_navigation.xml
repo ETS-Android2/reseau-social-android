@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.socialmediaproject.ui.mes_reseaux.MesReseauxFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_reseaux"
         tools:layout="@layout/fragment_mes_reseaux" >
         <action
             android:id="@+id/action_navigation_dashboard_to_navigation_groupe_post"
@@ -81,7 +81,7 @@
     <fragment
         android:id="@+id/navigation_groupe_post"
         android:name="com.example.socialmediaproject.ui.mes_reseaux.groupe.PostGroupeFragment"
-        android:label="@string/title_groupe_post"
+        android:label="@string/title_groupe"
         tools:layout="@layout/fragment_groupe">
         <action
             android:id="@+id/action_navigation_groupe_post_to_settingsGroupFragment"

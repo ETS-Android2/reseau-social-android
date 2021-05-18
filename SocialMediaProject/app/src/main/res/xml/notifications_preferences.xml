@@ -18,11 +18,6 @@
                 app:key="notif_newPost"
                 app:title="@string/notif_newPost" />
 
-            <SwitchPreferenceCompat
-                android:dependency="notif_disabled"
-
-                app:key="notif_newLike"
-                app:title="@string/notif_newLike" />
 
             <SwitchPreferenceCompat
                 android:dependency="notif_disabled"

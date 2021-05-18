@@ -19,7 +19,7 @@
         android:textStyle="bold"
         android:paddingRight="10dp"
         android:textAllCaps="true"
-        android:text="@string/item_username" />
+        android:text="@string/username" />
 
     <TextView
         android:id="@+id/item_content"

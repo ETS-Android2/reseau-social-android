@@ -124,5 +124,6 @@
     <string name="error_unknown_error">Erreur inconnu.</string>
     <string name="button_send">Envoyer</string>
     <string name="placeholder_message">Message...</string>
+    <string name="username">username</string>
 
 </resources>
