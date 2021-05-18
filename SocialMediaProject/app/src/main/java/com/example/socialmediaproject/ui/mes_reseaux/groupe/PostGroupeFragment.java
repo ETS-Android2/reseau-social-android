@@ -82,8 +82,6 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
 
         textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
 
-
-
         ImageView imageAccess = root.findViewById(R.id.group_acces_image);
         TextView tv_groupTitle = root.findViewById(R.id.group_title);
         TextView tv_groupType = root.findViewById(R.id.group_type);

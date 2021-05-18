@@ -183,8 +183,8 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                 dialog.show();
             });
 
-            // add picture into profile item
-            ImageView img = holder.itemView.findViewById(R.id.item_icon);
+            // print picture into profile item
+            ImageView imgProfile = holder.itemView.findViewById(R.id.item_icon);
 
             UserHelper.getUser(model.getUserSender()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -194,9 +194,25 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
                     Glide.with(context)
                             .load(BaseActivity.getRefImg(sender.getUrlPicture()))
-                            .into(img);
+                            .into(imgProfile);
                 }
             });
+
+            // print picture into message content
+            ImageView img = holder.itemView.findViewById(R.id.item_picture);
+            String urlPic = model.getUrlImage();
+
+            if(!model.getUrlImage().equals("null")){
+                img.setVisibility(View.VISIBLE);
+
+                Glide.with(context)
+                        .load(BaseActivity.getRefImg(model.getUrlImage()))
+                        .into(img);
+            }
+            else{
+                img.setVisibility(View.GONE);
+            }
+
         }
 
 
