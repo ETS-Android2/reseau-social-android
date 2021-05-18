@@ -1,8 +1,10 @@
 package com.example.socialmediaproject.ui.mes_reseaux;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
+import com.example.socialmediaproject.MainActivity;
 import com.example.socialmediaproject.adapters.PostAdapter;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
@@ -24,10 +26,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import androidx.core.content.ContextCompat;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -67,6 +74,7 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
         img = findViewById(R.id.item_icon);
         EditText editText_content = findViewById(R.id.editText_content_message);
 
+
         // on récupère l'objet du fragment précédent
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
@@ -76,14 +84,30 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
             recyclerView = findViewById(R.id.recyclerView_group_chat);
             configureRecyclerView(groupName);
 
-            Button textView_send_message = findViewById(R.id.send_message);
+            Button button_send_message = findViewById(R.id.send_message);
 
-            // On ne peut pas appuyer sur le bouton tant que le message est vide
-            boolean contentIsEmpty =  editText_content.getText().toString().matches("");
-            //textView_send_message
-            //textView_send_message.setEnabled(!contentIsEmpty);
+            //
+            //button_send_message.setVisibility(View.INVISIBLE);
+            //button_send_message.setEnabled(false);
 
-            textView_send_message.setOnClickListener(new View.OnClickListener() {
+            // Lorsqu'il y a un changement sur l'edit text
+            editText_content.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    //button_send_message.setVisibility(s.length() != 0 ? View.VISIBLE : View.INVISIBLE );
+                    //button_send_message.setEnabled(s.length() != 0);
+                    int colorEnabled = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary);
+                    int colorNotEnabled = ContextCompat.getColor(getApplicationContext(), R.color.colorLight);
+                    button_send_message.setTextColor(s.length() != 0 ? colorEnabled : colorNotEnabled);
+                }
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+
+            button_send_message.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(editText_content.getText().toString().matches("")){
@@ -170,10 +194,17 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
                 this.onBackPressed();
                 break;
             case R.id.group_menu_settings:
-                Bundle bundle = new Bundle();
-                bundle.putString("group_name", currentGroup.getName());
+                //Bundle bundle = new Bundle();
+                //bundle.putString("group_name", currentGroup.getName());
+                //Navigation.findNavController(view).navigate(R.id.action_navigation_newGroup_to_navigation_groupe_post, bundle);
+                //Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.newGroupFragment);
+                finish();
+                //Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                //startActivity(i);
+                //Navigation.findNavController(MainActivity, R.id.nav_host_fragment).navigate(R.id.action_global_navigation_groupe_post);
 
-                //NavHostFragment.findNavController(this).navigate(R.id.action_navigation_groupe_post_to_settingsGroupFragment, bundle);
+
+                //settingsGroupFragment
                 break;
         }
         return super.onOptionsItemSelected(item);

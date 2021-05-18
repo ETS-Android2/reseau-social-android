@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.models.Group;
-import com.example.socialmediaproject.newPostActivity;
 import com.example.socialmediaproject.ui.mes_reseaux.ChatActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;

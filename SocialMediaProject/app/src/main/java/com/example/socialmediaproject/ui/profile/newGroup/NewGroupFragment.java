@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
+import com.example.socialmediaproject.ui.mes_reseaux.ChatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -115,9 +117,17 @@ public class NewGroupFragment extends Fragment {
 
                             // On passe le nom du groupe entre les fragments
                             Bundle bundle = new Bundle();
-                            bundle.putString("group_name", editText_groupName.getText().toString());
+
                             // Navigation vers le fragment qui affiche le groupe
-                            Navigation.findNavController(view).navigate(R.id.action_navigation_newGroup_to_navigation_groupe_post, bundle);
+                            if(spinnerGroupType.getText().toString().equals("chat")){
+                                bundle.putString("group_name", editText_groupName.getText().toString());
+                                Intent intent = new Intent(getContext(), ChatActivity.class);
+                                intent.putExtras(bundle);
+                                getContext().startActivity(intent);
+                            }else{
+                                Navigation.findNavController(view).navigate(R.id.action_navigation_newGroup_to_navigation_groupe_post, bundle);
+                            }
+
                         }
 
                     }

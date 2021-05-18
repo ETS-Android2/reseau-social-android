@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 import androidx.preference.Preference;
@@ -72,20 +73,37 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         String key = preference.getKey();
 
         if(key.equals("group_invite")){
+
+            // setup the alert builder
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
             // On créer un code d'accès pour le groupe
             CodeAccess newCode = new CodeAccess(groupName);
             CodeAccessHelper.generateCode(newCode).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
-                    Toast.makeText(getContext(),"Le code est copié dans le presse-papier." , Toast.LENGTH_LONG).show();
 
-                    // On copie dans le presse papier le code généré
-                    ClipboardManager clipboard = getSystemService(requireContext(), ClipboardManager.class);
-                    ClipData clip = ClipData.newPlainText("invitation", documentReference.getId());
-                    assert clipboard != null;
-                    clipboard.setPrimaryClip(clip);
+
+                    builder.setTitle("Code : " + documentReference.getId());
+
+                    String[] actions = {"Copier le code"};
+                    builder.setItems(actions, (dialog, which) -> {
+                        if (which == 0) {
+                            Toast.makeText(getContext(),"Le code est copié dans le presse-papier." , Toast.LENGTH_LONG).show();
+                            // On copie dans le presse papier le code généré
+                            ClipboardManager clipboard = getSystemService(requireContext(), ClipboardManager.class);
+                            ClipData clip = ClipData.newPlainText("invitation", documentReference.getId());
+                            assert clipboard != null;
+                            clipboard.setPrimaryClip(clip);
+                        }
+                    });
+                    // create and show the alert dialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             });
+
+
         }
 
         if(key.equals("group_edit")){

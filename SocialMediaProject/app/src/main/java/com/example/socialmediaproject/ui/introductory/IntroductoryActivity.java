@@ -1,4 +1,4 @@
-package com.example.socialmediaproject;
+package com.example.socialmediaproject.ui.introductory;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,9 +12,7 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.socialmediaproject.ui.OnBoardingFragment1;
-import com.example.socialmediaproject.ui.OnBoardingFragment2;
-import com.example.socialmediaproject.ui.OnBoardingFragment3;
+import com.example.socialmediaproject.R;
 
 public class IntroductoryActivity extends AppCompatActivity {
 

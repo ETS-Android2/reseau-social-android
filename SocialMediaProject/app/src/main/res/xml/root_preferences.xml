@@ -10,6 +10,7 @@
 
     <PreferenceCategory app:title="Général">
 
+        <!--
         <Preference
             app:key="informations"
             app:title="Personnal informations" />
@@ -17,20 +18,21 @@
         <Preference
             app:key="activity"
             app:title="Your activity" />
-
-        <SwitchPreferenceCompat
+-->
+        <SwitchPreference
             app:key="theme"
             app:summaryOff="Désactivé"
             app:summaryOn="Activé"
             app:title="Dark mode" />
 
+        <!--
         <Preference
             app:key="help"
-            app:title="Help" />
+            app:title="Help" /> -->
 
         <Preference
             app:key="deconnexion"
-            app:title="Log Out" />
+            app:title="Se deconnecter" />
     </PreferenceCategory>
 
 </PreferenceScreen>

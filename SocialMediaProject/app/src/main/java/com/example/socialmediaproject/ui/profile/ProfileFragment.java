@@ -16,12 +16,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
+import com.example.socialmediaproject.ui.login.LoginActivity;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.ProfileItemAdapter;
 import com.example.socialmediaproject.api.UserHelper;
@@ -97,7 +99,29 @@ public class ProfileFragment extends Fragment {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                choosePicture();
+                // setup the alert builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                //builder.setTitle("Action");
+
+                String[] actions = {"Modifier l'image de profile", "Se deconnecter"};
+                builder.setItems(actions, (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            // Choisir une nouvelle image de profile
+                            choosePicture();
+                            break;
+                        case 1:
+                            if(BaseActivity.isCurrentUserLogged())
+                                BaseActivity.getAuth().signOut();
+
+                            Intent intent = new Intent(getActivity(), LoginActivity.class);
+                            startActivity(intent);
+                            break;
+                    }
+                });
+                // create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 

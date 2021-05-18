@@ -2,6 +2,7 @@ package com.example.socialmediaproject.adapters;
 
 import android.content.Context;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.ui.mes_reseaux.ChatActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -115,7 +117,13 @@ public class SearchGroupAdapter extends FirestoreRecyclerAdapter<Group, SearchGr
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
                         bundle.putString("group_name", currentItem.getName());
-                        Navigation.findNavController(itemView).navigate(R.id.action_searchPageFragment_to_navigation_groupe_post, bundle);
+                        if(currentItem.getType().equals("chat")){
+                            Intent intent = new Intent(itemView.getContext(), ChatActivity.class);
+                            intent.putExtras(bundle);
+                            itemView.getContext().startActivity(intent);
+                        }else {
+                            Navigation.findNavController(itemView).navigate(R.id.action_searchPageFragment_to_navigation_groupe_post, bundle);
+                        }
                     }
                 });
 

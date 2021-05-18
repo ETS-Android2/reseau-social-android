@@ -7,7 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.socialmediaproject.LoginActivity;
+import com.example.socialmediaproject.ui.login.LoginActivity;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.base.BaseActivity;
 
@@ -17,8 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-
-import java.util.Base64;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
