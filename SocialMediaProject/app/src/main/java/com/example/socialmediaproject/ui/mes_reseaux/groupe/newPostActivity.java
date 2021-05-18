@@ -53,7 +53,7 @@ public class newPostActivity extends AppCompatActivity {
 
     @Nullable private User modelCurrentUser;
     private Uri imageUri;
-    private CircularImageView img;
+    private ImageView imageView;
     StorageReference refImg;
     String urlImg;
 
@@ -73,7 +73,7 @@ public class newPostActivity extends AppCompatActivity {
 
         this.getCurrentUserFromFirestore();
 
-        img = findViewById(R.id.image_uploaded);
+        imageView = findViewById(R.id.image_uploaded);
         EditText editText_content = findViewById(R.id.editTextTextMultiLine);
 
 
@@ -103,19 +103,19 @@ public class newPostActivity extends AppCompatActivity {
         });
 
         FloatingActionButton btn = findViewById(R.id.addPicture);
-        CardView card = findViewById(R.id.card);
+        imageView.setVisibility(View.GONE);
 
         /* add picture button */
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                card.setVisibility(View.VISIBLE);
                 choosePicture();
+                imageView.setVisibility(View.VISIBLE);
             }
         });
 
         /* picked picture */
-        card.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // setup the alert builder
@@ -128,9 +128,9 @@ public class newPostActivity extends AppCompatActivity {
                         case 0:
                             // Choisir une nouvelle image de profile
                             imageUri = Uri.EMPTY;
-                            img.setImageResource(0);
+                            imageView.setImageResource(0);
                             urlImg = "null";
-                            card.setVisibility(View.GONE);
+                            imageView.setVisibility(View.GONE);
                             break;
                     }
                 });
@@ -169,8 +169,8 @@ public class newPostActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
             imageUri = data.getData();
-            img.setImageURI(imageUri);
-            Log.d("PICTURE ==> ", img.toString());
+            imageView.setImageURI(imageUri);
+            Log.d("PICTURE ==> ", imageView.toString());
         }
     }
 
