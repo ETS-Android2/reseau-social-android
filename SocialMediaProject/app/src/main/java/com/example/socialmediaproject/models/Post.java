@@ -26,11 +26,11 @@ public class Post implements Serializable {
         this.userSender = "content";
         this.urlImage = null;
     }
-    public Post(String content, String group, String userSender){
+    public Post(String content, String group, String userSender, String urlPicture){
         this.content = content;
         this.group = group;
         this.userSender = userSender;
-        this.urlImage = null;
+        this.urlImage = urlPicture;
     }
 
     // --- GETTERS ---

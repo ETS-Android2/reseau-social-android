@@ -4,10 +4,12 @@ package com.example.socialmediaproject.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.GroupHelper;
@@ -27,8 +30,12 @@ import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -175,11 +182,25 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                 AlertDialog dialog = builder.create();
                 dialog.show();
             });
+
+            // add picture into profile item
+            ImageView img = holder.itemView.findViewById(R.id.item_icon);
+
+            UserHelper.getUser(model.getUserSender()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+
+                    User sender = task.getResult().toObject(User.class);
+
+                    Glide.with(context)
+                            .load(BaseActivity.getRefImg(sender.getUrlPicture()))
+                            .into(img);
+                }
+            });
         }
 
 
     }
-
 
 
     @Override
@@ -307,13 +328,5 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             }
 
         }
-
-
-        /*@Override
-        public boolean onLongClick(View v) {
-            Toast.makeText(v.getContext(),"test",Toast.LENGTH_SHORT).show();
-            return true;
-        }*/
-
     }
 }

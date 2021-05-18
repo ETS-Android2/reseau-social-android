@@ -2,11 +2,14 @@ package com.example.socialmediaproject.ui.home;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -28,9 +31,12 @@ import com.example.socialmediaproject.adapters.PostAdapter;
 
 import com.example.socialmediaproject.api.PostHelper;
 
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Post;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
+
+import java.util.Objects;
 
 public class HomeFragment extends Fragment implements PostAdapter.Listener {
 
@@ -44,6 +50,9 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
 
     private TextView textViewRecyclerViewEmpty;
     private ProgressBar progressBar;
+
+    private ImageView itemIcon;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -60,9 +69,10 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
         // Add a divider between posts
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
+        //itemIcon = recyclerView.findViewById(R.id.item_icon);
+
         this.configureToolbar();
         this.configureRecyclerView();
-
 
         return root;
     }
@@ -92,6 +102,7 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
         });*/
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         recyclerView.setAdapter(this.postAdapter);
     }
 

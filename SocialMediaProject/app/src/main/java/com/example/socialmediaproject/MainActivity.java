@@ -3,6 +3,7 @@ package com.example.socialmediaproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.ui.login.LoginActivity;
@@ -33,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
             //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
             setSupportActionBar(findViewById(R.id.materialToolbar));
             NavigationUI.setupWithNavController(navView, navController);
-
-
         }
 
         // action sur le bouton flottant du menu pour ajouter un groupe
@@ -61,5 +60,4 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
     }
-
 }

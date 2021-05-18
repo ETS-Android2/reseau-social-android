@@ -9,11 +9,14 @@ import com.example.socialmediaproject.adapters.PostAdapter;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
 
+import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 
+import com.example.socialmediaproject.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -39,11 +42,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+
+import org.jetbrains.annotations.NotNull;
 
 public class ChatActivity extends AppCompatActivity implements PostAdapter.Listener {
 
@@ -51,7 +58,9 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
     @Nullable
     Group currentGroup;
     String groupName;
+    private User user;
     private RecyclerView recyclerView;
+    private ImageView img;
 
 
     @Override
@@ -62,7 +71,7 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        img = findViewById(R.id.item_icon);
         EditText editText_content = findViewById(R.id.editText_content_message);
 
 
@@ -101,12 +110,14 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
             button_send_message.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid());
-                    PostHelper.createPostForGroup(message).addOnFailureListener(onFailureListener());
-                    // On reset
-                    editText_content.setText("");
-
+                    if(editText_content.getText().toString().matches("")){
+                        Toast.makeText(getApplicationContext(),"Vous devez saisir du texte avant de poster votre message !" , Toast.LENGTH_SHORT).show();
+                    }else{
+                        Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid(), "gs://social-media-project-f6ca2.appspot.com/images/default.png");
+                        PostHelper.createPostForGroup(message).addOnFailureListener(onFailureListener());
+                        // On reset
+                        editText_content.setText("");
+                    }
 
                 }
             });
