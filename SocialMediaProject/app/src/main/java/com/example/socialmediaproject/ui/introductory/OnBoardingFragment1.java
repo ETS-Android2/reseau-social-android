@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui;
+package com.example.socialmediaproject.ui.introductory;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,30 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.socialmediaproject.LoginActivity;
+import com.example.socialmediaproject.ui.login.LoginActivity;
 import com.example.socialmediaproject.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class OnBoardingFragment3 extends Fragment {
+public class OnBoardingFragment1 extends Fragment {
 
     TextView skip;
-    FloatingActionButton fab;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_on_boarding3, container, false);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_on_boarding1, container, false);
 
-        fab = root.findViewById(R.id.fab);
         skip = root.findViewById(R.id.skip);
-
-        fab.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
 
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +32,6 @@ public class OnBoardingFragment3 extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         return root;
     }

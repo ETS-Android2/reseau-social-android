@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui;
+package com.example.socialmediaproject.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;

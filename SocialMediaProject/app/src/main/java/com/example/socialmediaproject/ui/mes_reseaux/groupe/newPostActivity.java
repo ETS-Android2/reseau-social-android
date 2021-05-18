@@ -1,4 +1,4 @@
-package com.example.socialmediaproject;
+package com.example.socialmediaproject.ui.mes_reseaux.groupe;
 
 import android.os.Bundle;
 
@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 
+import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;

@@ -1,4 +1,4 @@
-package com.example.socialmediaproject;
+package module;
 
 import android.content.Context;
 

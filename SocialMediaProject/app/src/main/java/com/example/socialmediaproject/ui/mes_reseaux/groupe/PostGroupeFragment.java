@@ -15,7 +15,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,7 +39,6 @@ import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
-import com.example.socialmediaproject.newPostActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import com.google.android.gms.tasks.OnFailureListener;

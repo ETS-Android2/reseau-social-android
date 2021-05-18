@@ -15,7 +15,7 @@
             android:label="@string/title_activity_chat"
             android:theme="@style/Theme.SocialMediaProject.NoActionBar" />
         <activity
-            android:name=".newPostActivity"
+            android:name=".ui.mes_reseaux.groupe.newPostActivity"
             android:label="@string/title_activity_new_post"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SocialMediaProject.NoActionBar"
@@ -28,7 +28,7 @@
             android:windowSoftInputMode="adjustNothing"></activity>
         -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity

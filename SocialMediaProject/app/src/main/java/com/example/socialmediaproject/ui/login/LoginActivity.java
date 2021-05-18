@@ -1,4 +1,4 @@
-package com.example.socialmediaproject;
+package com.example.socialmediaproject.ui.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.LoginAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;

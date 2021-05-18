@@ -166,7 +166,7 @@
     </fragment>
     <activity
         android:id="@+id/newPostActivity"
-        android:name="com.example.socialmediaproject.newPostActivity"
+        android:name="com.example.socialmediaproject.ui.mes_reseaux.groupe.newPostActivity"
         android:label="activity_chat"
         tools:layout="@layout/activity_chat" />
 

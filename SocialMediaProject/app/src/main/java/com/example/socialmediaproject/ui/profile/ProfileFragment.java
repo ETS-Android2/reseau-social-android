@@ -23,7 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
-import com.example.socialmediaproject.LoginActivity;
+import com.example.socialmediaproject.ui.login.LoginActivity;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.adapters.ProfileItemAdapter;
 import com.example.socialmediaproject.api.UserHelper;
