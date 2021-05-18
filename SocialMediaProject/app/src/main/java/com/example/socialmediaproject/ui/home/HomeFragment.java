@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
@@ -50,6 +51,7 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
 
     private TextView textViewRecyclerViewEmpty;
     private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private ImageView itemIcon;
 
@@ -62,10 +64,10 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
-
+        swipeRefreshLayout = root.findViewById(R.id.swipe_refresh);
         progressBar = root.findViewById(R.id.idProgressBar);
-
         recyclerView = root.findViewById(R.id.recyclerView_home_posts);
+
         // Add a divider between posts
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
@@ -74,6 +76,17 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
         this.configureToolbar();
         this.configureRecyclerView();
 
+        // Sets up the swipe refrash
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // On re execute la requête et on remet en place le recycler view avec les nouvelles données
+                // une fois que le chargement esy terminé, on setRefreshing(false)
+                configureRecyclerView();
+            }
+        });
+
+
         return root;
     }
 
@@ -81,7 +94,7 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
     public void configureToolbar(){
         // on enlève la fleche de retour en arrière
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("App Projet Android");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
     }
 
     // --------------------
@@ -104,6 +117,8 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         recyclerView.setAdapter(this.postAdapter);
+        // On met sur false la progresse bar qui indique le raffrachissment
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     // 6 - Create options for RecyclerView from a Query
