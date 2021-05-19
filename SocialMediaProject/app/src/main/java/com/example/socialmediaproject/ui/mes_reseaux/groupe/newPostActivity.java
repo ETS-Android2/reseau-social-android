@@ -1,12 +1,8 @@
 package com.example.socialmediaproject.ui.mes_reseaux.groupe;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,9 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -26,19 +19,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
-import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;
+import com.example.socialmediaproject.mails.JavaMailAPI;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
-import com.example.socialmediaproject.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,15 +37,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -127,6 +115,9 @@ public class newPostActivity extends AppCompatActivity {
                     switch(groupType){
                         case "sms":
                             sendSms(editText_content.getText().toString(), groupeName, BaseActivity.getUid());
+                            break;
+                        case "email":
+                            sendEmail(editText_content.getText().toString(), groupeName, BaseActivity.getUid());
                             break;
                         default:
                             sendPost(editText_content.getText().toString(), groupeName, BaseActivity.getUid());
@@ -296,4 +287,85 @@ public class newPostActivity extends AppCompatActivity {
         });
     }
 
+    public void sendEmail(String content, String group, String userId){
+
+        GroupHelper.getGroup(group).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+
+                DocumentSnapshot document = task.getResult();
+                List<String> members = (List<String>) document.get("members");
+
+                for(String idMember : members){
+                    UserHelper.getUser(idMember).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                            User user = new User();
+                            user = task.getResult().toObject(User.class);
+
+                            if(!user.getUid().equals(userId)){
+
+                                try {
+                                    JavaMailAPI javaMailAPI = new JavaMailAPI(newPostActivity.this, user.getEmail(), "Envoyé depuis l'app Socializing, groupe : " + group, content);
+                                    javaMailAPI.execute();
+                                }
+                                catch (Exception e){
+                                    Log.d("EMAIL NOT SENT : ", e.getMessage());
+                                }
+                            }
+                        }
+                    });
+                }
+                sendPost(content, group, userId);
+            }
+        });
+    }
+
+    public void sendEmailVersion2(String content, String group, String userId){
+
+        GroupHelper.getGroup(group).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+
+                DocumentSnapshot document = task.getResult();
+                List<String> members = (List<String>) document.get("members");
+
+                for(String idMember : members){
+                    UserHelper.getUser(idMember).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                            User user = new User();
+                            user = task.getResult().toObject(User.class);
+
+                            if(!user.getUid().equals(userId)){
+
+                                Log.i("Send email", "");
+
+                                String[] TO = {user.getEmail()};
+                                String[] CC = {"plateformestage2021@gmail.com"};
+                                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                emailIntent.setData(Uri.parse("mailto:"));
+                                emailIntent.setType("text/plain");
+
+                                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                                emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, group);
+                                emailIntent.putExtra(Intent.EXTRA_TEXT, content);
+
+                                try {
+                                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                                    finish();
+                                    Log.i("Email Status : ", "Finished sending email...");
+                                } catch (android.content.ActivityNotFoundException ex) {
+                                    Toast.makeText(newPostActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    });
+                }
+
+                sendPost(content, group, userId);
+            }
+        });
+    }
 }
