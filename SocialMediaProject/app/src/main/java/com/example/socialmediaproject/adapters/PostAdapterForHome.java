@@ -1,5 +1,6 @@
 package com.example.socialmediaproject.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,18 +9,22 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
 
+import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;
 
+import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 
 import com.example.socialmediaproject.models.User;
@@ -39,6 +44,7 @@ import java.util.ArrayList;
 
 public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.ViewHolder> {
 
+    private Context context;
     private ArrayList<Post> postList;
 
     public PostAdapterForHome(ArrayList<Post> postList){
@@ -48,6 +54,8 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        this.context = parent.getContext();
+
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater
                 .inflate(R.layout.adapter_post_item, parent, false);
@@ -57,7 +65,84 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.updateWithPost(postList.get(position));
+
         boolean currentUserIsAuthor = postList.get(position).getUserSender().equals(BaseActivity.getUid());
+
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setTitle("Choisir une action");
+
+        // si je suis l'utilisateur qui à posté
+        if(currentUserIsAuthor){
+            // Un appui long pour poucoir supprimer le message
+            holder.shareButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String[] actions = {"Supprimer"};
+                    builder.setItems(actions, (dialog, which) -> {
+                        if (which == 0) { // Supprimer
+                            //getSnapshots().getSnapshot(position).getReference().delete();
+                            // notifyDataSetChanged();
+                            Toast.makeText(context, "Suppression du post ! (à faire) ", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    // create and show the alert dialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
+        }else{
+
+            // SINON ON VA REGARDER QU'ELLE ROLE ON POSS7DE DANS CE GROUPE
+
+            GroupHelper.getGroup(postList.get(position).getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    Group postGroup = documentSnapshot.toObject(Group.class);
+                    assert postGroup != null;
+
+
+                    // -> POSSIBILITÉ POUR UN ADMIN ET UN MODÉRATEUR DE SUPPRIMÉ LE POST
+
+                    if(postGroup.getAdmin().equals(BaseActivity.getUid())){
+                        String[] actions = {"Supprimer"};
+                        builder.setItems(actions, (dialog, which) -> {
+                            if (which == 0) { // Supprimer
+                                //getSnapshots().getSnapshot(position).getReference().delete();
+                                // notifyDataSetChanged();
+                                Toast.makeText(context, "Supprimer le post : (à faire)", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if(postGroup.getModerators().contains(BaseActivity.getUid())
+                            && postGroup.getModerators().contains(postList.get(position).getUserSender())){
+                        // Si la personne qui à posté n'est pas modérateur, alors un modérateur peut modérer son post
+
+                        String[] actions = {"Supprimer"};
+                        builder.setItems(actions, (dialog, which) -> {
+                            if (which == 0) { // Supprimer
+                                // notifyDataSetChanged();
+                                Toast.makeText(context, "Supprimer le post : (à faire)", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else{
+                        // Je suis un utilisateur et je peux report le message
+                        String[] actions = {"Report abuse"};
+                        builder.setItems(actions, (dialog, which) -> {
+                            if (which == 0) { // Report abuse
+                                Toast.makeText(context, "Reporter le post ! (à faire)", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                }
+            });
+
+
+
+
+
+        }
 
     }
 

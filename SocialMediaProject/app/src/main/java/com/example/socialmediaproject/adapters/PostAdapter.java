@@ -157,17 +157,48 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                 }else if(postLayoutForGroup){
                     // SI JE LE POST EST AFFICHER DANS UN GROUPE
 
-                    // -> POSSIBILITÉ POUR UN ADMIN ET UN MODÉRATEUR DE SUPPRIMÉ LE POST
-                    if(false){
-                        String[] actions = {"Supprimer"};
-                        builder.setItems(actions, (dialog, which) -> {
-                            if (which == 0) { // Supprimer
-                                getSnapshots().getSnapshot(position).getReference().delete();
-                                // notifyDataSetChanged();
-                                Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
+                    GroupHelper.getGroup(model.getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            Group postGroup = documentSnapshot.toObject(Group.class);
+                            assert postGroup != null;
+
+
+                            // -> POSSIBILITÉ POUR UN ADMIN ET UN MODÉRATEUR DE SUPPRIMÉ LE POST
+
+                            if(postGroup.getAdmin().equals(BaseActivity.getUid())){
+                                String[] actions = {"Supprimer"};
+                                builder.setItems(actions, (dialog, which) -> {
+                                    if (which == 0) { // Supprimer
+                                        getSnapshots().getSnapshot(position).getReference().delete();
+                                        // notifyDataSetChanged();
+                                        Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }else if(postGroup.getModerators().contains(BaseActivity.getUid())
+                                    && postGroup.getModerators().contains(model.getUserSender())){
+                                // Si la personne qui à posté n'est pas modérateur, alors un modérateur peut modérer son post
+
+                                String[] actions = {"Supprimer"};
+                                builder.setItems(actions, (dialog, which) -> {
+                                    if (which == 0) { // Supprimer
+                                        getSnapshots().getSnapshot(position).getReference().delete();
+                                        // notifyDataSetChanged();
+                                        Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }else{
+                                // Je suis un utilisateur et je peux report le message
+                                String[] actions = {"Report abuse"};
+                                builder.setItems(actions, (dialog, which) -> {
+                                    if (which == 0) { // Report abuse
+                                        Toast.makeText(context, "Reporter le post ! (à faire)", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
-                        });
-                    }
+                        }
+                    });
+
                 }else{
                     String[] actions = {"Report abuse"};
                     builder.setItems(actions, (dialog, which) -> {
