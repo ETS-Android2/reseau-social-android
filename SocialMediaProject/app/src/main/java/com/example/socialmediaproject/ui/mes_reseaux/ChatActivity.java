@@ -98,6 +98,7 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
                     int colorEnabled = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary);
                     int colorNotEnabled = ContextCompat.getColor(getApplicationContext(), R.color.colorLight);
                     button_send_message.setTextColor(s.length() != 0 ? colorEnabled : colorNotEnabled);
+
                 }
                 @Override
                 public void afterTextChanged(Editable s) {}
@@ -106,12 +107,12 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
             button_send_message.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid(), "null");
-                    PostHelper.createPostForGroup(message).addOnFailureListener(onFailureListener());
-                    // On reset
-                    editText_content.setText("");
-
-
+                    if(editText_content.getText().toString().length() !=0){
+                        Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid(), "null");
+                        PostHelper.createPostForGroup(message).addOnFailureListener(onFailureListener());
+                        // On reset
+                        editText_content.setText("");
+                    }
                 }
             });
 
