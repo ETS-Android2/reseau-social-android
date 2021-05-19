@@ -50,15 +50,8 @@ import com.google.firebase.firestore.Query;
 
 public class PostGroupeFragment extends Fragment implements PostAdapter.Listener {
 
-    // FOR DESIGN
-    // 1 - Getting all views needed
 
-
-    // FOR DATA
-    // 2 - Declaring Adapter and data
     private PostAdapter postAdapter;
-    @Nullable private User modelCurrentUser;
-    private String currentGroupName;
 
     Group currentGroup;
     String groupName;
@@ -175,14 +168,6 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
         return root;
     }
 
-    protected OnFailureListener onFailureListener(){
-        return new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), getString(R.string.error_unknown_error), Toast.LENGTH_LONG).show();
-            }
-        };
-    }
 
     public void configureToolbar(){
         // affichage de la flèche retour en arrière dans le menu
@@ -201,7 +186,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
     private void configureRecyclerView(String groupName, String groupType){
         //Configure Adapter & RecyclerView
         this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
-                Glide.with(this), this, groupType.equals("chat"));
+                Glide.with(this), this, true, groupType.equals("chat"));
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

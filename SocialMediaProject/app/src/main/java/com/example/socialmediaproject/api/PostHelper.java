@@ -43,18 +43,20 @@ public class PostHelper {
                 .limit(50);
     }
 
-    public static Query getAllPostForGroupOrderAscending(String groupName){
-        return PostHelper.getPostCollection()
-                .whereEqualTo("group", groupName)
-                .orderBy("dateCreated",Query.Direction.ASCENDING)
-                .limit(50);
-    }
-
     // --- GET ---
     public static Query getAllPost(){
         return PostHelper.getPostCollection()
                 .orderBy("dateCreated", Query.Direction.DESCENDING);
     }
+
+    // --- GET ---
+    public static Query getAllMyPosts(String uid){
+        return PostHelper.getPostCollection()
+                .whereEqualTo("userSender", uid)
+                .orderBy("dateCreated", Query.Direction.DESCENDING);
+    }
+
+
 
     public static Query getMessageFromGroup(String name){
         return PostHelper.getPostCollection()

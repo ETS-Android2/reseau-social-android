@@ -5,9 +5,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.mes_posts.MyPostsFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_mes_posts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Pages mes posts" />
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/textViewRecyclerViewEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textAlignment="center"
+        android:text="Vous n'avez pas encore publié de post."/>
 
 </FrameLayout>

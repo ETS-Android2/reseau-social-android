@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,10 +17,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.adapters.PostAdapter;
+import com.example.socialmediaproject.api.PostHelper;
+import com.example.socialmediaproject.base.BaseActivity;
+import com.example.socialmediaproject.models.Post;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.Query;
 
-public class MyPostsFragment extends Fragment {
+public class MyPostsFragment extends Fragment implements PostAdapter.Listener {
+
+    private PostAdapter postAdapter;
+    private TextView textViewRecyclerViewEmpty;
+    private RecyclerView recyclerView;
+
 
     private MyPostsViewModel mViewModel;
 
@@ -31,10 +46,39 @@ public class MyPostsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_posts_fragment, container, false);
 
+        this.configureToolbar();
+
+        textViewRecyclerViewEmpty = view.findViewById(R.id.textViewRecyclerViewEmpty);
+        recyclerView = view.findViewById(R.id.recycler_view_mes_posts);
+        this.configureRecyclerView();
+
+
+        return view;
+    }
+
+    public void configureToolbar(){
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes posts");
-        return view;
+        // title fragment in the header bar
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes Posts");
+    }
+
+    private void configureRecyclerView(){
+        //Configure Adapter & RecyclerView
+        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllMyPosts(BaseActivity.getUid())),
+                Glide.with(this), this,false, false);
+
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(this.postAdapter);
+    }
+
+    // 6 - Create options for RecyclerView from a Query
+    private FirestoreRecyclerOptions<Post> generateOptionsForAdapter(Query query){
+        return new FirestoreRecyclerOptions.Builder<Post>()
+                .setQuery(query, Post.class)
+                .setLifecycleOwner(this)
+                .build();
     }
 
     @Override
@@ -69,4 +113,8 @@ public class MyPostsFragment extends Fragment {
     }
 
 
+    @Override
+    public void onDataChanged() {
+        textViewRecyclerViewEmpty.setVisibility(this.postAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+    }
 }
