@@ -237,7 +237,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                 Bundle bundle = new Bundle();
                 if(!currentGroup.getType().equals("chat")){
                     bundle.putString("group_name", currentGroup.getName());
-                    NavHostFragment.findNavController(this).navigate(R.id.action_navigation_groupe_post_to_settingsGroupFragment, bundle);
+                    NavHostFragment.findNavController(this).navigate(R.id.action_navigation_groupe_to_settingsGroupFragment, bundle);
                 }
                 break;
         }

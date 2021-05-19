@@ -14,7 +14,7 @@
         android:title="@string/title_new_group" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_mes_reseaux"
         android:icon="@drawable/ic_grip_horizontal_solid"
         android:title="@string/title_reseaux" />
 

@@ -62,7 +62,11 @@ public class GroupHelper {
                 .whereArrayContains("members",uid);
     }
 
-    // --- GENERATE PRIVATE CODE TO ACCESS TO A SPECIFIC PRIVATE GROUP  ---
+    // --- GET ALL USER ADMIN GROUP  ---
+    public static Query getAllMyGroupAdmin(String uid){
+        return GroupHelper.getGroupCollection()
+                .whereEqualTo("admin", uid);
+    }
 
 
 

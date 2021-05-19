@@ -26,15 +26,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="@null"
         android:layout_marginTop="60dp"
         android:paddingBottom="0dp"
         android:theme="@style/Theme.MaterialComponents.Light"
         app:contentInsetStart="0dp"
         app:contentInsetStartWithNavigation="0dp"
-        app:fabAlignmentMode="center"
-        app:fabCradleMargin="7dp"
-        app:fabCradleRoundedCornerRadius="25dp"
-        app:fabCradleVerticalOffset="0dp"
         >
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -43,7 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
-            android:background="@drawable/background_transparent"
             app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

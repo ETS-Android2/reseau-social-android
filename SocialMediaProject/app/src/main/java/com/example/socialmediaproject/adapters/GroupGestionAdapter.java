@@ -1,7 +1,6 @@
 package com.example.socialmediaproject.adapters;
 
 import android.content.Context;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,13 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-
-import androidx.core.content.ContextCompat;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,10 +26,10 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
- * Created by Antoine Barbier on 5/15/21.
+ * Created by Antoine Barbier on 5/19/21.
  */
 
-public class SearchGroupAdapter extends FirestoreRecyclerAdapter<Group, SearchGroupAdapter.MyViewHolder> {
+public class GroupGestionAdapter extends FirestoreRecyclerAdapter<Group, GroupGestionAdapter.MyViewHolder> {
 
     public interface Listener {
         void onDataChanged();
@@ -49,9 +45,9 @@ public class SearchGroupAdapter extends FirestoreRecyclerAdapter<Group, SearchGr
 
 
     // constructor
-    public SearchGroupAdapter(@NonNull FirestoreRecyclerOptions<Group> options,
-                       RequestManager glide,
-                       Listener callback){
+    public GroupGestionAdapter(@NonNull FirestoreRecyclerOptions<Group> options,
+                              RequestManager glide,
+                              Listener callback){
         super(options);
         this.glide = glide;
         this.callback = callback;
@@ -106,49 +102,39 @@ public class SearchGroupAdapter extends FirestoreRecyclerAdapter<Group, SearchGr
             }
 
 
-            boolean alreadyInGroup = currentItem.getMembers().contains(BaseActivity.getUid());
-            boolean alreadyInGroupWaitingList = currentItem.getWaitlist().contains(BaseActivity.getUid());
-
-            if(alreadyInGroup){
+            boolean isAdmin = currentItem.getAdmin().equals(BaseActivity.getUid());
+            if(isAdmin){
                 // si l'utilisateur est déja dans le groupe
                 button_add.setEnabled(true);
-                //itemIconView.setColorFilter(ContextCompat.getColor(context, R.color.colorSecondary),PorterDuff.Mode.MULTIPLY);
-                button_add.setText("Voir");
+                button_add.setText("Paramètres");
                 button_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
                         bundle.putString("group_name", currentItem.getName());
-                        if(currentItem.getType().equals("chat")){
-                            Intent intent = new Intent(itemView.getContext(), ChatActivity.class);
-                            intent.putExtras(bundle);
-                            itemView.getContext().startActivity(intent);
-                        }else {
-                            Navigation.findNavController(itemView).navigate(R.id.action_searchPageFragment_to_navigation_groupe_post, bundle);
-                        }
+                        Navigation.findNavController(itemView).navigate(R.id.settingsGroupFragment, bundle);
+
                     }
                 });
 
-            }else if(alreadyInGroupWaitingList){
-                // si l'utilisateur à déjà fait une demande
-                button_add.setEnabled(false);
-                button_add.setText("En attente");
-            }else{
-                // alors on affiche le bouton d'ajout du groupe pour envoyé une demande d'adhésion
-                button_add.setEnabled(true);
-                button_add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        GroupHelper.addUserInWaitlistGroup(currentItem.getName(),BaseActivity.getUid())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(context, "Demande d'adhésion envoyé !", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }
-                });
             }
+
+            // Lorsque l'on clique sur un item -> on accède au groupe
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("group_name", currentItem.getName());
+                    if(currentItem.getType().equals("chat")){
+                        Intent intent = new Intent(itemView.getContext(), ChatActivity.class);
+                        intent.putExtras(bundle);
+                        itemView.getContext().startActivity(intent);
+                    }else {
+                        Navigation.findNavController(itemView).navigate(R.id.action_searchPageFragment_to_navigation_groupe_post, bundle);
+                    }
+
+                }
+            });
         }
     }
 }

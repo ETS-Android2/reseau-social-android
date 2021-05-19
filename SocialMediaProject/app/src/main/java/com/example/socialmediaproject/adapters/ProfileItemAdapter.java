@@ -69,8 +69,8 @@ public class ProfileItemAdapter extends BaseAdapter {
         int resId = context.getResources().getIdentifier(ressourceName, "drawable", context.getPackageName());
         itemIconView.setImageResource(resId);
 
-        itemIconView.setColorFilter(ContextCompat.getColor(context, R.color.colorSecondary),
-                PorterDuff.Mode.MULTIPLY);
+        // modifier la couleur des icones
+        //itemIconView.setColorFilter(ContextCompat.getColor(context, R.color.colorSecondary),PorterDuff.Mode.MULTIPLY);
 
         // get item title view
         TextView itemTitleView = view.findViewById(R.id.item_title);

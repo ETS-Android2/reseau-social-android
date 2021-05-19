@@ -49,18 +49,11 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
 
-        // title fragment in the header bar
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Paramètres du groupe");
-        // affichage de la flèche retour en arrière dans le menu
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+        Bundle bundle = getArguments();
+        groupName = bundle.getString("group_name");
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        this.initSettings();
         // title fragment in the header bar
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Paramètres du groupe");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(groupName);
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -134,7 +127,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_dashboard);
+                            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_mes_reseaux);
                             Toast.makeText(getContext(), "Vous avez quitté le groupe !", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -146,7 +139,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_dashboard);
+                            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_mes_reseaux);
                             Toast.makeText(getContext(), "Le groupe à été supprimé !", Toast.LENGTH_SHORT).show();
                         }
                     });

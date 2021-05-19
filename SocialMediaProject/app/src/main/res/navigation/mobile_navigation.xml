@@ -18,21 +18,21 @@
         tools:layout="@layout/search_page_fragment" >
         <action
             android:id="@+id/action_searchPageFragment_to_navigation_groupe_post"
-            app:destination="@id/navigation_groupe_post" />
+            app:destination="@id/navigation_groupe" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_mes_reseaux"
         android:name="com.example.socialmediaproject.ui.mes_reseaux.MesReseauxFragment"
         android:label="@string/title_reseaux"
         tools:layout="@layout/fragment_mes_reseaux" >
         <action
-            android:id="@+id/action_navigation_dashboard_to_navigation_groupe_post"
-            app:destination="@id/navigation_groupe_post"
+            android:id="@+id/action_navigation_mes_reseaux_to_navigation_groupe_post"
+            app:destination="@id/navigation_groupe"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
         <action
-            android:id="@+id/action_navigation_dashboard_to_searchPageFragment"
+            android:id="@+id/action_navigation_mes_reseaux_to_searchPageFragment"
             app:destination="@id/navigation_searchPage" />
     </fragment>
 
@@ -43,7 +43,7 @@
         tools:layout="@layout/new_group_fragment" >
         <action
             android:id="@+id/action_navigation_newGroup_to_navigation_groupe_post"
-            app:destination="@id/navigation_groupe_post" />
+            app:destination="@id/navigation_groupe" />
     </fragment>
 
     <fragment
@@ -79,12 +79,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_groupe_post"
+        android:id="@+id/navigation_groupe"
         android:name="com.example.socialmediaproject.ui.mes_reseaux.groupe.PostGroupeFragment"
         android:label="@string/title_groupe"
         tools:layout="@layout/fragment_groupe">
         <action
-            android:id="@+id/action_navigation_groupe_post_to_settingsGroupFragment"
+            android:id="@+id/action_navigation_groupe_to_settingsGroupFragment"
             app:destination="@id/settingsGroupFragment" />
     </fragment>
     <fragment
@@ -134,8 +134,8 @@
             android:id="@+id/action_settingsGroupFragment_to_waitlistFragment"
             app:destination="@id/waitlistFragment" />
         <action
-            android:id="@+id/action_settingsGroupFragment_to_navigation_dashboard"
-            app:destination="@id/navigation_dashboard" />
+            android:id="@+id/action_settingsGroupFragment_to_navigation_mes_reseaux"
+            app:destination="@id/navigation_mes_reseaux" />
     </fragment>
 
     <fragment
@@ -178,7 +178,7 @@
             android:label="ChatActivity" />
         <action
             android:id="@+id/action_global_navigation_groupe_post"
-            app:destination="@id/navigation_groupe_post" />
+            app:destination="@id/navigation_groupe" />
     </navigation>
 
 
