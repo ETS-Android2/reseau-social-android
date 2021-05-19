@@ -106,7 +106,7 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
             button_send_message.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid(), "gs://social-media-project-f6ca2.appspot.com/images/default.png");
+                    Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid(), "null");
                     PostHelper.createPostForGroup(message).addOnFailureListener(onFailureListener());
                     // On reset
                     editText_content.setText("");
