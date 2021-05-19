@@ -276,8 +276,6 @@ public class newPostActivity extends AppCompatActivity {
 
                             if(!user.getUid().equals(userId)){
 
-                                Log.d("ADMIN/RECEIVER", userId + "|" + user.getUid());
-
                                 try {
                                     SmsManager smsManager = SmsManager.getDefault();
                                     smsManager.sendTextMessage(user.getPhoneNumber(), null, content, null, null);
