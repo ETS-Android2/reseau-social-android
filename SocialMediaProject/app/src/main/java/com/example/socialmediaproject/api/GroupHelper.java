@@ -38,11 +38,12 @@ public class GroupHelper {
     }
 
     // --- GET ALL PUBLIC GROUP BY TYPE ---
-    public static Query getAllPublicGroupByType( String type){
+    public static Query getAllPublicGroupByType(String type){
         return GroupHelper.getGroupCollection()
                 .whereEqualTo("type", type)
                 .whereEqualTo("accessPrivate", false);
     }
+
 
     // --- GET ALL CURRENT USER ' S GROUP ---
     public static Query getAllGroup(String uid){

@@ -48,7 +48,8 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater
                 .inflate(R.layout.adapter_post_item, parent, false);
         return new ViewHolder(view);
     }
@@ -56,14 +57,13 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.updateWithPost(postList.get(position));
-
         boolean currentUserIsAuthor = postList.get(position).getUserSender().equals(BaseActivity.getUid());
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return postList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

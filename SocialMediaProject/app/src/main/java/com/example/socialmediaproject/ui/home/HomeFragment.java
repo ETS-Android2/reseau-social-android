@@ -30,16 +30,30 @@ import com.example.socialmediaproject.R;
 
 import com.example.socialmediaproject.adapters.PostAdapter;
 
+import com.example.socialmediaproject.adapters.PostAdapterForHome;
+import com.example.socialmediaproject.adapters.UserAdapter;
+import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
 
+import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;
+import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
+import com.example.socialmediaproject.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class HomeFragment extends Fragment implements PostAdapter.Listener {
+public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private HomeViewModel homeViewModel;
@@ -47,13 +61,10 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
 
     // FOR DATA
     // 2 - Declaring Adapter and data
-    private PostAdapter postAdapter;
+    private PostAdapterForHome postAdapter;
 
-    private TextView textViewRecyclerViewEmpty;
-    private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private ImageView itemIcon;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -63,19 +74,18 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
         swipeRefreshLayout = root.findViewById(R.id.swipe_refresh);
-        progressBar = root.findViewById(R.id.idProgressBar);
+
         recyclerView = root.findViewById(R.id.recyclerView_home_posts);
 
         // Add a divider between posts
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        //itemIcon = recyclerView.findViewById(R.id.item_icon);
 
         this.configureToolbar();
         this.configureRecyclerView();
 
+        swipeRefreshLayout.setRefreshing(true);
         // Sets up the swipe refrash
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -103,15 +113,59 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
     // 5 - Configure RecyclerView with a Query
     private void configureRecyclerView(){
         //Configure Adapter & RecyclerView //PostHelper.getAllPost(BaseActivity.getUid())
-        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPost()),
+        /*this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPost()),
                     Glide.with(this), this);
 
+         */
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        recyclerView.setAdapter(this.postAdapter);
+
+
+        // On récupère tous les groupes post où l'utilisateur courrant à adhéré
+        GroupHelper.getAllGroupByType("post", BaseActivity.getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<Group> listGroupOfUser = queryDocumentSnapshots.toObjects(Group.class);
+                        Log.d("SIZE_LISTE_GROUPS",listGroupOfUser.size()+" groups");
+
+                        // On place les noms des groupes récupérer dans une liste
+                        ArrayList<String> listNomGroupsUser =  new ArrayList<String>();
+                        for(Group item : listGroupOfUser){
+                            listNomGroupsUser.add(item.getName());
+                        }
+                        // On récupère tous les posts
+                        PostHelper.getAllPost().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                                ArrayList<Post> listResultats = new ArrayList<Post>();
+                                List<Post> listPosts = queryDocumentSnapshots.toObjects(Post.class);
+                                for(Post post : listPosts){
+                                    if(listNomGroupsUser.contains(post.getGroup())){
+                                        Log.d("RECYCLER_CONFIG","OOOOOOOOOOOOK");
+                                        listResultats.add(post);
+                                    }
+                                }
+                                Log.d("RECYCLER_CONFIG",listResultats.size() + ": NOMBRE DE POST À AFFICHER");
+
+                                postAdapter = new PostAdapterForHome(listResultats);
+                                recyclerView.setAdapter(postAdapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                        });
+
+                    }
+                });
+
+
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //recyclerView.setAdapter(this.postAdapter);
+        //recyclerView.setAdapter(this.postAdapterForHome);
         // On met sur false la progresse bar qui indique le raffrachissment
-        swipeRefreshLayout.setRefreshing(false);
+
     }
 
     // 6 - Create options for RecyclerView from a Query
@@ -129,18 +183,5 @@ public class HomeFragment extends Fragment implements PostAdapter.Listener {
     }
 
 
-    // --------------------
-    // CALLBACK
-    // --------------------
-
-    @Override
-    public void onDataChanged() {
-        // 7 - Show TextView in case RecyclerView is empty
-
-
-        // La progresse bar est afficher quand il n'y a pas d'article
-        progressBar.setVisibility(this.postAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
-        textViewRecyclerViewEmpty.setVisibility(this.postAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
-    }
 
 }
