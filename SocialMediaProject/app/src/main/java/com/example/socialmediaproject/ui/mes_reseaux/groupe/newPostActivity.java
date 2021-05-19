@@ -215,6 +215,7 @@ public class newPostActivity extends AppCompatActivity {
         }
         else{
             // Msg without picture
+            urlImg = "null";
             Post post = new Post(content, group, userId, urlImg);
             PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
 

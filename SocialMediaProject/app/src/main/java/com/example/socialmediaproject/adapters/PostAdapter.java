@@ -4,7 +4,6 @@ package com.example.socialmediaproject.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,6 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
     private Context context;
 
-    private boolean postLayoutForGroup;
     private boolean groupTypeChat; // si Afficher dans un groupe style WhatsApp
     //FOR DATA
     private final RequestManager glide;
@@ -65,27 +63,16 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
         super(options);
         this.glide = glide;
         this.callback = callback;
-        this.postLayoutForGroup = false;
         this.groupTypeChat = false;
     }
 
-    public PostAdapter(@NonNull FirestoreRecyclerOptions<Post> options,
-                       RequestManager glide,
-                       Listener callback, boolean postLayoutForGroup){
-        super(options);
-        this.glide = glide;
-        this.callback = callback;
-        this.postLayoutForGroup = postLayoutForGroup;
-        this.groupTypeChat = false;
-    }
 
     public PostAdapter(@NonNull FirestoreRecyclerOptions<Post> options,
                        RequestManager glide,
-                       Listener callback, boolean postLayoutForGroup, boolean groupTypeChat){
+                       Listener callback, boolean groupTypeChat){
         super(options);
         this.glide = glide;
         this.callback = callback;
-        this.postLayoutForGroup = postLayoutForGroup;
         this.groupTypeChat = groupTypeChat;
     }
 
@@ -105,7 +92,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Post model){
-        holder.updateWithPost(model, postLayoutForGroup, groupTypeChat);
+        holder.updateWithPost(model, groupTypeChat);
 
 
 
@@ -155,20 +142,6 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                 Toast.makeText(context, "Supprimer le post : "+ getSnapshots().getSnapshot(position).getReference().getId()  , Toast.LENGTH_SHORT).show();
                                 break;
                         } });
-                }else if(postLayoutForGroup){
-                    // SI JE LE POST EST AFFICHER DANS UN GROUPE
-
-                    // -> POSSIBILITÉ POUR UN ADMIN ET UN MODÉRATEUR DE SUPPRIMÉ LE POST
-                    if(false){
-                        String[] actions = {"Supprimer"};
-                        builder.setItems(actions, (dialog, which) -> {
-                            if (which == 0) { // Supprimer
-                                getSnapshots().getSnapshot(position).getReference().delete();
-                                // notifyDataSetChanged();
-                                Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
                 }else{
                     String[] actions = {"Report abuse"};
                     builder.setItems(actions, (dialog, which) -> {
@@ -246,7 +219,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
         }
 
-        public void updateWithPost(Post currentItem, boolean _postLayoutForGroup, boolean _groupTypeChat){
+        public void updateWithPost(Post currentItem, boolean _groupTypeChat){
 
             itemContentView.setText(currentItem.getContent());
             itemDateAgo.setText(BaseActivity.getTimeAgo(currentItem.getDateCreated()));
@@ -254,7 +227,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             int colorCurrentUser = ContextCompat.getColor(itemView.getContext(), R.color.colorSecondary);
             int colorRemoteUser = ContextCompat.getColor(itemView.getContext(), R.color.colorLight);
 
-            if(_groupTypeChat && _postLayoutForGroup){
+            if(_groupTypeChat){
                 boolean currentUserIsAuthor = currentItem.getUserSender().equals(BaseActivity.getUid());
                 //Update Message Color Background
                 ((GradientDrawable) messageContainer.getBackground()).setColor(currentUserIsAuthor ? colorCurrentUser : colorRemoteUser);
@@ -282,7 +255,6 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                     itemTitleView.setText("");
                 }else{
                     itemTitleView.setVisibility(View.GONE);
-                    if(_postLayoutForGroup){
                         // si c'est le post qui est afficher dans un group alors on affiche le nom de l'utilisateur dans le titre
                         UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
@@ -291,11 +263,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                 itemTitleView.setText(documentSnapshot.toObject(User.class).getUsername());
                             }
                         });
-                    }else{
-                        // sinon on affiche le nom du groupe
-                        itemTitleView.setVisibility(View.VISIBLE);
-                        itemTitleView.setText(currentItem.getGroup());
-                    }
+
 
                 }
 
@@ -305,7 +273,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                 }else{
                     // tant qu'on a pas charger les données on affiche rien
                     itemSubtitleView.setVisibility(View.GONE);
-                    if(_postLayoutForGroup){
+
                         // si c'est le post qui est afficher dans un group alors on le role de l'utilisateur
                         GroupHelper.getGroup(currentItem.getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
@@ -329,17 +297,6 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                 }
                             }
                         });
-                    }else{
-                        // sinon on affiche le nom de l'utilisateur
-                        UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                                itemSubtitleView.setVisibility(View.VISIBLE);
-                                itemSubtitleView.setText(documentSnapshot.toObject(User.class).getUsername());
-                            }
-                        });
-                    }
                 }
             }
 
