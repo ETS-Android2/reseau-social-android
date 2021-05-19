@@ -15,7 +15,7 @@
 
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_baseline_apps_24"
+        android:icon="@drawable/ic_grip_horizontal_solid"
         android:title="@string/title_reseaux" />
 
     <item

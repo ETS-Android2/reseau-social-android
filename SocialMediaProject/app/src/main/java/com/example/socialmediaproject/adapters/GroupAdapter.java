@@ -67,12 +67,14 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
 
         TextView itemTitleView;
         ImageView iv_imageAccess;
+        ImageView iv_imageType;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             itemTitleView = itemView.findViewById(R.id.item_title);
             iv_imageAccess = itemView.findViewById(R.id.groupItem_access_image);
+            iv_imageType = itemView.findViewById(R.id.item_icon);
 
         }
 
@@ -85,6 +87,24 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
                 iv_imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
             }else{
                 iv_imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);
+            }
+
+            // Affichage de l'icone qui illustre le type du groupe
+            switch(model.getType()){
+                case "post":
+                    iv_imageType.setImageResource(R.drawable.ic_users_solid);
+                    break;
+                case "chat":
+                    iv_imageType.setImageResource(R.drawable.ic_comments_solid);
+                    break;
+                case "email":
+                    iv_imageType.setImageResource(R.drawable.ic_at_solid);
+                    break;
+                case "sms":
+                    iv_imageType.setImageResource(R.drawable.ic_sms_solid);
+                    break;
+                default:
+                    break;
             }
 
 

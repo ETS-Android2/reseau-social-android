@@ -14,17 +14,38 @@
         android:paddingTop="20dp"
         android:paddingBottom="15dp">
 
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/launch_screen"
+            android:layout_centerHorizontal="true"
+            app:civ_border_color="@color/colorSecondary"
+            app:civ_border_width="5dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="5dp"
+            app:civ_shadow_color="#AD2B2B2B"
+            app:civ_shadow_gravity="end"
+
+            tools:ignore="MissingClass" />
+
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/image_profile"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/launch_screen"
             android:layout_centerHorizontal="true"
+            app:civ_circle_color_start="@color/colorPrimary"
+            app:civ_circle_color_end="@color/colorLight"
             app:civ_border_color="@color/colorSecondary"
-            app:civ_border_width="4dp"
+            app:civ_border_width="5dp"
             app:civ_shadow="true"
+            app:civ_shadow_radius="5dp"
             app:civ_shadow_color="@color/colorLight"
+            app:civ_shadow_gravity="top"
+
             tools:ignore="MissingClass" />
+
 
         <TextView
             android:id="@+id/username"

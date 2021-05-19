@@ -2,6 +2,7 @@ package com.example.socialmediaproject.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.navigation.Navigation;
 
 import com.example.socialmediaproject.R;
@@ -66,6 +68,9 @@ public class ProfileItemAdapter extends BaseAdapter {
         String ressourceName = "ic_baseline_"+ mnenonic + "_24" ;
         int resId = context.getResources().getIdentifier(ressourceName, "drawable", context.getPackageName());
         itemIconView.setImageResource(resId);
+
+        itemIconView.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary),
+                PorterDuff.Mode.MULTIPLY);
 
         // get item title view
         TextView itemTitleView = view.findViewById(R.id.item_title);
