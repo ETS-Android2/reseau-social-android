@@ -46,6 +46,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
@@ -72,7 +73,7 @@ public class ProfileFragment extends Fragment {
                 user = task.getResult().toObject(User.class);
                 username.setText(user.getUsername());
 
-                Glide.with(getContext())
+                Glide.with(requireContext())
                         .load(BaseActivity.getRefImg(user.getUrlPicture()))
                         .into(img);
             }

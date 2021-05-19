@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -126,29 +128,65 @@ public class UserAdapter extends BaseAdapter {
         }else{
             view = this.inflater.inflate(R.layout.adapter_user_item, null);
 
+            // le layout
+            LinearLayout user_layout = view.findViewById(R.id.user_layout);
+
+            // Si l'utilisateur de la liste est l'utilisateur connecté
+            if(currentItem.getUid().equals(BaseActivity.getUid())){
+                user_layout.setBackgroundColor(ContextCompat.getColor(context, R.color.silver));
+            }
+
             // get item name view
             TextView itemNameView = (TextView) view.findViewById(R.id.user_name);
             itemNameView.setText(currentItem.getUsername());
 
             TextView itemRoleView = (TextView) view.findViewById(R.id.user_role);
+
+
             // on écrit le role de l'utilisateur
             if(this.isAdmin(currentItem.getUid())){
                 itemRoleView.setText("Admin");
                 itemRoleView.setTextColor(Color.RED);
+
+                if(!this.isAdmin(BaseActivity.getUid())){
+                    // si je clique sur l'admin et que je ne suis pas cette utilisateur alors
+                    dialogInfo(view, i, currentItem);
+                }
+
             }else if(this.isModerator(currentItem.getUid())){
                 itemRoleView.setText("Moderator");
                 itemRoleView.setTextColor(Color.parseColor("#388E3C"));
-                dialogForModerator(view, i, currentItem);
+
+                // On défini les droit en fonction de l'utilisateur connecté
+
+                if(this.isAdmin(BaseActivity.getUid())){
+                    // si je click sur un modérateur et que je suis l'admin alors
+                    dialogToEditAModerator(view, i, currentItem);
+                }else if(!currentItem.getUid().equals(BaseActivity.getUid())){
+                    // si je clique sur un modérateur et que je ne suis cette personne
+                    dialogInfo(view, i, currentItem);
+                }
+
+
+
             }else{
                 itemRoleView.setText("Member");
                 itemRoleView.setTextColor(Color.GRAY);
-                dialogForMember(view, i, currentItem);
+
+                if(this.isAdmin(BaseActivity.getUid())){
+                    // si je click sur un membre et que je suis l'admin alors
+                    dialogToEditAMember(view, i, currentItem);
+                }else if(this.isModerator(BaseActivity.getUid())){
+                    // si je click sur un membre et que je suis modérateur alors
+                    dialogToEditAMember(view, i, currentItem);
+                }else{
+                    // si je click sur un membre et que je suis membre et que ce membre n'est pas moi
+                    if(!currentItem.getUid().equals(BaseActivity.getUid())){
+                        dialogInfo(view, i, currentItem);
+                    }
+                }
             }
         }
-
-
-
-
 
         return view;
     }
@@ -173,13 +211,13 @@ public class UserAdapter extends BaseAdapter {
         itemRoleView.setTextColor(Color.parseColor("#388E3C"));
     }
 
-    private void dialogForModerator(View view, int position, User currentItem){
+    private void dialogToEditAModerator(View view, int position, User currentItem){
         view.setOnClickListener(v -> {
             // setup the alert builder
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Actions");
+            builder.setTitle(currentItem.getUsername());
             // add a list
-            String[] actions = {"Contact", "Demote to member", "Kick Out"};
+            String[] actions = {"Contact", "Demote to member", "Exclure"};
             builder.setItems(actions, (dialog, which) -> {
                 switch (which) {
                     case 0: // Contacter
@@ -192,7 +230,7 @@ public class UserAdapter extends BaseAdapter {
                                     public void onSuccess(Void aVoid) {
                                         changeToMember(currentItem.getUid(), view);
                                         currentGroup.removeToModerators(currentItem.getUid());
-                                        dialogForMember(view, position, currentItem);
+                                        dialogToEditAMember(view, position, currentItem);
                                         Toast.makeText(context, "Retrograder à simple membre !", Toast.LENGTH_SHORT).show();
                                     }
                                 });
@@ -218,13 +256,13 @@ public class UserAdapter extends BaseAdapter {
         });
     }
 
-    public void dialogForMember(View view, int position, User currentItem){
+    public void dialogToEditAMember(View view, int position, User currentItem){
         view.setOnClickListener(v -> {
             // setup the alert builder
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Actions");
+            builder.setTitle(currentItem.getUsername());
             // add a list
-            String[] actions = {"Contact", "Promote to Moderator", "Kick Out"};
+            String[] actions = {"Contact", "Promote to Moderator", "Exclure"};
             builder.setItems(actions, (dialog, which) -> {
                 switch (which) {
                     case 0: // Contacter
@@ -237,7 +275,7 @@ public class UserAdapter extends BaseAdapter {
                                     public void onSuccess(Void aVoid) {
                                         changeToModerator(currentItem.getUid(), view);
                                         currentGroup.addToModerators(currentItem.getUid());
-                                        dialogForModerator(view, position, currentItem);
+                                        dialogToEditAModerator(view, position, currentItem);
                                         Toast.makeText(context, "Promouvoir au role de modérateur !"  , Toast.LENGTH_SHORT).show();
                                     }
                                 });
@@ -255,6 +293,26 @@ public class UserAdapter extends BaseAdapter {
                                         Toast.makeText(context, "Exclure l'utilisateur !", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                        break;
+                } }); // create and show the alert dialog
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+    }
+
+
+    private void dialogInfo(View view, int position, User currentItem){
+        view.setOnClickListener(v -> {
+            // setup the alert builder
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(currentItem.getUsername());
+            // add a list
+            String[] actions = {"Contacter"};
+            builder.setItems(actions, (dialog, which) -> {
+                switch (which) {
+                    case 0: // Contacter
+                        Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
                         break;
                 } }); // create and show the alert dialog
 

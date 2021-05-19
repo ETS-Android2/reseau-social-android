@@ -72,9 +72,9 @@
     <string name="group_subject">Sujet du groupe</string>
     <string name="group_access">Accès au groupe</string>
     <string name="group_publication">Publication</string>
-    <string name="group_notification">Disable notifications</string>
+    <string name="group_notification">Désactivé les notifications</string>
     <string name="group_exit">Quitter le groupe</string>
-    <string name="group_members">Gérer les membres</string>
+    <string name="group_members">Membres du groupe</string>
     <string name="group_moderators">Gérer les modérateurs</string>
     <string name="group_edit">Modifier le groupe</string>
     <string name="title_settings_alerts">Alertes</string>

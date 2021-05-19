@@ -53,6 +53,19 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         Bundle bundle = getArguments();
         groupName = bundle.getString("group_name");
 
+        configToolbar();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Bundle bundle = getArguments();
+        groupName = bundle.getString("group_name");
+
+        configToolbar();
+
+    }
+    private void configToolbar(){
         // title fragment in the header bar
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(groupName);
         // affichage de la flèche retour en arrière dans le menu
@@ -185,8 +198,14 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     preferenceEditGroup.setVisible(true);
                     preferenceEditMembersGroup.setVisible(true);
                     preferenceDeleteGroup.setVisible(true);
-                }else{
+                }else if(currentGroup.getModerators().contains(BaseActivity.getUid())){
+                    // Si le compte connecté est un modérateur du groupe
+                    preferenceEditWaitlistGroup.setVisible(true);
+                    preferenceEditMembersGroup.setVisible(true);
+                    preferenceExitGroup.setVisible(true);
+                } else{
                     // Si le compte connecté est un membre
+                    preferenceEditMembersGroup.setVisible(true);
                     preferenceExitGroup.setVisible(true);
                 }
 

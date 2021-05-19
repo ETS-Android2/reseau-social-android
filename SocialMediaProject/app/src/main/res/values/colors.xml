@@ -33,6 +33,7 @@
 
     <color name="black">#FF000000</color>
     <color name="gray">#C5CAE9</color>
+    <color name="silver">#E1E4F6</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#ba53de</color>
     <color name="pink">#f469a9</color>
