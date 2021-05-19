@@ -152,6 +152,7 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                                         //UserHelper.addUserInGroup().addOnFailureListener(onFailureListener());
                                         Bundle bundle = new Bundle();
                                         bundle.putString("group_name", currentGroup.getName());
+                                        bundle.putString("group_type", currentGroup.getType());
                                         Intent intent = new Intent(getActivity(), newPostActivity.class);
                                         intent.putExtras(bundle);
                                         startActivity(intent);

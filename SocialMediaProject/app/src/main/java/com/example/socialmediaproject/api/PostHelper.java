@@ -49,6 +49,13 @@ public class PostHelper {
                 .orderBy("dateCreated", Query.Direction.DESCENDING);
     }
 
+    public static Query getAllUsersNumbersForGroup(String groupName) {
+        return PostHelper.getPostCollection()
+                .whereEqualTo("group", groupName)
+                .orderBy("dateCreated", Query.Direction.ASCENDING)
+                .limit(50);
+    }
+
     // --- GET ---
     public static Query getAllMyPosts(String uid){
         return PostHelper.getPostCollection()

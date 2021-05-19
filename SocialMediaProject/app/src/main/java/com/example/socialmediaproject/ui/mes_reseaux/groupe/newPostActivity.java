@@ -1,7 +1,9 @@
 package com.example.socialmediaproject.ui.mes_reseaux.groupe;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,7 +16,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,17 +32,21 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.example.socialmediaproject.ui.login.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -46,11 +55,13 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class newPostActivity extends AppCompatActivity {
 
-
+    private static final int PERMISSION_REQUEST_CODE = 1;
     @Nullable private User modelCurrentUser;
     private Uri imageUri;
     private ImageView imageView;
@@ -65,8 +76,23 @@ public class newPostActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+
+            if (checkSelfPermission(Manifest.permission.SEND_SMS)
+                    == PackageManager.PERMISSION_DENIED) {
+
+                Log.d("permission", "permission denied to SEND_SMS - requesting it");
+                String[] permissions = {Manifest.permission.SEND_SMS};
+
+                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+
+            }
+        }
+
         Bundle bundle = getIntent().getExtras();
         String groupeName =  bundle.getString("group_name");
+        String groupType = bundle.getString("group_type");
+
 
         imageUri = Uri.EMPTY;
         urlImg = "null";
@@ -95,7 +121,18 @@ public class newPostActivity extends AppCompatActivity {
                 if(editText_content.getText().toString().matches("")){
                     Toast.makeText(getApplicationContext(),"Vous devez saisir du texte avant de poster votre message !" , Toast.LENGTH_SHORT).show();
                 }else{
-                    sendPost(editText_content.getText().toString(), groupeName, BaseActivity.getUid());
+
+                    Log.d("=====> GROUP TYPE : ", groupType);
+
+                    switch(groupType){
+                        case "sms":
+                            sendSms(editText_content.getText().toString(), groupeName, BaseActivity.getUid());
+                            break;
+                        default:
+                            sendPost(editText_content.getText().toString(), groupeName, BaseActivity.getUid());
+                            break;
+                    }
+
                     finish();
                 }
 
@@ -139,8 +176,6 @@ public class newPostActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-
-
     }
     protected OnFailureListener onFailureListener(){
         return new OnFailureListener() {
@@ -222,4 +257,43 @@ public class newPostActivity extends AppCompatActivity {
             Toast.makeText(newPostActivity.this, "No picture !", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void sendSms(String content, String group, String userId){
+
+        GroupHelper.getGroup(group).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+
+                DocumentSnapshot document = task.getResult();
+                List<String> members = (List<String>) document.get("members");
+
+                for(String idMember : members){
+                    UserHelper.getUser(idMember).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                            User user = new User();
+                            user = task.getResult().toObject(User.class);
+
+                            if(!user.getUid().equals(userId)){
+
+                                try {
+                                    SmsManager smsManager = SmsManager.getDefault();
+                                    smsManager.sendTextMessage(user.getPhoneNumber(), null, content, null, null);
+                                    Toast.makeText(getApplicationContext(), "Message Sent",
+                                            Toast.LENGTH_LONG).show();
+                                } catch (Exception ex) {
+                                    Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
+                                            Toast.LENGTH_LONG).show();
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                }
+
+                sendPost(content, group, userId);
+            }
+        });
+    }
+
 }
