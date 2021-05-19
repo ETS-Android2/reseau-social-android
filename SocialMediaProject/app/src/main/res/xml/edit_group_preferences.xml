@@ -5,7 +5,9 @@
 
 
 
-    <PreferenceCategory app:title="Group privacy">
+    <PreferenceCategory app:title="Group privacy"
+        app:key="group_category_privacy"
+        app:isPreferenceVisible="false">
 
         <SwitchPreference
             app:key="group_edit_privacy"
@@ -14,29 +16,26 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Général">
-
-        <!--
-        <EditTextPreference
-            app:key="group_edit_name"
-            android:defaultValue="Nom du groupe"
-            app:title="@string/group_edit_name"
-            app:useSimpleSummaryProvider="true" />-->
+    <PreferenceCategory app:title="Général"
+        app:key="group_category_general"
+        app:isPreferenceVisible="false">
 
         <ListPreference
-            app:entries="@array/subject_entries"
-            app:entryValues="@array/subject_values"
             app:key="group_edit_subject"
             app:title="@string/group_edit_subject"
-            app:useSimpleSummaryProvider="true" />
+            app:entries="@array/subject_entries"
+            app:entryValues="@array/subject_values"
+            app:useSimpleSummaryProvider="true"
+            app:isPreferenceVisible="false"/>
 
         <ListPreference
+            app:key="group_edit_publication"
+            app:title="@string/group_edit_publication"
             app:defaultValue="All_members"
             app:entries="@array/publication_entries"
             app:entryValues="@array/publication_values"
-            app:key="group_edit_publication"
-            app:title="@string/group_edit_publication"
-            app:useSimpleSummaryProvider="true" />
+            app:useSimpleSummaryProvider="true"
+            app:isPreferenceVisible="false"/>
 
     </PreferenceCategory>
 </PreferenceScreen>

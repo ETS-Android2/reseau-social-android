@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceScreen;
 
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.CodeAccessHelper;
@@ -151,6 +152,10 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
     private void initSettings(){
         Preference preferenceInvitation = findPreference("category_invitations");
+        Preference preferenceGeneral = findPreference("category_general");
+        Preference preferenceCategorieNotifications = findPreference("category_notifications");
+
+
         Preference preferenceExitGroup = findPreference("group_exit");
         Preference preferenceEditGroup = findPreference("group_edit");
         Preference preferenceEditWaitlistGroup = findPreference("group_waitlist");
@@ -168,28 +173,23 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 currentGroup = documentSnapshot.toObject(Group.class);
 
-
-
+                // On affiche tout une fois le groue chargé
+                preferenceGeneral.setVisible(true);
+                preferenceCategorieNotifications.setVisible(true);
                 // Si le compte connecté est l'admin du groupe
                 if(currentGroup.getAdmin().equals(BaseActivity.getUid())){
 
                     // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
                     preferenceInvitation.setVisible(currentGroup.getAccessPrivate());
-
-                    preferenceExitGroup.setVisible(false);
                     preferenceEditWaitlistGroup.setVisible(true);
                     preferenceEditGroup.setVisible(true);
                     preferenceEditMembersGroup.setVisible(true);
                     preferenceDeleteGroup.setVisible(true);
                 }else{
                     // Si le compte connecté est un membre
-                    preferenceInvitation.setVisible(false);
                     preferenceExitGroup.setVisible(true);
-                    preferenceEditWaitlistGroup.setVisible(false);
-                    preferenceEditGroup.setVisible(false);
-                    preferenceEditMembersGroup.setVisible(false);
-                    preferenceDeleteGroup.setVisible(false);
                 }
+
 
             }
         });

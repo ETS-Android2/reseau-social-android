@@ -33,8 +33,10 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
         Bundle bundle = getArguments();
         String groupName = bundle.getString("group_name");
 
+        Preference preferenceCategoryPrivacy = findPreference("group_category_privacy");
+        Preference preferenceCategoryGeneral = findPreference("group_category_general");
+
         Preference preferencePublication = findPreference("group_edit_publication");
-        //EditTextPreference preferenceNameGroup = findPreference("group_edit_name");
         SwitchPreference preferenceSwitch = findPreference("group_edit_privacy");
         ListPreference preferenceSubjectGroup = findPreference("group_edit_subject");
 
@@ -46,7 +48,10 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 currentGroup = documentSnapshot.toObject(Group.class);
 
-
+                // On affiche une fois les données récupérer
+                preferenceCategoryPrivacy.setVisible(true);
+                preferenceCategoryGeneral.setVisible(true);
+                preferenceSubjectGroup.setVisible(true);
                 // si on est en mode post alors on affiche sinon on ne l'affiche pas
                 preferencePublication.setVisible(currentGroup.getType().equals("post"));
 
