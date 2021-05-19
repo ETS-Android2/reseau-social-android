@@ -68,41 +68,39 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
 
         boolean currentUserIsAuthor = postList.get(position).getUserSender().equals(BaseActivity.getUid());
 
-        // setup the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        GroupHelper.getGroup(postList.get(position).getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Group postGroup = documentSnapshot.toObject(Group.class);
+                assert postGroup != null;
 
-        builder.setTitle("Choisir une action");
+                // setup the alert builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        // si je suis l'utilisateur qui à posté
-        if(currentUserIsAuthor){
-            // Un appui long pour poucoir supprimer le message
-            holder.shareButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String[] actions = {"Supprimer"};
-                    builder.setItems(actions, (dialog, which) -> {
-                        if (which == 0) { // Supprimer
-                            //getSnapshots().getSnapshot(position).getReference().delete();
-                            // notifyDataSetChanged();
-                            Toast.makeText(context, "Suppression du post ! (à faire) ", Toast.LENGTH_SHORT).show();
+                builder.setTitle("Choisir une action");
+
+                // si je suis l'utilisateur qui à posté
+                if(currentUserIsAuthor){
+                    // Un appui long pour poucoir supprimer le message
+                    holder.shareButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String[] actions = {"Supprimer"};
+                            builder.setItems(actions, (dialog, which) -> {
+                                if (which == 0) { // Supprimer
+                                    //getSnapshots().getSnapshot(position).getReference().delete();
+                                    // notifyDataSetChanged();
+                                    Toast.makeText(context, "Suppression du post ! (à faire) ", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            // create and show the alert dialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
                         }
                     });
-                    // create and show the alert dialog
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            });
-        }else{
+                }else{
 
-            // SINON ON VA REGARDER QU'ELLE ROLE ON POSS7DE DANS CE GROUPE
-
-            GroupHelper.getGroup(postList.get(position).getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    Group postGroup = documentSnapshot.toObject(Group.class);
-                    assert postGroup != null;
-
-
+                // SINON ON VA REGARDER QU'ELLE ROLE ON POSS7DE DANS CE GROUPE
                     // -> POSSIBILITÉ POUR UN ADMIN ET UN MODÉRATEUR DE SUPPRIMÉ LE POST
 
                     if(postGroup.getAdmin().equals(BaseActivity.getUid())){
@@ -135,14 +133,15 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
                         });
 
                     }
+                    // create and show the alert dialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+
                 }
-            });
 
-
-
-
-
-        }
+            }
+        });
 
     }
 

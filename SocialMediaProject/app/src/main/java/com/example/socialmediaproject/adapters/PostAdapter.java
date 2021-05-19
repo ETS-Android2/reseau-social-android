@@ -140,33 +140,36 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
         }else{
             holder.shareButton.setOnClickListener(v -> {
 
-                // add a list
-                if(currentUserIsAuthor){
-                    String[] actions = {"Modifier", "Supprimer"};
-                    builder.setItems(actions, (dialog, which) -> {
-                        switch (which) {
-                            case 0: // Modifier
-                                Toast.makeText(context, "Modifier le post !"  , Toast.LENGTH_SHORT).show();
-                                break;
-                            case 1: // Supprimer
-                                getSnapshots().getSnapshot(position).getReference().delete();
-                                // notifyDataSetChanged();
-                                Toast.makeText(context, "Supprimer le post : "+ getSnapshots().getSnapshot(position).getReference().getId()  , Toast.LENGTH_SHORT).show();
-                                break;
-                        } });
-                }else if(postLayoutForGroup){
-                    // SI JE LE POST EST AFFICHER DANS UN GROUPE
+                GroupHelper.getGroup(model.getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Group postGroup = documentSnapshot.toObject(Group.class);
 
-                    GroupHelper.getGroup(model.getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            Group postGroup = documentSnapshot.toObject(Group.class);
+                        // add a list
+                        if (currentUserIsAuthor) {
+                            String[] actions = {"Modifier", "Supprimer"};
+                            builder.setItems(actions, (dialog, which) -> {
+                                switch (which) {
+                                    case 0: // Modifier
+                                        Toast.makeText(context, "Modifier le post !", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 1: // Supprimer
+                                        getSnapshots().getSnapshot(position).getReference().delete();
+                                        // notifyDataSetChanged();
+                                        Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
+                            });
+                        } else if (postLayoutForGroup) {
+                            // SI JE LE POST EST AFFICHER DANS UN GROUPE
+
+
                             assert postGroup != null;
 
 
                             // -> POSSIBILITÉ POUR UN ADMIN ET UN MODÉRATEUR DE SUPPRIMÉ LE POST
 
-                            if(postGroup.getAdmin().equals(BaseActivity.getUid())){
+                            if (postGroup.getAdmin().equals(BaseActivity.getUid())) {
                                 String[] actions = {"Supprimer"};
                                 builder.setItems(actions, (dialog, which) -> {
                                     if (which == 0) { // Supprimer
@@ -175,8 +178,8 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                         Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                            }else if(postGroup.getModerators().contains(BaseActivity.getUid())
-                                    && postGroup.getModerators().contains(model.getUserSender())){
+                            } else if (postGroup.getModerators().contains(BaseActivity.getUid())
+                                    && postGroup.getModerators().contains(model.getUserSender())) {
                                 // Si la personne qui à posté n'est pas modérateur, alors un modérateur peut modérer son post
 
                                 String[] actions = {"Supprimer"};
@@ -187,7 +190,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                         Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                            }else{
+                            } else {
                                 // Je suis un utilisateur et je peux report le message
                                 String[] actions = {"Report abuse"};
                                 builder.setItems(actions, (dialog, which) -> {
@@ -196,21 +199,22 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                     }
                                 });
                             }
-                        }
-                    });
 
-                }else{
-                    String[] actions = {"Report abuse"};
-                    builder.setItems(actions, (dialog, which) -> {
-                        if (which == 0) { // Report abuse
-                            Toast.makeText(context, "Reporter le post ! (à faire)", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
 
-                // create and show the alert dialog
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                        } else {
+                            String[] actions = {"Report abuse"};
+                            builder.setItems(actions, (dialog, which) -> {
+                                if (which == 0) { // Report abuse
+                                    Toast.makeText(context, "Reporter le post ! (à faire)", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                        // create and show the alert dialog
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                });
             });
 
             // print picture into profile item
