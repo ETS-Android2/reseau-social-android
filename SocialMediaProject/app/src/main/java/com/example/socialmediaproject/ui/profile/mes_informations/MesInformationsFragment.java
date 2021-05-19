@@ -94,7 +94,7 @@ public class MesInformationsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         // inflate menu
-        inflater.inflate(R.menu.profile_menu, menu);
+        inflater.inflate(R.menu.profile_page_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
