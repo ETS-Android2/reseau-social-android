@@ -119,8 +119,8 @@ public class NewGroupFragment extends Fragment {
                             Bundle bundle = new Bundle();
 
                             // Navigation vers le fragment qui affiche le groupe
+                            bundle.putString("group_name", editText_groupName.getText().toString());
                             if(spinnerGroupType.getText().toString().equals("chat")){
-                                bundle.putString("group_name", editText_groupName.getText().toString());
                                 Intent intent = new Intent(getContext(), ChatActivity.class);
                                 intent.putExtras(bundle);
                                 getContext().startActivity(intent);

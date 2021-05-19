@@ -200,9 +200,8 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
     // Seulement appeler quand les données du groupe sont chargé
     private void configureRecyclerView(String groupName, String groupType){
         //Configure Adapter & RecyclerView
-
         this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
-                Glide.with(this), this, true);
+                Glide.with(this), this, groupType.equals("chat"));
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -18,21 +18,4 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
-    <!--Progress bar for showing loading screen-->
-    <ProgressBar
-        android:id="@+id/idProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
-
-    <TextView
-        android:id="@+id/textViewRecyclerViewEmpty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:textAlignment="center"
-        android:text="Il n'y a pas de post "/>
-
-
 </RelativeLayout>

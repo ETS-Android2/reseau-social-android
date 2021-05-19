@@ -141,7 +141,7 @@ public class ChatActivity extends AppCompatActivity implements PostAdapter.Liste
     private void configureRecyclerView(String groupName){
         //Configure Adapter & RecyclerView
         this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getMessageFromGroup(groupName)),
-                Glide.with(this), this, true, true);
+                Glide.with(this), this, true);
 
 
         postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
