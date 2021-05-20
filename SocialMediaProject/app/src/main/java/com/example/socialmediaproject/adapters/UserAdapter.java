@@ -1,6 +1,7 @@
 package com.example.socialmediaproject.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -100,6 +101,9 @@ public class UserAdapter extends BaseAdapter {
                                     userList.remove(i);
                                     notifyDataSetChanged();
                                     Toast.makeText(context, "Utilisateur ajouté !", Toast.LENGTH_SHORT).show();
+                                    if(userList.size()==0){
+                                        ((Activity) viewGroup.getContext()).onBackPressed();
+                                    }
                                 }
                             });
 
@@ -118,6 +122,9 @@ public class UserAdapter extends BaseAdapter {
                                     userList.remove(i);
                                     notifyDataSetChanged();
                                     Toast.makeText(context, "Utilisateur supprimé de la liste d'attente! ", Toast.LENGTH_SHORT).show();
+                                    if(userList.size()==0){
+                                        ((Activity) viewGroup.getContext()).onBackPressed();
+                                    }
                                 }
                             });
 
