@@ -175,6 +175,41 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                             }
                         });
                     }
+
+                    /**
+                     *  AFFICHAGE IMAGE DANS LE CHAT
+                     */
+
+
+                    // print picture into message content
+                    ImageView img = holder.itemView.findViewById(R.id.item_picture);
+                    String urlPic = model.getUrlImage();
+
+                    if (!model.getUrlImage().equals("null")) {
+                        img.setVisibility(View.VISIBLE);
+
+                        Glide.with(context)
+                                .load(BaseActivity.getRefImg(model.getUrlImage()))
+                                .into(img);
+
+                        /**
+                         * Affichage Full screen de l'image quand on click dessus
+                         *
+                         */
+                        img.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("urlImage", model.getUrlImage());
+                                Intent intent = new Intent(context, ImageFullScreenActivity.class);
+                                intent.putExtras(bundle);
+                                context.startActivity(intent);
+                            }
+                        });
+
+                    } else {
+                        img.setVisibility(View.GONE);
+                    }
                 } else {
                     holder.shareButton.setOnClickListener(v -> {
 
@@ -345,6 +380,8 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                         itemTitleView.setText(currentUser.getUsername());
                         itemContentView.setText(currentItem.getContent());
 
+                        itemContentView.setVisibility(currentItem.getContent().length() == 0 ? View.GONE : View.VISIBLE);
+
                         int colorCurrentUser = ContextCompat.getColor(itemView.getContext(), R.color.colorSecondary);
                         int colorRemoteUser = ContextCompat.getColor(itemView.getContext(), R.color.colorLight);
 
@@ -376,6 +413,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                 // On place le texte du post dans le layout
                                 // On place le temps écoulé depuis l'envoie du post
                                 itemContentView.setText(currentItem.getContent());
+                                itemContentView.setVisibility(currentItem.getContent().length() == 0 ? View.GONE : View.VISIBLE);
                                 itemDateAgo.setText(BaseActivity.getTimeAgo(currentItem.getDateCreated()));
 
                                 // title
