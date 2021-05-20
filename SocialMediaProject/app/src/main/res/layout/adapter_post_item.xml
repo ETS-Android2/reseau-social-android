@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:id="@+id/container"
     android:orientation="vertical"
@@ -72,14 +73,24 @@
         android:layout_height="match_parent"
         android:text="@string/item_content_text" />
 
-    <ImageView
-        android:id="@+id/item_picture"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:visibility="visible"
-        android:paddingTop="10dp"
-        android:layout_gravity="center"
-        android:scaleType="centerInside" />
+        android:layout_height="match_parent"
+        app:cardCornerRadius="8dp"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="@color/browser_actions_bg_grey">
+
+        <ImageView
+            android:id="@+id/item_picture"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:visibility="visible"
+
+            android:layout_gravity="center"
+            android:scaleType="centerCrop" />
+
+    </androidx.cardview.widget.CardView>
+
 
     <!-- FOOTER -->
     <RelativeLayout

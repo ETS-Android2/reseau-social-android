@@ -63,17 +63,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <EditText
             android:id="@+id/editTextTextMultiLine"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="?attr/actionBarSize"
             android:autofillHints=""
-            android:padding="10dp"
             android:background="@null"
             android:gravity="start|top"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:inputType="textMultiLine" />
+            android:hint="@string/placeholder_post"
+            android:inputType="textMultiLine"
+            android:padding="10dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="@color/browser_actions_bg_grey"
+            android:layout_below="@+id/editTextTextMultiLine">
+
+            <ImageView
+                android:id="@+id/image_uploaded"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:visibility="visible"
+                android:scaleType="centerCrop" />
+
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addPicture"
@@ -81,19 +96,12 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_photo_camera_24"
             android:contentDescription="@string/addPost"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true" />
 
-        <ImageView
-            android:id="@+id/image_uploaded"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="16dp"
-            android:layout_alignParentBottom="true" >
 
-        </ImageView>
 
 
     </RelativeLayout>
