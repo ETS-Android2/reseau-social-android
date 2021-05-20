@@ -45,6 +45,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 
 
@@ -53,8 +54,9 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
 
     private PostAdapter postAdapter;
 
-    Group currentGroup;
-    String groupName;
+    private Group currentGroup;
+    private String groupName;
+    private String groupType;
     private RecyclerView recyclerView;
     private PostGroupeViewModel mViewModel;
 
@@ -92,12 +94,12 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
         Bundle bundle = getArguments();
         if(bundle != null){
             this.groupName = bundle.getString("group_name");
+            this.groupType = bundle.getString("group_type");
             configureToolbar();
 
-            GroupHelper.getGroup(this.groupName)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+            GroupHelper.getGroupRef(groupName).addSnapshotListener(new com.google.firebase.firestore.EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                             if(documentSnapshot.exists()){
                                 currentGroup = documentSnapshot.toObject(Group.class);
 
@@ -122,14 +124,6 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                                     tv_groupAccess.setText("public");
                                     imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);
                                 }
-
-
-                                recyclerView = root.findViewById(R.id.recyclerView_group_posts);
-                                configureRecyclerView(currentGroup.getName(), currentGroup.getType());
-
-
-
-
 
                                 // on cache le bouton si publication onlyModerator et qu'on est membre
                                 boolean currentUserisModerator = currentGroup.getModerators().contains(BaseActivity.getUid());
@@ -165,6 +159,11 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                             }
                         }
                     });
+
+
+            recyclerView = root.findViewById(R.id.recyclerView_group_posts);
+            configureRecyclerView(groupName, groupType);
+
         }
         return root;
     }

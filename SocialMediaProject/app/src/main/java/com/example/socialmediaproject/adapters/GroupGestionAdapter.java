@@ -125,12 +125,13 @@ public class GroupGestionAdapter extends FirestoreRecyclerAdapter<Group, GroupGe
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putString("group_name", currentItem.getName());
+                    bundle.putString("group_type", currentItem.getType());
                     if(currentItem.getType().equals("chat")){
                         Intent intent = new Intent(itemView.getContext(), ChatActivity.class);
                         intent.putExtras(bundle);
                         itemView.getContext().startActivity(intent);
                     }else {
-                        Navigation.findNavController(itemView).navigate(R.id.action_searchPageFragment_to_navigation_groupe_post, bundle);
+                        Navigation.findNavController(itemView).navigate(R.id.navigation_groupe, bundle);
                     }
 
                 }

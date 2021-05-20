@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +34,8 @@ public class membersListFragment extends Fragment {
     Group currentGroup;
 
     private MembersListViewModel mViewModel;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    ListView allUser;
 
     public static membersListFragment newInstance() {
         return new membersListFragment();
@@ -56,35 +59,55 @@ public class membersListFragment extends Fragment {
             // Inflate the layout for this fragment
             View view = inflater.inflate(R.layout.fragment_members_list, container, false);
 
-            Bundle bundle = getArguments();
-            String groupName = bundle.getString("group_name");
+        Bundle bundle = getArguments();
+        String groupName = bundle.getString("group_name");
 
         // get list view
-        ListView allUser = view.findViewById(R.id.listView_members);
+        allUser = view.findViewById(R.id.listView_members);
+        this.configureListView();
+
+        swipeRefreshLayout = view.findViewById(R.id.swiperefresh_memberlist);
+        swipeRefreshLayout.setRefreshing(true);
+        // Sets up the swipe refrash
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // On re execute la requête et on remet en place le recycler view avec les nouvelles données
+                // une fois que le chargement esy terminé, on setRefreshing(false)
+                configureListView();
+            }
+        });
 
 
-            GroupHelper.getGroup(groupName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    currentGroup = documentSnapshot.toObject(Group.class);
-                    ArrayList<User> userList = new ArrayList<>();
-
-                    for(String id : currentGroup.getMembers()){
-
-                        UserHelper.getUser(id).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                userList.add(documentSnapshot.toObject(User.class));
-
-                                // on set l'adapter
-                                allUser.setAdapter(new UserAdapter(getContext(), userList, currentGroup));
-                            }
-                        });
-                    }
-                }
-            });
 
             return view;
+    }
+
+    private void configureListView(){
+        Bundle bundle = getArguments();
+        String groupName = bundle.getString("group_name");
+
+        GroupHelper.getGroup(groupName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                currentGroup = documentSnapshot.toObject(Group.class);
+                ArrayList<User> userList = new ArrayList<>();
+
+                for(String id : currentGroup.getMembers()){
+
+                    UserHelper.getUser(id).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            userList.add(documentSnapshot.toObject(User.class));
+
+                            // on set l'adapter
+                            allUser.setAdapter(new UserAdapter(getContext(), userList, currentGroup));
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override
