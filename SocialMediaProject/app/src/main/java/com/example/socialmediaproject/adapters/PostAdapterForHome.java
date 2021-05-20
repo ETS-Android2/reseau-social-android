@@ -1,8 +1,10 @@
 package com.example.socialmediaproject.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,8 @@ import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 
 import com.example.socialmediaproject.models.User;
+import com.example.socialmediaproject.ui.ImageFullScreenActivity;
+import com.example.socialmediaproject.ui.mes_reseaux.ChatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -70,6 +74,7 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         holder.messageContainer.setVisibility(View.GONE);
+
 
         boolean currentUserIsAuthor = postList.get(position).getUserSender().equals(BaseActivity.getUid());
 
@@ -289,6 +294,7 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
                                         Glide.with(itemView.getContext())
                                                 .load(BaseActivity.getRefImg(sender.getUrlPicture()))
                                                 .into(imgProfile);
+
                                     }
                                 });
 
@@ -299,6 +305,12 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
                                     Glide.with(itemView.getContext())
                                             .load(BaseActivity.getRefImg(currentItem.getUrlImage()))
                                             .into(imgContent);
+
+                                    /**
+                                     * ON AFFICHE L'IMAGE EN FULL SCREEN LORS DU CLICK
+                                     */
+                                    fullScreenImage(currentItem.getUrlImage());
+
                                 }
                                 else{
                                     imgContent.setVisibility(View.GONE);
@@ -313,7 +325,21 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
             }
 
 
+            private void fullScreenImage(String url){
+                imgContent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("urlImage", url);
+                        Intent intent = new Intent(itemView.getContext(), ImageFullScreenActivity.class);
+                        intent.putExtras(bundle);
+                        itemView.getContext().startActivity(intent);
+                    }
+                });
+            }
 
     }
+
+
 }
 
