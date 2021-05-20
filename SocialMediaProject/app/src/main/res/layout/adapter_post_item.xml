@@ -83,11 +83,11 @@
         <ImageView
             android:id="@+id/item_picture"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="220dp"
             android:visibility="visible"
 
             android:layout_gravity="center"
-            android:scaleType="centerInside" />
+            android:scaleType="centerCrop" />
 
     </androidx.cardview.widget.CardView>
 
