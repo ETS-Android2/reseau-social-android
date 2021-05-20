@@ -189,6 +189,17 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                 // On affiche tout une fois le groue chargé
                 preferenceGeneral.setVisible(true);
                 preferenceCategorieNotifications.setVisible(true);
+
+                if(currentGroup.getWaitlist().size() == 0){
+                    preferenceEditWaitlistGroup.setSummary("Aucune demande");
+                }else{
+                    preferenceEditWaitlistGroup.setSummary(currentGroup.getWaitlist().size() +
+                                    (currentGroup.getWaitlist().size() == 1 ? " demande" : " demandes" ));
+                }
+
+                preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() +
+                        (currentGroup.getMembers().size() <= 1 ? " demande" : " demandes"));
+
                 // Si le compte connecté est l'admin du groupe
                 if(currentGroup.getAdmin().equals(BaseActivity.getUid())){
 
