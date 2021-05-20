@@ -3,11 +3,8 @@ package com.example.socialmediaproject.notifications;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.media.RingtoneManager;
 import android.os.Build;
 import android.util.Log;
 
@@ -16,7 +13,6 @@ import com.example.socialmediaproject.R;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.example.socialmediaproject.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -44,12 +40,13 @@ public class NotificationsService extends FirebaseMessagingService {
             showNotification(remoteMessage.getData());
     }
 
+
     private void showNotification(Map<String,String> data){
         String title = data.get("title").toString();
         String body = data.get("body").toString();
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        String NOTIFICATION_CHANNEL_ID = "com.example.socialmediaproject";
+        String NOTIFICATION_CHANNEL_ID = "example.socialmediaproject.notifications";
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_DEFAULT);
@@ -77,7 +74,7 @@ public class NotificationsService extends FirebaseMessagingService {
     private void showNotification(String title, String body){
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        String NOTIFICATION_CHANNEL_ID = "com.example.socialmediaproject";
+        String NOTIFICATION_CHANNEL_ID = "example.socialmediaproject.notifications";
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_DEFAULT);
