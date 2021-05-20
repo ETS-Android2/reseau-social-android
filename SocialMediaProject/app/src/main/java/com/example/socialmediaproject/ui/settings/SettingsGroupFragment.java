@@ -29,7 +29,9 @@ import com.example.socialmediaproject.models.Group;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.util.EventListener;
 import java.util.Objects;
 
 import static androidx.core.content.ContextCompat.getSystemService;
@@ -181,9 +183,10 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         groupName = bundle.getString("group_name");
 
 
-        GroupHelper.getGroup(groupName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        // On écoute le document pour afficher les nouveaux changement
+        GroupHelper.getGroupRef(groupName).addSnapshotListener(new com.google.firebase.firestore.EventListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 currentGroup = documentSnapshot.toObject(Group.class);
 
                 // On affiche tout une fois le groue chargé

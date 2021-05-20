@@ -3,6 +3,7 @@ package com.example.socialmediaproject.api;
 import com.example.socialmediaproject.models.Group;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -54,6 +55,11 @@ public class GroupHelper {
     // --- GET GROUP ---
     public static Task<DocumentSnapshot> getGroup(String groupName){
         return GroupHelper.getGroupCollection().document(groupName).get();
+    }
+
+    // --- GET GROUP ---
+    public static DocumentReference getGroupRef(String groupName){
+        return GroupHelper.getGroupCollection().document(groupName);
     }
 
     // --- GET GROUP BY TYPE---
