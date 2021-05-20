@@ -106,10 +106,19 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Post model){
         holder.updateWithPost(model, postLayoutForGroup, groupTypeChat);
 
-
-
-
         boolean currentUserIsAuthor = model.getUserSender().equals(BaseActivity.getUid());
+
+        if(groupTypeChat){
+            LinearLayout.LayoutParams paramsLayoutContent = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            // MESSAGE CONTAINER
+
+            paramsLayoutContent.setMargins(
+                    currentUserIsAuthor ? 120 : 20,
+                    10,
+                    currentUserIsAuthor ? 20 : 120,
+                    10);
+            holder.messageContainer.setLayoutParams(paramsLayoutContent);
+        }
 
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -261,15 +270,16 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        LinearLayout messageContainer;
         TextView itemTitleView, itemSubtitleView, itemContentView, itemDateAgo;
         ImageButton shareButton;
-        LinearLayout messageContainer;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             // get item title view
-            messageContainer = itemView.findViewById(R.id.messageContainer);
+            messageContainer = itemView.findViewById(R.id.container);
             itemTitleView = itemView.findViewById(R.id.item_title);
             itemSubtitleView = itemView.findViewById(R.id.item_subtitle);
             itemContentView = itemView.findViewById(R.id.item_content);
@@ -282,99 +292,82 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
         public void updateWithPost(Post currentItem, boolean _postLayoutForGroup, boolean _groupTypeChat){
 
-            itemContentView.setText(currentItem.getContent());
-            itemDateAgo.setText(BaseActivity.getTimeAgo(currentItem.getDateCreated()));
-
-            int colorCurrentUser = ContextCompat.getColor(itemView.getContext(), R.color.colorSecondary);
-            int colorRemoteUser = ContextCompat.getColor(itemView.getContext(), R.color.colorLight);
-
-            if(_groupTypeChat && _postLayoutForGroup){
-                boolean currentUserIsAuthor = currentItem.getUserSender().equals(BaseActivity.getUid());
-                //Update Message Color Background
-                ((GradientDrawable) messageContainer.getBackground()).setColor(currentUserIsAuthor ? colorCurrentUser : colorRemoteUser);
-
-                // MESSAGE CONTAINER
-                LinearLayout.LayoutParams paramsLayoutContent = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                paramsLayoutContent.setMargins(
-                        currentUserIsAuthor ? 120 : 20,
-                        10,
-                        currentUserIsAuthor ? 20 : 120,
-                        10);
-                this.messageContainer.setLayoutParams(paramsLayoutContent);
-
+            if(_groupTypeChat){
+                messageContainer.setVisibility(View.GONE);
                 UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        itemTitleView.setVisibility(View.VISIBLE);
-                        itemTitleView.setText(documentSnapshot.toObject(User.class).getUsername());
-                    }
-                });
+                        User currentUser = documentSnapshot.toObject(User.class);
 
+                        messageContainer.setVisibility(View.VISIBLE);
+                        itemTitleView.setText(currentUser.getUsername());
+                        itemContentView.setText(currentItem.getContent());
+
+                        int colorCurrentUser = ContextCompat.getColor(itemView.getContext(), R.color.colorSecondary);
+                        int colorRemoteUser = ContextCompat.getColor(itemView.getContext(), R.color.colorLight);
+
+                        boolean currentUserIsAuthor = currentUser.getUid().equals(BaseActivity.getUid());
+                        //Update Message Color Background
+                        ((GradientDrawable) messageContainer.getBackground()).setColor(currentUserIsAuthor ? colorCurrentUser : colorRemoteUser);
+                    }});
             }else{
-                // title
-                if(currentItem.getGroup() == null){
-                    itemTitleView.setText("");
-                }else{
-                    itemTitleView.setVisibility(View.GONE);
-                    if(_postLayoutForGroup){
-                        // si c'est le post qui est afficher dans un group alors on affiche le nom de l'utilisateur dans le titre
+
+
+                // On récupère le nom du groupe
+                GroupHelper.getGroup(currentItem.getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Group currentGroup =  documentSnapshot.toObject(Group.class);
+
+                        // On recupère le nom de l'utilisateur et l'image
                         UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                itemTitleView.setVisibility(View.VISIBLE);
-                                itemTitleView.setText(documentSnapshot.toObject(User.class).getUsername());
-                            }
-                        });
-                    }else{
-                        // sinon on affiche le nom du groupe
-                        itemTitleView.setVisibility(View.VISIBLE);
-                        itemTitleView.setText(currentItem.getGroup());
-                    }
+                                User currentUser =  documentSnapshot.toObject(User.class);
+                                assert currentUser != null;
 
-                }
+                                // On place le texte du post dans le layout
+                                // On place le temps écoulé depuis l'envoie du post
+                                itemContentView.setText(currentItem.getContent());
+                                itemDateAgo.setText(BaseActivity.getTimeAgo(currentItem.getDateCreated()));
 
-                // subtitle
-                if(currentItem.getUserSender() == null){
-                    itemSubtitleView.setText("");
-                }else{
-                    // tant qu'on a pas charger les données on affiche rien
-                    itemSubtitleView.setVisibility(View.GONE);
-                    if(_postLayoutForGroup){
-                        // si c'est le post qui est afficher dans un group alors on le role de l'utilisateur
-                        GroupHelper.getGroup(currentItem.getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                                itemSubtitleView.setVisibility(View.VISIBLE);
-
-                                Group groupPost = documentSnapshot.toObject(Group.class);
-                                boolean isAdmin  = groupPost.getAdmin().equals(currentItem.getUserSender());
-                                boolean isModerator  = groupPost.getModerators().contains(currentItem.getUserSender());
-                                boolean isMember  = groupPost.getMembers().contains(currentItem.getUserSender());
-                                itemSubtitleView.setTextColor(Color.GRAY);
-                                if(isAdmin){
-                                    itemSubtitleView.setText("Admin");
-                                }else if(isModerator){
-                                    itemSubtitleView.setText("Moderator");
-                                }else if(isMember){
-                                    itemSubtitleView.setText("Member");
+                                // title
+                                if(_postLayoutForGroup){
+                                    itemTitleView.setText(currentUser.getUsername());
                                 }else{
-                                    itemSubtitleView.setText("Former member (n'est plus dans le group)");
+                                    itemTitleView.setText(currentItem.getGroup());
                                 }
-                            }
-                        });
-                    }else{
-                        // sinon on affiche le nom de l'utilisateur
-                        UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                                itemSubtitleView.setVisibility(View.VISIBLE);
-                                itemSubtitleView.setText(documentSnapshot.toObject(User.class).getUsername());
+                                // subtitle
+                                if(currentItem.getUserSender() == null){
+                                    itemSubtitleView.setText("");
+                                }else{
+                                    if(_postLayoutForGroup){
+                                        // si c'est le post qui est afficher dans un group alors on le role de l'utilisateur
+                                        boolean isAdmin  = currentGroup.getAdmin().equals(currentItem.getUserSender());
+                                        boolean isModerator  = currentGroup.getModerators().contains(currentItem.getUserSender());
+                                        boolean isMember  = currentGroup.getMembers().contains(currentItem.getUserSender());
+                                        itemSubtitleView.setTextColor(Color.GRAY);
+                                        if(isAdmin){
+                                            itemSubtitleView.setText("Admin");
+                                        }else if(isModerator){
+                                            itemSubtitleView.setText("Moderator");
+                                        }else if(isMember){
+                                            itemSubtitleView.setText("Member");
+                                        }else{
+                                            itemSubtitleView.setText("Former member (n'est plus dans le groupe)");
+                                        }
+                                    }else{
+                                        // sinon on affiche le nom de l'utilisateur
+                                        itemSubtitleView.setText(currentUser.getUsername());
+                                    }
+                                }
+
                             }
                         });
-                    }
-                }
+
+                    }});
+
             }
 
         }
