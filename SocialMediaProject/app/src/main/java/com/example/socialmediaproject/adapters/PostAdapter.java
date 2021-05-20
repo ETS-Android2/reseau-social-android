@@ -104,9 +104,13 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Post model){
-        holder.updateWithPost(model, postLayoutForGroup, groupTypeChat);
-
         boolean currentUserIsAuthor = model.getUserSender().equals(BaseActivity.getUid());
+
+        /**
+         * On affiche rien pour l'instant (on attent que les données soit récupérer avant d'afficher le layout)
+         */
+        holder.messageContainer.setVisibility(View.GONE);
+
 
         if(groupTypeChat){
             LinearLayout.LayoutParams paramsLayoutContent = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -120,144 +124,158 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             holder.messageContainer.setLayoutParams(paramsLayoutContent);
         }
 
+
+
+
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Choisir une action");
 
-        if(this.groupTypeChat){
-            if(currentUserIsAuthor){
-                // Un appui long pour poucoir supprimer le message
-                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
+        UserHelper.getUser(model.getUserSender()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                User sender = task.getResult().toObject(User.class);
 
-                        String[] actions = {"Supprimer"};
-                        builder.setItems(actions, (dialog, which) -> {
-                            if (which == 0) { // Supprimer
-                                getSnapshots().getSnapshot(position).getReference().delete();
-                                // notifyDataSetChanged();
-                                Toast.makeText(context, "Suppression du post ! ", Toast.LENGTH_SHORT).show();
+
+                /**
+                 *
+                 *  ON LANCE LA LE BINDING ICI
+                 */
+                holder.updateWithPost(model, postLayoutForGroup, groupTypeChat);
+                /**
+                 *
+                 *
+                 */
+
+
+
+                if(groupTypeChat) {
+                    if (currentUserIsAuthor) {
+                        // Un appui long pour poucoir supprimer le message
+                        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+
+
+                                String[] actions = {"Supprimer"};
+                                builder.setItems(actions, (dialog, which) -> {
+                                    if (which == 0) { // Supprimer
+                                        getSnapshots().getSnapshot(position).getReference().delete();
+                                        // notifyDataSetChanged();
+                                        Toast.makeText(context, "Suppression du post ! ", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                // create and show the alert dialog
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                                return true;
                             }
                         });
-                        // create and show the alert dialog
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                        return true;
                     }
-                    });
-                }
-        }else{
-            holder.shareButton.setOnClickListener(v -> {
+                } else {
+                    holder.shareButton.setOnClickListener(v -> {
 
-                GroupHelper.getGroup(model.getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Group postGroup = documentSnapshot.toObject(Group.class);
+                        GroupHelper.getGroup(model.getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                Group postGroup = documentSnapshot.toObject(Group.class);
 
-                        // add a list
-                        if (currentUserIsAuthor) {
-                            String[] actions = {"Modifier", "Supprimer"};
-                            builder.setItems(actions, (dialog, which) -> {
-                                switch (which) {
-                                    case 0: // Modifier
-                                        Toast.makeText(context, "Modifier le post !", Toast.LENGTH_SHORT).show();
-                                        break;
-                                    case 1: // Supprimer
-                                        getSnapshots().getSnapshot(position).getReference().delete();
-                                        // notifyDataSetChanged();
-                                        Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
-                                        break;
+                                // add a list
+                                if (currentUserIsAuthor) {
+                                    String[] actions = {"Modifier", "Supprimer"};
+                                    builder.setItems(actions, (dialog, which) -> {
+                                        switch (which) {
+                                            case 0: // Modifier
+                                                Toast.makeText(context, "Modifier le post !", Toast.LENGTH_SHORT).show();
+                                                break;
+                                            case 1: // Supprimer
+                                                getSnapshots().getSnapshot(position).getReference().delete();
+                                                // notifyDataSetChanged();
+                                                Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
+                                                break;
+                                        }
+                                    });
+                                } else if (postLayoutForGroup) {
+                                    // SI JE LE POST EST AFFICHER DANS UN GROUPE
+
+
+                                    assert postGroup != null;
+
+
+                                    // -> POSSIBILITÉ POUR UN ADMIN ET UN MODÉRATEUR DE SUPPRIMÉ LE POST
+
+                                    if (postGroup.getAdmin().equals(BaseActivity.getUid())) {
+                                        String[] actions = {"Supprimer"};
+                                        builder.setItems(actions, (dialog, which) -> {
+                                            if (which == 0) { // Supprimer
+                                                getSnapshots().getSnapshot(position).getReference().delete();
+                                                // notifyDataSetChanged();
+                                                Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    } else if (postGroup.getModerators().contains(BaseActivity.getUid())
+                                            && postGroup.getModerators().contains(model.getUserSender())) {
+                                        // Si la personne qui à posté n'est pas modérateur, alors un modérateur peut modérer son post
+
+                                        String[] actions = {"Supprimer"};
+                                        builder.setItems(actions, (dialog, which) -> {
+                                            if (which == 0) { // Supprimer
+                                                getSnapshots().getSnapshot(position).getReference().delete();
+                                                // notifyDataSetChanged();
+                                                Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    } else {
+                                        // Je suis un utilisateur et je peux report le message
+                                        String[] actions = {"Report abuse"};
+                                        builder.setItems(actions, (dialog, which) -> {
+                                            if (which == 0) { // Report abuse
+                                                Toast.makeText(context, "Reporter le post ! (à faire)", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+
+
+                                } else {
+                                    String[] actions = {"Report abuse"};
+                                    builder.setItems(actions, (dialog, which) -> {
+                                        if (which == 0) { // Report abuse
+                                            Toast.makeText(context, "Reporter le post ! (à faire)", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
-                            });
-                        } else if (postLayoutForGroup) {
-                            // SI JE LE POST EST AFFICHER DANS UN GROUPE
 
-
-                            assert postGroup != null;
-
-
-                            // -> POSSIBILITÉ POUR UN ADMIN ET UN MODÉRATEUR DE SUPPRIMÉ LE POST
-
-                            if (postGroup.getAdmin().equals(BaseActivity.getUid())) {
-                                String[] actions = {"Supprimer"};
-                                builder.setItems(actions, (dialog, which) -> {
-                                    if (which == 0) { // Supprimer
-                                        getSnapshots().getSnapshot(position).getReference().delete();
-                                        // notifyDataSetChanged();
-                                        Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            } else if (postGroup.getModerators().contains(BaseActivity.getUid())
-                                    && postGroup.getModerators().contains(model.getUserSender())) {
-                                // Si la personne qui à posté n'est pas modérateur, alors un modérateur peut modérer son post
-
-                                String[] actions = {"Supprimer"};
-                                builder.setItems(actions, (dialog, which) -> {
-                                    if (which == 0) { // Supprimer
-                                        getSnapshots().getSnapshot(position).getReference().delete();
-                                        // notifyDataSetChanged();
-                                        Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            } else {
-                                // Je suis un utilisateur et je peux report le message
-                                String[] actions = {"Report abuse"};
-                                builder.setItems(actions, (dialog, which) -> {
-                                    if (which == 0) { // Report abuse
-                                        Toast.makeText(context, "Reporter le post ! (à faire)", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                // create and show the alert dialog
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
                             }
+                        });
+                    });
 
-
-                        } else {
-                            String[] actions = {"Report abuse"};
-                            builder.setItems(actions, (dialog, which) -> {
-                                if (which == 0) { // Report abuse
-                                    Toast.makeText(context, "Reporter le post ! (à faire)", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-
-                        // create and show the alert dialog
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
-                });
-            });
-
-            // print picture into profile item
-            ImageView imgProfile = holder.itemView.findViewById(R.id.item_icon);
-
-            UserHelper.getUser(model.getUserSender()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-
-                    User sender = task.getResult().toObject(User.class);
+                    // print picture into profile item
+                    ImageView imgProfile = holder.itemView.findViewById(R.id.item_icon);
 
                     Glide.with(context)
                             .load(BaseActivity.getRefImg(sender.getUrlPicture()))
                             .into(imgProfile);
+
+
+                    // print picture into message content
+                    ImageView img = holder.itemView.findViewById(R.id.item_picture);
+                    String urlPic = model.getUrlImage();
+
+                    if (!model.getUrlImage().equals("null")) {
+                        img.setVisibility(View.VISIBLE);
+
+                        Glide.with(context)
+                                .load(BaseActivity.getRefImg(model.getUrlImage()))
+                                .into(img);
+                    } else {
+                        img.setVisibility(View.GONE);
+                    }
+
                 }
-            });
-
-            // print picture into message content
-            ImageView img = holder.itemView.findViewById(R.id.item_picture);
-            String urlPic = model.getUrlImage();
-
-            if(!model.getUrlImage().equals("null")){
-                img.setVisibility(View.VISIBLE);
-
-                Glide.with(context)
-                        .load(BaseActivity.getRefImg(model.getUrlImage()))
-                        .into(img);
-            }
-            else{
-                img.setVisibility(View.GONE);
-            }
-
-        }
-
+            }});
 
     }
 
@@ -293,6 +311,9 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
         public void updateWithPost(Post currentItem, boolean _postLayoutForGroup, boolean _groupTypeChat){
 
             if(_groupTypeChat){
+                /**
+                 * ON REND VISIBLE LE LAYOUT
+                 */
                 messageContainer.setVisibility(View.GONE);
                 UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -325,6 +346,11 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 User currentUser =  documentSnapshot.toObject(User.class);
                                 assert currentUser != null;
+
+                                /**
+                                 * ON REND VISIBLE LE LAYOUT
+                                 */
+                                messageContainer.setVisibility(View.VISIBLE);
 
                                 // On place le texte du post dans le layout
                                 // On place le temps écoulé depuis l'envoie du post
