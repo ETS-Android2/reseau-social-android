@@ -1,9 +1,13 @@
 package com.example.socialmediaproject.ui.mes_reseaux.groupe;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -223,6 +229,9 @@ public class newPostActivity extends AppCompatActivity {
                             Post post = new Post(content, group, userId, urlImg);
                             PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
 
+                            /* On notifie ici */
+                            notification();
+
                             Toast.makeText(newPostActivity.this, "Image uploaded !", Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -244,6 +253,9 @@ public class newPostActivity extends AppCompatActivity {
             urlImg = "null";
             Post post = new Post(content, group, userId, urlImg);
             PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
+
+            /* On notifie ici */
+            notification();
 
             Toast.makeText(newPostActivity.this, "No picture !", Toast.LENGTH_SHORT).show();
         }
@@ -367,5 +379,23 @@ public class newPostActivity extends AppCompatActivity {
                 sendPost(content, group, userId);
             }
         });
+    }
+
+    private void notification(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("n", "n", NotificationManager.IMPORTANCE_DEFAULT);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "n")
+                .setContentText("TEST NOTIFICATION")
+                .setSmallIcon(R.drawable.fui_ic_twitter_bird_white_24dp)
+                .setAutoCancel(true)
+                .setContentText("CONTENU NOTIFICATION");
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(999, builder.build());
     }
 }
