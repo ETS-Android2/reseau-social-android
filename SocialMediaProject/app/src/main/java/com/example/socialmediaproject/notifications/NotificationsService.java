@@ -13,6 +13,7 @@ import com.example.socialmediaproject.R;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.example.socialmediaproject.api.GroupHelper;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -26,18 +27,18 @@ import java.util.Random;
  */
 public class NotificationsService extends FirebaseMessagingService {
 
-    private final int NOTIFICATION_ID = 007;
-    private final String NOTIFICATION_TAG = "FIREBASEOC";
+    private String NOTIFICATION_CHANNEL_ID = "com.example.socialmediaproject";
 
-    /* Test */
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage){
         super.onMessageReceived(remoteMessage);
 
-        if(remoteMessage.getData().isEmpty())
+        if(remoteMessage.getData().isEmpty()) {
             showNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
-        else
+        }
+        else {
             showNotification(remoteMessage.getData());
+        }
     }
 
 
@@ -46,7 +47,6 @@ public class NotificationsService extends FirebaseMessagingService {
         String body = data.get("body").toString();
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        String NOTIFICATION_CHANNEL_ID = "example.socialmediaproject.notifications";
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_DEFAULT);
@@ -74,7 +74,6 @@ public class NotificationsService extends FirebaseMessagingService {
     private void showNotification(String title, String body){
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        String NOTIFICATION_CHANNEL_ID = "example.socialmediaproject.notifications";
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_DEFAULT);
