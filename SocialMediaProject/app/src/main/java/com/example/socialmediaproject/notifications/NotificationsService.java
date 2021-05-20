@@ -25,6 +25,7 @@ public class NotificationsService extends FirebaseMessagingService {
     private final int NOTIFICATION_ID = 007;
     private final String NOTIFICATION_TAG = "FIREBASEOC";
 
+    /*
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if (remoteMessage.getNotification() != null) {
@@ -75,4 +76,9 @@ public class NotificationsService extends FirebaseMessagingService {
         // 7 - Show notification
         notificationManager.notify(NOTIFICATION_TAG, NOTIFICATION_ID, notificationBuilder.build());
     }
+    */
+
+    /* Test */
+
+
 }
