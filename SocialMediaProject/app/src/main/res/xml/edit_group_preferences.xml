@@ -4,9 +4,20 @@
     android:persistent="false">
 
 
+    <!--
+        <PreferenceCategory app:title="Group privacy"
+            app:key="group_category_privacy"
+            app:isPreferenceVisible="false">
 
-    <PreferenceCategory app:title="Group privacy"
-        app:key="group_category_privacy"
+            <SwitchPreference
+                app:key="group_edit_privacy"
+                app:title="@string/group_edit_privacy" />
+
+
+    </PreferenceCategory> -->
+
+    <PreferenceCategory app:title="Général"
+        app:key="group_category_general"
         app:isPreferenceVisible="false">
 
         <SwitchPreference
@@ -14,11 +25,12 @@
             app:title="@string/group_edit_privacy" />
 
 
-    </PreferenceCategory>
+        <SwitchPreference
+            app:key="group_edit_publications"
+            app:title="@string/group_edit_publications"
+            android:summaryOn="Seulement les modérateurs"
+            android:summaryOff="Tous les membres"/>
 
-    <PreferenceCategory app:title="Général"
-        app:key="group_category_general"
-        app:isPreferenceVisible="false">
 
         <ListPreference
             app:key="group_edit_subject"
@@ -28,14 +40,8 @@
             app:useSimpleSummaryProvider="true"
             app:isPreferenceVisible="false"/>
 
-        <ListPreference
-            app:key="group_edit_publication"
-            app:title="@string/group_edit_publication"
-            app:defaultValue="All_members"
-            app:entries="@array/publication_entries"
-            app:entryValues="@array/publication_values"
-            app:useSimpleSummaryProvider="true"
-            app:isPreferenceVisible="false"/>
+
+
 
     </PreferenceCategory>
 </PreferenceScreen>

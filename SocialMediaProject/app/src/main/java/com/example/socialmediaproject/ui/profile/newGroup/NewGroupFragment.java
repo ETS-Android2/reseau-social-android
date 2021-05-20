@@ -125,7 +125,7 @@ public class NewGroupFragment extends Fragment {
                                 intent.putExtras(bundle);
                                 getContext().startActivity(intent);
                             }else{
-                                Navigation.findNavController(view).navigate(R.id.action_navigation_newGroup_to_navigation_groupe_post, bundle);
+                                Navigation.findNavController(view).navigate(R.id.action_navigation_newGroup_to_navigation_groupe, bundle);
                             }
 
                         }

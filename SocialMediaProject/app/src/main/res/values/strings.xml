@@ -101,7 +101,7 @@
     <string name="group_edit_name">Nom du groupe</string>
     <string name="group_edit_privacy">Groupe privé</string>
     <string name="group_edit_subject">Sujet du groupe</string>
-    <string name="group_edit_publication">Publication</string>
+    <string name="group_edit_publications">Publications</string>
 
     <!-- Settings d'un groupe -->
 

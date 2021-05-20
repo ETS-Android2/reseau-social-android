@@ -37,7 +37,7 @@
         <Preference
             app:key="group_waitlist"
             app:title="@string/group_title_waitlist"
-            app:isPreferenceVisible="false"/>
+            app:isPreferenceVisible="false" />
 
         <Preference
             app:key="group_members"

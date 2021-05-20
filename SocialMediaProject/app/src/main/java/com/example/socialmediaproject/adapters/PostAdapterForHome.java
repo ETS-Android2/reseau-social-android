@@ -1,6 +1,8 @@
 package com.example.socialmediaproject.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -64,7 +68,8 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.updateWithPost(postList.get(position));
+
+        holder.messageContainer.setVisibility(View.GONE);
 
         boolean currentUserIsAuthor = postList.get(position).getUserSender().equals(BaseActivity.getUid());
 
@@ -73,6 +78,8 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Group postGroup = documentSnapshot.toObject(Group.class);
                 assert postGroup != null;
+
+                holder.updateWithPost(postList.get(position));
 
                 // setup the alert builder
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -152,6 +159,7 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
+        LinearLayout messageContainer;
         TextView itemTitleView, itemSubtitleView, itemContentView, itemDateAgo;
         ImageView imgContent, imgProfile;
         ImageButton shareButton;
@@ -159,7 +167,7 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-
+            messageContainer = itemView.findViewById(R.id.container);
             // get item title view
             itemTitleView = itemView.findViewById(R.id.item_title);
             itemSubtitleView = itemView.findViewById(R.id.item_subtitle);
@@ -173,7 +181,7 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
 
             shareButton = itemView.findViewById(R.id.item_share);
         }
-
+/*
         public void updateWithPost(Post currentItem){
 
             itemContentView.setText(currentItem.getContent());
@@ -232,6 +240,81 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
             }
 
         }
+*/
+
+        public void updateWithPost(Post currentItem){
+
+                // On récupère le nom du groupe
+                GroupHelper.getGroup(currentItem.getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Group currentGroup =  documentSnapshot.toObject(Group.class);
+
+                        // On recupère le nom de l'utilisateur et l'image
+                        UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                User currentUser =  documentSnapshot.toObject(User.class);
+                                assert currentUser != null;
+
+                                /**
+                                 * ON REND VISIBLE LE LAYOUT
+                                 */
+                                messageContainer.setVisibility(View.VISIBLE);
+
+                                // On place le texte du post dans le layout
+                                // On place le temps écoulé depuis l'envoie du post
+                                itemContentView.setText(currentItem.getContent());
+                                itemDateAgo.setText(BaseActivity.getTimeAgo(currentItem.getDateCreated()));
+
+                                // title
+
+                                    itemTitleView.setText(currentItem.getGroup());
+
+
+                                // subtitle
+                                if(currentItem.getUserSender() == null){
+                                    itemSubtitleView.setText("");
+                                }else{
+
+                                        // sinon on affiche le nom de l'utilisateur
+                                        itemSubtitleView.setText(currentUser.getUsername());
+
+                                }
+
+                                UserHelper.getUser(currentItem.getUserSender()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+
+                                        User sender = task.getResult().toObject(User.class);
+
+                                        Glide.with(itemView.getContext())
+                                                .load(BaseActivity.getRefImg(sender.getUrlPicture()))
+                                                .into(imgProfile);
+                                    }
+                                });
+
+                                // print picture into message content
+                                if(!currentItem.getUrlImage().equals("null")){
+                                    imgContent.setVisibility(View.VISIBLE);
+
+                                    Glide.with(itemView.getContext())
+                                            .load(BaseActivity.getRefImg(currentItem.getUrlImage()))
+                                            .into(imgContent);
+                                }
+                                else{
+                                    imgContent.setVisibility(View.GONE);
+                                }
+
+
+                            }
+                        });
+
+                    }});
+
+            }
+
+
 
     }
 }

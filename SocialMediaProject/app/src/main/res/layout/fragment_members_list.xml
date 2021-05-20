@@ -5,10 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.settings.pageMembers.membersListFragment">
 
-    <ListView
-        android:id="@+id/listView_members"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh_memberlist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="1dp"/>
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/listView_members"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="1dp"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </FrameLayout>

@@ -122,7 +122,8 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
                     // Sinon on lance le fragment classique d'un groupe
                     Bundle bundle = new Bundle();
                     bundle.putString("group_name", model.getName());
-                    Navigation.findNavController(itemView).navigate(R.id.action_navigation_mes_reseaux_to_navigation_groupe_post, bundle);
+                    bundle.putString("group_type", model.getType());
+                    Navigation.findNavController(itemView).navigate(R.id.action_navigation_mes_reseaux_to_navigation_groupe, bundle);
                 }
 
             });

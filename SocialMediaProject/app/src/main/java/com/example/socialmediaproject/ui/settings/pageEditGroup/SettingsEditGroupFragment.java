@@ -33,15 +33,13 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
         Bundle bundle = getArguments();
         String groupName = bundle.getString("group_name");
 
-        Preference preferenceCategoryPrivacy = findPreference("group_category_privacy");
         Preference preferenceCategoryGeneral = findPreference("group_category_general");
 
-        Preference preferencePublication = findPreference("group_edit_publication");
+        SwitchPreference preferencePublications = findPreference("group_edit_publications");
         SwitchPreference preferenceSwitch = findPreference("group_edit_privacy");
         ListPreference preferenceSubjectGroup = findPreference("group_edit_subject");
 
         // initialisation tant qu'on a pas récupérer les données du groupe courant
-        //preferenceNameGroup.setText("");
 
         GroupHelper.getGroup(groupName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -49,11 +47,11 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
                 currentGroup = documentSnapshot.toObject(Group.class);
 
                 // On affiche une fois les données récupérer
-                preferenceCategoryPrivacy.setVisible(true);
                 preferenceCategoryGeneral.setVisible(true);
                 preferenceSubjectGroup.setVisible(true);
                 // si on est en mode post alors on affiche sinon on ne l'affiche pas
-                preferencePublication.setVisible(currentGroup.getType().equals("post"));
+                //preferencePublication.setVisible(currentGroup.getType().equals("post"));
+                preferencePublications.setVisible(currentGroup.getType().equals("post"));
 
                 //preferenceNameGroup.setText(currentGroup.getName());
                 preferenceSwitch.setChecked(currentGroup.getAccessPrivate());
@@ -105,15 +103,15 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
                     }
                 });
 
-                preferencePublication.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                preferencePublications.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-                        GroupHelper.setPublicationModerator(currentGroup.getName(),newValue.toString().equals("onlyModerator"))
+                        GroupHelper.setPublicationModerator(currentGroup.getName(),newValue.equals(true))
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(getContext(),"onlyModerator" , Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(),newValue.equals(true) ? "Publication seulement pour les modérateurs" : "Tout le monde peut publier des posts", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 

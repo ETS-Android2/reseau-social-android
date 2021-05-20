@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,8 +30,10 @@ import java.util.ArrayList;
 
 public class WaitlistFragment extends Fragment {
 
-    Group currentGroup;
+    private Group currentGroup;
     private WaitlistViewModel mViewModel;
+    private ListView allUser;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public static WaitlistFragment newInstance() {
         return new WaitlistFragment();
@@ -47,9 +50,29 @@ public class WaitlistFragment extends Fragment {
         String groupName = bundle.getString("group_name");
 
         // get list view
-        ListView allUser = view.findViewById(R.id.listView_waitlist);
+        allUser = view.findViewById(R.id.listView_waitlist);
+        this.configureListView();
+
+        swipeRefreshLayout = view.findViewById(R.id.swiperefresh_waitlist);
+        swipeRefreshLayout.setRefreshing(true);
+        // Sets up the swipe refrash
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // On re execute la requête et on remet en place le recycler view avec les nouvelles données
+                // une fois que le chargement esy terminé, on setRefreshing(false)
+                configureListView();
+            }
+        });
 
 
+
+        return view;
+    }
+
+    private void configureListView(){
+        Bundle bundle = getArguments();
+        String groupName = bundle.getString("group_name");
         GroupHelper.getGroup(groupName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -62,12 +85,12 @@ public class WaitlistFragment extends Fragment {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             userWaitList.add(documentSnapshot.toObject(User.class));
                             allUser.setAdapter(new UserAdapter(getContext(), userWaitList, currentGroup, true));
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     });
                 }
             }
         });
-        return view;
     }
 
     @Override

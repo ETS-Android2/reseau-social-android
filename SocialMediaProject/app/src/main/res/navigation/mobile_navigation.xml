@@ -17,7 +17,7 @@
         android:label="search_page_fragment"
         tools:layout="@layout/search_page_fragment" >
         <action
-            android:id="@+id/action_searchPageFragment_to_navigation_groupe_post"
+            android:id="@+id/action_searchPageFragment_to_navigation_groupe"
             app:destination="@id/navigation_groupe" />
     </fragment>
 
@@ -27,7 +27,7 @@
         android:label="@string/title_reseaux"
         tools:layout="@layout/fragment_mes_reseaux" >
         <action
-            android:id="@+id/action_navigation_mes_reseaux_to_navigation_groupe_post"
+            android:id="@+id/action_navigation_mes_reseaux_to_navigation_groupe"
             app:destination="@id/navigation_groupe"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
@@ -42,7 +42,7 @@
         android:label="new_group_fragment"
         tools:layout="@layout/new_group_fragment" >
         <action
-            android:id="@+id/action_navigation_newGroup_to_navigation_groupe_post"
+            android:id="@+id/action_navigation_newGroup_to_navigation_groupe"
             app:destination="@id/navigation_groupe" />
     </fragment>
 
@@ -177,7 +177,7 @@
             android:name="com.example.socialmediaproject.ui.mes_reseaux.ChatActivity"
             android:label="ChatActivity" />
         <action
-            android:id="@+id/action_global_navigation_groupe_post"
+            android:id="@+id/action_global_navigation_groupe"
             app:destination="@id/navigation_groupe" />
     </navigation>
 

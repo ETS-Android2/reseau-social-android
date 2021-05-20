@@ -273,7 +273,7 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
 
                                     Bundle bundle = new Bundle();
                                     bundle.putString("group_name", groupName);
-                                    Navigation.findNavController(getView()).navigate(R.id.action_searchPageFragment_to_navigation_groupe_post, bundle);
+                                    Navigation.findNavController(getView()).navigate(R.id.action_searchPageFragment_to_navigation_groupe, bundle);
                                     CodeAccessHelper.deleteCode(inputTextCode).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
