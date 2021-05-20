@@ -165,6 +165,7 @@ public class SearchGroupAdapter extends FirestoreRecyclerAdapter<Group, SearchGr
                                         *   1. On place un écouteur d'événement sur la liste des membres d'un groupe
                                         *   2. On récupère cette liste et on regarde si on est dedans
                                         *   3. Si c'est le cas alors on s'abonne au canal de communication (qui correspond au nom du groupe en minuscule et sans espace)
+                                        *   4. Lorsqu'on quitte un groupe ou on se fait exclure, on se désabonne du canal de communication
                                         */
 
                                         GroupHelper.getMembersListOfGroup(group.getName()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
