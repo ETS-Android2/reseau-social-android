@@ -6,7 +6,6 @@ import android.content.ClipboardManager;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,10 +26,15 @@ import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.CodeAccess;
 import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.ui.settings.pageEditGroup.SettingsEditGroupFragment;
+import com.example.socialmediaproject.ui.settings.pageWaitlist.WaitlistFragment;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.EventListener;
 import java.util.Objects;
@@ -77,6 +81,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
+
         Bundle bundle = getArguments();
         groupName = bundle.getString("group_name");
 
@@ -119,7 +124,17 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         if(key.equals("group_edit")){
             //Toast.makeText(getContext(),"Modifier le groupe !" , Toast.LENGTH_SHORT).show();
             bundle.putString("group_name", groupName);
-            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsEditGroupFragment, bundle);
+            if(!currentGroup.getType().equals("chat")){
+                Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsEditGroupFragment, bundle);
+
+            }else{
+                SettingsEditGroupFragment fragment = new SettingsEditGroupFragment();
+                fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commitNow();
+            }
         }
 
 
@@ -128,15 +143,35 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
             if(currentGroup.getWaitlist().size() == 0){
                 Toast.makeText(getContext(),"Il n'y a personne dans la liste d'attente !" , Toast.LENGTH_SHORT).show();
             }else{
-                bundle.putString("group_name", groupName);
-                Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_waitlistFragment, bundle);
+                if(!currentGroup.getType().equals("chat")){
+                    bundle.putString("group_name", groupName);
+                    Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_waitlistFragment, bundle);
+                }else{
+                    WaitlistFragment fragment = new WaitlistFragment();
+                    fragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container, fragment)
+                            .commitNow();
+                }
             }
 
         }
         if(key.equals("group_members")){
             //Toast.makeText(getContext(),"Gérer les adhérents !" , Toast.LENGTH_SHORT).show();
-            bundle.putString("group_name", groupName);
-            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsGroupFragment_pageMembers, bundle);
+            if(!currentGroup.getType().equals("chat")){
+
+                bundle.putString("group_name", groupName);
+                Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsGroupFragment_pageMembers, bundle);
+            }else{
+                WaitlistFragment fragment = new WaitlistFragment();
+                fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commitNow();
+            }
+
         }
 
         if(key.equals("group_exit")){
@@ -144,20 +179,32 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_mes_reseaux);
+                            if(!currentGroup.getType().equals("chat")) {
+                                Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_mes_reseaux);
+                            }else{
+                                getActivity().finish();
+                            }
                             Toast.makeText(getContext(), "Vous avez quitté le groupe !", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull @NotNull Exception e) {
+                            Toast.makeText(getContext(), "GROUP DOES NOT EXIST", Toast.LENGTH_LONG);
                         }
                     });
         }
 
         if(key.equals("group_delete")){
-
             GroupHelper.deleteGroup(currentGroup.getName())
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_mes_reseaux);
-                            Toast.makeText(getContext(), "Le groupe à été supprimé !", Toast.LENGTH_SHORT).show();
+                            if(!currentGroup.getType().equals("chat")) {
+                                Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_mes_reseaux);
+                            }else{
+                                getActivity().finish();
+                            }
                         }
                     });
         }
@@ -181,60 +228,59 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
         // on récupère l'objet du fragment précédent
         Bundle bundle = getArguments();
+        assert bundle != null;
         groupName = bundle.getString("group_name");
 
 
         // On écoute le document pour afficher les nouveaux changement
         GroupHelper.getGroupRef(groupName).addSnapshotListener(new com.google.firebase.firestore.EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                assert documentSnapshot != null;
+                currentGroup = documentSnapshot.toObject(Group.class);
 
+                // On affiche tout une fois le groue chargé
+                preferenceGeneral.setVisible(true);
+                assert preferenceCategorieNotifications != null;
+                preferenceCategorieNotifications.setVisible(true);
 
-                @Override
-                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-
-                    try {
-                        currentGroup = documentSnapshot.toObject(Group.class);
-
-                        // On affiche tout une fois le groue chargé
-                        preferenceGeneral.setVisible(true);
-                        preferenceCategorieNotifications.setVisible(true);
-
-                        if (currentGroup.getWaitlist().size() == 0) {
-                            preferenceEditWaitlistGroup.setSummary("Aucune demande");
-                        } else {
-                            preferenceEditWaitlistGroup.setSummary(currentGroup.getWaitlist().size() +
-                                    (currentGroup.getWaitlist().size() == 1 ? " demande" : " demandes"));
-                        }
-
-                        preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() +
-                                (currentGroup.getMembers().size() <= 1 ? " demande" : " demandes"));
-
-                        // Si le compte connecté est l'admin du groupe
-                        if (currentGroup.getAdmin().equals(BaseActivity.getUid())) {
-
-                            // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
-                            preferenceInvitation.setVisible(currentGroup.getAccessPrivate());
-                            preferenceEditWaitlistGroup.setVisible(true);
-                            preferenceEditGroup.setVisible(true);
-                            preferenceEditMembersGroup.setVisible(true);
-                            preferenceDeleteGroup.setVisible(true);
-                        } else if (currentGroup.getModerators().contains(BaseActivity.getUid())) {
-                            // Si le compte connecté est un modérateur du groupe
-                            preferenceEditWaitlistGroup.setVisible(true);
-                            preferenceEditMembersGroup.setVisible(true);
-                            preferenceExitGroup.setVisible(true);
-                        } else {
-                            // Si le compte connecté est un membre
-                            preferenceEditMembersGroup.setVisible(true);
-                            preferenceExitGroup.setVisible(true);
-                        }
-                    }
-                    catch(Exception e){
-                        Log.d("EXCEPTION : ", e.getMessage());
-                    }
+                if(currentGroup.getWaitlist().size() == 0){
+                    assert preferenceEditWaitlistGroup != null;
+                    preferenceEditWaitlistGroup.setSummary("Aucune demande");
+                }else{
+                    assert preferenceEditWaitlistGroup != null;
+                    preferenceEditWaitlistGroup.setSummary(currentGroup.getWaitlist().size() +
+                            (currentGroup.getWaitlist().size() == 1 ? " demande" : " demandes" ));
                 }
-            });
+
+                assert preferenceEditMembersGroup != null;
+                preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() +
+                        (currentGroup.getMembers().size() <= 1 ? " demande" : " demandes"));
+
+                // Si le compte connecté est l'admin du groupe
+                if(currentGroup.getAdmin().equals(BaseActivity.getUid())){
+
+                    // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
+                    assert preferenceInvitation != null;
+                    preferenceInvitation.setVisible(currentGroup.getAccessPrivate());
+                    preferenceEditWaitlistGroup.setVisible(true);
+                    preferenceEditGroup.setVisible(true);
+                    preferenceEditMembersGroup.setVisible(true);
+                    preferenceDeleteGroup.setVisible(true);
+                }else if(currentGroup.getModerators().contains(BaseActivity.getUid())){
+                    // Si le compte connecté est un modérateur du groupe
+                    preferenceEditWaitlistGroup.setVisible(true);
+                    preferenceEditMembersGroup.setVisible(true);
+                    preferenceExitGroup.setVisible(true);
+                } else{
+                    // Si le compte connecté est un membre
+                    preferenceEditMembersGroup.setVisible(true);
+                    preferenceExitGroup.setVisible(true);
+                }
 
 
+            }
+        });
     }
 
 

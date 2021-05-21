@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -155,7 +156,12 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
 
 
                     }else{
-                        Toast.makeText(getContext(),"Le groupe n'existe pas" , Toast.LENGTH_SHORT).show();
+                        try {
+                            Toast.makeText(getContext(), "Le groupe n'existe pas", Toast.LENGTH_SHORT).show();
+                        }
+                        catch(Exception e){
+                            Log.d("EXCEPTION : ", e.getMessage());
+                        }
                     }
                 }
             });

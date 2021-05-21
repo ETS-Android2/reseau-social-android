@@ -103,11 +103,11 @@ public class NewGroupFragment extends Fragment {
                                 spinnerGroupSubject.getText().toString().matches("")){
                             Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
                         }else{
-                             Group groupToCreate = new Group(editText_groupName.getText().toString(),
-                                                                spinnerGroupType.getText().toString(),
-                                                                spinnerGroupSubject.getText().toString(),
-                                                                spinnerGroupAccess.getText().toString(),
-                                                                modelCurrentUser.getUid());
+                            Group groupToCreate = new Group(editText_groupName.getText().toString(),
+                                    spinnerGroupType.getText().toString(),
+                                    spinnerGroupSubject.getText().toString(),
+                                    spinnerGroupAccess.getText().toString(),
+                                    modelCurrentUser.getUid());
                             GroupHelper.createGroup(groupToCreate).addOnFailureListener(onFailureListener());
 
                             // On passe le nom du groupe entre les fragments
