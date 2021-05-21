@@ -4,33 +4,37 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+app:defaultNavHost="true"
+app:navGraph="@navigation/mobile_navigation"
 tools:context=".ui.mes_reseaux.groupe.newPostActivity">
-
-<com.google.android.material.appbar.AppBarLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:theme="@style/Theme.SocialMediaProject.AppBarOverlay">
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </com.google.android.material.appbar.MaterialToolbar>
-</com.google.android.material.appbar.AppBarLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_group_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="?attr/actionBarSize"
-        />
+        android:layout_marginBottom="?attr/actionBarSize" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_imageToSend"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="20dp"
+        app:layout_anchor="@id/bottom_bar_writte_message"
+        android:layout_gravity="end">
+
+        <ImageView
+            android:id="@+id/imageToSend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/bottom_bar_writte_message"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:orientation="vertical"
         android:padding="5dp"
         android:layout_gravity="end|bottom">
 
@@ -42,7 +46,7 @@ tools:context=".ui.mes_reseaux.groupe.newPostActivity">
             tools:ignore="UselessParent">
 
             <ImageButton
-                android:id="@+id/load_image"
+                android:id="@+id/button_load_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"

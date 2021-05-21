@@ -2,8 +2,10 @@ package com.example.socialmediaproject.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
+import com.example.socialmediaproject.ui.ImageFullScreenActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -172,6 +175,41 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                             }
                         });
                     }
+
+                    /**
+                     *  AFFICHAGE IMAGE DANS LE CHAT
+                     */
+
+
+                    // print picture into message content
+                    ImageView img = holder.itemView.findViewById(R.id.item_picture);
+                    String urlPic = model.getUrlImage();
+
+                    if (!model.getUrlImage().equals("null")) {
+                        img.setVisibility(View.VISIBLE);
+
+                        Glide.with(context)
+                                .load(BaseActivity.getRefImg(model.getUrlImage()))
+                                .into(img);
+
+                        /**
+                         * Affichage Full screen de l'image quand on click dessus
+                         *
+                         */
+                        img.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("urlImage", model.getUrlImage());
+                                Intent intent = new Intent(context, ImageFullScreenActivity.class);
+                                intent.putExtras(bundle);
+                                context.startActivity(intent);
+                            }
+                        });
+
+                    } else {
+                        img.setVisibility(View.GONE);
+                    }
                 } else {
                     holder.shareButton.setOnClickListener(v -> {
 
@@ -270,6 +308,22 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                         Glide.with(context)
                                 .load(BaseActivity.getRefImg(model.getUrlImage()))
                                 .into(img);
+
+                        /**
+                         * Affichage Full screen de l'image quand on click dessus
+                         * 
+                         */
+                        img.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("urlImage", model.getUrlImage());
+                                Intent intent = new Intent(context, ImageFullScreenActivity.class);
+                                intent.putExtras(bundle);
+                                context.startActivity(intent);
+                            }
+                        });
+
                     } else {
                         img.setVisibility(View.GONE);
                     }
@@ -298,6 +352,8 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
             // get item title view
             messageContainer = itemView.findViewById(R.id.container);
+
+
             itemTitleView = itemView.findViewById(R.id.item_title);
             itemSubtitleView = itemView.findViewById(R.id.item_subtitle);
             itemContentView = itemView.findViewById(R.id.item_content);
@@ -323,6 +379,8 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                         messageContainer.setVisibility(View.VISIBLE);
                         itemTitleView.setText(currentUser.getUsername());
                         itemContentView.setText(currentItem.getContent());
+
+                        itemContentView.setVisibility(currentItem.getContent().length() == 0 ? View.GONE : View.VISIBLE);
 
                         int colorCurrentUser = ContextCompat.getColor(itemView.getContext(), R.color.colorSecondary);
                         int colorRemoteUser = ContextCompat.getColor(itemView.getContext(), R.color.colorLight);
@@ -355,6 +413,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                 // On place le texte du post dans le layout
                                 // On place le temps écoulé depuis l'envoie du post
                                 itemContentView.setText(currentItem.getContent());
+                                itemContentView.setVisibility(currentItem.getContent().length() == 0 ? View.GONE : View.VISIBLE);
                                 itemDateAgo.setText(BaseActivity.getTimeAgo(currentItem.getDateCreated()));
 
                                 // title
@@ -397,5 +456,6 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
             }
 
         }
+
     }
 }

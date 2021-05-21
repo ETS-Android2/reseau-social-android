@@ -140,7 +140,7 @@ public class UserAdapter extends BaseAdapter {
 
             // Si l'utilisateur de la liste est l'utilisateur connecté
             if(currentItem.getUid().equals(BaseActivity.getUid())){
-                user_layout.setBackgroundColor(ContextCompat.getColor(context, R.color.silver));
+                user_layout.setBackgroundColor(ContextCompat.getColor(context, R.color.browser_actions_bg_grey));
             }
 
             // get item name view
