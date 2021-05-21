@@ -2,8 +2,6 @@ package com.example.socialmediaproject.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -35,7 +32,6 @@ import com.example.socialmediaproject.models.Post;
 
 import com.example.socialmediaproject.models.User;
 import com.example.socialmediaproject.ui.ImageFullScreenActivity;
-import com.example.socialmediaproject.ui.mes_reseaux.ChatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;

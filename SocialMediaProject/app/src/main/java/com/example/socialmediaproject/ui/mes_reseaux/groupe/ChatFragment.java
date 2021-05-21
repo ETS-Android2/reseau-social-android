@@ -1,4 +1,4 @@
-package com.example.socialmediaproject.ui.mes_reseaux.ui.main;
+package com.example.socialmediaproject.ui.mes_reseaux.groupe;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +14,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +39,7 @@ import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
+import com.example.socialmediaproject.ui.settings.SettingsGroupFragment;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -291,9 +291,9 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
 
     public void configureToolbar(){
         // affichage de la flèche retour en arrière dans le menu
-        //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // title fragment in the header bar
-        //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(groupName);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(groupName);
     }
 
 
@@ -352,10 +352,18 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
                 break;
             case R.id.group_menu_settings:
                 Bundle bundle = new Bundle();
-                if(!currentGroup.getType().equals("chat")){
-                    bundle.putString("group_name", currentGroup.getName());
-                    NavHostFragment.findNavController(this).navigate(R.id.action_navigation_groupe_to_settingsGroupFragment, bundle);
-                }
+
+                bundle.putString("group_name", groupName);
+                //NavHostFragment.findNavController(this).navigate(R.id.action_chatFragment_to_settingsGroupFragment, bundle);
+                //Navigation.findNavController(this.getView()).navigate(R.id.settingsGroupFragment, bundle);
+
+                SettingsGroupFragment fragment = new SettingsGroupFragment();
+                fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commitNow();
+
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -17,7 +17,6 @@ import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.ui.mes_reseaux.ChatActivity;
-import com.example.socialmediaproject.ui.mes_reseaux.MainTestActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
@@ -116,7 +115,7 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
                     // Si on est dans un groupe de type CHAT alors on ouvre le chat
                     Bundle bundle = new Bundle();
                     bundle.putString("group_name", model.getName());
-                    Intent intent = new Intent(itemView.getContext(), MainTestActivity.class);
+                    Intent intent = new Intent(itemView.getContext(), ChatActivity.class);
                     intent.putExtras(bundle);
                     itemView.getContext().startActivity(intent);
                 }else{
