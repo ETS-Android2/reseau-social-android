@@ -100,69 +100,74 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
             GroupHelper.getGroupRef(groupName).addSnapshotListener(new com.google.firebase.firestore.EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                            if(documentSnapshot.exists()){
-                                currentGroup = documentSnapshot.toObject(Group.class);
+                    if(documentSnapshot.exists()){
+                        currentGroup = documentSnapshot.toObject(Group.class);
 
-                                layout_group.setVisibility(View.VISIBLE);
+                        layout_group.setVisibility(View.VISIBLE);
 
-                                tv_groupTitle.setText(currentGroup.getName());
-                                tv_groupType.setText(currentGroup.getType().toUpperCase());
+                        tv_groupTitle.setText(currentGroup.getName());
+                        tv_groupType.setText(currentGroup.getType().toUpperCase());
 
-                                // On enlève l'admin du compteur de member
-                                String nbMembers;
-                                if(currentGroup.getMembers().size() <= 1){
-                                    nbMembers = currentGroup.getMembers().size() + " member"; // à l'infinitif
-                                }else{
-                                    nbMembers = currentGroup.getMembers().size() + " members"; // au pluriels
-                                }
-                                tv_groupNbMembers.setText(nbMembers);
-
-                                if(currentGroup.getAccessPrivate()){
-                                    tv_groupAccess.setText("private");
-                                    imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
-                                }else{
-                                    tv_groupAccess.setText("public");
-                                    imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);
-                                }
-
-                                // on cache le bouton si publication onlyModerator et qu'on est membre
-                                boolean currentUserisModerator = currentGroup.getModerators().contains(BaseActivity.getUid());
-                                boolean publicationOnlyModerator = currentGroup.getPublicationOnlyModerator();
-                                if(!publicationOnlyModerator){
-                                    // tous le monde peut post si c'est pas reservé au moderateurs
-                                    fab.setVisibility(View.VISIBLE);
-                                }else{
-                                    // seul les modérateurs peuvent post
-                                    fab.setVisibility(currentUserisModerator ? View.VISIBLE : View.GONE);
-                                }
-
-
-
-                                fab.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        //Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
-
-                                        //UserHelper.addUserInGroup().addOnFailureListener(onFailureListener());
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("group_name", currentGroup.getName());
-                                        bundle.putString("group_type", currentGroup.getType());
-                                        Intent intent = new Intent(getActivity(), newPostActivity.class);
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
-                                    }
-                                });
-
-
-                            }else{
-                                Toast.makeText(getContext(),"Le groupe n'existe pas" , Toast.LENGTH_SHORT).show();
-                            }
+                        // On enlève l'admin du compteur de member
+                        String nbMembers;
+                        if(currentGroup.getMembers().size() <= 1){
+                            nbMembers = currentGroup.getMembers().size() + " member"; // à l'infinitif
+                        }else{
+                            nbMembers = currentGroup.getMembers().size() + " members"; // au pluriels
                         }
-                    });
+                        tv_groupNbMembers.setText(nbMembers);
+
+                        if(currentGroup.getAccessPrivate()){
+                            tv_groupAccess.setText("private");
+                            imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
+                        }else{
+                            tv_groupAccess.setText("public");
+                            imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);
+                        }
+
+                        // on cache le bouton si publication onlyModerator et qu'on est membre
+                        boolean currentUserisModerator = currentGroup.getModerators().contains(BaseActivity.getUid());
+                        boolean publicationOnlyModerator = currentGroup.getPublicationOnlyModerator();
+                        if(!publicationOnlyModerator){
+                            // tous le monde peut post si c'est pas reservé au moderateurs
+                            fab.setVisibility(View.VISIBLE);
+                        }else{
+                            // seul les modérateurs peuvent post
+                            fab.setVisibility(currentUserisModerator ? View.VISIBLE : View.GONE);
+                        }
+
+
+
+                        fab.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //Toast.makeText(getContext(),"Ajouter un post dans ce groupe!" , Toast.LENGTH_SHORT).show();
+
+                                //UserHelper.addUserInGroup().addOnFailureListener(onFailureListener());
+                                Bundle bundle = new Bundle();
+                                bundle.putString("group_name", currentGroup.getName());
+                                bundle.putString("group_type", currentGroup.getType());
+                                Intent intent = new Intent(getActivity(), newPostActivity.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
+
+
+                    }else{
+                        Toast.makeText(getContext(),"Le groupe n'existe pas" , Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
 
             recyclerView = root.findViewById(R.id.recyclerView_group_posts);
-            configureRecyclerView(groupName, groupType);
+            if(groupType == null){
+                configureRecyclerView(groupName, "other");
+            }else{
+                configureRecyclerView(groupName, groupType);
+            }
+
 
         }
         return root;
@@ -185,8 +190,15 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
     // Seulement appeler quand les données du groupe sont chargé
     private void configureRecyclerView(String groupName, String groupType){
         //Configure Adapter & RecyclerView
-        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
-                Glide.with(this), this, true, groupType.equals("chat"));
+        if(groupType.equals("chat")){
+            this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
+                    Glide.with(this), this, true, true);
+        }else{
+            this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
+                    Glide.with(this), this, true);
+
+        }
+
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

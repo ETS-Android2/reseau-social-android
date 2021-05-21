@@ -35,17 +35,6 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(findViewById(R.id.materialToolbar));
             NavigationUI.setupWithNavController(navView, navController);
         }
-
-        /*
-        BaseActivity.getMessaging().subscribeToTopic("meteo")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        String msg = "msg";
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-         */
     }
 
 

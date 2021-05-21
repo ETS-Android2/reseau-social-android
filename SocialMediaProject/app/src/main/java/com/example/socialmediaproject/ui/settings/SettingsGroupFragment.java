@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -185,47 +186,53 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
         // On écoute le document pour afficher les nouveaux changement
         GroupHelper.getGroupRef(groupName).addSnapshotListener(new com.google.firebase.firestore.EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                currentGroup = documentSnapshot.toObject(Group.class);
 
-                // On affiche tout une fois le groue chargé
-                preferenceGeneral.setVisible(true);
-                preferenceCategorieNotifications.setVisible(true);
 
-                if(currentGroup.getWaitlist().size() == 0){
-                    preferenceEditWaitlistGroup.setSummary("Aucune demande");
-                }else{
-                    preferenceEditWaitlistGroup.setSummary(currentGroup.getWaitlist().size() +
-                                    (currentGroup.getWaitlist().size() == 1 ? " demande" : " demandes" ));
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+
+                    try {
+                        currentGroup = documentSnapshot.toObject(Group.class);
+
+                        // On affiche tout une fois le groue chargé
+                        preferenceGeneral.setVisible(true);
+                        preferenceCategorieNotifications.setVisible(true);
+
+                        if (currentGroup.getWaitlist().size() == 0) {
+                            preferenceEditWaitlistGroup.setSummary("Aucune demande");
+                        } else {
+                            preferenceEditWaitlistGroup.setSummary(currentGroup.getWaitlist().size() +
+                                    (currentGroup.getWaitlist().size() == 1 ? " demande" : " demandes"));
+                        }
+
+                        preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() +
+                                (currentGroup.getMembers().size() <= 1 ? " demande" : " demandes"));
+
+                        // Si le compte connecté est l'admin du groupe
+                        if (currentGroup.getAdmin().equals(BaseActivity.getUid())) {
+
+                            // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
+                            preferenceInvitation.setVisible(currentGroup.getAccessPrivate());
+                            preferenceEditWaitlistGroup.setVisible(true);
+                            preferenceEditGroup.setVisible(true);
+                            preferenceEditMembersGroup.setVisible(true);
+                            preferenceDeleteGroup.setVisible(true);
+                        } else if (currentGroup.getModerators().contains(BaseActivity.getUid())) {
+                            // Si le compte connecté est un modérateur du groupe
+                            preferenceEditWaitlistGroup.setVisible(true);
+                            preferenceEditMembersGroup.setVisible(true);
+                            preferenceExitGroup.setVisible(true);
+                        } else {
+                            // Si le compte connecté est un membre
+                            preferenceEditMembersGroup.setVisible(true);
+                            preferenceExitGroup.setVisible(true);
+                        }
+                    }
+                    catch(Exception e){
+                        Log.d("EXCEPTION : ", e.getMessage());
+                    }
                 }
-
-                preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() +
-                        (currentGroup.getMembers().size() <= 1 ? " demande" : " demandes"));
-
-                // Si le compte connecté est l'admin du groupe
-                if(currentGroup.getAdmin().equals(BaseActivity.getUid())){
-
-                    // si on est en mode privé alors on affiche la catégorie d'invitation, sinon on n'affiche pas
-                    preferenceInvitation.setVisible(currentGroup.getAccessPrivate());
-                    preferenceEditWaitlistGroup.setVisible(true);
-                    preferenceEditGroup.setVisible(true);
-                    preferenceEditMembersGroup.setVisible(true);
-                    preferenceDeleteGroup.setVisible(true);
-                }else if(currentGroup.getModerators().contains(BaseActivity.getUid())){
-                    // Si le compte connecté est un modérateur du groupe
-                    preferenceEditWaitlistGroup.setVisible(true);
-                    preferenceEditMembersGroup.setVisible(true);
-                    preferenceExitGroup.setVisible(true);
-                } else{
-                    // Si le compte connecté est un membre
-                    preferenceEditMembersGroup.setVisible(true);
-                    preferenceExitGroup.setVisible(true);
-                }
-
-
-            }
-        });
+            });
 
 
     }

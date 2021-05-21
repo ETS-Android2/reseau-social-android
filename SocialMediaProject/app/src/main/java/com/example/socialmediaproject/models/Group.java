@@ -1,6 +1,8 @@
 package com.example.socialmediaproject.models;
 
 
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -80,7 +82,7 @@ public class Group implements Serializable {
     public List<String> getMembers(){ return this.members; }
     public List<String> getModerators(){ return this.moderators; }
 
-    public List<String> getWaitlist(){ return this.waitlist; }
+    public List<String> getWaitlist() { return this.waitlist; }
 
 
 
