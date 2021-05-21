@@ -43,7 +43,6 @@ import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -182,7 +181,7 @@ public class newPostActivity extends AppCompatActivity {
     // --------------------
     // 4 - Get Current User from Firestore
     private void getCurrentUserFromFirestore(){
-        UserHelper.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        UserHelper.getUser(BaseActivity.getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 modelCurrentUser = documentSnapshot.toObject(User.class);

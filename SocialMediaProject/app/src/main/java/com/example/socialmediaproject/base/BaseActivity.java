@@ -10,10 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialmediaproject.R;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -127,5 +129,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static FirebaseStorage getStorage(){ return FirebaseStorage.getInstance(); }
     public static  StorageReference getRefStorage() { return getStorage().getReference(); }
     public static StorageReference getRefImg(String url) { return getStorage().getReferenceFromUrl(url); }
+
+    /* Messaging */
+    public static FirebaseMessaging getMessaging(){ return FirebaseMessaging.getInstance(); }
+
+    public static Task<String> getToken(){ return FirebaseMessaging.getInstance().getToken(); }
+
 
 }

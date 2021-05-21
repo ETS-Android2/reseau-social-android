@@ -1,78 +1,107 @@
 package com.example.socialmediaproject.notifications;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.media.RingtoneManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 
 import com.example.socialmediaproject.R;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.example.socialmediaproject.MainActivity;
+import com.example.socialmediaproject.api.GroupHelper;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by Antoine Barbier and Antoine Brahimi on 5/16/21.
  */
 public class NotificationsService extends FirebaseMessagingService {
 
-    private final int NOTIFICATION_ID = 007;
-    private final String NOTIFICATION_TAG = "FIREBASEOC";
+    private String NOTIFICATION_CHANNEL_ID = "com.example.socialmediaproject";
 
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        if (remoteMessage.getNotification() != null) {
-            String message = remoteMessage.getNotification().getBody();
-            // 8 - Show notification after received message
-            this.sendVisualNotification(message);
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage){
+        super.onMessageReceived(remoteMessage);
+
+        if(remoteMessage.getData().isEmpty()) {
+            showNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+        }
+        else {
+            showNotification(remoteMessage.getData());
         }
     }
 
-    // ---
 
-    private void sendVisualNotification(String messageBody) {
+    private void showNotification(Map<String,String> data){
+        String title = data.get("title").toString();
+        String body = data.get("body").toString();
 
-        // 1 - Create an Intent that will be shown when user will click on the Notification
-        Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // 2 - Create a Style for the Notification
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        inboxStyle.setBigContentTitle(getString(R.string.notification_title));
-        inboxStyle.addLine(messageBody);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_DEFAULT);
 
-        // 3 - Create a Channel (Android 8)
-        String channelId = getString(R.string.default_notification_channel_id);
-
-        // 4 - Build a Notification object
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(R.drawable.fui_ic_twitter_bird_white_24dp)
-                        .setContentTitle(getString(R.string.app_name))
-                        .setContentText(getString(R.string.notification_title))
-                        .setAutoCancel(true)
-                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                        .setContentIntent(pendingIntent)
-                        .setStyle(inboxStyle);
-
-        // 5 - Add the Notification to the Notification Manager and show it.
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        // 6 - Support Version >= Android 8
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence channelName = "Message provenant de Firebase";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
-            notificationManager.createNotificationChannel(mChannel);
+            notificationChannel.setDescription("Code sphere");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.BLUE);
+            notificationChannel.enableLights(true);
+            notificationManager.createNotificationChannel(notificationChannel);
         }
 
-        // 7 - Show notification
-        notificationManager.notify(NOTIFICATION_TAG, NOTIFICATION_ID, notificationBuilder.build());
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+
+        notificationBuilder.setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.fui_ic_twitter_bird_white_24dp)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setContentInfo("Info");
+
+        notificationManager.notify(new Random().nextInt(), notificationBuilder.build());
+    }
+
+    private void showNotification(String title, String body){
+
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_DEFAULT);
+
+            notificationChannel.setDescription("Code sphere");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.BLUE);
+            notificationChannel.enableLights(true);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+
+        notificationBuilder.setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.fui_ic_twitter_bird_white_24dp)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setContentInfo("Info");
+
+        notificationManager.notify(new Random().nextInt(), notificationBuilder.build());
+    }
+
+    @Override
+    public void onNewToken(@NonNull @NotNull String s) {
+        super.onNewToken(s);
+
+        Log.d("FIREBASE TOKEN : ", s);
     }
 }

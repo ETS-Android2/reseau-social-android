@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import androidx.core.content.ContextCompat;
+import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +28,17 @@ import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.ui.mes_reseaux.ChatActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+
 
 /**
  * Created by Antoine Barbier on 5/15/21.
@@ -145,6 +156,49 @@ public class SearchGroupAdapter extends FirestoreRecyclerAdapter<Group, SearchGr
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(context, "Demande d'adhésion envoyé !", Toast.LENGTH_SHORT).show();
+
+                                        /**********************/
+                                        /* DÉBUT NOTIFICATION */
+                                        /**********************/
+
+                                        /*
+                                        *   1. On place un écouteur d'événement sur la liste des membres d'un groupe
+                                        *   2. On récupère cette liste et on regarde si on est dedans
+                                        *   3. Si c'est le cas alors on s'abonne au canal de communication (qui correspond au nom du groupe en minuscule et sans espace)
+                                        *   4. Lorsqu'on quitte un groupe ou on se fait exclure, on se désabonne du canal de communication
+                                        */
+
+                                        GroupHelper.getMembersListOfGroup(group.getName()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                                                ArrayList<String> listMembre = (ArrayList<String>) value.getData().get("members");
+
+                                                Log.d("LES MEMBRES SONT : ", listMembre.toString());
+
+                                                String groupNameWithoutSpace = group.getName().replaceAll("\\s+","").toLowerCase();
+                                                Log.d("Group abrégé : ", groupNameWithoutSpace);
+
+                                                if(listMembre.contains(BaseActivity.getUid())){
+                                                    BaseActivity.getMessaging().subscribeToTopic(groupNameWithoutSpace)
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) { }
+                                                            });
+
+                                                }
+                                                else{
+                                                    BaseActivity.getMessaging().unsubscribeFromTopic(groupNameWithoutSpace)
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull @NotNull Task<Void> task) { }
+                                                            });
+                                                }
+                                            }
+                                        });
+
+                                        /********************/
+                                        /* FIN NOTIFICATION */
+                                        /********************/
                                     }
                                 });
                     }
