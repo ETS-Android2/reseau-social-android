@@ -162,7 +162,12 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
 
 
             recyclerView = root.findViewById(R.id.recyclerView_group_posts);
-            configureRecyclerView(groupName, groupType);
+            if(groupType == null){
+                configureRecyclerView(groupName, "other");
+            }else{
+                configureRecyclerView(groupName, groupType);
+            }
+
 
         }
         return root;
@@ -185,8 +190,15 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
     // Seulement appeler quand les données du groupe sont chargé
     private void configureRecyclerView(String groupName, String groupType){
         //Configure Adapter & RecyclerView
-        this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
-                Glide.with(this), this, true, groupType.equals("chat"));
+        if(groupType.equals("chat")){
+            this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
+                    Glide.with(this), this, true, true);
+        }else{
+            this.postAdapter = new PostAdapter(generateOptionsForAdapter(PostHelper.getAllPostForGroup(groupName)),
+                    Glide.with(this), this, true);
+
+        }
+
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

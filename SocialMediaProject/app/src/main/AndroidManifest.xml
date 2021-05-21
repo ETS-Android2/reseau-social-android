@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialMediaProject">
-        <activity android:name=".ui.ImageFullScreenActivity"></activity>
+        <activity android:name=".ui.mes_reseaux.MainTestActivity"></activity>
+        <activity android:name=".ui.ImageFullScreenActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +41,7 @@
             android:name=".MainActivity"
             android:label="Home"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"></activity> <!-- NOTIFICATION SERVICE -->
+            android:windowSoftInputMode="adjustNothing" /> <!-- NOTIFICATION SERVICE -->
         <service android:name=".notifications.NotificationsService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

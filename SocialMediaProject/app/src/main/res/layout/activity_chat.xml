@@ -6,27 +6,11 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".ui.mes_reseaux.groupe.newPostActivity">
 
-<com.google.android.material.appbar.AppBarLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:theme="@style/Theme.SocialMediaProject.AppBarOverlay">
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </com.google.android.material.appbar.MaterialToolbar>
-</com.google.android.material.appbar.AppBarLayout>
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_group_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="?attr/actionBarSize"
-        />
+        android:layout_marginBottom="?attr/actionBarSize" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView_imageToSend"
