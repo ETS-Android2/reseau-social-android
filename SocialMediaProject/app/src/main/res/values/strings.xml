@@ -72,7 +72,7 @@
     <string name="group_subject">Sujet du groupe</string>
     <string name="group_access">Accès au groupe</string>
     <string name="group_publication">Publication</string>
-    <string name="group_notification">Désactivé les notifications</string>
+    <string name="group_notification">Désactiver les notifications</string>
     <string name="group_exit">Quitter le groupe</string>
     <string name="group_members">Membres du groupe</string>
     <string name="group_moderators">Gérer les modérateurs</string>
@@ -97,8 +97,7 @@
 
     <!-- Champs par défault d'un groupe -->
 
-    <string name="group_edit_name">Nom du groupe</string>
-    <string name="group_edit_privacy">Groupe privé</string>
+    <string name="group_edit_privacy">Mode privé</string>
     <string name="group_edit_subject">Sujet du groupe</string>
     <string name="group_edit_publications">Publications</string>
 

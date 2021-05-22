@@ -43,6 +43,7 @@ public class PostHelper {
                 .limit(50);
     }
 
+
     // --- GET ---
     public static Query getAllPost(){
         return PostHelper.getPostCollection()
@@ -70,9 +71,6 @@ public class PostHelper {
                 .whereEqualTo("group",name)
                 .orderBy("dateCreated");
     }
-
-
-
 
 
     // --- DELETE ---

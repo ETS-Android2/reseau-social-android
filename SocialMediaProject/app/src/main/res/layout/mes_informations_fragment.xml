@@ -45,10 +45,9 @@
         android:id="@+id/button_update_informations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="110dp"
-        android:layout_gravity="center"
+        android:layout_below="@+id/label_phone"
         android:text="@string/update_informations"/>
 
 

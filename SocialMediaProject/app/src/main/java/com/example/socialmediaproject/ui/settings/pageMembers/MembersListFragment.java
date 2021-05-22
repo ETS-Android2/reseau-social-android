@@ -24,12 +24,14 @@ import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
+import com.example.socialmediaproject.ui.settings.SettingsGroupFragment;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
-public class membersListFragment extends Fragment {
+public class MembersListFragment extends Fragment {
 
     Group currentGroup;
 
@@ -37,8 +39,8 @@ public class membersListFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     ListView allUser;
 
-    public static membersListFragment newInstance() {
-        return new membersListFragment();
+    public static MembersListFragment newInstance() {
+        return new MembersListFragment();
     }
 
     @Override
@@ -95,7 +97,13 @@ public class membersListFragment extends Fragment {
 
                 for(String id : currentGroup.getMembers()){
 
-                    UserHelper.getUser(id).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    UserHelper.getUser(id).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    })
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             userList.add(documentSnapshot.toObject(User.class));
@@ -133,7 +141,18 @@ public class membersListFragment extends Fragment {
 
         switch(item.getItemId()) {
             case android.R.id.home: // action sur la flèche de retour en arrière
-                getActivity().onBackPressed();
+                if(currentGroup.getType().equals("chat")){
+                    Bundle bundle = getArguments();
+                    bundle.putString("group_name",bundle.getString("group_name"));
+                    SettingsGroupFragment fragment = new SettingsGroupFragment();
+                    fragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container, fragment)
+                            .commitNow();
+                }else{
+                    getActivity().onBackPressed();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
