@@ -24,6 +24,7 @@ import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
+import com.example.socialmediaproject.ui.settings.SettingsGroupFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -140,7 +141,18 @@ public class MembersListFragment extends Fragment {
 
         switch(item.getItemId()) {
             case android.R.id.home: // action sur la flèche de retour en arrière
-                getActivity().onBackPressed();
+                if(currentGroup.getType().equals("chat")){
+                    Bundle bundle = getArguments();
+                    bundle.putString("group_name",bundle.getString("group_name"));
+                    SettingsGroupFragment fragment = new SettingsGroupFragment();
+                    fragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container, fragment)
+                            .commitNow();
+                }else{
+                    getActivity().onBackPressed();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
