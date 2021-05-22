@@ -140,7 +140,7 @@
 
     <fragment
         android:id="@+id/settingsGroupFragment_pageMembers"
-        android:name="com.example.socialmediaproject.ui.settings.pageMembers.membersListFragment"
+        android:name="com.example.socialmediaproject.ui.settings.pageMembers.MembersListFragment"
         android:label="MembersList"
         tools:layout="@layout/fragment_members_list">
         <action

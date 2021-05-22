@@ -30,6 +30,7 @@ import com.example.socialmediaproject.models.CodeAccess;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.ui.settings.pageEditGroup.SettingsEditGroupFragment;
+import com.example.socialmediaproject.ui.settings.pageMembers.MembersListFragment;
 import com.example.socialmediaproject.ui.settings.pageWaitlist.WaitlistFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -169,7 +170,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                 bundle.putString("group_name", groupName);
                 Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_settingsGroupFragment_pageMembers, bundle);
             }else{
-                WaitlistFragment fragment = new WaitlistFragment();
+                MembersListFragment fragment = new MembersListFragment();
                 fragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()

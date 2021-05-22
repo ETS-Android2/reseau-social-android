@@ -30,7 +30,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
-public class membersListFragment extends Fragment {
+public class MembersListFragment extends Fragment {
 
     Group currentGroup;
 
@@ -38,8 +38,8 @@ public class membersListFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     ListView allUser;
 
-    public static membersListFragment newInstance() {
-        return new membersListFragment();
+    public static MembersListFragment newInstance() {
+        return new MembersListFragment();
     }
 
     @Override
