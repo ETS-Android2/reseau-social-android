@@ -24,6 +24,7 @@ import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.User;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -95,7 +96,13 @@ public class membersListFragment extends Fragment {
 
                 for(String id : currentGroup.getMembers()){
 
-                    UserHelper.getUser(id).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    UserHelper.getUser(id).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    })
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             userList.add(documentSnapshot.toObject(User.class));

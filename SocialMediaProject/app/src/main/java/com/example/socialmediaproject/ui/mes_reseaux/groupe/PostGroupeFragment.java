@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -100,7 +101,12 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
             GroupHelper.getGroupRef(groupName).addSnapshotListener(new com.google.firebase.firestore.EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                            if(documentSnapshot.exists()){
+                            if (error != null) {
+                                Log.w("ERROOOOOOR", "Listen failed.", error);
+                                return;
+                            }
+
+                            if(documentSnapshot != null && documentSnapshot.exists()){
                                 currentGroup = documentSnapshot.toObject(Group.class);
 
                                 layout_group.setVisibility(View.VISIBLE);
@@ -152,10 +158,6 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                                         startActivity(intent);
                                     }
                                 });
-
-
-                            }else{
-                                Toast.makeText(getContext(),"Le groupe n'existe pas" , Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
