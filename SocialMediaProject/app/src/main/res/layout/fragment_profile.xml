@@ -33,7 +33,7 @@
             android:id="@+id/image_profile"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/default_bg_img_profile"
+            android:src="@drawable/launch_screen"
             android:layout_centerHorizontal="true"
             app:civ_circle_color_start="@color/colorPrimary"
             app:civ_circle_color_end="@color/colorLight"
