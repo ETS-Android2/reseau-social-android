@@ -24,17 +24,25 @@ import androidx.preference.PreferenceScreen;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.CodeAccessHelper;
 import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.CodeAccess;
 import com.example.socialmediaproject.models.Group;
+import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.ui.settings.pageEditGroup.SettingsEditGroupFragment;
 import com.example.socialmediaproject.ui.settings.pageWaitlist.WaitlistFragment;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.EventListener;
+import java.util.List;
 import java.util.Objects;
 
 import static androidx.core.content.ContextCompat.getSystemService;
@@ -191,6 +199,40 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+
+
+                            /**
+                             *
+                             * SUPRESSION DE TOUS LES POSTS ÉCRIT DANS LE GROUPE
+                             *
+                             */
+                            PostHelper.getAllPostForGroup(groupName).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    for(QueryDocumentSnapshot item : queryDocumentSnapshots){
+                                        Log.d("POST A SUPP", item.getId());
+                                        PostHelper.deletePost(item.getId()).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d("ERRROR", "error lors de la suppression du post :"+item.getId());
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
+
+
+
+
+
+
+
+
+
+
+
+
                             if(!currentGroup.getType().equals("chat")) {
                                 Navigation.findNavController(getView()).navigate(R.id.action_settingsGroupFragment_to_navigation_mes_reseaux);
                             }else{
