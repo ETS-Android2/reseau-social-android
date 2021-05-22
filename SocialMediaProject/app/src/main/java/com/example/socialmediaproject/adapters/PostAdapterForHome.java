@@ -18,12 +18,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.socialmediaproject.R;
 
 import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;
 
@@ -71,7 +73,7 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
 
         holder.messageContainer.setVisibility(View.GONE);
 
-
+        holder.shareButton.setVisibility(View.GONE);
         boolean currentUserIsAuthor = postList.get(position).getUserSender().equals(BaseActivity.getUid());
 
         GroupHelper.getGroup(postList.get(position).getGroup()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -94,12 +96,15 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
                         if(currentUserIsAuthor){
                             // Un appui long pour poucoir supprimer le message
 
-                                    String[] actions = {"Supprimer"};
+                                    String[] actions = {"Accéder au groupe"};
                                     builder.setItems(actions, (dialog, which) -> {
-                                        if (which == 0) { // Supprimer
-                                            //getSnapshots().getSnapshot(position).getReference().delete();
-                                            // notifyDataSetChanged();
-                                            Toast.makeText(context, "Suppression du post ! (à faire) ", Toast.LENGTH_SHORT).show();
+                                        if (which == 0) {
+
+
+                                            // suppression local
+
+
+                                            Toast.makeText(context, "Accéder au groupe : "+ postList.get(position).getGroup(), Toast.LENGTH_SHORT).show();
                                         }
                                     });
                         }else{
@@ -114,6 +119,7 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
                                         //getSnapshots().getSnapshot(position).getReference().delete();
                                         // notifyDataSetChanged();
                                         Toast.makeText(context, "Supprimer le post : (à faire)", Toast.LENGTH_SHORT).show();
+
                                     }
                                 });
                             }else if(postGroup.getModerators().contains(BaseActivity.getUid())
