@@ -9,9 +9,7 @@
 
             <SwitchPreferenceCompat
                 app:key="group_notification"
-                app:title="@string/group_notification"
-                android:summaryOn="Les notification du groupe sont désactivés"
-                android:summaryOff="Les notification du groupe sont activés" />
+                app:title="@string/group_notification" />
 
         </PreferenceCategory>
 

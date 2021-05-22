@@ -97,8 +97,7 @@
 
     <!-- Champs par défault d'un groupe -->
 
-    <string name="group_edit_name">Nom du groupe</string>
-    <string name="group_edit_privacy">Groupe privé</string>
+    <string name="group_edit_privacy">Mode privé</string>
     <string name="group_edit_subject">Sujet du groupe</string>
     <string name="group_edit_publications">Publications</string>
 
