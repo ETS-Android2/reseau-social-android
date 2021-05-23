@@ -26,6 +26,8 @@ import com.google.firebase.firestore.DocumentReference;
 
 import org.jetbrains.annotations.NotNull;
 
+import es.dmoral.toasty.Toasty;
+
 public class SignupTabFragment extends Fragment {
 
     EditText email, name, phone, password;
@@ -109,8 +111,9 @@ public class SignupTabFragment extends Fragment {
                     startActivity(intent);
                 }
                 else{
-                    Toast.makeText(getContext(), "Error ! " + task.getException().getMessage(), Toast.LENGTH_LONG);
+                    Toasty.error(getContext(), "Sign up failed : " + task.getException().getMessage(), Toasty.LENGTH_LONG, true).show();
                 }
+
             }
         });
     }
