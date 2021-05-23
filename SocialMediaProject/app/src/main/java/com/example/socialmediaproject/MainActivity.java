@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                value.getDocuments().forEach(group -> {
+                for(DocumentSnapshot group : value.getDocuments()){
 
                     List<String> membres = (List<String>) group.get("members");
 
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                     }
-                });
+                }
             }
         });
     }
