@@ -87,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
+                if(error != null){
+                    Log.w("Listen failed : ", "onEvent error", error);
+                    return;
+                }
+
                 value.getDocuments().forEach(group -> {
 
                     List<String> membres = (List<String>) group.get("members");
@@ -95,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                         PostHelper.getAllPostForGroup(group.get("name").toString()).addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
                                 if(error != null){
                                     Log.w("EXCEPTION", "Listen failed.", error);
                                     return;
