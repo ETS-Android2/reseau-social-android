@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginTabFragment extends Fragment {
 
     EditText email, password;
@@ -64,7 +66,7 @@ public class LoginTabFragment extends Fragment {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Logique métier forgotPassword pas encore implémentée...", Toast.LENGTH_LONG).show();
+                Toasty.info(getContext(), "Logique métier forgotPassword pas encore implémentée...", Toast.LENGTH_SHORT, true).show();
             }
         });
 
@@ -88,11 +90,11 @@ public class LoginTabFragment extends Fragment {
         boolean validate = true;
 
         if(email.isEmpty() || !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
-            Toast.makeText(getContext(), "The email address must be correct", Toast.LENGTH_LONG).show();
+            Toasty.warning(getContext(), "The email address must be correct", Toast.LENGTH_SHORT, true).show();
             validate = false;
         }
         else if(password.isEmpty() || password.length()<4){
-            Toast.makeText(getContext(), "Password must be at least 4 characters", Toast.LENGTH_LONG).show();
+            Toasty.warning(getContext(), "Password must be at least 4 characters", Toast.LENGTH_SHORT, true).show();
             validate = false;
         }
 
@@ -104,13 +106,13 @@ public class LoginTabFragment extends Fragment {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(getContext(),"User logged sucessfully", Toast.LENGTH_LONG).show();
+                    Toasty.success(getContext(), "User logged sucessfully !", Toast.LENGTH_SHORT, true).show();
 
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                 }
                 else{
-                    Toast.makeText(getContext(), "Error ! " + task.getException().getMessage(), Toast.LENGTH_LONG);
+                    Toasty.error(getContext(), "Sign in failed : " + task.getException().getMessage(), Toasty.LENGTH_LONG, true).show();
                 }
             }
         });

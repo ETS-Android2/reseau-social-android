@@ -89,7 +89,7 @@ public class SignupTabFragment extends Fragment {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(getContext(), "User created !", Toast.LENGTH_LONG).show();
+                    Toasty.success(getContext(), "User created !", Toast.LENGTH_SHORT, true).show();
 
                     DocumentReference documentReference = BaseActivity.getRefUser();
 
@@ -123,19 +123,19 @@ public class SignupTabFragment extends Fragment {
         boolean validate = true;
 
         if(name.isEmpty() || name.length()<3 || !name.matches("^([^0-9]*)$")){
-            Toast.makeText(getContext(), "The name must be at least 3 characters long and not contain number", Toast.LENGTH_LONG).show();
+            Toasty.warning(getContext(), "The name must be at least 3 characters long and not contain number", Toasty.LENGTH_LONG, true).show();
             validate = false;
         }
         else if(phone.isEmpty() || !phone.matches("^0[6-7]{1}[0-9]{8}$")){
-            Toast.makeText(getContext(), "The phone mustn't be empty and be correct", Toast.LENGTH_LONG).show();
+            Toasty.warning(getContext(), "The phone mustn't be empty and be correct", Toasty.LENGTH_LONG, true).show();
             validate = false;
         }
         else if(email.isEmpty() || !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
-            Toast.makeText(getContext(), "The email address must be correct", Toast.LENGTH_LONG).show();
+            Toasty.warning(getContext(), "The email address must be correct", Toasty.LENGTH_LONG, true).show();
             validate = false;
         }
         else if(password.isEmpty() || password.length()<4){
-            Toast.makeText(getContext(), "Password must be at least 4 characters", Toast.LENGTH_LONG).show();
+            Toasty.warning(getContext(), "Password must be at least 4 characters", Toasty.LENGTH_LONG, true).show();
             validate = false;
         }
 
