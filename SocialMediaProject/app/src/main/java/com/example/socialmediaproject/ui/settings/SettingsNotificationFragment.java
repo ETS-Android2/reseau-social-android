@@ -5,13 +5,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.base.BaseActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreference;
+import androidx.preference.SwitchPreferenceCompat;
 
 
 public class SettingsNotificationFragment extends PreferenceFragmentCompat {
@@ -19,6 +26,25 @@ public class SettingsNotificationFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.notifications_preferences, rootKey);
+
+        SwitchPreferenceCompat preferenceSwitch = findPreference("notif_disabled");
+
+        preferenceSwitch.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                if(newValue.equals(true)) {
+                    BaseActivity.beNotified = false;
+                    Toast.makeText(getContext(), "Les notifications sont désactivés", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    BaseActivity.beNotified = true;
+                    Toast.makeText(getContext(), "Les notifications sont activés", Toast.LENGTH_SHORT).show();
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override
