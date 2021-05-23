@@ -18,6 +18,8 @@ import androidx.navigation.Navigation;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import es.dmoral.toasty.Toasty;
+
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     Intent intent;
@@ -56,7 +58,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         if(key.equals("deconnexion")){
-            Toast.makeText(getContext(),"Déconnexion" , Toast.LENGTH_SHORT).show();
+            Toasty.success(getContext(), "Bye bye :-)", Toast.LENGTH_LONG, false).show();
 
             if(BaseActivity.isCurrentUserLogged())
                 BaseActivity.getAuth().signOut();
