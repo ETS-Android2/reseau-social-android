@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialmediaproject.R;
+import com.example.socialmediaproject.models.Notif;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,10 +21,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    public static List<Notif> notifs = new ArrayList<Notif>();
+    public static boolean beNotified = true;
 
     // --------------------
     // LIFE CYCLE

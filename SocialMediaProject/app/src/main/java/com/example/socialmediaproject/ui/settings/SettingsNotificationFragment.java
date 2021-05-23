@@ -1,6 +1,7 @@
 package com.example.socialmediaproject.ui.settings;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,7 +16,6 @@ import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsNotificationFragment extends PreferenceFragmentCompat {
 
-
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.notifications_preferences, rootKey);
@@ -25,6 +25,8 @@ public class SettingsNotificationFragment extends PreferenceFragmentCompat {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+
+
 
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

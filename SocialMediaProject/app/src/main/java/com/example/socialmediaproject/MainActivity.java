@@ -1,19 +1,49 @@
 package com.example.socialmediaproject;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.api.PostHelper;
+import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;
+import com.example.socialmediaproject.models.Notif;
+import com.example.socialmediaproject.models.User;
 import com.example.socialmediaproject.ui.login.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,9 +64,10 @@ public class MainActivity extends AppCompatActivity {
             //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
             setSupportActionBar(findViewById(R.id.materialToolbar));
             NavigationUI.setupWithNavController(navView, navController);
+
+            notification();
         }
     }
-
 
     @Override
     protected void onStart(){
@@ -49,5 +80,83 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
+    }
+
+    protected void notification(){
+        GroupHelper.getAllGroup(BaseActivity.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                value.getDocuments().forEach(group -> {
+
+                    List<String> membres = (List<String>) group.get("members");
+
+                    if(membres.contains(BaseActivity.getUid())){
+                        PostHelper.getAllPostForGroup(group.get("name").toString()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                                if(error != null){
+                                    Log.w("EXCEPTION", "Listen failed.", error);
+                                    return;
+                                }
+
+                                for(DocumentChange dc : value.getDocumentChanges()){
+
+                                    if(dc.getDocument().getData().get("dateCreated") == null)
+                                        return;
+
+                                    Date currentDate = new Date();
+                                    Date dateCreated = ((Timestamp)dc.getDocument().getData().get("dateCreated")).toDate();
+
+                                    long diff = TimeUnit.MILLISECONDS.toMinutes(currentDate.getTime() - dateCreated.getTime());
+
+                                    Log.d("DIFF : ", String.valueOf(diff));
+
+                                    if(!dc.getDocument().getData().get("userSender").toString().equals(BaseActivity.getUid()) && diff < 1 && BaseActivity.beNotified) {
+
+                                        switch (dc.getType()) {
+                                            case ADDED:
+                                                UserHelper.getUser(dc.getDocument().getData().get("userSender").toString()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                                                        User user = task.getResult().toObject(User.class);
+                                                        String content = dc.getDocument().getData().get("content").toString();
+                                                        String groupName = group.get("name").toString();
+
+                                                        // Notification
+                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                                            NotificationChannel channel = new NotificationChannel("n", "n", NotificationManager.IMPORTANCE_DEFAULT);
+
+                                                            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                                            manager.createNotificationChannel(channel);
+
+                                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "n")
+                                                                    .setContentTitle("Nouveau message envoyé par " + user.getUsername())
+                                                                    .setSmallIcon(R.drawable.twitter)
+                                                                    .setAutoCancel(true)
+                                                                    .setContentText(content);
+
+                                                            Notif notif = new Notif("Nouveau message posté par " + user.getUsername(), content);
+                                                            BaseActivity.notifs.add(notif);
+
+                                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                                            managerCompat.notify(999, builder.build());
+                                                        }
+                                                    }
+                                                });
+                                                break;
+                                            case MODIFIED:
+                                                break;
+                                            case REMOVED:
+                                                break;
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
 }
