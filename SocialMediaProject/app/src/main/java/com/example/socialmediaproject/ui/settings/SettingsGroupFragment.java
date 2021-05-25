@@ -192,7 +192,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                             }else{
                                getActivity().finish();
                             }
-                                Toast.makeText(getContext(), "Vous avez quitté le groupe !", Toast.LENGTH_SHORT).show();
+                                Toasty.success(getContext(), "Vous avez quitté le groupe !", Toast.LENGTH_SHORT, false).show();
                         }
                     });
         }

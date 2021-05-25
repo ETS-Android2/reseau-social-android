@@ -39,6 +39,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import org.jetbrains.annotations.NotNull;
 
+import es.dmoral.toasty.Toasty;
+
 
 /**
  * Created by Antoine Barbier and Antoine Brahimi on 4/26/21.
@@ -165,7 +167,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                     if (which == 0) { // Supprimer
                                         getSnapshots().getSnapshot(position).getReference().delete();
                                         // notifyDataSetChanged();
-                                        Toast.makeText(context, "Suppression du post ! ", Toast.LENGTH_SHORT).show();
+                                        Toasty.success(context, "Suppression du post ! ", Toast.LENGTH_SHORT, true).show();
                                     }
                                 });
                                 // create and show the alert dialog
@@ -229,7 +231,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                             case 1: // Supprimer
                                                 getSnapshots().getSnapshot(position).getReference().delete();
                                                 // notifyDataSetChanged();
-                                                Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
+                                                Toasty.success(context, "Post removed !", Toast.LENGTH_SHORT, true).show();
                                                 break;
                                         }
                                     });
@@ -248,7 +250,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                             if (which == 0) { // Supprimer
                                                 getSnapshots().getSnapshot(position).getReference().delete();
                                                 // notifyDataSetChanged();
-                                                Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
+                                                Toasty.success(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT, true).show();
                                             }
                                         });
                                     } else if (postGroup.getModerators().contains(BaseActivity.getUid())
@@ -260,7 +262,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                             if (which == 0) { // Supprimer
                                                 getSnapshots().getSnapshot(position).getReference().delete();
                                                 // notifyDataSetChanged();
-                                                Toast.makeText(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT).show();
+                                                Toasty.success(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT, true).show();
                                             }
                                         });
                                     } else {

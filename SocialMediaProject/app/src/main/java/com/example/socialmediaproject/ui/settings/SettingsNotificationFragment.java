@@ -20,6 +20,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 import androidx.preference.SwitchPreferenceCompat;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class SettingsNotificationFragment extends PreferenceFragmentCompat {
 
@@ -35,11 +37,11 @@ public class SettingsNotificationFragment extends PreferenceFragmentCompat {
 
                 if(newValue.equals(true)) {
                     BaseActivity.beNotified = false;
-                    Toast.makeText(getContext(), "Les notifications sont désactivés", Toast.LENGTH_SHORT).show();
+                    Toasty.success(getContext(), "Les notifications sont désactivés", Toast.LENGTH_SHORT, false).show();
                 }
                 else {
                     BaseActivity.beNotified = true;
-                    Toast.makeText(getContext(), "Les notifications sont activés", Toast.LENGTH_SHORT).show();
+                    Toasty.success(getContext(), "Les notifications sont activés", Toast.LENGTH_SHORT, false).show();
                 }
 
                 return true;
