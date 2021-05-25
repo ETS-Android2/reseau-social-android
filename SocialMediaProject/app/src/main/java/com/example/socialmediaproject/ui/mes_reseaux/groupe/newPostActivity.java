@@ -46,6 +46,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.UUID;
 
+import es.dmoral.toasty.Toasty;
+
 public class newPostActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -106,7 +108,8 @@ public class newPostActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(editText_content.getText().toString().matches("")){
-                    Toast.makeText(getApplicationContext(),"Vous devez saisir du texte avant de poster votre message !" , Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(), "Vous devez saisir du texte avant de poster votre message !", Toast.LENGTH_SHORT, true).show();
+
                 }else{
 
                     Log.d("=====> GROUP TYPE : ", groupType);
@@ -171,7 +174,7 @@ public class newPostActivity extends AppCompatActivity {
         return new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.error_unknown_error), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), "Error : " + e.getMessage(), Toast.LENGTH_LONG, true).show();
             }
         };
     }
@@ -222,13 +225,13 @@ public class newPostActivity extends AppCompatActivity {
                             Post post = new Post(content, group, userId, urlImg);
                             PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
 
-                            Toast.makeText(newPostActivity.this, "Image uploaded !", Toast.LENGTH_SHORT).show();
+                            Toasty.success(newPostActivity.this, "Image uploaded !", Toast.LENGTH_SHORT, true).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull @NotNull Exception e) {
-                            Toast.makeText(newPostActivity.this, "Failed to upload !", Toast.LENGTH_SHORT).show();
+                            Toasty.error(newPostActivity.this, "Failed to upload !", Toast.LENGTH_SHORT, true).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -243,8 +246,6 @@ public class newPostActivity extends AppCompatActivity {
             urlImg = "null";
             Post post = new Post(content, group, userId, urlImg);
             PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
-
-            Toast.makeText(newPostActivity.this, "No picture !", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -272,8 +273,8 @@ public class newPostActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "Message Sent",
                                             Toast.LENGTH_LONG).show();
                                 } catch (Exception ex) {
-                                    Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
-                                            Toast.LENGTH_LONG).show();
+                                    Toasty.warning(getApplicationContext(),ex.getMessage().toString(),
+                                            Toast.LENGTH_LONG, true).show();
                                     ex.printStackTrace();
                                 }
                             }
@@ -356,7 +357,7 @@ public class newPostActivity extends AppCompatActivity {
                                     finish();
                                     Log.i("Email Status : ", "Finished sending email...");
                                 } catch (android.content.ActivityNotFoundException ex) {
-                                    Toast.makeText(newPostActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                                    Toasty.warning(newPostActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT, true).show();
                                 }
                             }
                         }
