@@ -46,6 +46,8 @@ import java.util.EventListener;
 import java.util.List;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 import static androidx.core.content.ContextCompat.getSystemService;
 
 public class SettingsGroupFragment extends PreferenceFragmentCompat {
@@ -110,7 +112,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     String[] actions = {"Copier le code"};
                     builder.setItems(actions, (dialog, which) -> {
                         if (which == 0) {
-                            Toast.makeText(getContext(),"Le code est copié dans le presse-papier." , Toast.LENGTH_LONG).show();
+                            Toasty.success(getContext(),"Le code est copié dans le presse-papier." , Toast.LENGTH_LONG, false).show();
                             // On copie dans le presse papier le code généré
                             ClipboardManager clipboard = getSystemService(requireContext(), ClipboardManager.class);
                             ClipData clip = ClipData.newPlainText("invitation", documentReference.getId());
@@ -147,7 +149,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
         if(key.equals("group_waitlist")){
 
             if(currentGroup.getWaitlist().size() == 0){
-                Toast.makeText(getContext(),"Il n'y a personne dans la liste d'attente !" , Toast.LENGTH_SHORT).show();
+                Toasty.info(getContext(),"Il n'y a personne dans la liste d'attente !" , Toast.LENGTH_SHORT, false).show();
             }else{
                 if(!currentGroup.getType().equals("chat")){
                     bundle.putString("group_name", groupName);

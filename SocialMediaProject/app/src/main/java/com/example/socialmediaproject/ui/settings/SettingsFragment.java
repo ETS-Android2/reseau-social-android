@@ -53,12 +53,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         String key = preference.getKey();
 
         if(key.equals("notifications")){
-            Toast.makeText(getContext(),"Afficher page settings notifications !" , Toast.LENGTH_SHORT).show();
+            Toasty.info(getContext(),"Afficher page settings notifications !" , Toast.LENGTH_SHORT, false).show();
             Navigation.findNavController(getView()).navigate(R.id.action_settingsFragment_to_settingsNotificationFragment);
         }
 
         if(key.equals("deconnexion")){
-                Toasty.success(getContext(), "Bye bye :-)", Toast.LENGTH_SHORT, false).show();
+                Toasty.success(getContext(), "Déconnexion", Toast.LENGTH_SHORT, true).show();
 
             if(BaseActivity.isCurrentUserLogged())
                 BaseActivity.getAuth().signOut();
