@@ -2,21 +2,6 @@
     <!-- App title -->
     <string name="app_name">Socializing</string>
 
-    <!-- Introduction -->
-    <string name="skip_introduction">Skip</string>
-    <!-- Fragment 1 -->
-    <string name="title_fragment1">Create your</string>
-    <string name="subtitle_fragment1">Network</string>
-    <string name="description_fragment1">Customize your own social network by choosing a theme, a geographical location and much more… </string>
-    <!-- Fragment 2 -->
-    <string name="title_fragment2">Set up your</string>
-    <string name="subtitle_fragment2">Network</string>
-    <string name="description_fragment2">Public so that everyone has access or private to be in smaller numbers…</string>
-    <!-- Fragment 3 -->
-    <string name="title_fragment3">Share content</string>
-    <string name="subtitle_fragment3">on Network</string>
-    <string name="description_fragment3">You can share whatever you want : message, media, emails and be notified !</string>
-
     <!-- Home page -->
     <string name="welcome_login">Welcome to our App</string>
 

@@ -7,16 +7,16 @@
 
     <!-- Login -->
     <string name="email_login">Email</string>
-    <string name="password_login">Password</string>
-    <string name="forgotPassword_login">Forgot password</string>
-    <string name="button_login">Login</string>
+    <string name="password_login">Mot de passe</string>
+    <string name="forgotPassword_login">Mot de passe oublié</string>
+    <string name="button_login">Connexion</string>
 
     <!-- Signup -->
     <string name="email_signup">Email</string>
-    <string name="name_signup">Name</string>
-    <string name="phone_signup">Phone number</string>
-    <string name="password_signup">Password</string>
-    <string name="button_signup">Signup</string>
+    <string name="name_signup">Nom d\'utilisateur</string>
+    <string name="phone_signup">Numéro de téléphone</string>
+    <string name="password_signup">Mot de passe</string>
+    <string name="button_signup">S\'inscrire</string>
 
 
     <!-- Les titres des sections principale de la navigation -->
