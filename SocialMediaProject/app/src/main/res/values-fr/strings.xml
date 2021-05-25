@@ -1,0 +1,114 @@
+<resources>
+    <!-- App title -->
+    <string name="app_name">Socializing</string>
+
+    <!-- Home page -->
+    <string name="welcome_login">Welcome to our App</string>
+
+    <!-- Login -->
+    <string name="email_login">Email</string>
+    <string name="password_login">Password</string>
+    <string name="forgotPassword_login">Forgot password</string>
+    <string name="button_login">Login</string>
+
+    <!-- Signup -->
+    <string name="email_signup">Email</string>
+    <string name="name_signup">Name</string>
+    <string name="phone_signup">Phone number</string>
+    <string name="password_signup">Password</string>
+    <string name="button_signup">Signup</string>
+
+
+    <!-- Les titres des sections principale de la navigation -->
+    <string name="title_home">Acceuil</string>
+    <string name="title_reseaux">Mes Réseaux</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+
+    <string name="item_default">nom du post</string>
+    <string name="item_title_default">Titre du post</string>
+    <string name="item_subtitle_default">Soustitre du post</string>
+    <string name="item_content_text">Default content</string>
+    <string name="item_nbView">3000</string>
+    <string name="item_date_ago">1min</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+
+    <!-- Sync Preferences -->
+
+    <string name="profile_username">Nom utilisateur</string>
+    <string name="title_groupe">Nom du groupe</string>
+
+    <string name="title_activity_settings_notification">SettingsNotificationActivity</string>
+    <string name="notif_newPost">New posts</string>
+    <string name="notif_groupProposition">Group proposition</string>
+    <string name="title_settings_notification">Notifications</string>
+    <string name="addPost">ajouter un post</string>
+    <string name="long_latin">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod ex nec sagittis suscipit. Pellentesque et massa id turpis rutrum blandit vitae nec lectus. Etiam consequat, tellus sit amet faucibus interdum, neque odio scelerisque sem, id efficitur risus sapien at nunc. Vivamus quis ultrices elit, non auctor dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam viverra, velit nec ornare dignissim, lacus lacus malesuada nisi, eu elementum mi ligula a mauris. Phasellus non semper tortor, at condimentum mauris.  Curabitur a tortor justo. Nunc quis arcu aliquam ex maximus ultricies. Praesent eu enim in neque molestie pretium. Sed eget enim suscipit, hendrerit leo vel, lacinia sapien. Fusce in magna eu libero cursus hendrerit. Duis in magna convallis, dapibus velit sit amet, maximus eros. Maecenas ornare purus justo, eget hendrerit nulla porta ac. Proin viverra nisl sit amet est interdum pellentesque. Morbi ut diam quis metus feugiat sollicitudin. Sed id malesuada odio. Cras in lectus nibh. Nam interdum ante ligula. Cras pulvinar faucibus augue at varius.  Cras commodo lacus ut nulla ultrices, sit amet viverra arcu vehicula. Nunc purus metus, auctor et purus nec, sagittis gravida lectus. Nunc eleifend mattis sem, nec sagittis ligula aliquam at. Pellentesque facilisis in felis nec tristique. Nunc dictum vitae est eu mattis. Donec in lacus condimentum, bibendum ligula eu, auctor nisl. Fusce dapibus, orci vitae sollicitudin aliquam, enim dui sagittis lorem, quis ultricies ipsum leo sit amet neque. Nam nec elit leo. Integer eget tellus sed sem hendrerit consectetur. Vivamus sit amet velit tincidunt, ullamcorper purus eget, tempus neque.  Aliquam non elit mauris. Morbi malesuada mattis turpis, at pulvinar justo mollis quis. Sed lobortis tempus scelerisque. Vestibulum posuere, purus at rhoncus tincidunt, lorem velit luctus arcu, quis condimentum ligula diam id augue. Fusce lobortis vitae est ac posuere. Praesent eros dui, scelerisque vitae ullamcorper quis, bibendum non sapien. Nulla facilisi. Cras purus orci, dapibus in condimentum vel, congue eget sapien. Phasellus ultrices feugiat diam vel dictum.  Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis magna erat, aliquam vitae ornare a, rutrum nec justo. Curabitur ac ullamcorper nunc, a lobortis massa. In venenatis commodo malesuada. Sed rutrum lacus sit amet felis tempor, eget pretium elit convallis. Vivamus hendrerit mi ac facilisis tempus. Nulla sit amet tempus lacus. Nunc mattis enim eu eros imperdiet sollicitudin. Pellentesque eros ex, dictum bibendum imperdiet in, gravida vel urna. Aliquam eget nisl pellentesque, viverra mauris sed, molestie urna. Etiam neque ipsum, dictum nec velit sit amet, semper placerat ante.</string>
+    <string name="email_adress">Email adress</string>
+    <string name="phone_number">Phone number</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="update_informations">Update Informations</string>
+    <string name="nom_du_groupe">Nom du groupe</string>
+    <string name="group_name">Nom du groupe</string>
+    <string name="type_groupe">Type de groupe</string>
+    <string name="btn_create_groupe">Nouveau groupe</string>
+    <string name="group_type">Type du groupe</string>
+    <string name="group_subject">Sujet du groupe</string>
+    <string name="group_access">Accès au groupe</string>
+    <string name="group_publication">Publication</string>
+    <string name="group_notification">Désactiver les notifications</string>
+    <string name="group_exit">Quitter le groupe</string>
+    <string name="group_members">Membres du groupe</string>
+    <string name="group_moderators">Gérer les modérateurs</string>
+    <string name="group_edit">Modifier le groupe</string>
+    <string name="title_settings_alerts">Alertes</string>
+    <string name="delete_group">Supprimer le groupe</string>
+
+    <string name="title_activity_new_post">newPostActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_new_group">New group</string>
+    <string name="notif_disable">Disable notifications</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Champs par défault d'un groupe -->
+
+    <string name="group_edit_privacy">Mode privé</string>
+    <string name="group_edit_subject">Sujet du groupe</string>
+    <string name="group_edit_publications">Publications</string>
+
+    <!-- Settings d'un groupe -->
+
+    <string name="group_title_waitlist">Demandes d\'adhésions</string>
+    <string name="group_infos">Informations</string>
+    <string name="notification_title">Titre notification</string>
+    <string name="default_notification_channel_id">messages</string>
+
+    <string name="title_activity_chat">ChatActivity</string>
+
+
+    <!-- Les messages d'informations -->
+
+    <string name="messageNoGroupFound">Aucun groupe trouvé.</string>
+    <string name="messageNoGroup">Il n\'y a pas de groupe</string>
+    <string name="messageNoGroupType">Il n\'y a pas de groupe de ce type.</string>
+
+    <!-- Les messages d'erreurs -->
+
+    <string name="error_unknown_error">Erreur inconnu.</string>
+    <string name="button_send">Envoyer</string>
+    <string name="placeholder_post">Écrivez votre message ...</string>
+    <string name="placeholder_message">Message...</string>
+    <string name="username">username</string>
+    <string name="title_activity_main">MainActivity</string>
+
+</resources>
