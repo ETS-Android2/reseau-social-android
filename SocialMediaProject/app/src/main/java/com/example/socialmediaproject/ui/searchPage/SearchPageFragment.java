@@ -56,6 +56,8 @@ import com.google.firebase.firestore.Query;
 
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class SearchPageFragment extends Fragment implements SearchGroupAdapter.Listener {
 
@@ -269,7 +271,7 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
                             GroupHelper.addUserInGroup(groupName, BaseActivity.getUid()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(getContext(), "Code correct ! Accès au groupe -> " + groupName, Toast.LENGTH_SHORT).show();
+                                    Toasty.error(getContext(), "Code correct ! Accès au groupe -> " + groupName, Toast.LENGTH_SHORT, true).show();
 
                                     Bundle bundle = new Bundle();
                                     bundle.putString("group_name", groupName);
@@ -283,7 +285,7 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
                                 };
                             });
                         } else {
-                            Toast.makeText(getContext(), "Code non valide !" , Toast.LENGTH_LONG).show();
+                            Toasty.error(getContext(), "Code non valide !" , Toast.LENGTH_LONG, true).show();
                         }
                     }
                 });
