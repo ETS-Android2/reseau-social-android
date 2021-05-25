@@ -216,7 +216,7 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
 
                                         Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid(), urlImageToSend);
                                         PostHelper.createPostForGroup(message).addOnFailureListener(onFailureListener());
-                                        Toasty.info(getContext(), "Image uploaded !", Toast.LENGTH_SHORT, false).show();
+                                        Toasty.success(getContext(), "Message sent !", Toast.LENGTH_SHORT, true).show();
 
                                         // On reset
                                         editText_content.setText("");
@@ -238,6 +238,8 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
                         // Msg without picture
                         Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid(), "null");
                         PostHelper.createPostForGroup(message).addOnFailureListener(onFailureListener());
+
+                        Toasty.success(getContext(), "Message sent !", Toast.LENGTH_SHORT, true).show();
 
                         // On reset
                         editText_content.setText("");

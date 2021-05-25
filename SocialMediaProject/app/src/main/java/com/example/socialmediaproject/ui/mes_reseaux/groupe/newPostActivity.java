@@ -225,7 +225,7 @@ public class newPostActivity extends AppCompatActivity {
                             Post post = new Post(content, group, userId, urlImg);
                             PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
 
-                            Toasty.success(newPostActivity.this, "Image uploaded !", Toast.LENGTH_SHORT, true).show();
+                            Toasty.success(getApplicationContext(), "Message sent !", Toast.LENGTH_SHORT, true).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -246,6 +246,8 @@ public class newPostActivity extends AppCompatActivity {
             urlImg = "null";
             Post post = new Post(content, group, userId, urlImg);
             PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
+
+            Toasty.success(getApplicationContext(), "Message sent !", Toast.LENGTH_SHORT, true).show();
         }
     }
 
@@ -270,8 +272,7 @@ public class newPostActivity extends AppCompatActivity {
                                 try {
                                     SmsManager smsManager = SmsManager.getDefault();
                                     smsManager.sendTextMessage(user.getPhoneNumber(), null, content, null, null);
-                                    Toast.makeText(getApplicationContext(), "Message Sent",
-                                            Toast.LENGTH_LONG).show();
+                                    Toasty.success(getApplicationContext(), "SMS sent !", Toast.LENGTH_SHORT, true).show();
                                 } catch (Exception ex) {
                                     Toasty.warning(getApplicationContext(),ex.getMessage().toString(),
                                             Toast.LENGTH_LONG, true).show();
@@ -306,6 +307,7 @@ public class newPostActivity extends AppCompatActivity {
                             if(!user.getUid().equals(userId)){
 
                                 try {
+                                    Toasty.success(getApplicationContext(), "Email sent !", Toast.LENGTH_SHORT, true).show();
                                     JavaMailAPI javaMailAPI = new JavaMailAPI(newPostActivity.this, user.getEmail(), "Envoyé depuis l'app Socializing, groupe : " + group, content);
                                     javaMailAPI.execute();
                                 }
