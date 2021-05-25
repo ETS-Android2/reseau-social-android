@@ -32,6 +32,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import org.jetbrains.annotations.NotNull;
 
+import es.dmoral.toasty.Toasty;
+
 public class MesInformationsFragment extends Fragment {
 
     private MesInformationsViewModel mViewModel;
@@ -114,11 +116,11 @@ public class MesInformationsFragment extends Fragment {
         boolean validate = true;
 
         if(email.isEmpty() || !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
-            Toast.makeText(getContext(), "The email address must be correct", Toast.LENGTH_LONG).show();
+            Toasty.error(getContext(), "The email address must be correct", Toast.LENGTH_LONG, true).show();
             validate = false;
         }
         else if(phone.isEmpty() || !phone.matches("^0[6-7]{1}[0-9]{8}$")){
-            Toast.makeText(getContext(), "The phone mustn't be empty and be correct", Toast.LENGTH_LONG).show();
+            Toasty.error(getContext(), "The phone mustn't be empty and be correct", Toast.LENGTH_LONG, true).show();
             validate = false;
         }
 
@@ -130,7 +132,7 @@ public class MesInformationsFragment extends Fragment {
         BaseActivity.getRefUser().update("email", email);
         BaseActivity.getRefUser().update("phoneNumber", phone);
 
-        Toast.makeText(getContext(), "User's informations updated !", Toast.LENGTH_LONG).show();
+        Toasty.success(getContext(), "User's informations has been updated !", Toast.LENGTH_LONG, true).show();
     }
 
 }
