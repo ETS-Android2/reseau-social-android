@@ -13,6 +13,8 @@ import com.example.socialmediaproject.adapters.LoginAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
@@ -41,21 +43,21 @@ public class LoginActivity extends AppCompatActivity {
         microsoft.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Connexion via microsoft pas encore dispo...", Toast.LENGTH_LONG).show();
+                Toasty.info(getApplicationContext(), "Connexion via microsoft pas encore dispo...", Toast.LENGTH_SHORT, false).show();
             }
         });
 
         google.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Connexion via google pas encore dispo...", Toast.LENGTH_LONG).show();
+                Toasty.info(getApplicationContext(), "Connexion via google pas encore dispo...", Toast.LENGTH_SHORT, false).show();
             }
         });
 
         apple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Connexion via apple pas encore dispo...", Toast.LENGTH_LONG).show();
+                Toasty.info(getApplicationContext(), "Connexion via apple pas encore dispo...", Toast.LENGTH_SHORT, false).show();
             }
         });
 

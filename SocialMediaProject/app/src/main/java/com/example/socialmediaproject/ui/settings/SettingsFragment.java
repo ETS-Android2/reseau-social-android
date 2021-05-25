@@ -58,7 +58,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         if(key.equals("deconnexion")){
-            Toasty.success(getContext(), "Bye bye :-)", Toast.LENGTH_LONG, false).show();
+                Toasty.success(getContext(), "Bye bye :-)", Toast.LENGTH_SHORT, false).show();
 
             if(BaseActivity.isCurrentUserLogged())
                 BaseActivity.getAuth().signOut();
