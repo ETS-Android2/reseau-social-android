@@ -26,12 +26,18 @@
     <string name="forgotPassword_login">Forgot password</string>
     <string name="button_login">Login</string>
 
+    <!-- Gestions erreurs Login -->
+
     <!-- Signup -->
     <string name="email_signup">Email</string>
     <string name="name_signup">Name</string>
     <string name="phone_signup">Phone number</string>
     <string name="password_signup">Password</string>
     <string name="button_signup">Signup</string>
+
+    <!-- Gestions erreurs Signup -->
+
+
 
 
     <!-- Les titres des sections principale de la navigation -->

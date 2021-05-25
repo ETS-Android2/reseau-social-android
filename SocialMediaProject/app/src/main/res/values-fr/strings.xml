@@ -31,7 +31,7 @@
     <string name="name_signup">Nom d\'utilisateur</string>
     <string name="phone_signup">Numéro de téléphone</string>
     <string name="password_signup">Mot de passe</string>
-    <string name="button_signup">S\'inscrire</string>
+    <string name="button_signup">Inscription</string>
 
 
     <!-- Les titres des sections principale de la navigation -->
