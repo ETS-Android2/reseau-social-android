@@ -78,7 +78,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         try{
             ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.fragmentName_settings));
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getContext().getResources().getString(R.string.fragmentName_settings));
 
 
         }catch(Exception e){
@@ -104,7 +104,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         if(key.equals("deconnexion")){
-            Toasty.success(getContext(), getString(R.string.message_logout), Toast.LENGTH_SHORT, true).show();
+            Toasty.success(getContext(), getContext().getResources().getString(R.string.message_logout), Toast.LENGTH_SHORT, true).show();
 
             if(BaseActivity.isCurrentUserLogged())
                 BaseActivity.getAuth().signOut();

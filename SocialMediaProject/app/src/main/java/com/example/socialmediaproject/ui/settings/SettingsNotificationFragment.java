@@ -61,14 +61,14 @@ public class SettingsNotificationFragment extends PreferenceFragmentCompat {
 
         // title fragment in the header
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.FragmentTitle_notifications));
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getContext().getResources().getString(R.string.FragmentTitle_notifications));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.FragmentTitle_notifications));
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getContext().getResources().getString(R.string.FragmentTitle_notifications));
     }
 
     @Override

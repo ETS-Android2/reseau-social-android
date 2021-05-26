@@ -174,7 +174,7 @@
     <string name="text_member">Member</string>
     <string name="text_former_member">Former Member</string>
     <string name="toast_send_request_addUser">User is added !</string>
-    <string name="toast_delete_user_waitlist">User is added  from waiting list!</string>
+    <string name="toast_delete_user_waitlist">User is deleted from waiting list!</string>
     <string name="contact">Contact</string>
     <string name="promote_to_moderator">Promote to moderator</string>
     <string name="exclure">Kick out</string>
@@ -222,7 +222,7 @@
     <string name="message_past_code_done">" The code is copied to the clipboard."</string>
     <string name="message_nobody_in_waiting_list">There is no one on the waiting list!</string>
     <string name="message_exit_group">Vous avez quitté le groupe !</string>
-    <string name="setting_aucune_demande">" No request"</string>
+    <string name="setting_aucune_demande">No request</string>
     <string name="setting_text_demande">request</string>
     <string name="FragmentTitle_notifications">Notifications</string>
     <string name="notification_template_new_message">New message sent by</string>
@@ -233,4 +233,5 @@
     <string name="email">Email</string>
     <string name="sms">SMS</string>
     <string name="access_to_groupe">Enter</string>
+    <string name="vous_n_avez_pas_encore_publi_de_post">You haven\'t published a post yet.</string>
 </resources>
