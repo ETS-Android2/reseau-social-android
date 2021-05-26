@@ -87,6 +87,9 @@
 
     <string name="access_code">Saisir un code d\'accès pour accéder à un groupe privé :</string>
 
+    <string name="no_group">There is no group</string>
+
+
 
     <!-- User profile -->
     <string name="update_informations">Mettre à jour les informations</string>

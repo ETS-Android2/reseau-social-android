@@ -51,7 +51,7 @@ public class MesInformationsFragment extends Fragment {
 
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes informations");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.my_informations);
 
         btn = view.findViewById(R.id.button_update_informations);
 

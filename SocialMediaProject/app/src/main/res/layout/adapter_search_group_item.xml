@@ -35,7 +35,7 @@
         android:id="@+id/button_add"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="Ajouter"/>
+        android:text="@string/group_add"/>
 
 
 

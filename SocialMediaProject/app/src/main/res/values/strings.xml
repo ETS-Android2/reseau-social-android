@@ -73,6 +73,8 @@
 
     <string name="access_code">Enter an access code to join a private group :</string>
 
+    <string name="no_group">There is no group</string>
+
     <!-- User profile -->
     <string name="update_informations">Update Information</string>
     <string name="user_group">You haven\'t created any groups yet</string>
