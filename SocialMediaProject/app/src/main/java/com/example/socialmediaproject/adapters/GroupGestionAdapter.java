@@ -86,7 +86,6 @@ public class GroupGestionAdapter extends FirestoreRecyclerAdapter<Group, GroupGe
             button_add = itemView.findViewById(R.id.button_add);
         }
 
-        @SuppressLint("ResourceType")
         public void updateWithPost(Group group, RequestManager glide){
             Group currentItem = group;
             // Set Group Name View
@@ -105,7 +104,7 @@ public class GroupGestionAdapter extends FirestoreRecyclerAdapter<Group, GroupGe
             if(isAdmin){
                 // si l'utilisateur est déja dans le groupe
                 button_add.setEnabled(true);
-                button_add.setText(context.getString(R.id.settings));
+                button_add.setText(itemView.getContext().getResources().getString(R.string.settings));
                 button_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
