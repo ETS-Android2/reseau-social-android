@@ -161,7 +161,7 @@ public class MesReseauxFragment extends Fragment implements GroupAdapter.Listene
         // on enlève la fleche de retour en arrière
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes réseaux");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.my_networks);
     }
 
 

@@ -144,7 +144,7 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
     public void configureToolbar(){
         // on enlève l'affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Les groupes");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.groups);
     }
 
 

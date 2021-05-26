@@ -82,8 +82,9 @@
     <string name="group_add">Rejoindre</string>
     <string name="group_empty">Il n\'y a aucun message</string>
 
-    <!-- Group (waitlist) -->
     <string name="group_waitlist_add">Ajouter</string>
+
+    <string name="new_group">Nouveau groupe</string>
 
     <!-- User profile -->
     <string name="update_informations">Mettre à jour les informations</string>
@@ -103,6 +104,17 @@
     <string name="group_members">Membres du groupe</string>
     <string name="delete_group">Supprimer le groupe</string>
     <string name="group_notification">Désactiver les notifications</string>
+
+    <!-- Champs par défault d'un groupe -->
+    <string name="group_edit_privacy">Mode privé</string>
+    <string name="group_edit_subject">Sujet du groupe</string>
+    <string name="group_edit_publications">Publications</string>
+
+    <!-- Navigation -->
+    <string name="my_networks">Mes réseaux</string>
+    <string name="my_groups">Mes groupes</string>
+    <string name="groups">Les groupes</string>
+
 
 
     <!-- Sync Preferences -->
@@ -138,12 +150,6 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!-- Champs par défault d'un groupe -->
-
-    <string name="group_edit_privacy">Mode privé</string>
-    <string name="group_edit_subject">Sujet du groupe</string>
-    <string name="group_edit_publications">Publications</string>
-
     <!-- Settings d'un groupe -->
 
     <string name="title_activity_chat">ChatActivity</string>
@@ -162,5 +168,12 @@
     <string name="placeholder_message">Message...</string>
     <string name="username">username</string>
     <string name="title_activity_main">MainActivity</string>
+
+
+    <string name="settings_category_general">Général</string>
+    <string name="settings_dark_mode">Mode sombre</string>
+    <string name="settings_activated">Activé</string>
+    <string name="settings_desactivated">Désactivé</string>
+    <string name="settings_log_out">Se déconnecter</string>
 
 </resources>

@@ -67,7 +67,7 @@ public class NewGroupFragment extends Fragment {
 
 
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nouveau Groupe");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.new_group);
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

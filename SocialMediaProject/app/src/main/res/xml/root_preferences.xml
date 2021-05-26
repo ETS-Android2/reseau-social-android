@@ -8,31 +8,17 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Général">
+    <PreferenceCategory app:title="@string/settings_category_general">
 
-        <!--
-        <Preference
-            app:key="informations"
-            app:title="Personnal informations" />
-
-        <Preference
-            app:key="activity"
-            app:title="Your activity" />
--->
         <SwitchPreference
             app:key="theme_dark_mode"
-            app:summaryOff="Désactivé"
-            app:summaryOn="Activé"
-            app:title="Dark mode" />
-
-        <!--
-        <Preference
-            app:key="help"
-            app:title="Help" /> -->
+            app:summaryOff="@string/settings_desactivated"
+            app:summaryOn="@string/settings_activated"
+            app:title="@string/settings_dark_mode" />
 
         <Preference
             app:key="deconnexion"
-            app:title="Se deconnecter" />
+            app:title="@string/settings_log_out" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Own colors -->
-    <color name="colorPrimary">#383842</color>
+    <color name="colorPrimary">#5C5BE5</color>
+    <color name="colorPrimarySurface">#383842</color>
 
     <color name="colorSecondary">#9292E3</color>
 

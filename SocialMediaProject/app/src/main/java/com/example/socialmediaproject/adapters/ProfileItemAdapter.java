@@ -62,6 +62,7 @@ public class ProfileItemAdapter extends BaseAdapter {
 
         String itemTitle = currentItem.getTitle();
         String mnenonic = currentItem.getMnenonic();
+        int itemPosition = currentItem.getItem();
 
         // get item icon view
         ImageView itemIconView = view.findViewById(R.id.item_icon);
@@ -81,22 +82,17 @@ public class ProfileItemAdapter extends BaseAdapter {
         // accéder à la notification
         view.setOnClickListener(v -> {
 
-            final String createGroup = context.getResources().getString(R.string.group_create);
-            final String myPosts = context.getResources().getString(R.string.myPosts);
-            final String manageMyGroups = context.getResources().getString(R.string.group_manage);
-            final String myInformations = context.getResources().getString(R.string.my_informations);
-
-            switch (itemTitle){
-                case "Créer un groupe":
+            switch (itemPosition){
+                case 0:
                     Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_navigation_newGroup);
                     break;
-                case "Mes posts":
+                case 1:
                     Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myPostsFragment);
                     break;
-                case "Gérer mes groupes":
+                case 2:
                     Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_myGroupsFragment);
                     break;
-                case "Mes informations":
+                case 3:
                     Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_my_informationsFragment);
                     break;
                 default:

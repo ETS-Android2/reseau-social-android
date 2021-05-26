@@ -54,10 +54,11 @@
             app:layout_constraintVertical_bias="0" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:visibility="invisible"
             android:id="@+id/fab_google"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/colorBackgroundCard"
             android:elevation="35dp"
             android:src="@drawable/google"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -66,11 +67,12 @@
             app:layout_constraintTop_toBottomOf="@+id/view_pager" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:visibility="invisible"
             android:id="@+id/fab_microsoft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/colorBackgroundCard"
             android:elevation="35dp"
             android:src="@drawable/microsoft"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -80,11 +82,12 @@
             app:layout_constraintTop_toBottomOf="@+id/view_pager" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:visibility="invisible"
             android:id="@+id/fab_apple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/colorBackgroundCard"
             android:elevation="35dp"
             android:src="@drawable/apple"
             app:layout_constraintBottom_toBottomOf="parent"

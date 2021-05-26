@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.api.GroupHelper;
+import com.example.socialmediaproject.api.PostHelper;
 import com.example.socialmediaproject.api.UserHelper;
 import com.example.socialmediaproject.base.BaseActivity;
 import com.example.socialmediaproject.models.Group;
@@ -33,6 +34,7 @@ import com.example.socialmediaproject.ui.ImageFullScreenActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -111,6 +113,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Post model){
         boolean currentUserIsAuthor = model.getUserSender().equals(BaseActivity.getUid());
 
+
         /**
          * On affiche rien pour l'instant (on attent que les données soit récupérer avant d'afficher le layout)
          */
@@ -165,9 +168,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                 String[] actions = {"Supprimer"};
                                 builder.setItems(actions, (dialog, which) -> {
                                     if (which == 0) { // Supprimer
-                                        getSnapshots().getSnapshot(position).getReference().delete();
-                                        // notifyDataSetChanged();
-                                        Toasty.success(context, "Suppression du post ! ", Toast.LENGTH_SHORT, true).show();
+                                        deletePost(position);
                                     }
                                 });
                                 // create and show the alert dialog
@@ -226,9 +227,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                     builder.setItems(actions, (dialog, which) -> {
                                         switch (which) {
                                             case 0: // Supprimer
-                                                getSnapshots().getSnapshot(position).getReference().delete();
-                                                // notifyDataSetChanged();
-                                                Toasty.success(context, "Post removed !", Toast.LENGTH_SHORT, true).show();
+                                                deletePost(position);
                                                 break;
                                         }
                                     });
@@ -245,9 +244,8 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                         String[] actions = {"Supprimer"};
                                         builder.setItems(actions, (dialog, which) -> {
                                             if (which == 0) { // Supprimer
-                                                getSnapshots().getSnapshot(position).getReference().delete();
-                                                // notifyDataSetChanged();
-                                                Toasty.success(context, "Le post est supprimé", Toast.LENGTH_SHORT, true).show();
+                                                deletePost(position);
+
                                             }
                                         });
                                     } else if (postGroup.getModerators().contains(BaseActivity.getUid())
@@ -257,9 +255,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                         String[] actions = {"Supprimer"};
                                         builder.setItems(actions, (dialog, which) -> {
                                             if (which == 0) { // Supprimer
-                                                getSnapshots().getSnapshot(position).getReference().delete();
-                                                // notifyDataSetChanged();
-                                                Toasty.success(context, "Le post est supprimé", Toast.LENGTH_SHORT, true).show();
+                                                deletePost(position);
                                             }
                                         });
                                     } else {
@@ -330,6 +326,23 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                 }
             }});
 
+    }
+
+    void deletePost(int position){
+        try{
+            /*PostHelper.deletePost(getSnapshots().getSnapshot(position).getId()).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toasty.error(context, "La suppression à échoué  ! ", Toast.LENGTH_SHORT, true).show();
+                }
+            });*/
+            getSnapshots().getSnapshot(position).getReference().delete();
+        }catch (Exception e){
+            Toasty.error(context, "La suppression à échoué  ! ", Toast.LENGTH_SHORT, true).show();
+        }finally {
+            notifyDataSetChanged();
+            Toasty.success(context, "Le post est supprimé", Toast.LENGTH_SHORT, true).show();
+        }
     }
 
 

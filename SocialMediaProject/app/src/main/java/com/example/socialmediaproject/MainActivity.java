@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
@@ -38,6 +40,7 @@ import androidx.navigation.Navigation;
 
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -55,6 +58,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if(BaseActivity.isCurrentUserLogged()){
+
+            /**
+             *
+             * On regarde les paramètres de l'application pour choisir le mode sombre ou le mode classique
+             */
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+            Boolean modeSombre = settings.getBoolean("theme_dark_mode",false);
+            AppCompatDelegate.setDefaultNightMode(modeSombre ?
+                        AppCompatDelegate.MODE_NIGHT_YES :
+                        AppCompatDelegate.MODE_NIGHT_NO);
+
+
+
             Log.d("===========> ", "USER IS LOGGED !");
             setContentView(R.layout.activity_main);
             BottomNavigationView navView = findViewById(R.id.bottomAppBar);

@@ -62,7 +62,7 @@ public class MyGroupsFragment extends Fragment implements GroupGestionAdapter.Li
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // title fragment in the header bar
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes groupes");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.my_groups);
     }
 
     private void configureRecyclerView(){

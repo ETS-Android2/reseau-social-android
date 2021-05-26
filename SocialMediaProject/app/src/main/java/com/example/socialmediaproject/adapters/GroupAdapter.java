@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,11 +48,12 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
     @Override
     protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Group model) {
 
-        holder.updateWithMessage(model, this.glide);
+        holder.updateWithMessage(model, this.glide, context);
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
         return new MyViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_group_item, parent, false));
     }
@@ -78,7 +80,7 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
 
         }
 
-        public void updateWithMessage(Group model, RequestManager glide){
+        public void updateWithMessage(Group model, RequestManager glide, Context context){
 
             itemTitleView.setText(model.getName());
 
@@ -90,6 +92,7 @@ public class GroupAdapter extends FirestoreRecyclerAdapter<Group, GroupAdapter.M
             }
 
             // Affichage de l'icone qui illustre le type du groupe
+            iv_imageType.setColorFilter(ContextCompat.getColor(context, R.color.colorTitle));
             switch(model.getType()){
                 case "post":
                     iv_imageType.setImageResource(R.drawable.ic_users_solid);

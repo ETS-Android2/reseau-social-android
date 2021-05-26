@@ -91,10 +91,10 @@ public class ProfileFragment extends Fragment {
 
         // list of posts
         List<ProfileItem> profileItemList = new ArrayList<>();
-        profileItemList.add(new ProfileItem(createGroup,"add_circle"));
-        profileItemList.add(new ProfileItem(myPosts,"article"));
-        profileItemList.add(new ProfileItem(manageMyGroups,"groups"));
-        profileItemList.add(new ProfileItem(myInformations,"info"));
+        profileItemList.add(new ProfileItem(createGroup,"add_circle", 0));
+        profileItemList.add(new ProfileItem(myPosts,"article", 1));
+        profileItemList.add(new ProfileItem(manageMyGroups,"groups", 2));
+        profileItemList.add(new ProfileItem(myInformations,"info", 3));
 
         // get list view
         ListView allPost = (ListView) root.findViewById(R.id.profileListView);

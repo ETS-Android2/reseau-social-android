@@ -13,57 +13,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <include layout="@layout/group_header"
-                android:id="@+id/header_group"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_group_posts"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textViewRecyclerViewEmpty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    -->
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/group_header"
-            android:id="@+id/header_group"/>
+        <include
+            android:id="@+id/header_group"
+            layout="@layout/group_header" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_group_posts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"/>
+            android:layout_below="@+id/header_group"
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/textViewRecyclerViewEmpty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/header_group"
             android:layout_margin="20dp"
-            android:textAlignment="center"
-            android:text="@string/group_empty"/>
-    </LinearLayout>
+            android:text="@string/group_empty"
+            android:textAlignment="center" />
+    </RelativeLayout>
 
-</RelativeLayout>
 
 
     </androidx.core.widget.NestedScrollView>
