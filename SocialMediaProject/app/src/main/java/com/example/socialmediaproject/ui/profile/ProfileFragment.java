@@ -84,12 +84,17 @@ public class ProfileFragment extends Fragment {
         // on enlève la fleche de retour en arrière
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        final String createGroup = getContext().getResources().getString(R.string.group_create);
+        final String myPosts = getContext().getResources().getString(R.string.myPosts);
+        final String manageMyGroups = getContext().getResources().getString(R.string.group_manage);
+        final String myInformations = getContext().getResources().getString(R.string.my_informations);
+
         // list of posts
         List<ProfileItem> profileItemList = new ArrayList<>();
-        profileItemList.add(new ProfileItem("Créer un groupe","add_circle"));
-        profileItemList.add(new ProfileItem("Mes posts","article"));
-        profileItemList.add(new ProfileItem("Gérer mes groupes","groups"));
-        profileItemList.add(new ProfileItem("Mes informations","info"));
+        profileItemList.add(new ProfileItem(createGroup,"add_circle"));
+        profileItemList.add(new ProfileItem(myPosts,"article"));
+        profileItemList.add(new ProfileItem(manageMyGroups,"groups"));
+        profileItemList.add(new ProfileItem(myInformations,"info"));
 
         // get list view
         ListView allPost = (ListView) root.findViewById(R.id.profileListView);
@@ -106,7 +111,10 @@ public class ProfileFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 //builder.setTitle("Action");
 
-                String[] actions = {"Modifier l'image de profile", "Se deconnecter"};
+                String change_profile = getContext().getResources().getString(R.string.profile_change_profile_picture);
+                String logout = getContext().getResources().getString(R.string.profile_logout);
+
+                String[] actions = {change_profile, logout};
                 builder.setItems(actions, (dialog, which) -> {
                     switch (which) {
                         case 0:

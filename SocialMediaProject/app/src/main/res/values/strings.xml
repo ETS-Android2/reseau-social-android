@@ -57,11 +57,14 @@
 
     <!-- Profile -->
     <string name="profile">Profile</string>
+    <string name="profile_change_profile_picture">Change profile picture</string>
+    <string name="profile_logout">Logout</string>
 
 
     <!-- Post -->
     <string name="placeholder_post">Enter your message...</string>
     <string name="addPost">add a post</string>
+    <string name="myPosts">Mes posts</string> <!-- A modifier -->
 
     <!-- Group -->
     <string name="group_name">Group name</string>
@@ -72,6 +75,9 @@
     <string name="group_publication">Publication</string>
 
     <string name="btn_create_groupe">New group</string>
+    <string name="group_create">Créer un groupe</string>  <!-- A modifier -->
+
+    <string name="group_manage">Gérer mes groupes</string> <!-- Gérer mes groupes -->
 
     <string name="group_add">Join</string>
     <string name="group_empty">There is no message</string>
@@ -83,6 +89,7 @@
     <string name="update_informations">Update Information</string>
     <string name="user_group">You haven\'t created any groups yet</string>
     <string name="user_post">You haven\'t sent any posts yet</string>
+    <string name="my_informations">Mes informations</string>
 
 
 

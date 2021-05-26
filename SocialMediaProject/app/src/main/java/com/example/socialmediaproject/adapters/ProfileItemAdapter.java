@@ -80,6 +80,12 @@ public class ProfileItemAdapter extends BaseAdapter {
         View finalView = view;
         // accéder à la notification
         view.setOnClickListener(v -> {
+
+            final String createGroup = context.getResources().getString(R.string.group_create);
+            final String myPosts = context.getResources().getString(R.string.myPosts);
+            final String manageMyGroups = context.getResources().getString(R.string.group_manage);
+            final String myInformations = context.getResources().getString(R.string.my_informations);
+
             switch (itemTitle){
                 case "Créer un groupe":
                     Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_navigation_newGroup);

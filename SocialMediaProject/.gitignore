@@ -3,6 +3,7 @@
 /local.properties
 *.icloud
 
+/.idea
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
