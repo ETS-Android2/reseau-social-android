@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:onClick="onClick"
         android:clickable="true"
-        android:text="@string/forgotPassword_login"
+        android:text="@string/forgottenPassword_login"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="1"
         android:layout_marginTop="5dp"

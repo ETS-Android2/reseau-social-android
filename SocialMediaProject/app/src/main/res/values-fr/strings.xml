@@ -23,7 +23,7 @@
     <!-- Login -->
     <string name="email_login">Email</string>
     <string name="password_login">Mot de passe</string>
-    <string name="forgotPassword_login">Mot de passe oublié</string>
+    <string name="forgottenPassword_login">Mot de passe oublié</string>
     <string name="button_login">Connexion</string>
 
     <!-- Signup -->
@@ -35,7 +35,6 @@
 
 
     <!-- Les titres des sections principale de la navigation -->
-    <string name="title_home">Acceuil</string>
     <string name="title_reseaux">Mes Réseaux</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_profile">Profile</string>
@@ -47,6 +46,20 @@
     <string name="item_nbView">3000</string>
     <string name="item_date_ago">1min</string>
     <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Home -->
+    <string name="title_home">Acceuil</string>
+
+    <!-- Search -->
+
+    <!-- My Networks -->
+
+    <!-- Notifications -->
+
+    <!-- Profile -->
+
+    <!-- Post -->
+    <string name="placeholder_post">Écrivez votre message ...</string>
 
 
     <!-- Sync Preferences -->
@@ -121,7 +134,6 @@
 
     <string name="error_unknown_error">Erreur inconnu.</string>
     <string name="button_send">Envoyer</string>
-    <string name="placeholder_post">Écrivez votre message ...</string>
     <string name="placeholder_message">Message...</string>
     <string name="username">username</string>
     <string name="title_activity_main">MainActivity</string>

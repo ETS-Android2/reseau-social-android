@@ -23,10 +23,8 @@
     <!-- Login -->
     <string name="email_login">Email</string>
     <string name="password_login">Password</string>
-    <string name="forgotPassword_login">Forgot password</string>
+    <string name="forgottenPassword_login">Forgotten password</string>
     <string name="button_login">Login</string>
-
-    <!-- Gestions erreurs Login -->
 
     <!-- Signup -->
     <string name="email_signup">Email</string>
@@ -35,16 +33,10 @@
     <string name="password_signup">Password</string>
     <string name="button_signup">Signup</string>
 
-    <!-- Gestions erreurs Signup -->
-
-
-
-
-    <!-- Les titres des sections principale de la navigation -->
-    <string name="title_home">Acceuil</string>
+    <!-- Les titres des sections principales de la navigation -->
     <string name="title_reseaux">Mes Réseaux</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_profile">Profile</string>
+    <string name="title_profile">Profil</string>
 
     <string name="item_default">nom du post</string>
     <string name="item_title_default">Titre du post</string>
@@ -53,6 +45,23 @@
     <string name="item_nbView">3000</string>
     <string name="item_date_ago">1min</string>
     <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Home -->
+    <string name="title_home">Home</string>
+
+    <!-- Search -->
+
+    <!-- My Networks -->
+
+    <!-- Notifications -->
+
+    <!-- Profile -->
+
+
+    <!-- Post -->
+    <string name="placeholder_post">Enter your message...</string>
+
+
 
 
     <!-- Sync Preferences -->
@@ -127,7 +136,6 @@
 
     <string name="error_unknown_error">Erreur inconnu.</string>
     <string name="button_send">Envoyer</string>
-    <string name="placeholder_post">Écrivez votre message ...</string>
     <string name="placeholder_message">Message...</string>
     <string name="username">username</string>
     <string name="title_activity_main">MainActivity</string>
