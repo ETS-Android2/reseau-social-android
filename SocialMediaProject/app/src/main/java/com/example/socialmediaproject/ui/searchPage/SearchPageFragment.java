@@ -274,7 +274,7 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        Toasty.success(getContext(), getContext().getResources().getString(R.string.message_access_code_correct)+ " " + groupName, Toast.LENGTH_SHORT, true).show();
+                                        //Toasty.success(getContext(), getContext().getResources().getString(R.string.message_access_code_correct)+ " " + groupName, Toast.LENGTH_SHORT, true).show();
 
                                         Bundle bundle = new Bundle();
                                         bundle.putString("group_name", groupName);
