@@ -96,7 +96,7 @@ public class ProfileFragment extends Fragment {
         allPost.setAdapter(new ProfileItemAdapter(getContext(), profileItemList));
 
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Profile");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.profile);
 
         // edit profile picture
         img.setOnClickListener(new View.OnClickListener() {

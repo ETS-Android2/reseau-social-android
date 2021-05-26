@@ -57,6 +57,7 @@
     <!-- Notifications -->
 
     <!-- Profile -->
+    <string name="profile">Profil</string>
 
     <!-- Post -->
     <string name="placeholder_post">Écrivez votre message ...</string>

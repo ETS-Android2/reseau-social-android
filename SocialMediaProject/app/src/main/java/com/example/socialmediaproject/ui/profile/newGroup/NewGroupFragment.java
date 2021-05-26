@@ -39,6 +39,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import es.dmoral.toasty.Toasty;
+
 public class NewGroupFragment extends Fragment {
 
     private AutoCompleteTextView spinnerGroupType;
@@ -62,7 +64,7 @@ public class NewGroupFragment extends Fragment {
 
 
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nouveau Groupe");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.btn_create_groupe);
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -101,7 +103,7 @@ public class NewGroupFragment extends Fragment {
                                 spinnerGroupType.getText().toString().matches("") ||
                                 spinnerGroupAccess.getText().toString().matches("") ||
                                 spinnerGroupSubject.getText().toString().matches("")){
-                            Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
+                            Toasty.error(getContext(), "Vous devez remplir tous les champs demandé !", Toast.LENGTH_SHORT, true).show();
                         }else{
                             Group groupToCreate = new Group(editText_groupName.getText().toString(),
                                     spinnerGroupType.getText().toString(),
