@@ -63,8 +63,7 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
         this.context = parent.getContext();
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater
-                .inflate(R.layout.adapter_post_item, parent, false);
+        View view = inflater.inflate(R.layout.adapter_post_item, parent, false);
         return new ViewHolder(view);
     }
 
