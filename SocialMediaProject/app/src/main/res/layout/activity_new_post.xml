@@ -38,7 +38,7 @@
                     android:id="@+id/toolbar_post"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                    android:background="@color/fui_transparent"
                     android:textColor="@color/white"
                     android:drawablePadding="8dp"
                     android:gravity="center_vertical"

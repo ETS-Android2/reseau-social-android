@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:textSize="15sp"
-        android:textColor="@color/black"
+        android:textColor="@color/colorTitle"
         android:paddingRight="15dp"
         android:paddingLeft="15dp"
         android:text="User name"/>

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:textColor="@color/black"
+            android:textColor="@color/colorTitle"
             android:textStyle="bold"
             android:text="@string/group_name" />
         <TextView
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:textColor="@color/black"
+            android:textColor="@color/colorTitle"
             android:text="Type" />
     </LinearLayout>
 

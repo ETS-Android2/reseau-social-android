@@ -1,9 +1,12 @@
 package com.example.socialmediaproject.ui.profile.newGroup;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,11 +21,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.socialmediaproject.R;
@@ -39,16 +44,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import es.dmoral.toasty.Toasty;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewGroupFragment extends Fragment {
 
     private AutoCompleteTextView spinnerGroupType;
     private AutoCompleteTextView spinnerGroupAccess;
-    private AutoCompleteTextView spinnerGroupPublication;
     private AutoCompleteTextView spinnerGroupSubject;
-
-    private FirebaseFirestore fStore;
 
     private NewGroupViewModel mViewModel;
     @Nullable private User modelCurrentUser;
@@ -64,7 +67,7 @@ public class NewGroupFragment extends Fragment {
 
 
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.btn_create_groupe);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Nouveau Groupe");
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -89,11 +92,15 @@ public class NewGroupFragment extends Fragment {
 
         Button createGroup = view.findViewById(R.id.button_create_group);
 
+
         UserHelper.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 modelCurrentUser = documentSnapshot.toObject(User.class);
 
+                List<String> listType = new ArrayList<>(List.of("post", "chat", "email", "sms"));
+                List<String> listAccess = new ArrayList<>(List.of("public", "private"));
 
                 createGroup.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -103,27 +110,37 @@ public class NewGroupFragment extends Fragment {
                                 spinnerGroupType.getText().toString().matches("") ||
                                 spinnerGroupAccess.getText().toString().matches("") ||
                                 spinnerGroupSubject.getText().toString().matches("")){
-                            Toasty.error(getContext(), "Vous devez remplir tous les champs demandé !", Toast.LENGTH_SHORT, true).show();
+                            Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
                         }else{
-                            Group groupToCreate = new Group(editText_groupName.getText().toString(),
-                                    spinnerGroupType.getText().toString(),
-                                    spinnerGroupSubject.getText().toString(),
-                                    spinnerGroupAccess.getText().toString(),
-                                    modelCurrentUser.getUid());
-                            GroupHelper.createGroup(groupToCreate).addOnFailureListener(onFailureListener());
 
-                            // On passe le nom du groupe entre les fragments
-                            Bundle bundle = new Bundle();
+                            if(listType.contains(spinnerGroupType.getText().toString()) &&
+                                    listAccess.contains(spinnerGroupAccess.getText().toString())){
 
-                            // Navigation vers le fragment qui affiche le groupe
-                            bundle.putString("group_name", editText_groupName.getText().toString());
-                            if(spinnerGroupType.getText().toString().equals("chat")){
-                                Intent intent = new Intent(getContext(), ChatActivity.class);
-                                intent.putExtras(bundle);
-                                getContext().startActivity(intent);
+                                Group groupToCreate = new Group(editText_groupName.getText().toString(),
+                                        spinnerGroupType.getText().toString(),
+                                        spinnerGroupSubject.getText().toString(),
+                                        spinnerGroupAccess.getText().toString(),
+                                        modelCurrentUser.getUid());
+                                GroupHelper.createGroup(groupToCreate).addOnFailureListener(onFailureListener());
+
+                                // On passe le nom du groupe entre les fragments
+                                Bundle bundle = new Bundle();
+
+                                // Navigation vers le fragment qui affiche le groupe
+                                bundle.putString("group_name", editText_groupName.getText().toString());
+                                if(spinnerGroupType.getText().toString().equals("chat")){
+                                    Intent intent = new Intent(getContext(), ChatActivity.class);
+                                    intent.putExtras(bundle);
+                                    getContext().startActivity(intent);
+                                }else{
+                                    Navigation.findNavController(view).navigate(R.id.action_navigation_newGroup_to_navigation_groupe, bundle);
+                                }
                             }else{
-                                Navigation.findNavController(view).navigate(R.id.action_navigation_newGroup_to_navigation_groupe, bundle);
+
+                                Toast.makeText(getContext(),"Un champ n'est pas correct !" , Toast.LENGTH_SHORT).show();
+
                             }
+
 
                         }
 

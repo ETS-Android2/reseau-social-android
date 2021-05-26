@@ -51,7 +51,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_group_posts"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"/>
 
         <TextView
             android:id="@+id/textViewRecyclerViewEmpty"

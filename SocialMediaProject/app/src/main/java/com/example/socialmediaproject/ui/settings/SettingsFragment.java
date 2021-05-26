@@ -7,16 +7,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.ui.login.LoginActivity;
 import com.example.socialmediaproject.R;
 import com.example.socialmediaproject.base.BaseActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.Navigation;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreference;
 
 import es.dmoral.toasty.Toasty;
 
@@ -27,18 +31,40 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
+
+        SwitchPreference preferenceSwitchDarkMode = findPreference("theme_dark_mode");
+
+        this.configToolBar();
+
+        preferenceSwitchDarkMode.setChecked(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES);
+        // Changer le groupe en privé ou public
+        preferenceSwitchDarkMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Toasty.info(getContext(), newValue.equals(true) ? "Activé" : "Désactivé" , Toast.LENGTH_SHORT, false).show();
+                AppCompatDelegate.setDefaultNightMode(newValue.equals(true) ?
+                        AppCompatDelegate.MODE_NIGHT_YES :
+                        AppCompatDelegate.MODE_NIGHT_NO);
+                configToolBar();
+                return true;
+
+            }
+        });
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+    }
 
-        // affichage de la flèche retour en arrière dans le menu
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Paramètres");
+    void configToolBar(){
+        try{
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Paramètres");
+        }catch(Exception e){
+            Toasty.error(getContext(), "erroooooor" , Toast.LENGTH_SHORT, false).show();
+        }
     }
 
     @Override

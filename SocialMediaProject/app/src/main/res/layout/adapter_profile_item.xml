@@ -16,7 +16,7 @@
         android:id="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/colorTitle"
         android:textSize="15dp"
         android:paddingRight="15dp"
         android:layout_toRightOf="@+id/item_icon"

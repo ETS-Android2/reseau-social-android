@@ -271,7 +271,7 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
                             GroupHelper.addUserInGroup(groupName, BaseActivity.getUid()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toasty.error(getContext(), "Code correct ! Accès au groupe -> " + groupName, Toast.LENGTH_SHORT, true).show();
+                                    Toasty.success(getContext(), "Code correct ! Accès au groupe -> " + groupName, Toast.LENGTH_SHORT, true).show();
 
                                     Bundle bundle = new Bundle();
                                     bundle.putString("group_name", groupName);

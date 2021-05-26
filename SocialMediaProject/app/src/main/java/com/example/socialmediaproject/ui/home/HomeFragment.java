@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerView_home_posts);
 
         // Add a divider between posts
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
 
         this.configureToolbar();
