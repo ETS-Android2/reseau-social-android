@@ -306,7 +306,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     }
 
                     assert preferenceEditMembersGroup != null;
-                    preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() + " "+ "demande" +
+                    preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() + " "+ "membre" +
                             (currentGroup.getMembers().size() <= 1 ? " " : "s"));
 
                     // Si le compte connecté est l'admin du groupe
