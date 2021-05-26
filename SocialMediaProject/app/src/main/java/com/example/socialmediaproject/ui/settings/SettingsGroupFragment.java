@@ -293,7 +293,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
                     // On affiche tout une fois le groue chargé
                     preferenceGeneral.setVisible(true);
-                    preferenceCategorieNotifications.setVisible(true);
+                    preferenceCategorieNotifications.setVisible(false);
 
                     if(currentGroup.getWaitlist().size() == 0){
 
