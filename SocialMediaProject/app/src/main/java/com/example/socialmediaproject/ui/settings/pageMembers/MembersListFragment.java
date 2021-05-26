@@ -52,7 +52,7 @@ public class MembersListFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Membres du groupe");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.member_list);
     }
 
     @Override

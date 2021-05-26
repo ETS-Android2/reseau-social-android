@@ -246,7 +246,7 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
 
     void openPrivateGroup(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Saisir un code d'accès à un groupe privé pour le rejoindre : ");
+        builder.setTitle(R.string.access_code);
 
         // Set up the input
         final EditText input = new EditText(getContext());
