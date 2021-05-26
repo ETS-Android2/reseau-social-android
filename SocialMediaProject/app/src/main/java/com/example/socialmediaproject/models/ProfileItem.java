@@ -7,11 +7,13 @@ public class ProfileItem {
 
     private String title;
     private String mnenonic;
+    private int item;
 
     // --- CONSTRUCTOR ---
-    public ProfileItem(String title, String mnenonic){
+    public ProfileItem(String title, String mnenonic, int item){
         this.title = title;
         this.mnenonic = mnenonic;
+        this.item = item;
     }
 
     // --- GETTERS ---
@@ -19,6 +21,7 @@ public class ProfileItem {
     public String getMnenonic() {
         return mnenonic;
     }
+    public int getItem() { return item; }
 
     // --- SETTERS ---
     public void setTitle(String title){ this.title = title;}

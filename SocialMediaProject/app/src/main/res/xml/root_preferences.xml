@@ -32,7 +32,7 @@
 
         <Preference
             app:key="deconnexion"
-            app:title="Se deconnecter" />
+            app:title="Se déconnecter" />
     </PreferenceCategory>
 
 </PreferenceScreen>

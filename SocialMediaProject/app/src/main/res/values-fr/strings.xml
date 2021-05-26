@@ -22,32 +22,33 @@
 
     <!-- Login -->
     <string name="email_login">Email</string>
-    <string name="password_login">Password</string>
-    <string name="forgottenPassword_login">Forgotten password</string>
-    <string name="button_login">Login</string>
+    <string name="password_login">Mot de passe</string>
+    <string name="forgottenPassword_login">Mot de passe oublié</string>
+    <string name="button_login">Connexion</string>
 
     <!-- Signup -->
     <string name="email_signup">Email</string>
-    <string name="name_signup">Name</string>
-    <string name="phone_signup">Phone number</string>
-    <string name="password_signup">Password</string>
-    <string name="button_signup">Signup</string>
+    <string name="name_signup">Nom d\'utilisateur</string>
+    <string name="phone_signup">Numéro de téléphone</string>
+    <string name="password_signup">Mot de passe</string>
+    <string name="button_signup">Inscription</string>
 
-    <!-- Les titres des sections principales de la navigation -->
+
+    <!-- Les titres des sections principale de la navigation -->
     <string name="title_reseaux">Mes Réseaux</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_profile">Profil</string>
+    <string name="title_profile">Profile</string>
 
     <string name="item_default">nom du post</string>
     <string name="item_title_default">Titre du post</string>
-    <string name="item_subtitle_default">Sous titre du post</string>
+    <string name="item_subtitle_default">Soustitre du post</string>
     <string name="item_content_text">Default content</string>
     <string name="item_nbView">3000</string>
     <string name="item_date_ago">1min</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Home -->
-    <string name="title_home">Home</string>
+    <string name="title_home">Accueil</string>
 
     <!-- Search -->
 
@@ -56,41 +57,39 @@
     <!-- Notifications -->
 
     <!-- Profile -->
-    <string name="profile">Profile</string>
-    <string name="profile_change_profile_picture">Change profile picture</string>
-    <string name="profile_logout">Logout</string>
-
+    <string name="profile">Profil</string>
+    <string name="profile_change_profile_picture">Changer l\'image de profil</string>
+    <string name="profile_logout">Déconnexion</string>
 
     <!-- Post -->
-    <string name="placeholder_post">Enter your message...</string>
-    <string name="addPost">add a post</string>
-    <string name="myPosts">Mes posts</string> <!-- A modifier -->
+    <string name="placeholder_post">Écrivez votre message ...</string>
+    <string name="addPost">ajouter un post</string>
+    <string name="myPosts">Mes posts</string>
 
     <!-- Group -->
-    <string name="group_name">Group name</string>
+    <string name="group_name">Nom du groupe</string>
 
-    <string name="group_type">Group type</string>
-    <string name="group_subject">Group subject</string>
-    <string name="group_access">Group access</string>
+    <string name="group_type">Type du groupe</string>
+    <string name="group_subject">Sujet du groupe</string>
+    <string name="group_access">Accès au groupe</string>
     <string name="group_publication">Publication</string>
 
-    <string name="btn_create_groupe">New group</string>
-    <string name="group_create">Créer un groupe</string>  <!-- A modifier -->
+    <string name="btn_create_groupe">Nouveau groupe</string>
+    <string name="group_create">Créer un groupe</string>
 
-    <string name="group_manage">Gérer mes groupes</string> <!-- Gérer mes groupes -->
+    <string name="group_manage">Gérer mes groupes</string>
 
-    <string name="group_add">Join</string>
-    <string name="group_empty">There is no message</string>
+    <string name="group_add">Rejoindre</string>
+    <string name="group_empty">Il n\'y a aucun message</string>
 
     <!-- Group (waitlist) -->
-    <string name="group_waitlist_add">Add</string>
+    <string name="group_waitlist_add">Ajouter</string>
 
     <!-- User profile -->
-    <string name="update_informations">Update Information</string>
-    <string name="user_group">You haven\'t created any groups yet</string>
-    <string name="user_post">You haven\'t sent any posts yet</string>
+    <string name="update_informations">Mettre à jour les informations</string>
+    <string name="user_group">Vous n\'avez pas encore créer de groupe.</string>
+    <string name="user_post">Vous n\'avez pas encore publié de post.</string>
     <string name="my_informations">Mes informations</string>
-
 
 
     <!-- Sync Preferences -->

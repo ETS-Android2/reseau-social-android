@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:textAlignment="center"
-            android:text="Il n'y a pas de post "/>
+            android:text="@string/group_empty"/>
     </LinearLayout>
 
 </RelativeLayout>

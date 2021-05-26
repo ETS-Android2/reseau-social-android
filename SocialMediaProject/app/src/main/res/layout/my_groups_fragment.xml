@@ -16,6 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:textAlignment="center"
-        android:text="Vous n'avez pas encore créer de groupe."/>
+        android:text="@string/user_group"/>
 
 </FrameLayout>
