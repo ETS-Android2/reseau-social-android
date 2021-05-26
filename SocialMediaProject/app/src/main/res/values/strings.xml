@@ -33,19 +33,6 @@
     <string name="password_signup">Password</string>
     <string name="button_signup">Signup</string>
 
-    <!-- Les titres des sections principales de la navigation -->
-    <string name="title_reseaux">Mes Réseaux</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_profile">Profil</string>
-
-    <string name="item_default">nom du post</string>
-    <string name="item_title_default">Titre du post</string>
-    <string name="item_subtitle_default">Sous titre du post</string>
-    <string name="item_content_text">Default content</string>
-    <string name="item_nbView">3000</string>
-    <string name="item_date_ago">1min</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-
     <!-- Home -->
     <string name="title_home">Home</string>
 
@@ -103,6 +90,19 @@
     <string name="group_members">Group members</string>
     <string name="delete_group">Delete the group</string>
     <string name="group_notification">Disable notifications</string>
+
+    <!-- Les titres des sections principales de la navigation -->
+    <string name="title_reseaux">Mes Réseaux</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profil</string>
+
+    <string name="item_default">nom du post</string>
+    <string name="item_title_default">Titre du post</string>
+    <string name="item_subtitle_default">Sous titre du post</string>
+    <string name="item_content_text">Default content</string>
+    <string name="item_nbView">3000</string>
+    <string name="item_date_ago">1min</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 
     <!-- Sync Preferences -->
