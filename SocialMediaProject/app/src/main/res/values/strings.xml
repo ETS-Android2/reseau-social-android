@@ -222,7 +222,7 @@
     <string name="message_past_code_done">" The code is copied to the clipboard."</string>
     <string name="message_nobody_in_waiting_list">There is no one on the waiting list!</string>
     <string name="message_exit_group">Vous avez quitté le groupe !</string>
-    <string name="setting_aucune_demande">" No request"</string>
+    <string name="setting_aucune_demande">No request</string>
     <string name="setting_text_demande">request</string>
     <string name="FragmentTitle_notifications">Notifications</string>
     <string name="notification_template_new_message">New message sent by</string>

@@ -297,16 +297,16 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
                     if(currentGroup.getWaitlist().size() == 0){
 
-                        preferenceEditWaitlistGroup.setSummary(getString(R.string.setting_aucune_demande));
+                        preferenceEditWaitlistGroup.setSummary(getContext().getResources().getString(R.string.setting_aucune_demande));
                     }else{
                         assert preferenceEditWaitlistGroup != null;
 
-                        preferenceEditWaitlistGroup.setSummary(currentGroup.getWaitlist().size() + getString(R.string.setting_text_demande) +
+                        preferenceEditWaitlistGroup.setSummary(currentGroup.getWaitlist().size() + " "+ getString(R.string.setting_text_demande) +
                                 (currentGroup.getWaitlist().size() == 1 ? " " : "s" ));
                     }
 
                     assert preferenceEditMembersGroup != null;
-                    preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() + getString(R.string.setting_text_demande) +
+                    preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() + " "+ getContext().getResources().getString(R.string.setting_text_demande) +
                             (currentGroup.getMembers().size() <= 1 ? " " : "s"));
 
                     // Si le compte connecté est l'admin du groupe

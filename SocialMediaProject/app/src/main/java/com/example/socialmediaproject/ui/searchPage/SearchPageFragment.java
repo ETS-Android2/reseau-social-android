@@ -274,7 +274,7 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        Toasty.success(getContext(), getString(R.string.message_access_code_correct)+ " " + groupName, Toast.LENGTH_SHORT, true).show();
+                                        Toasty.success(getContext(), getContext().getResources().getString(R.string.message_access_code_correct)+ " " + groupName, Toast.LENGTH_SHORT, true).show();
 
                                         Bundle bundle = new Bundle();
                                         bundle.putString("group_name", groupName);
@@ -289,19 +289,19 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
                                 });
                             } else {
 
-                                Toasty.error(getContext(), getString(R.string.message_access_code_invalid) , Toast.LENGTH_LONG, true).show();
+                                Toasty.error(getContext(), getContext().getResources().getString(R.string.message_access_code_invalid) , Toast.LENGTH_LONG, true).show();
                             }
                         }
                     });
 
                 }else{
 
-                    Toasty.warning(getContext(), getString(R.string.message_access_code_empty) , Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(getContext(), getContext().getResources().getString(R.string.message_access_code_empty) , Toast.LENGTH_LONG, true).show();
                 }
             }
         });
 
-        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -320,9 +320,9 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
     public void onDataChanged() {
         // 7 - Show TextView in case RecyclerView is empty
         if(typeGroupFragment.equals("all")){
-            textViewRecyclerViewEmpty.setText(getString(R.string.message_no_public_group_type_all));
+            textViewRecyclerViewEmpty.setText(getContext().getResources().getString(R.string.message_no_public_group_type_all));
         }else{
-            textViewRecyclerViewEmpty.setText(getString(R.string.message_no_public_group_type));
+            textViewRecyclerViewEmpty.setText(getContext().getResources().getString(R.string.message_no_public_group_type));
         }
 
         textViewRecyclerViewEmpty.setVisibility(this.searchGroupAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
