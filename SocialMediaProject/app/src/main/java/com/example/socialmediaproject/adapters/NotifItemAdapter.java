@@ -70,7 +70,7 @@ public class NotifItemAdapter extends BaseAdapter {
 
         View finalView = view;
         // accéder à la notification
-        view.setOnClickListener(v -> Toast.makeText(context, "Voir la notification : " + itemTitle , Toast.LENGTH_SHORT).show());
+        //view.setOnClickListener(v -> Toast.makeText(context, "Voir la notification : " + itemTitle , Toast.LENGTH_SHORT).show());
 
         return view;
     }

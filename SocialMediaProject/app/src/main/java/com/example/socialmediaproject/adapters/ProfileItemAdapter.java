@@ -96,7 +96,6 @@ public class ProfileItemAdapter extends BaseAdapter {
                     Navigation.findNavController(finalView).navigate(R.id.action_navigation_profile_to_my_informationsFragment);
                     break;
                 default:
-                    Toast.makeText(context, "Voir : " + itemTitle , Toast.LENGTH_SHORT).show();
                     break;
             }
 

@@ -178,5 +178,22 @@
     <string name="settings_activated">Activé</string>
     <string name="settings_desactivated">Désactivé</string>
     <string name="settings_log_out">Se déconnecter</string>
+    <string name="waiting_acceptation">En attente</string>
+    <string name="toast_send_request_waitinglist">En attente d\'acceptation !</string>
+    <string name="text_admin">Administrateur</string>
+    <string name="text_moderator">Modérateur</string>
+    <string name="text_member">Membre</string>
+    <string name="text_former_member">Ancien membre</string>
+    <string name="toast_send_request_addUser">Utilisateur ajouté !</string>
+    <string name="toast_delete_user_waitlist">Utilisateur supprimé de la liste d\'attente !</string>
+    <string name="contact">Contacter</string>
+    <string name="promote_to_moderator">Promote to moderator</string>
+    <string name="exclure">Exclure</string>
+    <string name="demote_to_member">Rétrograder à membre</string>
+    <string name="toast_contact_user">Contacter l\'utilisateur (À faire) !</string>
+    <string name="text_day">d</string>
+    <string name="text_hour">h</string>
+    <string name="text_min">min</string>
+    <string name="text_now">Maintenant</string>
 
 </resources>

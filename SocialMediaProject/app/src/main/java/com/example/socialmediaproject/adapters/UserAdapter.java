@@ -100,7 +100,7 @@ public class UserAdapter extends BaseAdapter {
                                     currentGroup.removeFromWaitlist(currentItem.getUid());
                                     userList.remove(i);
                                     notifyDataSetChanged();
-                                    Toast.makeText(context, "Utilisateur ajouté !", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, context.getResources().getString(R.string.toast_send_request_addUser), Toast.LENGTH_SHORT).show();
                                     if(userList.size()==0){
                                         ((Activity) viewGroup.getContext()).onBackPressed();
                                     }
@@ -121,7 +121,7 @@ public class UserAdapter extends BaseAdapter {
                                     currentGroup.removeFromWaitlist(currentItem.getUid());
                                     userList.remove(i);
                                     notifyDataSetChanged();
-                                    Toast.makeText(context, "Utilisateur supprimé de la liste d'attente! ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, context.getResources().getString(R.string.toast_delete_user_waitlist), Toast.LENGTH_SHORT).show();
                                     if(userList.size()==0){
                                         ((Activity) viewGroup.getContext()).onBackPressed();
                                     }
@@ -152,7 +152,7 @@ public class UserAdapter extends BaseAdapter {
 
             // on écrit le role de l'utilisateur
             if(this.isAdmin(currentItem.getUid())){
-                itemRoleView.setText("Admin");
+                itemRoleView.setText(context.getResources().getString(R.string.text_admin));
                 itemRoleView.setTextColor(Color.RED);
 
                 if(!this.isAdmin(BaseActivity.getUid())){
@@ -161,7 +161,7 @@ public class UserAdapter extends BaseAdapter {
                 }
 
             }else if(this.isModerator(currentItem.getUid())){
-                itemRoleView.setText("Moderator");
+                itemRoleView.setText(context.getResources().getString(R.string.text_moderator));
                 itemRoleView.setTextColor(Color.parseColor("#388E3C"));
 
                 // On défini les droit en fonction de l'utilisateur connecté
@@ -177,7 +177,7 @@ public class UserAdapter extends BaseAdapter {
 
 
             }else{
-                itemRoleView.setText("Member");
+                itemRoleView.setText(context.getResources().getString(R.string.text_member));
                 itemRoleView.setTextColor(Color.GRAY);
 
                 if(this.isAdmin(BaseActivity.getUid())){
@@ -208,13 +208,13 @@ public class UserAdapter extends BaseAdapter {
 
     private void changeToMember(String uid, View view){
         TextView itemRoleView = view.findViewById(R.id.user_role);
-        itemRoleView.setText("Member");
+        itemRoleView.setText(context.getResources().getString(R.string.text_member));
         itemRoleView.setTextColor(Color.GRAY);
     }
 
     private void changeToModerator(String uid, View view){
         TextView itemRoleView = view.findViewById(R.id.user_role);
-        itemRoleView.setText("Moderator");
+        itemRoleView.setText(context.getResources().getString(R.string.text_moderator));
         itemRoleView.setTextColor(Color.parseColor("#388E3C"));
     }
 
@@ -224,11 +224,14 @@ public class UserAdapter extends BaseAdapter {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(currentItem.getUsername());
             // add a list
-            String[] actions = {"Contact", "Demote to member", "Exclure"};
+            String[] actions = {
+                    context.getResources().getString(R.string.contact),
+                    context.getResources().getString(R.string.demote_to_member),
+                    context.getResources().getString(R.string.exclure)};
             builder.setItems(actions, (dialog, which) -> {
                 switch (which) {
                     case 0: // Contacter
-                        Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getResources().getString(R.string.toast_contact_user)  , Toast.LENGTH_SHORT).show();
                         break;
                     case 1: // Retrograder à simple membre
                         GroupHelper.demoteModeratorToMember(currentGroup.getName(),currentItem.getUid())
@@ -237,9 +240,7 @@ public class UserAdapter extends BaseAdapter {
                                     public void onSuccess(Void aVoid) {
                                         changeToMember(currentItem.getUid(), view);
                                         currentGroup.removeToModerators(currentItem.getUid());
-                                        dialogToEditAMember(view, position, currentItem);
-                                        Toast.makeText(context, "Retrograder à simple membre !", Toast.LENGTH_SHORT).show();
-                                    }
+                                        dialogToEditAMember(view, position, currentItem);}
                                 });
 
                         break;
@@ -251,9 +252,7 @@ public class UserAdapter extends BaseAdapter {
                                         currentGroup.removeToModerators(currentItem.getUid());
                                         currentGroup.removeToMembers(currentItem.getUid());
                                         userList.remove(position);
-                                        notifyDataSetChanged();
-                                        Toast.makeText(context, "Exclure l'utilisateur !", Toast.LENGTH_SHORT).show();
-                                    }
+                                        notifyDataSetChanged();}
                                 });
                         break;
                 } }); // create and show the alert dialog
@@ -269,11 +268,14 @@ public class UserAdapter extends BaseAdapter {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(currentItem.getUsername());
             // add a list
-            String[] actions = {"Contact", "Promote to Moderator", "Exclure"};
+            String[] actions = {
+                    context.getResources().getString(R.string.contact),
+                    context.getResources().getString(R.string.promote_to_moderator),
+                    context.getResources().getString(R.string.exclure)};
             builder.setItems(actions, (dialog, which) -> {
                 switch (which) {
                     case 0: // Contacter
-                        Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getResources().getString(R.string.toast_contact_user)  , Toast.LENGTH_SHORT).show();
                         break;
                     case 1: // Promouvoir au role de modérateur
                         GroupHelper.promoteMemberToModerator(currentGroup.getName(),currentItem.getUid())
@@ -282,9 +284,7 @@ public class UserAdapter extends BaseAdapter {
                                     public void onSuccess(Void aVoid) {
                                         changeToModerator(currentItem.getUid(), view);
                                         currentGroup.addToModerators(currentItem.getUid());
-                                        dialogToEditAModerator(view, position, currentItem);
-                                        Toast.makeText(context, "Promouvoir au role de modérateur !"  , Toast.LENGTH_SHORT).show();
-                                    }
+                                        dialogToEditAModerator(view, position, currentItem);}
                                 });
 
                         break;
@@ -296,9 +296,7 @@ public class UserAdapter extends BaseAdapter {
                                         currentGroup.removeToModerators(currentItem.getUid());
                                         currentGroup.removeToMembers(currentItem.getUid());
                                         userList.remove(position);
-                                        notifyDataSetChanged();
-                                        Toast.makeText(context, "Exclure l'utilisateur !", Toast.LENGTH_SHORT).show();
-                                    }
+                                        notifyDataSetChanged();}
                                 });
                         break;
                 } }); // create and show the alert dialog
@@ -315,11 +313,14 @@ public class UserAdapter extends BaseAdapter {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(currentItem.getUsername());
             // add a list
-            String[] actions = {"Contacter"};
+            String[] actions = {
+                    // contacter
+                    context.getResources().getString(R.string.contact)
+            };
             builder.setItems(actions, (dialog, which) -> {
                 switch (which) {
                     case 0: // Contacter
-                        Toast.makeText(context, "Contacter l'utilisateur !"  , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getResources().getString(R.string.toast_contact_user)  , Toast.LENGTH_SHORT).show();
                         break;
                 } }); // create and show the alert dialog
 

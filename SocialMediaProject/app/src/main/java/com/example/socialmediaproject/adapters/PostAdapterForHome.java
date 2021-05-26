@@ -135,66 +135,7 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
 
             shareButton = itemView.findViewById(R.id.item_share);
         }
-/*
-        public void updateWithPost(Post currentItem){
 
-            itemContentView.setText(currentItem.getContent());
-            itemDateAgo.setText(BaseActivity.getTimeAgo(currentItem.getDateCreated()));
-
-            // title
-            if(currentItem.getGroup() == null){
-                itemTitleView.setText("");
-            }else{
-                itemTitleView.setVisibility(View.VISIBLE);
-                itemTitleView.setText(currentItem.getGroup());
-            }
-
-            // subtitle
-            if(currentItem.getUserSender() == null){
-                itemSubtitleView.setText("");
-            }else{
-                // tant qu'on a pas charger les données on affiche rien
-                itemSubtitleView.setVisibility(View.GONE);
-
-                // sinon on affiche le nom de l'utilisateur
-                UserHelper.getUser(currentItem.getUserSender()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                        itemSubtitleView.setVisibility(View.VISIBLE);
-                        itemSubtitleView.setText(documentSnapshot.toObject(User.class).getUsername());
-                    }
-                });
-
-            }
-
-
-            UserHelper.getUser(currentItem.getUserSender()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-
-                    User sender = task.getResult().toObject(User.class);
-
-                    Glide.with(itemView.getContext())
-                            .load(BaseActivity.getRefImg(sender.getUrlPicture()))
-                            .into(imgProfile);
-                }
-            });
-
-            // print picture into message content
-            if(!currentItem.getUrlImage().equals("null")){
-                imgContent.setVisibility(View.VISIBLE);
-
-                Glide.with(itemView.getContext())
-                        .load(BaseActivity.getRefImg(currentItem.getUrlImage()))
-                        .into(imgContent);
-            }
-            else{
-                imgContent.setVisibility(View.GONE);
-            }
-
-        }
-*/
 
         public void updateWithPost(Post currentItem){
 

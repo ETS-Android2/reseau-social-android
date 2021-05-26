@@ -66,7 +66,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
     */
 
-    public static String getTimeAgo(Date myDate){
+    public String getTimeAgo(Date myDate){
+
+        String text_now = getApplicationContext().getResources().getString(R.string.text_now);
+        String text_day = getApplicationContext().getResources().getString(R.string.text_day);
+        String text_hour = getApplicationContext().getResources().getString(R.string.text_hour);
+        String text_min = getApplicationContext().getResources().getString(R.string.text_min);
+
         try {
             @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             //Date past = format.parse("27/04/2021");
@@ -74,28 +80,23 @@ public abstract class BaseActivity extends AppCompatActivity {
             Date now = new Date();
             if(TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) < 60){
                 if(TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) < 1){
-                    return "maintenant";
+                    return text_now;
                 }else{
-                    return TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) + " min";
+                    return TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) + " " + text_min;
                 }
 
             }else{
                 if(TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime()) < 24){
-                    return TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime()) + " h";
+                    return TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime()) + " " + text_hour;
                 }else{
-                    if(TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) == 1){
-                        return TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + " jour";
-                    }else{
-                        return TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + " jours";
-                    }
-
+                    return TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + " " + text_day;
                 }
             }
 
         }
         catch (Exception j){
             j.printStackTrace();
-            return "Maintenant";
+            return text_now;
         }
     }
 
