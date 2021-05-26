@@ -114,7 +114,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     builder.setItems(actions, (dialog, which) -> {
                         if (which == 0) {
 
-                            //Toasty.info(getContext(), getString(R.string.message_past_code_done) , Toast.LENGTH_LONG, false).show();
+                            Toasty.info(getContext(), "Le code est copié dans le presse-papier." , Toast.LENGTH_LONG, false).show();
                             // On copie dans le presse papier le code généré
                             ClipboardManager clipboard = getSystemService(requireContext(), ClipboardManager.class);
                             ClipData clip = ClipData.newPlainText("invitation", documentReference.getId());
