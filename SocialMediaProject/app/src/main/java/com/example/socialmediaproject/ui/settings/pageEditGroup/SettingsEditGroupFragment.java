@@ -80,7 +80,7 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toasty.success(getContext(), newValue.equals(true) ? "private" : "public" , Toast.LENGTH_SHORT, false).show();
+                                        Toasty.info(getContext(), newValue.equals(true) ? "private" : "public" , Toast.LENGTH_SHORT, false).show();
                                     }
                                 });
 

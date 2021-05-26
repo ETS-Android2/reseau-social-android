@@ -20,7 +20,7 @@
             app:title="Your activity" />
 -->
         <SwitchPreference
-            app:key="theme"
+            app:key="theme_dark_mode"
             app:summaryOff="Désactivé"
             app:summaryOn="Activé"
             app:title="Dark mode" />
