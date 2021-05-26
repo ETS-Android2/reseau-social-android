@@ -104,7 +104,7 @@ public class GroupGestionAdapter extends FirestoreRecyclerAdapter<Group, GroupGe
             if(isAdmin){
                 // si l'utilisateur est déja dans le groupe
                 button_add.setEnabled(true);
-                button_add.setText(itemView.getContext().getResources().getString(R.string.settings));
+                button_add.setText("Paramètres");
                 button_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -110,7 +110,7 @@ public class NewGroupFragment extends Fragment {
                                 spinnerGroupType.getText().toString().matches("") ||
                                 spinnerGroupAccess.getText().toString().matches("") ||
                                 spinnerGroupSubject.getText().toString().matches("")){
-                            String messageEmpty = getString(R.string.info_empty_newGroup);
+                            String messageEmpty = "Saisie invalide !";
                             Toast.makeText(getContext(), messageEmpty , Toast.LENGTH_SHORT).show();
                         }else{
 
@@ -137,7 +137,7 @@ public class NewGroupFragment extends Fragment {
                                     Navigation.findNavController(view).navigate(R.id.action_navigation_newGroup_to_navigation_groupe, bundle);
                                 }
                             }else{
-                                String fieldIncorect = getString(R.string.info_field_incorect);
+                                String fieldIncorect = "Au moins un champs incorrect !";
                                 Toast.makeText(getContext(),fieldIncorect , Toast.LENGTH_SHORT).show();
 
                             }
