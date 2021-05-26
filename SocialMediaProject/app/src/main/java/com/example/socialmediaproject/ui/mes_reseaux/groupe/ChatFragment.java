@@ -8,12 +8,14 @@ import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -97,7 +99,17 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
 
         img = root.findViewById(R.id.item_icon);
 
-        colorEnabled = ContextCompat.getColor(getContext(), R.color.colorPrimary);
+        // On récupère les paramètres pour voir si le mode sombre est activé
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Boolean modeSombre = settings.getBoolean("theme_dark_mode",false);
+
+        // En fonction du dark mode on change la couleur
+        if(modeSombre){
+            colorEnabled = ContextCompat.getColor(getContext(), R.color.colorSecondary);
+        }else{
+            colorEnabled = ContextCompat.getColor(getContext(), R.color.colorPrimary);
+        }
+
         colorNotEnabled = ContextCompat.getColor(getContext(), R.color.colorLight);
 
         recyclerView = root.findViewById(R.id.recyclerView_group_chat);
