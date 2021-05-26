@@ -114,7 +114,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     builder.setItems(actions, (dialog, which) -> {
                         if (which == 0) {
 
-                            Toasty.info(getContext(), getString(R.string.message_past_code_done) , Toast.LENGTH_LONG, false).show();
+                            //Toasty.info(getContext(), getString(R.string.message_past_code_done) , Toast.LENGTH_LONG, false).show();
                             // On copie dans le presse papier le code généré
                             ClipboardManager clipboard = getSystemService(requireContext(), ClipboardManager.class);
                             ClipData clip = ClipData.newPlainText("invitation", documentReference.getId());
@@ -152,7 +152,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
             if(currentGroup.getWaitlist().size() == 0){
 
-                Toasty.info(getContext(),getString(R.string.message_nobody_in_waiting_list) , Toast.LENGTH_SHORT, false).show();
+                //Toasty.info(getContext(),getString(R.string.message_nobody_in_waiting_list) , Toast.LENGTH_SHORT, false).show();
             }else{
                 if(!currentGroup.getType().equals("chat")){
                     bundle.putString("group_name", groupName);
@@ -196,7 +196,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                                getActivity().finish();
                             }
 
-                            Toasty.info(getContext(), getString(R.string.message_exit_group), Toast.LENGTH_SHORT, false).show();
+                            //Toasty.info(getContext(), getString(R.string.message_exit_group), Toast.LENGTH_SHORT, false).show();
                         }
                     });
         }
@@ -297,16 +297,16 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
                     if(currentGroup.getWaitlist().size() == 0){
 
-                        preferenceEditWaitlistGroup.setSummary(getContext().getResources().getString(R.string.setting_aucune_demande));
+                        preferenceEditWaitlistGroup.setSummary(getActivity().getResources().getString(R.string.setting_aucune_demande));
                     }else{
                         assert preferenceEditWaitlistGroup != null;
 
-                        preferenceEditWaitlistGroup.setSummary(currentGroup.getWaitlist().size() + " "+ getString(R.string.setting_text_demande) +
+                        preferenceEditWaitlistGroup.setSummary(currentGroup.getWaitlist().size() + " "+ getActivity().getResources().getString(R.string.setting_text_demande) +
                                 (currentGroup.getWaitlist().size() == 1 ? " " : "s" ));
                     }
 
                     assert preferenceEditMembersGroup != null;
-                    preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() + " "+ getContext().getResources().getString(R.string.setting_text_demande) +
+                    preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() + " "+ getActivity().getResources().getString(R.string.setting_text_demande) +
                             (currentGroup.getMembers().size() <= 1 ? " " : "s"));
 
                     // Si le compte connecté est l'admin du groupe
