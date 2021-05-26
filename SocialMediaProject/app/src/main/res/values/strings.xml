@@ -91,6 +91,15 @@
     <string name="user_post">You haven\'t sent any posts yet</string>
     <string name="my_informations">Mes informations</string>
 
+    <!-- Settings -->
+    <string name="settings">Settings</string>
+
+    <string name="group_title_waitlist">Membership request</string>
+    <string name="group_infos">Informations</string>
+    <string name="notification_title">Title notification</string>
+    <string name="default_notification_channel_id">messages</string>
+
+    <string name="group_edit">Modifier le groupe</string>
 
 
     <!-- Sync Preferences -->
@@ -111,7 +120,6 @@
     <string name="group_exit">Quitter le groupe</string>
     <string name="group_members">Membres du groupe</string>
     <string name="group_moderators">Gérer les modérateurs</string>
-    <string name="group_edit">Modifier le groupe</string>
     <string name="title_settings_alerts">Alertes</string>
     <string name="delete_group">Supprimer le groupe</string>
 
@@ -137,12 +145,6 @@
     <string name="group_edit_publications">Publications</string>
 
     <!-- Settings d'un groupe -->
-
-    <string name="group_title_waitlist">Demandes d\'adhésions</string>
-    <string name="group_infos">Informations</string>
-    <string name="notification_title">Titre notification</string>
-    <string name="default_notification_channel_id">messages</string>
-
     <string name="title_activity_chat">ChatActivity</string>
 
 

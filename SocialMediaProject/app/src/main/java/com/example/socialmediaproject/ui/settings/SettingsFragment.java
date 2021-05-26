@@ -61,7 +61,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     void configToolBar(){
         try{
             ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Paramètres");
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.settings);
         }catch(Exception e){
             Toasty.error(getContext(), "erroooooor" , Toast.LENGTH_SHORT, false).show();
         }
@@ -71,7 +71,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onResume() {
         super.onResume();
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Paramètres");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.settings);
     }
 
     @Override
