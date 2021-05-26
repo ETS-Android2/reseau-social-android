@@ -44,7 +44,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_below="@+id/label_group_name"
-                android:hint="type de groupe">
+                android:hint="@string/group_type">
 
                 <AutoCompleteTextView
                     android:id="@+id/spinner_group_type"

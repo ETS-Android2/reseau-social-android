@@ -40,7 +40,7 @@
 
     <string name="item_default">nom du post</string>
     <string name="item_title_default">Titre du post</string>
-    <string name="item_subtitle_default">Soustitre du post</string>
+    <string name="item_subtitle_default">Sous titre du post</string>
     <string name="item_content_text">Default content</string>
     <string name="item_nbView">3000</string>
     <string name="item_date_ago">1min</string>
@@ -64,11 +64,25 @@
 
     <!-- Group -->
     <string name="group_name">Group name</string>
+
+    <string name="group_type">Group type</string>
+    <string name="group_subject">Group subject</string>
+    <string name="group_access">Group access</string>
+    <string name="group_publication">Publication</string>
+
+    <string name="btn_create_groupe">New group</string>
+
     <string name="group_add">Join</string>
     <string name="group_empty">There is no message</string>
 
     <!-- Group (waitlist) -->
     <string name="group_waitlist_add">Add</string>
+
+    <!-- User profile -->
+    <string name="update_informations">Update Information</string>
+    <string name="user_group">You haven\'t created any groups yet</string>
+    <string name="user_post">You haven\'t sent any posts yet</string>
+
 
 
     <!-- Sync Preferences -->
@@ -84,14 +98,7 @@
     <string name="email_adress">Email adress</string>
     <string name="phone_number">Phone number</string>
     <string name="date_of_birth">Date of birth</string>
-    <string name="update_informations">Update Informations</string>
     <string name="nom_du_groupe">Nom du groupe</string>
-    <string name="type_groupe">Type de groupe</string>
-    <string name="btn_create_groupe">Nouveau groupe</string>
-    <string name="group_type">Type du groupe</string>
-    <string name="group_subject">Sujet du groupe</string>
-    <string name="group_access">Accès au groupe</string>
-    <string name="group_publication">Publication</string>
     <string name="group_notification">Désactiver les notifications</string>
     <string name="group_exit">Quitter le groupe</string>
     <string name="group_members">Membres du groupe</string>

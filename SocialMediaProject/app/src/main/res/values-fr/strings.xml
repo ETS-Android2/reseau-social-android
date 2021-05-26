@@ -48,7 +48,7 @@
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Home -->
-    <string name="title_home">Acceuil</string>
+    <string name="title_home">Accueil</string>
 
     <!-- Search -->
 
@@ -64,12 +64,24 @@
 
     <!-- Group -->
     <string name="group_name">Nom du groupe</string>
+
+    <string name="group_type">Type du groupe</string>
+    <string name="group_subject">Sujet du groupe</string>
+    <string name="group_access">Accès au groupe</string>
+    <string name="group_publication">Publication</string>
+
+    <string name="btn_create_groupe">Nouveau groupe</string>
+
     <string name="group_add">Rejoindre</string>
-    <string name="group_empty">Il n'y a aucun message</string>
+    <string name="group_empty">Il n\'y a aucun message</string>
 
     <!-- Group (waitlist) -->
     <string name="group_waitlist_add">Ajouter</string>
 
+    <!-- User profile -->
+    <string name="update_informations">Mettre à jour les informations</string>
+    <string name="user_group">Vous n\'avez pas encore créer de groupe.</string>
+    <string name="user_post">Vous n\'avez pas encore publié de post.</string>
 
 
     <!-- Sync Preferences -->
@@ -85,14 +97,7 @@
     <string name="email_adress">Email adress</string>
     <string name="phone_number">Phone number</string>
     <string name="date_of_birth">Date of birth</string>
-    <string name="update_informations">Update Informations</string>
     <string name="nom_du_groupe">Nom du groupe</string>
-    <string name="type_groupe">Type de groupe</string>
-    <string name="btn_create_groupe">Nouveau groupe</string>
-    <string name="group_type">Type du groupe</string>
-    <string name="group_subject">Sujet du groupe</string>
-    <string name="group_access">Accès au groupe</string>
-    <string name="group_publication">Publication</string>
     <string name="group_notification">Désactiver les notifications</string>
     <string name="group_exit">Quitter le groupe</string>
     <string name="group_members">Membres du groupe</string>
