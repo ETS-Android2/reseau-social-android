@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +46,7 @@ import java.util.Objects;
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
+    private TextView textViewRecyclerViewEmpty;
     View finalView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,6 +56,8 @@ public class NotificationsFragment extends Fragment {
 
         // on enlève la fleche de retour en arrière
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        textViewRecyclerViewEmpty = root.findViewById(R.id.textViewRecyclerViewEmpty);
 
 
         // list of posts
