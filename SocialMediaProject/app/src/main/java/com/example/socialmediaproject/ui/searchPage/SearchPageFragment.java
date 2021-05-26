@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -46,6 +47,7 @@ import com.example.socialmediaproject.models.Group;
 import com.example.socialmediaproject.models.Post;
 import com.example.socialmediaproject.models.User;
 import com.example.socialmediaproject.ui.home.HomeViewModel;
+import com.example.socialmediaproject.ui.mes_reseaux.ChatActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -274,15 +276,37 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        Toasty.success(getContext(), "Code valide -> Accès au groupe : "+ " " + groupName, Toast.LENGTH_SHORT, true).show();
-
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("group_name", groupName);
-                                        Navigation.findNavController(getView()).navigate(R.id.action_searchPageFragment_to_navigation_groupe, bundle);
-                                        CodeAccessHelper.deleteCode(inputTextCode).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        GroupHelper.getGroup(groupName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
-                                            public void onSuccess(Void aVoid) {
-                                                // suppression du code car l'utilisation d'un code est unique.
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+
+                                                Toasty.success(getContext(), "Code valide -> Accès au groupe : "+ " " + groupName, Toast.LENGTH_SHORT, true).show();
+                                                CodeAccessHelper.deleteCode(inputTextCode).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        // suppression du code car l'utilisation d'un code est unique.
+                                                    }
+                                                });
+
+                                                if(documentSnapshot.toObject(Group.class).getType().equals("chat")){
+                                                    // Si on est dans un groupe de type CHAT alors on ouvre le chat
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("group_name", groupName);
+                                                    Intent intent = new Intent(getContext(), ChatActivity.class);
+                                                    intent.putExtras(bundle);
+                                                    getContext().startActivity(intent);
+                                                }else{
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("group_name", groupName);
+                                                    Navigation.findNavController(getView()).navigate(R.id.action_searchPageFragment_to_navigation_groupe, bundle);
+                                                }
+
+
+
+
+
+
                                             }
                                         });
                                     };
