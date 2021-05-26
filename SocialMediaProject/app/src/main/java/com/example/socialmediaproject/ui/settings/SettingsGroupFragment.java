@@ -112,7 +112,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     String[] actions = {"Copier le code"};
                     builder.setItems(actions, (dialog, which) -> {
                         if (which == 0) {
-                            Toasty.success(getContext(),"Le code est copié dans le presse-papier." , Toast.LENGTH_LONG, false).show();
+                            Toasty.info(getContext(),"Le code est copié dans le presse-papier." , Toast.LENGTH_LONG, false).show();
                             // On copie dans le presse papier le code généré
                             ClipboardManager clipboard = getSystemService(requireContext(), ClipboardManager.class);
                             ClipData clip = ClipData.newPlainText("invitation", documentReference.getId());
@@ -192,12 +192,17 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                             }else{
                                getActivity().finish();
                             }
-                                Toasty.success(getContext(), "Vous avez quitté le groupe !", Toast.LENGTH_SHORT, false).show();
+                            Toasty.info(getContext(), "Vous avez quitté le groupe !", Toast.LENGTH_SHORT, false).show();
                         }
                     });
         }
 
         if(key.equals("group_delete")){
+            /**
+             *
+             * SUPRESSION DU GROUPE
+             *
+             */
             GroupHelper.deleteGroup(currentGroup.getName())
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -308,15 +313,26 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                         preferenceEditGroup.setVisible(true);
                         preferenceEditMembersGroup.setVisible(true);
                         preferenceDeleteGroup.setVisible(true);
+
+                        preferenceExitGroup.setVisible(false);
                     }else if(currentGroup.getModerators().contains(BaseActivity.getUid())){
                         // Si le compte connecté est un modérateur du groupe
+                        preferenceInvitation.setVisible(currentGroup.getAccessPrivate());
                         preferenceEditWaitlistGroup.setVisible(true);
                         preferenceEditMembersGroup.setVisible(true);
                         preferenceExitGroup.setVisible(true);
+
+                        preferenceEditGroup.setVisible(false);
+                        preferenceDeleteGroup.setVisible(false);
                     } else{
                         // Si le compte connecté est un membre
                         preferenceEditMembersGroup.setVisible(true);
                         preferenceExitGroup.setVisible(true);
+
+                        preferenceInvitation.setVisible(false);
+                        preferenceEditWaitlistGroup.setVisible(false);
+                        preferenceEditGroup.setVisible(false);
+                        preferenceDeleteGroup.setVisible(false);
                     }
 
                 } else {
