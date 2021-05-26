@@ -100,6 +100,9 @@
     <string name="default_notification_channel_id">messages</string>
 
     <string name="group_edit">Modifier le groupe</string>
+    <string name="group_members">Membres du groupe</string>
+    <string name="delete_group">Supprimer le groupe</string>
+    <string name="group_notification">Désactiver les notifications</string>
 
 
     <!-- Sync Preferences -->
@@ -116,12 +119,9 @@
     <string name="phone_number">Phone number</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="nom_du_groupe">Nom du groupe</string>
-    <string name="group_notification">Désactiver les notifications</string>
     <string name="group_exit">Quitter le groupe</string>
-    <string name="group_members">Membres du groupe</string>
     <string name="group_moderators">Gérer les modérateurs</string>
     <string name="title_settings_alerts">Alertes</string>
-    <string name="delete_group">Supprimer le groupe</string>
 
     <string name="title_activity_new_post">newPostActivity</string>
     <!-- Strings used for fragments for navigation -->
