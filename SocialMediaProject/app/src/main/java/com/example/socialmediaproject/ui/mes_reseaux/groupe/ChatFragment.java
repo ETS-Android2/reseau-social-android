@@ -305,7 +305,7 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
             @Override
             public void onFailure(@NonNull Exception e) {
 
-                Toasty.error(getContext(), getContext().getResources().getString(R.string.error_sending_message), Toast.LENGTH_SHORT, false).show();
+                Toasty.error(getContext(), "error", Toast.LENGTH_SHORT, false).show();
             }
         };
     }

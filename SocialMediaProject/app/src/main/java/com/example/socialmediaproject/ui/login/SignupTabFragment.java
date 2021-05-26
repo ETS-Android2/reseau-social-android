@@ -90,7 +90,7 @@ public class SignupTabFragment extends Fragment {
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
 
-                    Toasty.success(getContext(), getContext().getResources().getString(R.string.toast_message_user_created), Toast.LENGTH_SHORT, true).show();
+                    //Toasty.success(getContext(), getContext().getResources().getString(R.string.toast_message_user_created), Toast.LENGTH_SHORT, true).show();
 
                     DocumentReference documentReference = BaseActivity.getRefUser();
 
@@ -113,7 +113,7 @@ public class SignupTabFragment extends Fragment {
                 }
                 else{
 
-                    Toasty.error(getContext(), getContext().getResources().getString(R.string.toast_message_signup_fail) + " " + task.getException().getMessage(), Toasty.LENGTH_LONG, true).show();
+                    Toasty.error(getContext(), "error :" + " " + task.getException().getMessage(), Toasty.LENGTH_LONG, true).show();
                 }
 
             }
@@ -148,7 +148,7 @@ public class SignupTabFragment extends Fragment {
         return new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), getString(R.string.welcome_login), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), getString(R.string.welcome_login), Toast.LENGTH_LONG).show();
             }
         };
     }

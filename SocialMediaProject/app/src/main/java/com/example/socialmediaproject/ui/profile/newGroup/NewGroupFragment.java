@@ -157,7 +157,7 @@ public class NewGroupFragment extends Fragment {
         return new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), getString(R.string.error_unknown_error), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Erreur inconnu.", Toast.LENGTH_LONG).show();
             }
         };
     }
