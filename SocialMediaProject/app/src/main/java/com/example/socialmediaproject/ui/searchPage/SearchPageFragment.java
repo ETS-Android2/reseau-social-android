@@ -262,34 +262,39 @@ public class SearchPageFragment extends Fragment implements SearchGroupAdapter.L
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String inputTextCode = input.getText().toString();
-                CodeAccessHelper.getCode(inputTextCode).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            String groupName = documentSnapshot.toObject(CodeAccess.class).getGroupName();
-                            // Le code est correct, on ajoute l'utilisateur dans la liste des membres
-                            GroupHelper.addUserInGroup(groupName, BaseActivity.getUid()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toasty.success(getContext(), "Code correct ! Accès au groupe -> " + groupName, Toast.LENGTH_SHORT, true).show();
+                if(inputTextCode.length() >= 1){
 
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("group_name", groupName);
-                                    Navigation.findNavController(getView()).navigate(R.id.action_searchPageFragment_to_navigation_groupe, bundle);
-                                    CodeAccessHelper.deleteCode(inputTextCode).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            // suppression du code car l'utilisation d'un code est unique.
-                                        }
-                                    });
-                                };
-                            });
-                        } else {
-                            Toasty.error(getContext(), "Code non valide !" , Toast.LENGTH_LONG, true).show();
+                    CodeAccessHelper.getCode(inputTextCode).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                String groupName = documentSnapshot.toObject(CodeAccess.class).getGroupName();
+                                // Le code est correct, on ajoute l'utilisateur dans la liste des membres
+                                GroupHelper.addUserInGroup(groupName, BaseActivity.getUid()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toasty.success(getContext(), "Code correct ! Accès au groupe -> " + groupName, Toast.LENGTH_SHORT, true).show();
+
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("group_name", groupName);
+                                        Navigation.findNavController(getView()).navigate(R.id.action_searchPageFragment_to_navigation_groupe, bundle);
+                                        CodeAccessHelper.deleteCode(inputTextCode).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                // suppression du code car l'utilisation d'un code est unique.
+                                            }
+                                        });
+                                    };
+                                });
+                            } else {
+                                Toasty.error(getContext(), "Code non valide !" , Toast.LENGTH_LONG, true).show();
+                            }
                         }
-                    }
-                });
+                    });
 
+                }else{
+                    Toasty.warning(getContext(), "Entrez un code !" , Toast.LENGTH_LONG, true).show();
+                }
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
