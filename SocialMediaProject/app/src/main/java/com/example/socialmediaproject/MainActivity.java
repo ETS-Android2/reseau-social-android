@@ -157,12 +157,12 @@ public class MainActivity extends AppCompatActivity {
                                                             manager.createNotificationChannel(channel);
 
                                                             NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "n")
-                                                                    .setContentTitle("Nouveau message envoyé par " + user.getUsername())
+                                                                    .setContentTitle(getString(R.string.notification_template_new_message) +" " + user.getUsername())
                                                                     .setSmallIcon(R.drawable.twitter)
                                                                     .setAutoCancel(true)
                                                                     .setContentText(content);
 
-                                                            Notif notif = new Notif("Nouveau message posté par " + user.getUsername(), content);
+                                                            Notif notif = new Notif(getString(R.string.notification_template_new_message) + user.getUsername(), content);
                                                             BaseActivity.notifs.add(notif);
 
                                                             NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);

@@ -77,7 +77,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         try{
             ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Paramètres");
+
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.fragmentName_settings));
 
 
         }catch(Exception e){
@@ -98,12 +99,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         String key = preference.getKey();
 
         if(key.equals("notifications")){
-            Toasty.info(getContext(),"Afficher page settings notifications !" , Toast.LENGTH_SHORT, false).show();
+            //Toasty.info(getContext(),"Afficher page settings notifications !" , Toast.LENGTH_SHORT, false).show();
             Navigation.findNavController(getView()).navigate(R.id.action_settingsFragment_to_settingsNotificationFragment);
         }
 
         if(key.equals("deconnexion")){
-                Toasty.success(getContext(), "Déconnexion", Toast.LENGTH_SHORT, true).show();
+            Toasty.success(getContext(), getString(R.string.message_logout), Toast.LENGTH_SHORT, true).show();
 
             if(BaseActivity.isCurrentUserLogged())
                 BaseActivity.getAuth().signOut();

@@ -157,7 +157,10 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     //builder.setTitle("Action");
 
-                    String[] actions = {"Supprimer l'image"};
+
+                    String[] actions = {
+                            getContext().getResources().getString(R.string.delete_image)
+                    };
                     builder.setItems(actions, (dialog, which) -> {
                         switch (which) {
                             case 0:
@@ -228,7 +231,8 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
 
                                         Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid(), urlImageToSend);
                                         PostHelper.createPostForGroup(message).addOnFailureListener(onFailureListener());
-                                        Toasty.success(getContext(), "Message sent !", Toast.LENGTH_SHORT, true).show();
+
+                                        Toasty.success(getContext(), getContext().getResources().getString(R.string.message_send), Toast.LENGTH_SHORT, true).show();
 
                                         // On reset
                                         editText_content.setText("");
@@ -242,7 +246,8 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull @NotNull Exception e) {
-                                        Toasty.error(getContext(), "Failed to upload !", Toast.LENGTH_SHORT, false).show();
+
+                                        Toasty.error(getContext(), getContext().getResources().getString(R.string.message_upload_failed), Toast.LENGTH_SHORT, false).show();
                                     }
                                 });
 
@@ -251,7 +256,7 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
                         Post message = new Post(editText_content.getText().toString(), groupName, BaseActivity.getUid(), "null");
                         PostHelper.createPostForGroup(message).addOnFailureListener(onFailureListener());
 
-                        Toasty.success(getContext(), "Message sent !", Toast.LENGTH_SHORT, true).show();
+                        Toasty.success(getContext(), getContext().getResources().getString(R.string.message_send), Toast.LENGTH_SHORT, true).show();
 
                         // On reset
                         editText_content.setText("");
@@ -261,7 +266,8 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
                         imageToSend.setVisibility(View.GONE);
                         button_send_message.setTextColor(colorNotEnabled);
                     } else {
-                        Toasty.warning(getContext(), "Veuillez écrire du texte", Toast.LENGTH_SHORT, false).show();
+
+                        Toasty.warning(getContext(), getContext().getResources().getString(R.string.writte_some_text), Toast.LENGTH_SHORT, false).show();
                     }
 
                 }
@@ -298,7 +304,8 @@ public class ChatFragment extends Fragment implements PostAdapter.Listener{
         return new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toasty.error(getContext(), "Erreur lors de l'envoie du message", Toast.LENGTH_SHORT, false).show();
+
+                Toasty.error(getContext(), getContext().getResources().getString(R.string.error_sending_message), Toast.LENGTH_SHORT, false).show();
             }
         };
     }

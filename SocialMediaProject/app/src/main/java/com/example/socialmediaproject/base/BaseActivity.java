@@ -1,7 +1,6 @@
 package com.example.socialmediaproject.base;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,10 +26,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public abstract class BaseActivity extends AppCompatActivity {
-
     public static List<Notif> notifs = new ArrayList<Notif>();
     public static boolean beNotified = true;
-
     // --------------------
     // LIFE CYCLE
     // --------------------
@@ -66,12 +63,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
     */
 
-    public String getTimeAgo(Date myDate){
+    public static String getTimeAgo(Date myDate){
 
-        String text_now = getApplicationContext().getResources().getString(R.string.text_now);
-        String text_day = getApplicationContext().getResources().getString(R.string.text_day);
-        String text_hour = getApplicationContext().getResources().getString(R.string.text_hour);
-        String text_min = getApplicationContext().getResources().getString(R.string.text_min);
+        String text_now = "now"; //context.getResources().getString(R.string.text_now);
+        String text_day = "d";//context.getResources().getString(R.string.text_day);
+        String text_hour = "h"; //context.getResources().getString(R.string.text_hour);
+        String text_min = "min"; //context.getResources().getString(R.string.text_min);
 
         try {
             @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");

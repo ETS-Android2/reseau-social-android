@@ -102,7 +102,8 @@ public class WaitlistFragment extends Fragment {
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Demandes adhésions");
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.fragmentName_waiting_list));
 
     }
 

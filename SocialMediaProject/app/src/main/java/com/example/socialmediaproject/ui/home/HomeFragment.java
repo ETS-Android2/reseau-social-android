@@ -143,11 +143,9 @@ public class HomeFragment extends Fragment {
                                 List<Post> listPosts = queryDocumentSnapshots.toObjects(Post.class);
                                 for(Post post : listPosts){
                                     if(listNomGroupsUser.contains(post.getGroup())){
-                                        Log.d("RECYCLER_CONFIG","OOOOOOOOOOOOK");
                                         listResultats.add(post);
                                     }
                                 }
-                                Log.d("RECYCLER_CONFIG",listResultats.size() + ": NOMBRE DE POST À AFFICHER");
 
                                 postAdapter = new PostAdapterForHome(listResultats);
                                 recyclerView.setAdapter(postAdapter);
@@ -159,12 +157,6 @@ public class HomeFragment extends Fragment {
                     }
                 });
 
-
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        //recyclerView.setAdapter(this.postAdapter);
-        //recyclerView.setAdapter(this.postAdapterForHome);
-        // On met sur false la progresse bar qui indique le raffrachissment
 
     }
 
