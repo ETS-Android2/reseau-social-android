@@ -84,6 +84,11 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
                 holder.updateWithPost(postList.get(position));
 
                 /**
+                 * Colour background text clickable lorsque l'on click dessus
+                 */
+                holder.itemTitleView.setBackgroundResource(R.drawable.selector_onclick);
+
+                /**
                  * NAVIGATION VERS LE GROUPE LORSQUE L'ON CLICK SUR LE NOM DU GROUPE
                  *
                  */

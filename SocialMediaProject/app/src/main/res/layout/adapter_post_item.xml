@@ -41,7 +41,6 @@
                 android:textColor="@color/black"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="@drawable/selector_onclick"
                 android:paddingLeft="5sp"
                 android:paddingRight="5sp"
                 android:textSize="17sp"
