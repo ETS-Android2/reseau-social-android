@@ -49,6 +49,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import es.dmoral.toasty.Toasty;
+
 import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
@@ -186,14 +188,14 @@ public class ProfileFragment extends Fragment {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         pd.dismiss();
                         BaseActivity.getRefUser().update("urlPicture", ref.toString());
-                        Toast.makeText(getContext(),"Image uploaded !" , Toast.LENGTH_SHORT).show();
+                        Toasty.success(getContext(), "Image uploaded !", Toast.LENGTH_SHORT, true).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull @NotNull Exception e) {
                         pd.dismiss();
-                        Toast.makeText(getContext(),"Failed to upload !" , Toast.LENGTH_SHORT).show();
+                        Toasty.error(getContext(),"Failed to upload !" , Toast.LENGTH_SHORT, true).show();
                     }
                 })
                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.api.PostHelper;
@@ -44,6 +45,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,7 +90,13 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
-                value.getDocuments().forEach(group -> {
+
+                if(error != null){
+                    Log.w("Listen failed : ", "onEvent error", error);
+                    return;
+                }
+
+                for(DocumentSnapshot group : value.getDocuments()){
 
                     List<String> membres = (List<String>) group.get("members");
 
@@ -95,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                         PostHelper.getAllPostForGroup(group.get("name").toString()).addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
                                 if(error != null){
                                     Log.w("EXCEPTION", "Listen failed.", error);
                                     return;
@@ -155,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                     }
-                });
+                }
             }
         });
     }

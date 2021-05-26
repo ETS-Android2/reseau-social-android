@@ -22,6 +22,8 @@ import com.example.socialmediaproject.ui.settings.SettingsGroupFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
 
@@ -78,7 +80,7 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(getContext(), newValue.equals(true) ? "private" : "public" , Toast.LENGTH_SHORT).show();
+                                        Toasty.success(getContext(), newValue.equals(true) ? "private" : "public" , Toast.LENGTH_SHORT, false).show();
                                     }
                                 });
 
@@ -95,7 +97,7 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(getContext(),"Changement effectué !" , Toast.LENGTH_SHORT).show();
+                                        Toasty.success(getContext(),"Changement effectué !" , Toast.LENGTH_SHORT, true).show();
                                     }
                                 });
 
@@ -112,7 +114,7 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(getContext(),newValue.equals(true) ? "Publication seulement pour les modérateurs" : "Tout le monde peut publier des posts", Toast.LENGTH_SHORT).show();
+                                        Toasty.info(getContext(),newValue.equals(true) ? "Publication seulement pour les modérateurs" : "Tout le monde peut publier des posts", Toast.LENGTH_SHORT, true).show();
                                     }
                                 });
 
