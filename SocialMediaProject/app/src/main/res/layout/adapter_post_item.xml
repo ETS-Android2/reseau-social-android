@@ -6,11 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:orientation="vertical"
-    android:background="@drawable/bg_post"
+    android:background="@color/colorBackgroundCard"
     android:paddingTop="20dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:layout_margin="7dp">
+    android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:id="@+id/item_header"

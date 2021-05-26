@@ -34,7 +34,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         SwitchPreference preferenceSwitchDarkMode = findPreference("theme_dark_mode");
 
+        this.configToolBar();
 
+        preferenceSwitchDarkMode.setChecked(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES);
         // Changer le groupe en privé ou public
         preferenceSwitchDarkMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -43,6 +45,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 AppCompatDelegate.setDefaultNightMode(newValue.equals(true) ?
                         AppCompatDelegate.MODE_NIGHT_YES :
                         AppCompatDelegate.MODE_NIGHT_NO);
+                configToolBar();
                 return true;
 
             }
@@ -53,12 +56,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+    }
 
-        // affichage de la flèche retour en arrière dans le menu
-        //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // title fragment in the header
-        //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Paramètres");
+    void configToolBar(){
+        try{
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Paramètres");
+        }catch(Exception e){
+            Toasty.error(getContext(), "erroooooor" , Toast.LENGTH_SHORT, false).show();
+        }
     }
 
     @Override

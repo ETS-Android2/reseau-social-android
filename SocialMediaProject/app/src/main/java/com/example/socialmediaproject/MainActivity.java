@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(findViewById(R.id.materialToolbar));
             NavigationUI.setupWithNavController(navView, navController);
 
-            //notification();
+            notification();
         }
     }
 

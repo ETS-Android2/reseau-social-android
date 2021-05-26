@@ -12,7 +12,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.chat_page_activity);
         setSupportActionBar(findViewById(R.id.materialToolbar));
         if (savedInstanceState == null) {
 
