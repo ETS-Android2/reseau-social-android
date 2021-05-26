@@ -117,17 +117,18 @@ public class PostGroupeFragment extends Fragment implements PostAdapter.Listener
                                 // On enlève l'admin du compteur de member
                                 String nbMembers;
                                 if(currentGroup.getMembers().size() <= 1){
-                                    nbMembers = currentGroup.getMembers().size() + " member"; // à l'infinitif
+                                    nbMembers = currentGroup.getMembers().size() + " " + getContext().getResources().getString(R.string.text_member); // à l'infinitif
                                 }else{
-                                    nbMembers = currentGroup.getMembers().size() + " members"; // au pluriels
+                                    nbMembers = currentGroup.getMembers().size() + " " + getContext().getResources().getString(R.string.text_member) + "s"; // au pluriels
                                 }
                                 tv_groupNbMembers.setText(nbMembers);
 
                                 if(currentGroup.getAccessPrivate()){
-                                    tv_groupAccess.setText("private");
+
+                                    tv_groupAccess.setText(getString(R.string.text_private));
                                     imageAccess.setImageResource(R.drawable.ic_baseline_lock_24);
                                 }else{
-                                    tv_groupAccess.setText("public");
+                                    tv_groupAccess.setText(getString(R.string.text_public));
                                     imageAccess.setImageResource(R.drawable.ic_baseline_lock_open_24);
                                 }
 

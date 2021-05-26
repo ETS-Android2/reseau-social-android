@@ -108,7 +108,8 @@ public class newPostActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(editText_content.getText().toString().matches("")){
-                    Toasty.warning(getApplicationContext(), "Vous devez saisir du texte avant de poster votre message !", Toast.LENGTH_SHORT, true).show();
+
+                    Toasty.warning(getApplicationContext(), getApplicationContext().getResources().getString(R.string.writte_some_text), Toast.LENGTH_SHORT, true).show();
 
                 }else{
 
@@ -152,7 +153,10 @@ public class newPostActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(newPostActivity.this);
                 //builder.setTitle("Action");
 
-                String[] actions = {"Supprimer l'image"};
+
+                String[] actions = {
+                        getApplicationContext().getResources().getString(R.string.delete_image)
+                };
                 builder.setItems(actions, (dialog, which) -> {
                     switch (which) {
                         case 0:
@@ -225,13 +229,13 @@ public class newPostActivity extends AppCompatActivity {
                             Post post = new Post(content, group, userId, urlImg);
                             PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
 
-                            Toasty.success(getApplicationContext(), "Message sent !", Toast.LENGTH_SHORT, true).show();
+                            Toasty.success(getApplicationContext(), getApplicationContext().getResources().getString(R.string.message_send), Toast.LENGTH_SHORT, true).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull @NotNull Exception e) {
-                            Toasty.error(newPostActivity.this, "Failed to upload !", Toast.LENGTH_SHORT, true).show();
+                            Toasty.error(newPostActivity.this, getApplicationContext().getResources().getString(R.string.message_upload_failed), Toast.LENGTH_SHORT, true).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -247,7 +251,7 @@ public class newPostActivity extends AppCompatActivity {
             Post post = new Post(content, group, userId, urlImg);
             PostHelper.createPostForGroup(post).addOnFailureListener(onFailureListener());
 
-            Toasty.success(getApplicationContext(), "Message sent !", Toast.LENGTH_SHORT, true).show();
+            Toasty.success(getApplicationContext(), getApplicationContext().getResources().getString(R.string.message_send), Toast.LENGTH_SHORT, true).show();
         }
     }
 
@@ -272,7 +276,8 @@ public class newPostActivity extends AppCompatActivity {
                                 try {
                                     SmsManager smsManager = SmsManager.getDefault();
                                     smsManager.sendTextMessage(user.getPhoneNumber(), null, content, null, null);
-                                    Toasty.success(getApplicationContext(), "SMS sent !", Toast.LENGTH_SHORT, true).show();
+
+                                    Toasty.success(getApplicationContext(), getApplicationContext().getResources().getString(R.string.message_send_sms), Toast.LENGTH_SHORT, true).show();
                                 } catch (Exception ex) {
                                     Toasty.warning(getApplicationContext(),ex.getMessage().toString(),
                                             Toast.LENGTH_LONG, true).show();
@@ -307,7 +312,8 @@ public class newPostActivity extends AppCompatActivity {
                             if(!user.getUid().equals(userId)){
 
                                 try {
-                                    Toasty.success(getApplicationContext(), "Email sent !", Toast.LENGTH_SHORT, true).show();
+
+                                    Toasty.success(getApplicationContext(), getApplicationContext().getResources().getString(R.string.message_send_email), Toast.LENGTH_SHORT, true).show();
                                     JavaMailAPI javaMailAPI = new JavaMailAPI(newPostActivity.this, user.getEmail(), "Envoyé depuis l'app Socializing, groupe : " + group, content);
                                     javaMailAPI.execute();
                                 }
@@ -359,7 +365,8 @@ public class newPostActivity extends AppCompatActivity {
                                     finish();
                                     Log.i("Email Status : ", "Finished sending email...");
                                 } catch (android.content.ActivityNotFoundException ex) {
-                                    Toasty.warning(newPostActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT, true).show();
+
+                                    Toasty.warning(newPostActivity.this, getApplicationContext().getResources().getString(R.string.message_no_email_client_installed), Toast.LENGTH_SHORT, true).show();
                                 }
                             }
                         }

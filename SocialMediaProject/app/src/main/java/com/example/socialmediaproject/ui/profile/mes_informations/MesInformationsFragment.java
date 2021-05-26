@@ -116,11 +116,13 @@ public class MesInformationsFragment extends Fragment {
         boolean validate = true;
 
         if(email.isEmpty() || !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
-            Toasty.error(getContext(), "The email address must be correct", Toast.LENGTH_LONG, true).show();
+
+            Toasty.error(getContext(), getContext().getResources().getString(R.string.error_incorect_email), Toast.LENGTH_LONG, true).show();
             validate = false;
         }
         else if(phone.isEmpty() || !phone.matches("^0[6-7]{1}[0-9]{8}$")){
-            Toasty.error(getContext(), "The phone mustn't be empty and be correct", Toast.LENGTH_LONG, true).show();
+
+            Toasty.error(getContext(), getContext().getResources().getString(R.string.error_incorect_phone), Toast.LENGTH_LONG, true).show();
             validate = false;
         }
 
@@ -132,7 +134,7 @@ public class MesInformationsFragment extends Fragment {
         BaseActivity.getRefUser().update("email", email);
         BaseActivity.getRefUser().update("phoneNumber", phone);
 
-        Toasty.success(getContext(), "User's informations has been updated !", Toast.LENGTH_LONG, true).show();
+        Toasty.success(getContext(), getContext().getResources().getString(R.string.info_update_user_informations), Toast.LENGTH_LONG, true).show();
     }
 
 }
