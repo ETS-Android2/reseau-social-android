@@ -124,7 +124,7 @@ public class SearchGroupAdapter extends FirestoreRecyclerAdapter<Group, SearchGr
                 // si l'utilisateur est déja dans le groupe
                 button_add.setEnabled(true);
                 //itemIconView.setColorFilter(ContextCompat.getColor(context, R.color.colorSecondary),PorterDuff.Mode.MULTIPLY);
-                button_add.setText(context.getResources().getString(R.string.access_to_groupe));
+                button_add.setText("Voir");
                 button_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -144,7 +144,7 @@ public class SearchGroupAdapter extends FirestoreRecyclerAdapter<Group, SearchGr
             }else if(alreadyInGroupWaitingList){
                 // si l'utilisateur à déjà fait une demande
                 button_add.setEnabled(false);
-                button_add.setText(context.getResources().getString(R.string.waiting_acceptation));
+                button_add.setText("En attente");
             }else{
                 // alors on affiche le bouton d'ajout du groupe pour envoyé une demande d'adhésion
                 button_add.setEnabled(true);
@@ -155,7 +155,7 @@ public class SearchGroupAdapter extends FirestoreRecyclerAdapter<Group, SearchGr
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(context, context.getResources().getString(R.string.toast_send_request_waitinglist), Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(context, context.getResources().getString(R.string.toast_send_request_waitinglist), Toast.LENGTH_SHORT).show();
 
                                         /**********************/
                                         /* DÉBUT NOTIFICATION */

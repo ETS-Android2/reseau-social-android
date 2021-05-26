@@ -446,13 +446,13 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                         boolean isMember  = currentGroup.getMembers().contains(currentItem.getUserSender());
                                         itemSubtitleView.setTextColor(Color.GRAY);
                                         if(isAdmin){
-                                            itemSubtitleView.setText(itemView.getContext().getResources().getString(R.string.text_admin));
+                                            itemSubtitleView.setText("Admin");
                                         }else if(isModerator){
-                                            itemSubtitleView.setText(itemView.getContext().getResources().getString(R.string.text_moderator));
+                                            itemSubtitleView.setText("Modérateur");
                                         }else if(isMember){
-                                            itemSubtitleView.setText(itemView.getContext().getResources().getString(R.string.text_member));
+                                            itemSubtitleView.setText("Membre");
                                         }else{
-                                            itemSubtitleView.setText(itemView.getContext().getResources().getString(R.string.text_former_member));
+                                            itemSubtitleView.setText("Ancien Membre");
                                         }
                                     }else{
                                         // sinon on affiche le nom de l'utilisateur

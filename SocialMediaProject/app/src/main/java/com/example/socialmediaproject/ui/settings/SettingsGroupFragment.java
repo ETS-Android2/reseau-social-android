@@ -110,7 +110,7 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
                     builder.setTitle("Code : " + documentReference.getId());
 
 
-                    String[] actions = { getString(R.string.past_code) };
+                    String[] actions = { "Copier le code" };
                     builder.setItems(actions, (dialog, which) -> {
                         if (which == 0) {
 
@@ -297,16 +297,16 @@ public class SettingsGroupFragment extends PreferenceFragmentCompat {
 
                     if(currentGroup.getWaitlist().size() == 0){
 
-                        preferenceEditWaitlistGroup.setSummary(getActivity().getResources().getString(R.string.setting_aucune_demande));
+                        preferenceEditWaitlistGroup.setSummary("Aucune demande");
                     }else{
                         assert preferenceEditWaitlistGroup != null;
 
-                        preferenceEditWaitlistGroup.setSummary(currentGroup.getWaitlist().size() + " "+ getActivity().getResources().getString(R.string.setting_text_demande) +
+                        preferenceEditWaitlistGroup.setSummary(currentGroup.getWaitlist().size() + " "+ "demande" +
                                 (currentGroup.getWaitlist().size() == 1 ? " " : "s" ));
                     }
 
                     assert preferenceEditMembersGroup != null;
-                    preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() + " "+ getActivity().getResources().getString(R.string.setting_text_demande) +
+                    preferenceEditMembersGroup.setSummary(currentGroup.getMembers().size() + " "+ "demande" +
                             (currentGroup.getMembers().size() <= 1 ? " " : "s"));
 
                     // Si le compte connecté est l'admin du groupe

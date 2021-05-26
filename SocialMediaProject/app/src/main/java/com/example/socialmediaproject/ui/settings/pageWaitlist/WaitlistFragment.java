@@ -103,7 +103,7 @@ public class WaitlistFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // title fragment in the header
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.fragmentName_waiting_list));
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Liste d'attente");
 
     }
 

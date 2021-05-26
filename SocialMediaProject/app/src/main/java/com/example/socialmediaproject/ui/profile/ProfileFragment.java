@@ -84,10 +84,10 @@ public class ProfileFragment extends Fragment {
         // on enlève la fleche de retour en arrière
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        final String createGroup = getContext().getResources().getString(R.string.group_create);
-        final String myPosts = getContext().getResources().getString(R.string.myPosts);
-        final String manageMyGroups = getContext().getResources().getString(R.string.group_manage);
-        final String myInformations = getContext().getResources().getString(R.string.my_informations);
+        final String createGroup = "Créer un groupe";
+        final String myPosts = "Mes posts";
+        final String manageMyGroups = "Gérer mes groupes";
+        final String myInformations = "Mes informations";
 
         // list of posts
         List<ProfileItem> profileItemList = new ArrayList<>();
@@ -101,7 +101,7 @@ public class ProfileFragment extends Fragment {
         allPost.setAdapter(new ProfileItemAdapter(getContext(), profileItemList));
 
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.profile);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Profil");
 
         // edit profile picture
         img.setOnClickListener(new View.OnClickListener() {
@@ -111,8 +111,8 @@ public class ProfileFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 //builder.setTitle("Action");
 
-                String change_profile = getContext().getResources().getString(R.string.profile_change_profile_picture);
-                String logout = getContext().getResources().getString(R.string.profile_logout);
+                String change_profile = "Modifier l'image";
+                String logout = "Se déconnecter";
 
                 String[] actions = {change_profile, logout};
                 builder.setItems(actions, (dialog, which) -> {
@@ -184,7 +184,7 @@ public class ProfileFragment extends Fragment {
 
     public void uploadPicture(){
         final ProgressDialog pd = new ProgressDialog(getContext());
-        pd.setTitle(getString(R.string.message_uploading_image));
+        pd.setTitle("Chargement de l'image");
         pd.show();
 
         final String randomKey = UUID.randomUUID().toString();
@@ -197,14 +197,14 @@ public class ProfileFragment extends Fragment {
                         pd.dismiss();
                         BaseActivity.getRefUser().update("urlPicture", ref.toString());
 
-                        Toasty.success(getContext(), getString(R.string.message_image_uploaded), Toast.LENGTH_SHORT, true).show();
+                        Toasty.success(getContext(), "Image chargé !", Toast.LENGTH_SHORT, true).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull @NotNull Exception e) {
                         pd.dismiss();
-                        Toasty.error(getContext(),getString(R.string.message_upload_failed) , Toast.LENGTH_SHORT, true).show();
+                        Toasty.error(getContext(), "Échec du chargement" , Toast.LENGTH_SHORT, true).show();
                     }
                 })
                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

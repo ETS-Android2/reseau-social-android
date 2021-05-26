@@ -152,7 +152,7 @@ public class UserAdapter extends BaseAdapter {
 
             // on écrit le role de l'utilisateur
             if(this.isAdmin(currentItem.getUid())){
-                itemRoleView.setText(context.getResources().getString(R.string.text_admin));
+                itemRoleView.setText("Admin");
                 itemRoleView.setTextColor(Color.RED);
 
                 if(!this.isAdmin(BaseActivity.getUid())){
@@ -161,7 +161,7 @@ public class UserAdapter extends BaseAdapter {
                 }
 
             }else if(this.isModerator(currentItem.getUid())){
-                itemRoleView.setText(context.getResources().getString(R.string.text_moderator));
+                itemRoleView.setText("Modérateur");
                 itemRoleView.setTextColor(Color.parseColor("#388E3C"));
 
                 // On défini les droit en fonction de l'utilisateur connecté
@@ -177,7 +177,7 @@ public class UserAdapter extends BaseAdapter {
 
 
             }else{
-                itemRoleView.setText(context.getResources().getString(R.string.text_member));
+                itemRoleView.setText("Membre");
                 itemRoleView.setTextColor(Color.GRAY);
 
                 if(this.isAdmin(BaseActivity.getUid())){
@@ -208,13 +208,13 @@ public class UserAdapter extends BaseAdapter {
 
     private void changeToMember(String uid, View view){
         TextView itemRoleView = view.findViewById(R.id.user_role);
-        itemRoleView.setText(context.getResources().getString(R.string.text_member));
+        itemRoleView.setText("Membre");
         itemRoleView.setTextColor(Color.GRAY);
     }
 
     private void changeToModerator(String uid, View view){
         TextView itemRoleView = view.findViewById(R.id.user_role);
-        itemRoleView.setText(context.getResources().getString(R.string.text_moderator));
+        itemRoleView.setText("Modérateur");
         itemRoleView.setTextColor(Color.parseColor("#388E3C"));
     }
 
@@ -225,13 +225,13 @@ public class UserAdapter extends BaseAdapter {
             builder.setTitle(currentItem.getUsername());
             // add a list
             String[] actions = {
-                    context.getResources().getString(R.string.contact),
-                    context.getResources().getString(R.string.demote_to_member),
-                    context.getResources().getString(R.string.exclure)};
+                    "Contacter",
+                    "Rétrograder à membre",
+                    "Exclure"};
             builder.setItems(actions, (dialog, which) -> {
                 switch (which) {
                     case 0: // Contacter
-                        Toast.makeText(context, context.getResources().getString(R.string.toast_contact_user)  , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "TO DO !" , Toast.LENGTH_SHORT).show();
                         break;
                     case 1: // Retrograder à simple membre
                         GroupHelper.demoteModeratorToMember(currentGroup.getName(),currentItem.getUid())
@@ -269,13 +269,13 @@ public class UserAdapter extends BaseAdapter {
             builder.setTitle(currentItem.getUsername());
             // add a list
             String[] actions = {
-                    context.getResources().getString(R.string.contact),
-                    context.getResources().getString(R.string.promote_to_moderator),
-                    context.getResources().getString(R.string.exclure)};
+                    "Contacter",
+                    "Promouvoir",
+                    "Exclure"};
             builder.setItems(actions, (dialog, which) -> {
                 switch (which) {
                     case 0: // Contacter
-                        Toast.makeText(context, context.getResources().getString(R.string.toast_contact_user)  , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "TO DO !" , Toast.LENGTH_SHORT).show();
                         break;
                     case 1: // Promouvoir au role de modérateur
                         GroupHelper.promoteMemberToModerator(currentGroup.getName(),currentItem.getUid())
@@ -315,12 +315,12 @@ public class UserAdapter extends BaseAdapter {
             // add a list
             String[] actions = {
                     // contacter
-                    context.getResources().getString(R.string.contact)
+                    "Contacter"
             };
             builder.setItems(actions, (dialog, which) -> {
                 switch (which) {
                     case 0: // Contacter
-                        Toast.makeText(context, context.getResources().getString(R.string.toast_contact_user)  , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "TO DO !" , Toast.LENGTH_SHORT).show();
                         break;
                 } }); // create and show the alert dialog
 
