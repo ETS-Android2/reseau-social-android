@@ -94,7 +94,7 @@ public class GroupGestionAdapter extends FirestoreRecyclerAdapter<Group, GroupGe
                 itemGroupNameView.setText(currentItem.getName());
             }
 
-            // Set Group Type View
+            // Set Group Type View ...
             if(currentItem.getType() != null){
                 itemGroupTypeView.setTextColor(Color.GRAY);
                 itemGroupTypeView.setText(currentItem.getType().toUpperCase());
