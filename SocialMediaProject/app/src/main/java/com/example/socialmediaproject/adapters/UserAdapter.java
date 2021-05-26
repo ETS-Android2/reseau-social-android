@@ -138,9 +138,9 @@ public class UserAdapter extends BaseAdapter {
             // le layout
             LinearLayout user_layout = view.findViewById(R.id.user_layout);
 
-            // Si l'utilisateur de la liste est l'utilisateur connecté
+            // Si l'utilisateur de la liste est l'utilisateur connectés
             if(currentItem.getUid().equals(BaseActivity.getUid())){
-                user_layout.setBackgroundColor(ContextCompat.getColor(context, R.color.browser_actions_bg_grey));
+                user_layout.setBackgroundColor(ContextCompat.getColor(context, R.color.fui_transparent));
             }
 
             // get item name view
