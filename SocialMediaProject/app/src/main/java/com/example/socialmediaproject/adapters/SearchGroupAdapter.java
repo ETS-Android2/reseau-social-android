@@ -124,7 +124,7 @@ public class SearchGroupAdapter extends FirestoreRecyclerAdapter<Group, SearchGr
                 // si l'utilisateur est déja dans le groupe
                 button_add.setEnabled(true);
                 //itemIconView.setColorFilter(ContextCompat.getColor(context, R.color.colorSecondary),PorterDuff.Mode.MULTIPLY);
-                button_add.setText("Voir");
+                button_add.setText(context.getResources().getString(R.string.access_to_groupe));
                 button_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
