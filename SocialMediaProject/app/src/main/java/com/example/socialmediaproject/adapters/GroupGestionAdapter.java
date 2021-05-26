@@ -1,5 +1,6 @@
 package com.example.socialmediaproject.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -92,7 +93,7 @@ public class GroupGestionAdapter extends FirestoreRecyclerAdapter<Group, GroupGe
                 itemGroupNameView.setText(currentItem.getName());
             }
 
-            // Set Group Type View
+            // Set Group Type View ...
             if(currentItem.getType() != null){
                 itemGroupTypeView.setTextColor(Color.GRAY);
                 itemGroupTypeView.setText(currentItem.getType().toUpperCase());
@@ -103,7 +104,7 @@ public class GroupGestionAdapter extends FirestoreRecyclerAdapter<Group, GroupGe
             if(isAdmin){
                 // si l'utilisateur est déja dans le groupe
                 button_add.setEnabled(true);
-                button_add.setText("Paramètres");
+                button_add.setText(itemView.getContext().getResources().getString(R.string.settings));
                 button_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

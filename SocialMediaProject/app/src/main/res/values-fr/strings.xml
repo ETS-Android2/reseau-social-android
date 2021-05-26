@@ -188,5 +188,6 @@
     <string name="text_hour">h</string>
     <string name="text_min">min</string>
     <string name="text_now">Maintenant</string>
+    <string name="access_to_groupe">Voir</string>
 
 </resources>
