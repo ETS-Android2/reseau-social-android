@@ -392,6 +392,8 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                         itemTitleView.setText(currentUser.getUsername());
                         itemContentView.setText(currentItem.getContent());
 
+                        itemDateAgo.setText(BaseActivity.getTimeAgo(currentItem.getDateCreated()));
+
                         itemContentView.setVisibility(currentItem.getContent().length() == 0 ? View.GONE : View.VISIBLE);
 
                         int colorCurrentUser = ContextCompat.getColor(itemView.getContext(), R.color.colorSecondary);

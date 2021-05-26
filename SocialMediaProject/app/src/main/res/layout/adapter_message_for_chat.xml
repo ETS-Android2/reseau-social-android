@@ -26,6 +26,7 @@
         android:id="@+id/item_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:textColor="@color/colorTitleDark"
         android:textSize="15dp"
         android:text="@string/item_content_text" />
 
