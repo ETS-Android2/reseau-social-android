@@ -189,5 +189,6 @@
     <string name="text_min">min</string>
     <string name="text_now">Maintenant</string>
     <string name="access_to_groupe">Voir</string>
+    <string name="vous_n_avez_pas_encore_publi_de_post">Vous n\'avez pas encore publié de post.</string>
 
 </resources>

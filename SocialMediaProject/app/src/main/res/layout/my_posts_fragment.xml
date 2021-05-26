@@ -16,6 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:textAlignment="center"
-        android:text="Vous n'avez pas encore publié de post."/>
+        android:text="@string/vous_n_avez_pas_encore_publi_de_post"/>
 
 </FrameLayout>

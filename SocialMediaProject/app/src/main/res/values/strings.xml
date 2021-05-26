@@ -174,7 +174,7 @@
     <string name="text_member">Member</string>
     <string name="text_former_member">Former Member</string>
     <string name="toast_send_request_addUser">User is added !</string>
-    <string name="toast_delete_user_waitlist">User is added  from waiting list!</string>
+    <string name="toast_delete_user_waitlist">User is deleted from waiting list!</string>
     <string name="contact">Contact</string>
     <string name="promote_to_moderator">Promote to moderator</string>
     <string name="exclure">Kick out</string>
@@ -233,4 +233,5 @@
     <string name="email">Email</string>
     <string name="sms">SMS</string>
     <string name="access_to_groupe">Enter</string>
+    <string name="vous_n_avez_pas_encore_publi_de_post">You haven\'t published a post yet.</string>
 </resources>
