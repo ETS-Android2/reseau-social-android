@@ -155,9 +155,15 @@
     <!-- Les messages d'erreurs -->
 
     <string name="error_unknown_error">Erreur inconnu.</string>
-    <string name="button_send">Envoyer</string>
+    <string name="button_send">Send</string>
     <string name="placeholder_message">Message...</string>
     <string name="username">username</string>
+
     <string name="title_activity_main">MainActivity</string>
+    <string name="settings_category_general">General</string>
+    <string name="settings_dark_mode">Dark mode</string>
+    <string name="settings_activated">Activated</string>
+    <string name="settings_desactivated">Deactivated</string>
+    <string name="settings_log_out">Log out</string>
 
 </resources>
