@@ -222,13 +222,10 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
 
                                 // add a list
                                 if (currentUserIsAuthor) {
-                                    String[] actions = {"Modifier", "Supprimer"};
+                                    String[] actions = { "Supprimer"};
                                     builder.setItems(actions, (dialog, which) -> {
                                         switch (which) {
-                                            case 0: // Modifier
-                                                Toast.makeText(context, "Modifier le post !", Toast.LENGTH_SHORT).show();
-                                                break;
-                                            case 1: // Supprimer
+                                            case 0: // Supprimer
                                                 getSnapshots().getSnapshot(position).getReference().delete();
                                                 // notifyDataSetChanged();
                                                 Toasty.success(context, "Post removed !", Toast.LENGTH_SHORT, true).show();
@@ -250,7 +247,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                             if (which == 0) { // Supprimer
                                                 getSnapshots().getSnapshot(position).getReference().delete();
                                                 // notifyDataSetChanged();
-                                                Toasty.success(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT, true).show();
+                                                Toasty.success(context, "Le post est supprimé", Toast.LENGTH_SHORT, true).show();
                                             }
                                         });
                                     } else if (postGroup.getModerators().contains(BaseActivity.getUid())
@@ -262,7 +259,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.MyVi
                                             if (which == 0) { // Supprimer
                                                 getSnapshots().getSnapshot(position).getReference().delete();
                                                 // notifyDataSetChanged();
-                                                Toasty.success(context, "Supprimer le post : " + getSnapshots().getSnapshot(position).getReference().getId(), Toast.LENGTH_SHORT, true).show();
+                                                Toasty.success(context, "Le post est supprimé", Toast.LENGTH_SHORT, true).show();
                                             }
                                         });
                                     } else {
