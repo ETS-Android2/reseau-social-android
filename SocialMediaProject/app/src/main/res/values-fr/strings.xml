@@ -3,22 +3,22 @@
     <string name="app_name">Socializing</string>
 
     <!-- Introduction -->
-    <string name="skip_introduction">Skip</string>
+    <string name="skip_introduction">Passer</string>
     <!-- Fragment 1 -->
-    <string name="title_fragment1">Create your</string>
-    <string name="subtitle_fragment1">Network</string>
-    <string name="description_fragment1">Customize your own social network by choosing a theme, a geographical location and much more… </string>
+    <string name="title_fragment1">"Créer votre "</string>
+    <string name="subtitle_fragment1">Réseau</string>
+    <string name="description_fragment1">Personnalisez votre propre réseau social en choisissant un thème, une localisation géographique et bien plus encore…</string>
     <!-- Fragment 2 -->
-    <string name="title_fragment2">Set up your</string>
-    <string name="subtitle_fragment2">Network</string>
-    <string name="description_fragment2">Public so that everyone has access or private to be in smaller numbers…</string>
+    <string name="title_fragment2">Configurez votre</string>
+    <string name="subtitle_fragment2">Réseau</string>
+    <string name="description_fragment2">Public pour que tout le monde ait accès ou privé pour être en plus petit nombre…</string>
     <!-- Fragment 3 -->
-    <string name="title_fragment3">Share content</string>
-    <string name="subtitle_fragment3">on Network</string>
-    <string name="description_fragment3">You can share whatever you want : message, media, emails and be notified !</string>
+    <string name="title_fragment3">Partager</string>
+    <string name="subtitle_fragment3">sur le réseau</string>
+    <string name="description_fragment3">Vous pouvez partager ce que vous voulez: message, média, e-mails et être averti!</string>
 
     <!-- Home page -->
-    <string name="welcome_login">Welcome to our App</string>
+    <string name="welcome_login">Bienvenue sur notre App</string>
 
     <!-- Login -->
     <string name="email_login">Email</string>
@@ -87,12 +87,12 @@
 
     <string name="access_code">Saisir un code d\'accès pour accéder à un groupe privé :</string>
 
-    <string name="no_group">There is no group</string>
+    <string name="no_group">Il n\'y a pas de groupe</string>
 
 
 
     <!-- User profile -->
-    <string name="update_informations">Mettre à jour les informations</string>
+    <string name="update_informations">Mettre à jour</string>
     <string name="user_group">Vous n\'avez pas encore créer de groupe.</string>
     <string name="user_post">Vous n\'avez pas encore publié de post.</string>
 
@@ -127,13 +127,12 @@
     <string name="title_groupe">Nom du groupe</string>
 
     <string name="title_activity_settings_notification">SettingsNotificationActivity</string>
-    <string name="notif_newPost">New posts</string>
-    <string name="notif_groupProposition">Group proposition</string>
+    <string name="notif_newPost">Nouveaux posts</string>
+    <string name="notif_groupProposition">Publicité</string>
     <string name="title_settings_notification">Notifications</string>
     <string name="long_latin">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod ex nec sagittis suscipit. Pellentesque et massa id turpis rutrum blandit vitae nec lectus. Etiam consequat, tellus sit amet faucibus interdum, neque odio scelerisque sem, id efficitur risus sapien at nunc. Vivamus quis ultrices elit, non auctor dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam viverra, velit nec ornare dignissim, lacus lacus malesuada nisi, eu elementum mi ligula a mauris. Phasellus non semper tortor, at condimentum mauris.  Curabitur a tortor justo. Nunc quis arcu aliquam ex maximus ultricies. Praesent eu enim in neque molestie pretium. Sed eget enim suscipit, hendrerit leo vel, lacinia sapien. Fusce in magna eu libero cursus hendrerit. Duis in magna convallis, dapibus velit sit amet, maximus eros. Maecenas ornare purus justo, eget hendrerit nulla porta ac. Proin viverra nisl sit amet est interdum pellentesque. Morbi ut diam quis metus feugiat sollicitudin. Sed id malesuada odio. Cras in lectus nibh. Nam interdum ante ligula. Cras pulvinar faucibus augue at varius.  Cras commodo lacus ut nulla ultrices, sit amet viverra arcu vehicula. Nunc purus metus, auctor et purus nec, sagittis gravida lectus. Nunc eleifend mattis sem, nec sagittis ligula aliquam at. Pellentesque facilisis in felis nec tristique. Nunc dictum vitae est eu mattis. Donec in lacus condimentum, bibendum ligula eu, auctor nisl. Fusce dapibus, orci vitae sollicitudin aliquam, enim dui sagittis lorem, quis ultricies ipsum leo sit amet neque. Nam nec elit leo. Integer eget tellus sed sem hendrerit consectetur. Vivamus sit amet velit tincidunt, ullamcorper purus eget, tempus neque.  Aliquam non elit mauris. Morbi malesuada mattis turpis, at pulvinar justo mollis quis. Sed lobortis tempus scelerisque. Vestibulum posuere, purus at rhoncus tincidunt, lorem velit luctus arcu, quis condimentum ligula diam id augue. Fusce lobortis vitae est ac posuere. Praesent eros dui, scelerisque vitae ullamcorper quis, bibendum non sapien. Nulla facilisi. Cras purus orci, dapibus in condimentum vel, congue eget sapien. Phasellus ultrices feugiat diam vel dictum.  Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis magna erat, aliquam vitae ornare a, rutrum nec justo. Curabitur ac ullamcorper nunc, a lobortis massa. In venenatis commodo malesuada. Sed rutrum lacus sit amet felis tempor, eget pretium elit convallis. Vivamus hendrerit mi ac facilisis tempus. Nulla sit amet tempus lacus. Nunc mattis enim eu eros imperdiet sollicitudin. Pellentesque eros ex, dictum bibendum imperdiet in, gravida vel urna. Aliquam eget nisl pellentesque, viverra mauris sed, molestie urna. Etiam neque ipsum, dictum nec velit sit amet, semper placerat ante.</string>
-    <string name="email_adress">Email adress</string>
-    <string name="phone_number">Phone number</string>
-    <string name="date_of_birth">Date of birth</string>
+    <string name="email_adress">Adresse email</string>
+    <string name="phone_number">Numéro de téléphone</string>
     <string name="nom_du_groupe">Nom du groupe</string>
     <string name="group_moderators">Gérer les modérateurs</string>
     <string name="title_settings_alerts">Alertes</string>
@@ -142,20 +141,14 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="next">Suivant</string>
+    <string name="previous">Précédent</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_new_group">New group</string>
-    <string name="notif_disable">Disable notifications</string>
+    <string name="title_new_group">Nouveau groupe</string>
+    <string name="notif_disable">Désactiver les notifications</string>
 
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Settings d'un groupe -->
-
-    <string name="title_activity_chat">ChatActivity</string>
 
 
     <!-- Les messages d'informations -->
@@ -169,7 +162,7 @@
     <string name="error_unknown_error">Erreur inconnu.</string>
     <string name="button_send">Envoyer</string>
     <string name="placeholder_message">Message...</string>
-    <string name="username">username</string>
+    <string name="username">nom d\'utilisateur</string>
     <string name="title_activity_main">MainActivity</string>
 
 
@@ -187,7 +180,7 @@
     <string name="toast_send_request_addUser">Utilisateur ajouté !</string>
     <string name="toast_delete_user_waitlist">Utilisateur supprimé de la liste d\'attente !</string>
     <string name="contact">Contacter</string>
-    <string name="promote_to_moderator">Promote to moderator</string>
+    <string name="promote_to_moderator">Promouvoir</string>
     <string name="exclure">Exclure</string>
     <string name="demote_to_member">Rétrograder à membre</string>
     <string name="toast_contact_user">Contacter l\'utilisateur (À faire) !</string>

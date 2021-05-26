@@ -60,7 +60,8 @@ public class MyPostsFragment extends Fragment implements PostAdapter.Listener {
         // affichage de la flèche retour en arrière dans le menu
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // title fragment in the header bar
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Mes Posts");
+        String titleFragment = getContext().getResources().getString(R.string.fragment_name_my_posts);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(titleFragment);
     }
 
     private void configureRecyclerView(){

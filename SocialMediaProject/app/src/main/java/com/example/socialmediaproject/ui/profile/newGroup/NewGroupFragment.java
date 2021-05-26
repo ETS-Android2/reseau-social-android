@@ -110,7 +110,8 @@ public class NewGroupFragment extends Fragment {
                                 spinnerGroupType.getText().toString().matches("") ||
                                 spinnerGroupAccess.getText().toString().matches("") ||
                                 spinnerGroupSubject.getText().toString().matches("")){
-                            Toast.makeText(getContext(),"Vous devez remplir tous les champs demandé !" , Toast.LENGTH_SHORT).show();
+                            String messageEmpty = getString(R.string.info_empty_newGroup);
+                            Toast.makeText(getContext(), messageEmpty , Toast.LENGTH_SHORT).show();
                         }else{
 
                             if(listType.contains(spinnerGroupType.getText().toString()) &&
@@ -136,8 +137,8 @@ public class NewGroupFragment extends Fragment {
                                     Navigation.findNavController(view).navigate(R.id.action_navigation_newGroup_to_navigation_groupe, bundle);
                                 }
                             }else{
-
-                                Toast.makeText(getContext(),"Un champ n'est pas correct !" , Toast.LENGTH_SHORT).show();
+                                String fieldIncorect = getString(R.string.info_field_incorect);
+                                Toast.makeText(getContext(),fieldIncorect , Toast.LENGTH_SHORT).show();
 
                             }
 

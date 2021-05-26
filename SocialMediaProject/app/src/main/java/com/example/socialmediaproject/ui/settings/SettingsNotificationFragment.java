@@ -37,11 +37,11 @@ public class SettingsNotificationFragment extends PreferenceFragmentCompat {
 
                 if(newValue.equals(true)) {
                     BaseActivity.beNotified = false;
-                    Toasty.success(getContext(), "Les notifications sont désactivés", Toast.LENGTH_SHORT, false).show();
+                    //Toasty.success(getContext(), "Les notifications sont désactivés", Toast.LENGTH_SHORT, false).show();
                 }
                 else {
                     BaseActivity.beNotified = true;
-                    Toasty.success(getContext(), "Les notifications sont activés", Toast.LENGTH_SHORT, false).show();
+                    //Toasty.success(getContext(), "Les notifications sont activés", Toast.LENGTH_SHORT, false).show();
                 }
 
                 return true;
@@ -60,14 +60,15 @@ public class SettingsNotificationFragment extends PreferenceFragmentCompat {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Notifications");
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.FragmentTitle_notifications));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         // title fragment in the header
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Notifications");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.FragmentTitle_notifications));
     }
 
     @Override

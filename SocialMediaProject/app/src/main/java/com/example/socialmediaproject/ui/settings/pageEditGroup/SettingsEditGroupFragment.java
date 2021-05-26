@@ -80,7 +80,7 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toasty.info(getContext(), newValue.equals(true) ? "private" : "public" , Toast.LENGTH_SHORT, false).show();
+                                        Toasty.info(getContext(), newValue.equals(true) ? getString(R.string.text_private) : getString(R.string.text_public) , Toast.LENGTH_SHORT, false).show();
                                     }
                                 });
 
@@ -97,7 +97,8 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toasty.success(getContext(),"Changement effectué !" , Toast.LENGTH_SHORT, true).show();
+
+                                        Toasty.success(getContext(), getString(R.string.message_changement_done) , Toast.LENGTH_SHORT, true).show();
                                     }
                                 });
 
@@ -114,7 +115,7 @@ public class SettingsEditGroupFragment extends PreferenceFragmentCompat{
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toasty.info(getContext(),newValue.equals(true) ? "Publication seulement pour les modérateurs" : "Tout le monde peut publier des posts", Toast.LENGTH_SHORT, true).show();
+                                        //Toasty.info(getContext(),newValue.equals(true) ? "Publication seulement pour les modérateurs" : "Tout le monde peut publier des posts", Toast.LENGTH_SHORT, true).show();
                                     }
                                 });
 

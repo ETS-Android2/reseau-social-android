@@ -184,7 +184,7 @@ public class ProfileFragment extends Fragment {
 
     public void uploadPicture(){
         final ProgressDialog pd = new ProgressDialog(getContext());
-        pd.setTitle("Uploading image...");
+        pd.setTitle(getString(R.string.message_uploading_image));
         pd.show();
 
         final String randomKey = UUID.randomUUID().toString();
@@ -196,21 +196,22 @@ public class ProfileFragment extends Fragment {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         pd.dismiss();
                         BaseActivity.getRefUser().update("urlPicture", ref.toString());
-                        Toasty.success(getContext(), "Image uploaded !", Toast.LENGTH_SHORT, true).show();
+
+                        Toasty.success(getContext(), getString(R.string.message_image_uploaded), Toast.LENGTH_SHORT, true).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull @NotNull Exception e) {
                         pd.dismiss();
-                        Toasty.error(getContext(),"Failed to upload !" , Toast.LENGTH_SHORT, true).show();
+                        Toasty.error(getContext(),getString(R.string.message_upload_failed) , Toast.LENGTH_SHORT, true).show();
                     }
                 })
                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull @NotNull UploadTask.TaskSnapshot snapshot) {
                         double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                        pd.setMessage("Percentage : " + (int) progressPercent + "%");
+                        pd.setMessage( (int) progressPercent + "%");
                     }
                 });
     }
