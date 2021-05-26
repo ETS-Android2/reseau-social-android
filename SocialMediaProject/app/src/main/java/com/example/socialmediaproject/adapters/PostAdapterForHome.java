@@ -84,74 +84,19 @@ public class PostAdapterForHome extends RecyclerView.Adapter<PostAdapterForHome.
 
                 holder.updateWithPost(postList.get(position));
 
-                // setup the alert builder
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                builder.setTitle("Choisir une action");
-
-                holder.shareButton.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * NAVIGATION VERS LE GROUPE LORSQUE L'ON CLICK SUR LE NOM DU GROUPE
+                 *
+                 */
+                holder.itemTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // si je suis l'utilisateur qui à posté
-                        if(currentUserIsAuthor){
-                            // Un appui long pour poucoir supprimer le message
+                        Bundle bundle = new Bundle();
+                        bundle.putString("group_name", postList.get(position).getGroup());
+                        Navigation.findNavController(holder.itemView).navigate(R.id.navigation_groupe, bundle);
+                    }
+                });
 
-                                    String[] actions = {"Accéder au groupe"};
-                                    builder.setItems(actions, (dialog, which) -> {
-                                        if (which == 0) {
-
-
-                                            // suppression local
-
-
-                                            Toast.makeText(context, "Accéder au groupe : "+ postList.get(position).getGroup(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                        }else{
-
-                        // SINON ON VA REGARDER QU'ELLE ROLE ON POSS7DE DANS CE GROUPE
-                            // -> POSSIBILITÉ POUR UN ADMIN ET UN MODÉRATEUR DE SUPPRIMÉ LE POST
-
-                            if(postGroup.getAdmin().equals(BaseActivity.getUid())){
-                                String[] actions = {"Supprimer"};
-                                builder.setItems(actions, (dialog, which) -> {
-                                    if (which == 0) { // Supprimer
-                                        //getSnapshots().getSnapshot(position).getReference().delete();
-                                        // notifyDataSetChanged();
-                                        Toast.makeText(context, "Supprimer le post : (à faire)", Toast.LENGTH_SHORT).show();
-
-                                    }
-                                });
-                            }else if(postGroup.getModerators().contains(BaseActivity.getUid())
-                                    && postGroup.getModerators().contains(postList.get(position).getUserSender())){
-                                // Si la personne qui à posté n'est pas modérateur, alors un modérateur peut modérer son post
-
-                                String[] actions = {"Supprimer"};
-                                builder.setItems(actions, (dialog, which) -> {
-                                    if (which == 0) { // Supprimer
-                                        // notifyDataSetChanged();
-                                        Toast.makeText(context, "Supprimer le post : (à faire)", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                // create and show the alert dialog
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                            }else{
-                                // Je suis un utilisateur et je peux report le message
-                                String[] actions = {"Report abuse"};
-                                builder.setItems(actions, (dialog, which) -> {
-                                    if (which == 0) { // Report abuse
-                                        Toast.makeText(context, "Reporter le post ! (à faire)", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-
-                            }
-                        }
-                        // create and show the alert dialog
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }});
             }
         });
 

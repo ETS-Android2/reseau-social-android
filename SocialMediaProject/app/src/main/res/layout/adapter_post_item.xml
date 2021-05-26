@@ -71,6 +71,8 @@
         android:id="@+id/item_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:autoLink="web"
+        android:linksClickable="true"
         android:text="@string/item_content_text" />
 
     <androidx.cardview.widget.CardView
