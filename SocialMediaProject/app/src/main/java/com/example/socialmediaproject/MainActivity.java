@@ -46,7 +46,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import es.dmoral.toasty.Toasty;
@@ -103,9 +105,11 @@ public class MainActivity extends AppCompatActivity {
 
     protected void notification(){
         GroupHelper.getAllGroup(BaseActivity.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
 
                 if(error != null){
                     Log.w("Listen failed : ", "onEvent error", error);
@@ -135,14 +139,16 @@ public class MainActivity extends AppCompatActivity {
                                     Date dateCreated = ((Timestamp)dc.getDocument().getData().get("dateCreated")).toDate();
 
                                     long diff = TimeUnit.MILLISECONDS.toMinutes(currentDate.getTime() - dateCreated.getTime());
+                                    long diff2 = TimeUnit.MILLISECONDS.toSeconds(currentDate.getTime() - dateCreated.getTime());
 
                                     Log.d("DIFF : ", String.valueOf(diff));
 
-                                    if(!dc.getDocument().getData().get("userSender").toString().equals(BaseActivity.getUid()) && diff < 1 && BaseActivity.beNotified) {
+                                    if(!dc.getDocument().getData().get("userSender").toString().equals(BaseActivity.getUid()) && diff2 < 1 && BaseActivity.beNotified) {
 
                                         switch (dc.getType()) {
                                             case ADDED:
                                                 UserHelper.getUser(dc.getDocument().getData().get("userSender").toString()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
                                                     @Override
                                                     public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
                                                         User user = task.getResult().toObject(User.class);
@@ -157,12 +163,13 @@ public class MainActivity extends AppCompatActivity {
                                                             manager.createNotificationChannel(channel);
 
                                                             NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "n")
-                                                                    .setContentTitle(getString(R.string.notification_template_new_message) +" " + user.getUsername())
+                                                                    .setContentTitle("Nouveau message envoyé par" +" " + user.getUsername())
                                                                     .setSmallIcon(R.drawable.twitter)
                                                                     .setAutoCancel(true)
                                                                     .setContentText(content);
 
-                                                            Notif notif = new Notif(getString(R.string.notification_template_new_message) + user.getUsername(), content);
+                                                            Notif notif = new Notif("Nouveau message envoyé par " + user.getUsername(), content);
+
                                                             BaseActivity.notifs.add(notif);
 
                                                             NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);

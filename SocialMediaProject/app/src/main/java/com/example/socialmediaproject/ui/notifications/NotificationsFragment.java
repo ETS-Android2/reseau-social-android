@@ -40,8 +40,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class NotificationsFragment extends Fragment {
 
@@ -63,10 +65,10 @@ public class NotificationsFragment extends Fragment {
         // list of posts
         List<Notif> notifItemList = new ArrayList<>();
 
-        notifItemList.add(new Notif("Alerte de sécurité"));
-        notifItemList.add(new Notif("Un nouveau membre à été ajouté au groupe"));
-        notifItemList.add(new Notif("Antoine à aimé votre post"));
-        notifItemList.add(new Notif("Salut les gars çava ?"));
+        //notifItemList.add(new Notif("Alerte de sécurité"));
+        //notifItemList.add(new Notif("Un nouveau membre à été ajouté au groupe"));
+        //notifItemList.add(new Notif("Antoine à aimé votre post"));
+        //notifItemList.add(new Notif("Salut les gars çava ?"));
 
         // get list view
         ListView allPost = (ListView) root.findViewById(R.id.notificationsListView);

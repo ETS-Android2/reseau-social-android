@@ -91,11 +91,11 @@ public class LoginTabFragment extends Fragment {
 
         if(email.isEmpty() || !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
 
-            Toasty.warning(getContext(), getContext().getResources().getString(R.string.toast_message_email_not_correct), Toast.LENGTH_SHORT, true).show();
+            Toasty.warning(getContext(), "email incorrect", Toast.LENGTH_SHORT, true).show();
             validate = false;
         }
         else if(password.isEmpty() || password.length()<4){
-            Toasty.warning(getContext(), getContext().getResources().getString(R.string.toast_message_password_characters_min), Toast.LENGTH_SHORT, true).show();
+            Toasty.warning(getContext(), "Entrer + de 4 caractères pour le mot de passe", Toast.LENGTH_SHORT, true).show();
             validate = false;
         }
 
@@ -108,13 +108,13 @@ public class LoginTabFragment extends Fragment {
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
 
-                    Toasty.success(getContext(), getContext().getResources().getString(R.string.toast_message_login_sucess), Toast.LENGTH_SHORT, true).show();
+                    //Toasty.success(getContext(), getContext().getResources().getString(R.string.toast_message_login_sucess), Toast.LENGTH_SHORT, true).show();
 
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                 }
                 else{
-                    Toasty.error(getContext(), getContext().getResources().getString(R.string.toast_message_sign_in_fail)+ " " + task.getException().getMessage(), Toasty.LENGTH_LONG, true).show();
+                    Toasty.error(getContext(), "Erreur :"+ " " + task.getException().getMessage(), Toasty.LENGTH_LONG, true).show();
                 }
             }
         });

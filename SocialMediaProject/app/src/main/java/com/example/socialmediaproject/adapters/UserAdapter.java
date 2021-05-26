@@ -100,7 +100,7 @@ public class UserAdapter extends BaseAdapter {
                                     currentGroup.removeFromWaitlist(currentItem.getUid());
                                     userList.remove(i);
                                     notifyDataSetChanged();
-                                    Toast.makeText(context, context.getResources().getString(R.string.toast_send_request_addUser), Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(context, context.getResources().getString(R.string.toast_send_request_addUser), Toast.LENGTH_SHORT).show();
                                     if(userList.size()==0){
                                         ((Activity) viewGroup.getContext()).onBackPressed();
                                     }
@@ -121,7 +121,7 @@ public class UserAdapter extends BaseAdapter {
                                     currentGroup.removeFromWaitlist(currentItem.getUid());
                                     userList.remove(i);
                                     notifyDataSetChanged();
-                                    Toast.makeText(context, context.getResources().getString(R.string.toast_delete_user_waitlist), Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(context, context.getResources().getString(R.string.toast_delete_user_waitlist), Toast.LENGTH_SHORT).show();
                                     if(userList.size()==0){
                                         ((Activity) viewGroup.getContext()).onBackPressed();
                                     }
