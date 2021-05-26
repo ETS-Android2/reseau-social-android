@@ -2,11 +2,14 @@ package com.example.socialmediaproject.ui.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.example.socialmediaproject.MainActivity;
 import com.example.socialmediaproject.api.GroupHelper;
 import com.example.socialmediaproject.ui.login.LoginActivity;
 import com.example.socialmediaproject.R;
@@ -17,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.Navigation;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -59,11 +63,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     void configToolBar(){
+
         try{
             ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Paramètres");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Paramètres");
+
+
         }catch(Exception e){
-            Toasty.error(getContext(), "erroooooor" , Toast.LENGTH_SHORT, false).show();
+            Log.d("ERRROOOOOOR", e.getMessage());
+            //Toasty.error(getContext(), "erroooooor" , Toast.LENGTH_SHORT, false).show();
         }
     }
 
