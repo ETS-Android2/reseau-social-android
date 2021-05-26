@@ -62,6 +62,15 @@
     <string name="placeholder_post">Écrivez votre message ...</string>
     <string name="addPost">ajouter un post</string>
 
+    <!-- Group -->
+    <string name="group_name">Nom du groupe</string>
+    <string name="group_add">Rejoindre</string>
+    <string name="group_empty">Il n'y a aucun message</string>
+
+    <!-- Group (waitlist) -->
+    <string name="group_waitlist_add">Ajouter</string>
+
+
 
     <!-- Sync Preferences -->
 
@@ -78,7 +87,6 @@
     <string name="date_of_birth">Date of birth</string>
     <string name="update_informations">Update Informations</string>
     <string name="nom_du_groupe">Nom du groupe</string>
-    <string name="group_name">Nom du groupe</string>
     <string name="type_groupe">Type de groupe</string>
     <string name="btn_create_groupe">Nouveau groupe</string>
     <string name="group_type">Type du groupe</string>
