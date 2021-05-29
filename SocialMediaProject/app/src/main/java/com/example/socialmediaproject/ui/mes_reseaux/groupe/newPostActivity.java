@@ -312,7 +312,6 @@ public class newPostActivity extends AppCompatActivity {
                             if(!user.getUid().equals(userId)){
 
                                 try {
-
                                     //Toasty.success(getApplicationContext(), getApplicationContext().getResources().getString(R.string.message_send_email), Toast.LENGTH_SHORT, true).show();
                                     JavaMailAPI javaMailAPI = new JavaMailAPI(newPostActivity.this, user.getEmail(), "Envoyé depuis l'app Socializing, groupe : " + group, content);
                                     javaMailAPI.execute();

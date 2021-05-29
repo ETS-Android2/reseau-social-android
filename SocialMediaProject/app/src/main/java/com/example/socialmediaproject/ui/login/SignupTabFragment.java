@@ -90,7 +90,7 @@ public class SignupTabFragment extends Fragment {
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
 
-                    //Toasty.success(getContext(), getContext().getResources().getString(R.string.toast_message_user_created), Toast.LENGTH_SHORT, true).show();
+                    Toasty.success(getContext(), "Inscription réussie", Toast.LENGTH_SHORT, true).show();
 
                     DocumentReference documentReference = BaseActivity.getRefUser();
 

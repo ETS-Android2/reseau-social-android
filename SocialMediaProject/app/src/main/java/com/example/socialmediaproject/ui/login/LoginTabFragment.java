@@ -108,7 +108,7 @@ public class LoginTabFragment extends Fragment {
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
 
-                    //Toasty.success(getContext(), getContext().getResources().getString(R.string.toast_message_login_sucess), Toast.LENGTH_SHORT, true).show();
+                    Toasty.success(getContext(), "Vous êtes connecté !", Toast.LENGTH_SHORT, true).show();
 
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
